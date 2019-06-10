@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "icon": "assets/images/ads/ad1.png"
+    },
+    {
+        "id": 2,
+        "icon": "assets/images/ads/ad2.png"
+    },
+    {
+        "id": 3,
+        "icon": "assets/images/ads/ad3.png"
+    },
+    {
+        "id": 4,
+        "icon": "assets/images/ads/ad4.png"
+    }
+]
