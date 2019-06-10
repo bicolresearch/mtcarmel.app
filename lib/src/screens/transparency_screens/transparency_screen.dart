@@ -133,7 +133,8 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                         borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: getTotal()
-                        ),),
+                        ),
+                        ),
                       IconButton(icon: Icon(MountCarmelIcons.refresh,
                         color: Colors.brown[600],),
                         onPressed: () {
