@@ -1,40 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/confraternity_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/confraternity_form.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
-import 'package:mt_carmel_app/src/widgets/services_header.dart';
-import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
-class JoinUs extends StatelessWidget {
-  const JoinUs({Key key}) : super(key: key);
+class ConfraternityInfo extends StatelessWidget {
+  const ConfraternityInfo({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.all(30.0),
+        margin: EdgeInsets.fromLTRB(30.0, 50.0,30.0,50.0),
         child: Column(
           children: <Widget>[
-          servicesHeader(),
-          SizedBox(height: 10.0,),
-          serviceTile(AppConstants.JOIN_US, AppConstants.sample_message),
-          SizedBox(height: 10.0,),
-          lineWidget(),
           Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 70.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    //builder: (context) => ServicesDetailScreen(service.service_name),
-                    builder: (context) => 
-                    ConfraternityInfo()
-                  )
-                );
+                print("Tapped item");
               },
               child: Text("Confraternity of Our Lady of Mount Carmel", 
-              style: AppConstants.OPTION_STYLE2,
+              style: AppConstants.OPTION_STYLE3,
               textAlign: TextAlign.center,
               ),
             ),
@@ -42,8 +28,27 @@ class JoinUs extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 50.0),
             child: lineWidget()),
+            
 
           Spacer(),
+          RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0)
+            ),
+            color: Colors.brown,
+            child: Text("Accept", 
+            style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                    ConfraternityForm()
+                  )
+                );
+            },
+          ),
           Container(
             margin: EdgeInsets.only(bottom: 30.0),
             child: GestureDetector(
