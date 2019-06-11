@@ -1,10 +1,18 @@
+/*
+*	Filename		:	profile_screen.dart
+*	Purpose			:	Display the list of the users access and other details of the church
+* Created			: 2019-06-11 15:44:56 by Detective Conan
+*	Updated			: 2019-06-11 15:44:56 by Detective Conan 
+*	Changes			:
+*/
+
 //import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/services_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 // import 'package:mt_carmel_app/src/widgets/login_widget.dart';
 import '../../constants/app_constants.dart';
@@ -22,7 +30,7 @@ class ProfileScreen extends StatefulWidget {
   static const String REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
   static const String LOCATION_MAP = "Location Map";
   static const String PRIESTS = "Carmelite Priests";
-  static const String PASTORS = "Pastors";
+  static const String PASTORS = "Carmelite Pastors";
   static const String CONTACT_DETAILS = "Contact Details";
   static const String ABOUT_THE_PARISH = "About the Parish";
 
@@ -52,6 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ProfileScreen.REGULAR_MASS_SCHEDULE,
     ProfileScreen.LOCATION_MAP,
     ProfileScreen.PRIESTS,
+    ProfileScreen.PASTORS,
     ProfileScreen.CONTACT_DETAILS,
     ProfileScreen.ABOUT_THE_PARISH,  
     
@@ -283,7 +292,11 @@ Widget _navigateToDetail(String itemText){
       return About();
     case ProfileScreen.PRIESTS:
       return PriestsScreen(context);
+    case ProfileScreen.PASTORS:
+      return PastorsScreen(context);
     default:
+      // show the about if not in selection
+      return About();
   }
 }
 }

@@ -1,7 +1,12 @@
+/*
+*	Filename		:	services_screen.dart
+*	Purpose			:	Displays the list of the services of the church
+* Created			: 2019-06-11 15:52:50 by Detective Conan
+*	Updated			: 2019-06-11 15:52:50 by Detective Conan 
+*	Changes			:
+*/
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/model/service.dart';
-import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/passing_screens/passing.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/baptism.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/communion.dart';
@@ -10,10 +15,8 @@ import 'package:mt_carmel_app/src/screens/services_screens/event_screen/event.da
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/join_us.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/make_request.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/services_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
-import 'package:mt_carmel_app/src/widgets/thank_you.dart';
 
 
 class ServicesScreen extends StatelessWidget {
@@ -80,15 +83,11 @@ class ServicesScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            //builder: (context) => ServicesDetailScreen(service.service_name),
             builder: (context) => 
             _navigateToService(service.service_name),
-            //ThankYouScreen(message: service.service_name),
-            //JoinUs(),
           )
         );
       },
-      // from service.dart
       child: serviceTile(service.service_name, message),
     );
   }
@@ -112,8 +111,6 @@ class ServicesScreen extends StatelessWidget {
        return Passing();
       case EVENTS:
        return Event();
-      // default: 
-      //   return MountCarmelIcons.logo;
     }
   }
 }

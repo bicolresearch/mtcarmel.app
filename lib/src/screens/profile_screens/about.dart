@@ -47,7 +47,24 @@ class About extends StatelessWidget {
         //     )
         //   ],
         // ),
-        child: Text("About"),
+        child: Column(
+          children: <Widget>[
+            Spacer(),
+            Text("About"),
+            Spacer(),
+            Container(
+              margin: EdgeInsets.only(bottom: 30.0),
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.pop(context);
+                  print("tapped");
+                },
+                child: Icon(Icons.keyboard_arrow_left, 
+                size: 50.0,
+                color: Colors.brown,)),
+            )
+          ],
+        ),
       ),
     );
   }
