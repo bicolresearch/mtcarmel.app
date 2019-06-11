@@ -20,30 +20,34 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
        body: Center(
-         child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: <Widget>[
-          Icon(MountCarmelIcons.thankyou, color: Colors.brown, size: 150.0,),
-          SizedBox(height: 20.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-            child: Text("${this.message}", style: AppConstants.OPTION_STYLE2, textAlign: TextAlign.justify,),
-          ),
-          RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0)
+         child: Padding(
+           padding: const EdgeInsets.all(20.0),
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: <Widget>[
+            Icon(MountCarmelIcons.thankyou, color: Colors.brown, size: 150.0,),
+            SizedBox(height: 20.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+              child: Text("${this.message}", style: AppConstants.OPTION_STYLE2, textAlign: TextAlign.justify,),
             ),
-            color: Colors.brown,
-            child: Text("Finish", 
-            style: TextStyle(color: Colors.white),
+            Spacer(),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)
+              ),
+              color: Colors.brown,
+              child: Text("Finish", 
+              style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.pop(context, true);
+                print("Back pressed");
+              },
             ),
-            onPressed: () {
-              Navigator.pop(context, true);
-              print("Back pressed");
-            },
-          ),
-         ],
+           ],
         ),
+         ),
       ),
     );
   }

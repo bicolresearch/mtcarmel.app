@@ -14,7 +14,7 @@ class ConfraternityInfo extends StatelessWidget {
         child: Column(
           children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 70.0),
             child: GestureDetector(
               onTap: () {
                 print("Tapped item");
