@@ -65,19 +65,19 @@ class _PastorsScreenState extends State<PastorsScreen> {
       Column(
         children: <Widget> [
           Container(   
-                margin: EdgeInsets.only(top: 30.0), 
-                height: 40.0,        
-                decoration: BoxDecoration(
-                  color: Colors.brown[600],
-                border: Border.all(width: 0.8),
-                borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Mount Carmel Church now a National Shrine",
-                  style: TextStyle(color: Colors.white,
-                  fontFamily: "Helvetica"),
-                  textAlign: TextAlign.center,
+            margin: EdgeInsets.only(top: 30.0), 
+            height: 40.0,        
+            decoration: BoxDecoration(
+              color: Colors.brown[600],
+            border: Border.all(width: 0.8),
+            borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Mount Carmel Church now a National Shrine",
+              style: TextStyle(color: Colors.white,
+              fontFamily: "Helvetica"),
+              textAlign: TextAlign.center,
                   ),
                 ),
               ),

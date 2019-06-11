@@ -6,15 +6,13 @@
 *	Changes			:
 */
 
-//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/about.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
-// import 'package:mt_carmel_app/src/widgets/login_widget.dart';
 import '../../constants/app_constants.dart';
 
 
@@ -289,14 +287,27 @@ Widget _navigateToDetail(String itemText){
   switch(itemText)
   {
     case ProfileScreen.ABOUT_THE_PARISH:
-      return About();
+      return AboutScreen();
     case ProfileScreen.PRIESTS:
       return PriestsScreen(context);
     case ProfileScreen.PASTORS:
       return PastorsScreen(context);
     default:
-      // show the about if not in selection
-      return About();
+      // show the default if not yet implemented
+      return DefaultScreen();
   }
 }
+}
+
+// TODO use for un-implemented screen
+class DefaultScreen extends StatelessWidget {
+  const DefaultScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Not yet implemented")),
+      body: Center(child: Text("Not yet implemented."),),
+    );
+  }
 }
