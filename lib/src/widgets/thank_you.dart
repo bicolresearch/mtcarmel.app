@@ -21,7 +21,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
     return Scaffold(
        body: Center(
          child: Padding(
-           padding: const EdgeInsets.all(20.0),
+           padding: const EdgeInsets.all(30.0),
            child: Column(
              mainAxisAlignment: MainAxisAlignment.center,
              children: <Widget>[

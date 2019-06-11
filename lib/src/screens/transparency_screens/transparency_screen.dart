@@ -119,31 +119,31 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                     textAlign: TextAlign.justify,),
                 ),
                 Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(   
-                        width: 200.0,  
-                        height: 20.0,        
-                        decoration: BoxDecoration(
-                          color: Colors.brown[600],
-                        border: Border.all(width: 0.8),
-                        borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: getTotal()
-                        ),
-                        ),
-                      IconButton(icon: Icon(MountCarmelIcons.refresh,
-                        color: Colors.brown[600],),
-                        onPressed: () {
-                          print("Refresh button pressed.");
-                            },
-                          )
-                        ],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(   
+                      width: 200.0,  
+                      height: 20.0,        
+                      decoration: BoxDecoration(
+                        color: Colors.brown[600],
+                      border: Border.all(width: 0.8),
+                      borderRadius: BorderRadius.circular(20.0),
                       ),
+                      child: getTotal()
+                      ),
+                      ),
+                    IconButton(icon: Icon(MountCarmelIcons.refresh,
+                      color: Colors.brown[600],),
+                      onPressed: () {
+                        print("Refresh button pressed.");
+                          },
+                        )
+                      ],
                     ),
+                  ),
                   ],
                 ),
               ],
@@ -153,19 +153,21 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
               ),  
             Divider(color: Colors.brown),
               //TRANSACTION LIST                  
-          Container(
-            height: (MediaQuery.of(context).size.height)/2 - 100.0,
-            width: double.infinity,
-            alignment: Alignment.center,
-            child:Container(
-              child: ListView.builder(
-                itemCount: _transactionList.length,
-                itemBuilder: (context,index){
-                  return Container( 
-                    child: _isLoading?CircularProgressIndicator():_transactionContent(_transactionList[index]) );
-                      },
+          Expanded(
+            child: SingleChildScrollView(
+                child: Container(
+                height: 500.0,
+                width: double.infinity,
+                alignment: Alignment.center,
+                child:ListView.builder(
+                  itemCount: _transactionList.length,
+                  itemBuilder: (context,index){
+                    return Container( 
+                      child: _isLoading?CircularProgressIndicator():_transactionContent(_transactionList[index]) );
+                        },
+                      )
                     ),
-                  )
+                  ),
                 ),        
               ],
             ),

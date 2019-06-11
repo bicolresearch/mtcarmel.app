@@ -1,6 +1,6 @@
 /*
-*	Filename		:	<filename.extension>
-*	Purpose			:	
+*	Filename		:	feed_detail_screen.dart
+*	Purpose			:	Displays the particular post
 * Created			: 2019-06-04 16:52:31 by Detective Conan
 *	Updated			: 2019-06-04 16:52:31 by Detective Conan 
 *	Changes			:
