@@ -10,7 +10,7 @@ import 'package:mt_carmel_app/src/model/service.dart';
 import 'package:mt_carmel_app/src/screens/passing_screens/passing.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/baptism.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/communion.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/confiramtion_screens/confirmation.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/confirmation_screens/confirmation.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/event_screen/event.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/join_us.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/make_request.dart';
@@ -104,13 +104,13 @@ class ServicesScreen extends StatelessWidget {
       case COMMUNION:
         return Communion();
       case CONFIRMATION:
-        return Confiramtion();
+        return Confirmation();
       case WEDDING:
        return Marriage();
       case PASSING:
        return Passing();
       case EVENTS:
-       return Event();
+       return Events();
     }
   }
 }
