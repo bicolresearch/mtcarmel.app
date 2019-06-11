@@ -102,7 +102,20 @@ class _PastorsScreenState extends State<PastorsScreen> {
                   }
                 ),
               ),
-            )
+            ),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)
+              ),
+              color: Colors.brown,
+              child: Text("Close", 
+              style: TextStyle(color: Colors.white,
+              fontFamily: "Helvetica"),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+            },
+          ),
           ],
         ),                
       ),
@@ -111,8 +124,8 @@ class _PastorsScreenState extends State<PastorsScreen> {
 
   Widget _pastorItem(context, Pastor pastor){
     return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 0.0),
-    child: ListTile(title: Text("${pastor.name}", 
+    padding: const EdgeInsets.symmetric(vertical: .0),
+    child: ListTile(title: Text('${pastor.name}', 
       style: AppConstants.OPTION_STYLE2),
       subtitle: Text('${pastor.position}',
       style: AppConstants.OPTION_STYLE1),
