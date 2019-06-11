@@ -188,7 +188,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
             
             Container(
               margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0,5.0),
-            width: 40.0,
+            width: 35.0,
             child: CircleAvatar(backgroundImage: NetworkImage(url),
               radius: 20,
               backgroundColor: Colors.brown,
@@ -196,11 +196,11 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
             ),
             Spacer(),
             Container(
-              width: 100.0, 
+              width: 90.0, 
               child: Text(transaction.name)),
             Spacer(flex: 2),
             Container(
-              width: 75.0,
+              width: 70.0,
               child: Text('P ${transaction.amount}')),
             Spacer(),
             Container(

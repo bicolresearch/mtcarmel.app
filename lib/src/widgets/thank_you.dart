@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 
 class ThankYouScreen extends StatefulWidget {
@@ -24,7 +25,10 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
            children: <Widget>[
           Icon(MountCarmelIcons.thankyou, color: Colors.brown, size: 150.0,),
           SizedBox(height: 20.0),
-          Text("${this.message}", ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+            child: Text("${this.message}", style: AppConstants.OPTION_STYLE2, textAlign: TextAlign.justify,),
+          ),
           RaisedButton(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0)
@@ -34,7 +38,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
             style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, true);
               print("Back pressed");
             },
           ),

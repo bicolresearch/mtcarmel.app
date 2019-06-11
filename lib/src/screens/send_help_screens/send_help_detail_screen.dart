@@ -57,7 +57,7 @@ with TickerProviderStateMixin{
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: SingleChildScrollView(
             child: TextField(
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              //keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                 hintText: "Amount",

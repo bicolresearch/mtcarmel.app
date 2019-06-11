@@ -107,7 +107,7 @@ class ServicesScreen extends StatelessWidget {
       case CONFIRMATION:
         return Confiramtion();
       case WEDDING:
-       return Marriage1();
+       return Marriage();
       case PASSING:
        return Passing();
       case EVENTS:

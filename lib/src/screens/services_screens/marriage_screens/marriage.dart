@@ -5,9 +5,9 @@ import 'package:mt_carmel_app/src/widgets/service_specific.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 ////
-class Marriage1 extends StatelessWidget {
+class Marriage extends StatelessWidget {
   //////
-  const Marriage1({Key key}) : super(key: key);
+  const Marriage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

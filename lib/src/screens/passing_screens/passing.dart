@@ -22,29 +22,34 @@ class Passing extends StatelessWidget {
           serviceTile(AppConstants.PASSING, AppConstants.sample_message),
           SizedBox(height: 10.0,),
           lineWidget(),
-           Column(children: <Widget>[
-            GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
-              child: serviceSpecific("Funeral Service")),
-              GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
-              child: serviceSpecific("Funeral Chapels")),
-              GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
-              child: serviceSpecific("Crypt Lobby")),
-              GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
-              child: serviceSpecific("November Mass for the Dead")),
-            ],
-            ),
+           Container(
+             height: 300,
+             child: SingleChildScrollView(
+               child: Column(children: <Widget>[
+                GestureDetector(
+                  onTap: (){
+                    print("Tapped...");
+                  },
+                  child: serviceSpecific("Funeral Service")),
+                  GestureDetector(
+                  onTap: (){
+                    print("Tapped...");
+                  },
+                  child: serviceSpecific("Funeral Chapels")),
+                  GestureDetector(
+                  onTap: (){
+                    print("Tapped...");
+                  },
+                  child: serviceSpecific("Crypt Lobby")),
+                  GestureDetector(
+                  onTap: (){
+                    print("Tapped...");
+                  },
+                  child: serviceSpecific("November Mass for the Dead")),
+                ],
+                ),
+             ),
+           ),
             Spacer(),
             Container(
               margin: EdgeInsets.only(bottom: 30.0),

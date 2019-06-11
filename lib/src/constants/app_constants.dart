@@ -28,11 +28,14 @@ class AppConstants{
   //Textstyle
 
   static const TextStyle OPTION_STYLE1 = TextStyle(
-                      color: Colors.brown, fontSize: 12.0, fontWeight: FontWeight.normal);
+                      color: Colors.brown, fontSize: 12.0, fontWeight: FontWeight.normal,
+                      fontFamily: "Helvetica");
   static const TextStyle OPTION_STYLE2 = TextStyle(
-                      color: Colors.brown, fontSize: 16.0, fontWeight: FontWeight.bold);
+                      color: Colors.brown, fontSize: 16.0, fontWeight: FontWeight.bold,
+                      fontFamily: "Helvetica");
   static const TextStyle OPTION_STYLE3 = TextStyle(
-                      color: Colors.brown, fontSize: 20.0, fontWeight: FontWeight.bold);
+                      color: Colors.brown, fontSize: 20.0, fontWeight: FontWeight.bold,
+                      fontFamily: "Helvetica");
 
   // services
   static const String JOIN_US = 'Join us';

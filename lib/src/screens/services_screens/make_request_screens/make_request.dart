@@ -22,29 +22,32 @@ class MakeRequest1 extends StatelessWidget {
           serviceTile(AppConstants.MAKE_REQUEST, AppConstants.sample_message),
           SizedBox(height: 10.0,),
           lineWidget(),
-          Column(children: <Widget>[
-            GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
-              child: serviceSpecific("Prayer Request")),
-            GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
-              child: serviceSpecific("Mass Request")),
-            GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
-              child: serviceSpecific("Liturgical Service")),
-            GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },child: serviceSpecific("Certification")),
-            ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(children: <Widget>[
+                GestureDetector(
+                  onTap: (){
+                    print("Tapped...");
+                  },
+                  child: serviceSpecific("Prayer Request")),
+                GestureDetector(
+                  onTap: (){
+                    print("Tapped...");
+                  },
+                  child: serviceSpecific("Mass Request")),
+                GestureDetector(
+                  onTap: (){
+                    print("Tapped...");
+                  },
+                  child: serviceSpecific("Liturgical Service")),
+                GestureDetector(
+                  onTap: (){
+                    print("Tapped...");
+                  },child: serviceSpecific("Certification")),
+                ],
+                ),
             ),
-          Spacer(),
+          ),
           Container(
             margin: EdgeInsets.only(bottom: 30.0),
             child: GestureDetector(

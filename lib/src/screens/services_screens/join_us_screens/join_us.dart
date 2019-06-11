@@ -23,8 +23,8 @@ class JoinUs extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 70.0),
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                final result = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     //builder: (context) => ServicesDetailScreen(service.service_name),
@@ -32,6 +32,8 @@ class JoinUs extends StatelessWidget {
                     ConfraternityInfo()
                   )
                 );
+                if (result)
+                  Navigator.pop(context, true);
               },
               child: Text("Confraternity of Our Lady of Mount Carmel", 
               style: AppConstants.OPTION_STYLE2,

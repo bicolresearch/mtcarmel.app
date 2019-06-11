@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/about.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/services_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 // import 'package:mt_carmel_app/src/widgets/login_widget.dart';
@@ -40,7 +41,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final _isLoggedIn = false;
+  final _isLoggedIn = true;
 
   final _profile = Profile(1, "Ransom", "Rapirap", "October 12, 1990", "");
   
@@ -256,19 +257,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _aboutItem(context, itemText){
+  Widget _aboutItem(context, String itemText){
   return GestureDetector(
     onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ServicesDetailScreen(itemText),
-        )
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => _navigateToDetail(itemText),
+      //   )
+      // );
+      //Navigator.pop(context);
     },
     child: ListTile(title: Text(itemText, 
       style: AppConstants.OPTION_STYLE2,textAlign: TextAlign.center,),
     ),
   );
+}
+
+Widget _navigateToDetail(String itemText){
+  switch(itemText)
+  {
+    case ProfileScreen.ABOUT_THE_PARISH:
+      return About();
+  }
 }
 }

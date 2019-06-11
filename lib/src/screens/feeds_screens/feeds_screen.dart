@@ -116,7 +116,11 @@ class _FeedScreenState extends State<FeedScreen> {
 
     String url = AppConstants.FEEDS_API_BASE_URL+feed.cover_photo;
     try{ 
-      NetworkImage(url);
+      FadeInImage.assetNetwork(
+        fadeInCurve: Curves.bounceIn,
+        image: url, 
+        placeholder: 'assets/images/mt_logo.png',
+      );
     }
     catch(e){
       print(e.toString());

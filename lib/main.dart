@@ -74,9 +74,9 @@ class _PageState extends State<Page> {
 
 	MaterialApp showScreen() {
 
-		//if (isFirstUsage){
-    //	 return MaterialApp(home: IntroScreen(),theme: ThemeData(fontFamily: "Helvetica",));
-    //}
+		if (isFirstUsage){
+    	 return MaterialApp(home: IntroScreen(),theme: ThemeData(fontFamily: "Helvetica",));
+    }
 		return MaterialApp(home: TabNavigator(), theme: ThemeData(fontFamily: "Helvetica",));
 	}
       
