@@ -3,8 +3,8 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/confraternity_form.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 
-class ConfraternityInfo extends StatelessWidget {
-  const ConfraternityInfo({Key key}) : super(key: key);
+class ConfirmationInfo extends StatelessWidget {
+  const ConfirmationInfo({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class ConfraternityInfo extends StatelessWidget {
         child: Column(
           children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 70.0),
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
             child: GestureDetector(
               onTap: () {
                 print("Tapped item");

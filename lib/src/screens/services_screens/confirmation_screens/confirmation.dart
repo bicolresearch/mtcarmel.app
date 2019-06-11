@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/event_screen/father_mark_horan_hall_venue_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/confirmation_screens/confirmation_info.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
-class Events extends StatelessWidget {
-  const Events({Key key}) : super(key: key);
+class Confirmation extends StatelessWidget {
+  const Confirmation({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Events extends StatelessWidget {
           children: <Widget>[
           servicesHeader(),
           SizedBox(height: 10.0,),
-          serviceTile(AppConstants.EVENTS, AppConstants.sample_message),
+          serviceTile(AppConstants.CONFIRMATION, AppConstants.sample_message),
           SizedBox(height: 10.0,),
           lineWidget(),
           Container(
@@ -29,13 +29,13 @@ class Events extends StatelessWidget {
                   MaterialPageRoute(
                     //builder: (context) => ServicesDetailScreen(service.service_name),
                     builder: (context) => 
-                    FatherMarkHoranHallVenueInfo()
+                    ConfirmationInfo()
                   )
                 );
                 if (result)
                   Navigator.pop(context, true);
               },
-              child: Text("Father Mark HoranHall - Venue", 
+              child: Text("Confirmation", 
               style: AppConstants.OPTION_STYLE2,
               textAlign: TextAlign.center,
               ),

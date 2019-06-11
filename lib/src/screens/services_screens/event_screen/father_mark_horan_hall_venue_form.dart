@@ -3,8 +3,8 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/thank_you.dart';
 
-class ConfraternityForm extends StatelessWidget {
-  const ConfraternityForm({Key key}) : super(key: key);
+class FatherMarkHoranHallVenueForm extends StatelessWidget {
+  const FatherMarkHoranHallVenueForm({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ConfraternityForm extends StatelessWidget {
             onTap: () {
               print("Tapped item");
             },
-            child: Text("Confraternity of Our Lady of Mount Carmel", 
+            child: Text("Father Mark Horan Hall", 
             style: AppConstants.OPTION_STYLE3,
             textAlign: TextAlign.center,
             ),
@@ -76,11 +76,11 @@ class ConfraternityForm extends StatelessWidget {
                 ],
               ),
             ),  
-            // Birthday
+            // Event Type
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Birthday", style: AppConstants.OPTION_STYLE2),
+                Text("Event Type", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -98,11 +98,11 @@ class ConfraternityForm extends StatelessWidget {
                 ],
               ),
             ),     
-            //contact number
+            //contact person
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Person", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -120,11 +120,11 @@ class ConfraternityForm extends StatelessWidget {
                 ],
               ),
             ),  
-            // Email
+            // Contact Number
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Home Address", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -191,12 +191,8 @@ class ConfraternityForm extends StatelessWidget {
   String _thankYouMessage(){
     return 
     """
-    Thank you for joining the Confraternity. Your application is subject for review, upon approval please settle the application fee.
+    Thank you for requesting a venue. Scheudule your rental and settle your rental fee in your mailbox.
     
-    Please visit Mount Carmel Shrine head office to receive your Scapular, Confraternity Manual and Certificate of Confraternity.
-
-    We will be reaching you through your provided contact details.
-
     You may view the status of your request in your mailbox.
     """;
   }
