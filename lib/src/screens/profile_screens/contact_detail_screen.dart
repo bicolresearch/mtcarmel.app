@@ -71,7 +71,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Container(
-          height: double.infinity,
+          // height: double.infinity,
           padding: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,15 +81,17 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                 textAlign: TextAlign.center,
               ),
               lineWidget(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                height: 500.0,
-                child: 
-                  _contactList.isEmpty
-                  ?Container()
-                  :_contactDetailContent(context),
+              Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: 
+                      _contactList.isEmpty
+                      ?Container()
+                      :_contactDetailContent(context),
+                ),
+                  ),
               ),
-            Spacer(),
             Container(
               alignment: Alignment.bottomCenter,
               child: Padding(
