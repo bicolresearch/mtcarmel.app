@@ -1,3 +1,10 @@
+/*
+*	Filename		:	father_mark_horan_hall_venue_form.dart
+*	Purpose			:	father mark horan hall - venue add form
+* Created			: 2019-06-13 15:14:01 by jo
+*	Updated			:	2019-06-13 15:14:01 by jo 
+*	Changes			: added form comment, remove widget GestureDetector
+*/
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
@@ -15,14 +22,9 @@ class FatherMarkHoranHallVenueForm extends StatelessWidget {
         children: <Widget>[
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
-          child: GestureDetector(
-            onTap: () {
-              print("Tapped item");
-            },
-            child: Text("Father Mark Horan Hall", 
-            style: AppConstants.OPTION_STYLE3,
-            textAlign: TextAlign.center,
-            ),
+          child: Text("Father Mark Horan Hall", 
+          style: AppConstants.OPTION_STYLE3,
+          textAlign: TextAlign.center,
           ),
         ),
         Container(
