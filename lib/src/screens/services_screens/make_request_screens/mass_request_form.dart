@@ -1,3 +1,11 @@
+/*
+*	Filename		:	mass_request_form.dart
+*	Purpose			:	mass request add form
+* Created			: 2019-06-13 14:52:14 by jo
+*	Updated			:	2019-06-13 14:52:14 by jo 
+*	Changes			: added form comment, remove widget GestureDetector
+*/
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
@@ -15,14 +23,9 @@ class MassRequestForm extends StatelessWidget {
         children: <Widget>[
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
-          child: GestureDetector(
-            onTap: () {
-              print("Tapped item");
-            },
-            child: Text("Mass Request", 
-            style: AppConstants.OPTION_STYLE3,
-            textAlign: TextAlign.center,
-            ),
+          child: Text("Mass Request", 
+          style: AppConstants.OPTION_STYLE3,
+          textAlign: TextAlign.center,
           ),
         ),
         Container(

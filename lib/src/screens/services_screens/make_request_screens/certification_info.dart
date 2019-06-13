@@ -1,3 +1,11 @@
+/*
+*	Filename		:	certification_info.dart
+*	Purpose			:	certification add form
+* Created			: 2019-06-13 14:34:24 by jo
+*	Updated			:	2019-06-13 14:34:24 by jo 
+*	Changes			: added form comment, update margins and buttons, remove widget GestureDetector
+*/
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/certification_form.dart';
