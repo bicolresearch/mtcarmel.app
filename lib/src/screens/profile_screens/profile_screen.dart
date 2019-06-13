@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import '../../constants/app_constants.dart';
 
@@ -292,6 +294,8 @@ Widget _navigateToDetail(String itemText){
       return PriestsScreen(context);
     case ProfileScreen.PASTORS:
       return PastorsScreen(context);
+    case ProfileScreen.CONTACT_DETAILS:
+      return ContactDetailScreen();
     default:
       // show the default if not yet implemented
       return DefaultScreen();
@@ -306,8 +310,14 @@ class DefaultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Not yet implemented")),
-      body: Center(child: Text("Not yet implemented."),),
+      body: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text("Not yet implemented."),
+          SizedBox(height: 40.0,),
+          leftArrowBackButton(context: context),
+        ],
+      ),),
     );
   }
 }

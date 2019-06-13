@@ -66,11 +66,6 @@ class _AboutScreenState extends State<AboutScreen> {
               _aboutItems.add(_AboutItem(about, AboutScreen.dioceseLabel));
 
             }
-            print(" about screen getJason");
-            print(_aboutList);
-            print(_aboutList.length);
-            print(_aboutList[0]);
-            print(_aboutList[0].date_of_establishment);
             _isLoading = false;              
           } 
           else 
@@ -89,6 +84,7 @@ class _AboutScreenState extends State<AboutScreen> {
     return Scaffold(
       body: Center(
         child: Container(
+          padding: EdgeInsets.symmetric(vertical: 50.0),
           child: Stack(
             alignment: Alignment.topCenter,
             children: <Widget>[            
