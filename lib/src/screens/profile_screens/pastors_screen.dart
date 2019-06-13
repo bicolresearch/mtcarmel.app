@@ -65,24 +65,27 @@ class _PastorsScreenState extends State<PastorsScreen> {
                                         
       body: 
       Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget> [
-          Container(   
-            margin: EdgeInsets.only(top: 30.0), 
-            height: 40.0,        
-            decoration: BoxDecoration(
-              color: Colors.brown[600],
-            border: Border.all(width: 0.8),
-            borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Mount Carmel Church now a National Shrine",
-              style: TextStyle(color: Colors.white,
-              fontFamily: "Helvetica"),
-              textAlign: TextAlign.center,
-                  ),
+          Column(
+            children: <Widget>[
+              Container(   
+                margin: EdgeInsets.only(top: 30.0), 
+                height: 40.0,        
+                decoration: BoxDecoration(
+                  color: Colors.brown[600],
+                border: Border.all(width: 0.8),
+                borderRadius: BorderRadius.circular(10.0),
                 ),
-              ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Mount Carmel Church now a National Shrine",
+                  style: TextStyle(color: Colors.white,
+                  fontFamily: "Helvetica"),
+                  textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("Pastors",
@@ -90,9 +93,12 @@ class _PastorsScreenState extends State<PastorsScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
+            ],
+          ),
             Expanded(
                 child: Container(
-                alignment: Alignment.bottomCenter,
+                  height: 200.0,
+                alignment: Alignment.topCenter,
                 margin: EdgeInsets.symmetric(
                   horizontal: 50.0,
                 ),
@@ -114,12 +120,16 @@ class _PastorsScreenState extends State<PastorsScreen> {
 
   Widget _pastorItem(context, Pastor pastor){
     return Padding(
-    padding: const EdgeInsets.symmetric(vertical: .0),
-    child: ListTile(title: Text('${pastor.name}', 
-      style: AppConstants.OPTION_STYLE2),
-      subtitle: Text('${pastor.position}',
-      style: AppConstants.OPTION_STYLE1),
-      ),
+    padding: const EdgeInsets.symmetric(vertical: 0.0),
+    child: Column(
+      children: <Widget>[        
+        ListTile(title: Text('${pastor.name}', 
+          style: AppConstants.OPTION_STYLE2),
+          subtitle: Text('${pastor.position}',
+          style: AppConstants.OPTION_STYLE1),
+          ),
+      ],
+    ),
     );
   }
 }
