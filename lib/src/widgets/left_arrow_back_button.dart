@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 Widget leftArrowBackButton({BuildContext context}){
   return GestureDetector(
     onTap: (){
-      Navigator.pop(context);
+      Navigator.pop(context, false);
     },
     child: Icon(Icons.keyboard_arrow_left, 
     size: 50.0,
