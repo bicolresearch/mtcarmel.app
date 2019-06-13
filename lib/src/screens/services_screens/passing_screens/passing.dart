@@ -1,5 +1,16 @@
+/*
+*	Filename		:	passing.dart
+*	Purpose			:	
+* Created			: 2019-06-13 18:22:25 by jo
+*	Updated			:	2019-06-13 18:22:25 by jo 
+*	Changes			: added form comment, update form - added navigation to each make request form/screen
+*/
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/passing_screens/funeral_service_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/passing_screens/funeral_chapel_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/passing_screens/crypt_lobby_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/passing_screens/november_mass_info.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
@@ -28,23 +39,55 @@ class Passing extends StatelessWidget {
              child: SingleChildScrollView(
                child: Column(children: <Widget>[
                 GestureDetector(
-                  onTap: (){
-                    print("Tapped...");
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        FuneralServiceInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
                   },
                   child: serviceSpecific("Funeral Service")),
                   GestureDetector(
-                  onTap: (){
-                    print("Tapped...");
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        FuneralChapelInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
                   },
                   child: serviceSpecific("Funeral Chapels")),
                   GestureDetector(
-                  onTap: (){
-                    print("Tapped...");
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        CryptLobbyInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
                   },
                   child: serviceSpecific("Crypt Lobby")),
                   GestureDetector(
-                  onTap: (){
-                    print("Tapped...");
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        NovemberMassInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
                   },
                   child: serviceSpecific("November Mass for the Dead")),
                 ],
