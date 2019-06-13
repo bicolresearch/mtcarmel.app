@@ -97,7 +97,7 @@ class _PriestsScreenState extends State<PriestsScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                  height: 500.0,
+                  height: 1000.0,
                   child: this._isLoading?LinearProgressIndicator(backgroundColor: Colors.brown,):_priestList.isNotEmpty
                     ?GridView.count(
                       primary: true,
