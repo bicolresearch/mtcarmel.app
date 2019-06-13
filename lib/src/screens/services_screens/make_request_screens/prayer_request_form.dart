@@ -40,12 +40,11 @@ class PrayerRequestForm extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                          decoration: InputDecoration(
-                           contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                           contentPadding: EdgeInsets.symmetric(vertical: 200.0),
                            border: OutlineInputBorder(),
-                           //hintText: "e.g. Juan dela Cruz",
-                          //  labelText: "Name",
+                           hintText: "write here...",
                            alignLabelWithHint: false,
                            ),
                        ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/prayer_request_info.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
@@ -26,8 +27,16 @@ class MakeRequest1 extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(children: <Widget>[
                 GestureDetector(
-                  onTap: (){
-                    print("Tapped...");
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        PrayerRequestInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
                   },
                   child: serviceSpecific("Prayer Request")),
                 GestureDetector(

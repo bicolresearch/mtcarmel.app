@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'about.g.dart';

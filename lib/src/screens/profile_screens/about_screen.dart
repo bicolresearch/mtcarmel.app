@@ -6,8 +6,16 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/model/about.dart';
+import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/widgets/line.dart';
 ////
 class AboutScreen extends StatefulWidget {
+
+  static const String dateOfEstablishmentLabel = "Date of Establishment";
+  static const String feastDayLabel = "Feast day";
+  static const String titularLabel = "Titular";
+  static const String dioceseLabel = "Diocese";
+
   //////
   const AboutScreen({Key key}) : super(key: key);
 
@@ -17,7 +25,9 @@ class AboutScreen extends StatefulWidget {
 
 class _AboutScreenState extends State<AboutScreen> {
 
-   List<About> _aboutList = [];
+  List<About> _aboutList = [];
+
+  final List<_AboutItem> _aboutItems = [];
 
   var _isLoading = true;
 
@@ -38,13 +48,28 @@ class _AboutScreenState extends State<AboutScreen> {
               _aboutList = (json.decode(response.body) as List)
             .map((data) => new About.fromJson(data))
             .toList();
+            // get only the first in the list
+            About about = _aboutList[0];
+
+            if(_aboutList.isNotEmpty){
+              _aboutItems.add(_AboutItem(about, AboutScreen.dateOfEstablishmentLabel));
+              _aboutItems.add(_AboutItem(about, AboutScreen.feastDayLabel));
+              _aboutItems.add(_AboutItem(about, AboutScreen.titularLabel));
+              _aboutItems.add(_AboutItem(about, AboutScreen.dioceseLabel));
+
+            }
+            print(" about screen getJason");
+            print(_aboutList);
+            print(_aboutList.length);
+            print(_aboutList[0]);
+            print(_aboutList[0].date_of_establishment);
             _isLoading = false;              
           } 
           else 
           {
             print(response.statusCode);
-          _isJsonFailed = true;
-          _isLoading = false;
+            _isJsonFailed = true;
+            _isLoading = false;
           }
         }
       );
@@ -55,143 +80,142 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          children: <Widget>[
-            Container(   
-            margin: EdgeInsets.only(top: 30.0), 
-            height: 40.0,        
-            decoration: BoxDecoration(
-              color: Colors.brown[600],
-            border: Border.all(width: 0.8),
-            borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Mount Carmel Church now a National Shrine",
-              style: TextStyle(color: Colors.white,
-              fontFamily: "Helvetica"),
-              textAlign: TextAlign.center,
+        child: Container(
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: <Widget>[            
+              Column(
+                children: <Widget>[
+                  Container(   
+                    margin: EdgeInsets.only(top: 30.0), 
+                    height: 40.0,        
+                    decoration: BoxDecoration(
+                      color: Colors.brown[600],
+                    border: Border.all(width: 0.8),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("About the Church",
-                style: AppConstants.OPTION_STYLE3,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Column(
-                  children: <Widget>[                    
-                  Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text("Date of Establishment:",
-                              style: AppConstants.OPTION_STYLE2,
-                              textAlign: TextAlign.start,
-                            ),
-                      ),
-                      SizedBox(width: 10.0,),
-                      Expanded(
-                        flex: 1,
-                        child: Text("${_aboutList.isEmpty?"":_aboutList[0].date_of_establishment}",
-                              style: AppConstants.OPTION_STYLE2,
-                              textAlign: TextAlign.left,
-                            ),
-                      ),
-                        ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Mount Carmel Church now a National Shrine",
+                    style: TextStyle(color: Colors.white,
+                    fontFamily: "Helvetica"),
+                    textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                    Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text("Feast day:",
-                              style: AppConstants.OPTION_STYLE2,
-                              textAlign: TextAlign.start,
-                            ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("About the Church",
+                      style: AppConstants.OPTION_STYLE3,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  Expanded(
+                      child: Container(
+                        height: 1000.0,
+                      alignment: Alignment.bottomCenter,
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 50.0,
                       ),
-                      SizedBox(width: 10.0,),
-                      Expanded(
-                        flex: 1,
-                        child: Text("${_aboutList.isEmpty?"":_aboutList[0].feast_Day}",
-                              style: AppConstants.OPTION_STYLE2,
-                              textAlign: TextAlign.left,
-                            ),
-                      ),
-                        ],
+                      child: ListView.builder(
+                        itemCount: _aboutItems.length,
+                        itemBuilder:(context, index){
+                          return _aboutItem(_aboutItems[index]);
+                        }
                       ),
                     ),
-                    Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text("Titular:",
-                              style: AppConstants.OPTION_STYLE2,
-                              textAlign: TextAlign.start,
-                            ),
-                      ),
-                      SizedBox(width: 10.0,),
-                      Expanded(
-                        flex: 1,
-                        child: Text("${_aboutList.isEmpty?"":_aboutList[0].titular}",
-                              style: AppConstants.OPTION_STYLE2,
-                              textAlign: TextAlign.left,
-                            ),
-                      ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text("Diocese:",
-                              style: AppConstants.OPTION_STYLE2,
-                              textAlign: TextAlign.start,
-                            ),
-                      ),
-                      SizedBox(width: 10.0,),
-                      Expanded(
-                        flex: 1,
-                        child: Text("${_aboutList.isEmpty?"":_aboutList[0].diocese}",
-                              style: AppConstants.OPTION_STYLE2,
-                              textAlign: TextAlign.left,
-                            ),
-                      ),
-                        ],
-                      ),
-                    ),
+                  ),
+
+                Container(
+                  alignment: Alignment.bottomCenter,
+                margin: EdgeInsets.only(bottom: 30.0),
+                child: GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.keyboard_arrow_left, 
+                    size: 50.0,
+                    color: Colors.brown,)),
+                      )
                     ],
                   ),
-            ),
-            Spacer(),
-            Container(
-              margin: EdgeInsets.only(bottom: 30.0),
-              child: GestureDetector(
-                onTap: (){
-                  Navigator.pop(context);
-                  print("tapped");
-                },
-                child: Icon(Icons.keyboard_arrow_left, 
-                size: 50.0,
-                color: Colors.brown,)),
-            )
-          ],
+                Container(
+                  alignment: Alignment.center,
+                  child: Icon(MountCarmelIcons.logo, 
+                    color: Color.fromARGB(0x80, 0x3E, 0x27, 0x23), 
+                    size: 150.0,),
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   void close(){
+    print("about screen close");
     this.dispose();
   }
+
+  Widget _aboutItem(_AboutItem aboutItem){    
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Text("${aboutItem.label()} :",
+                      style: AppConstants.OPTION_STYLE2,
+                      textAlign: TextAlign.start,
+                    ),
+              ),
+              SizedBox(width: 10.0,),
+              Expanded(
+                child: Text("${aboutItem._value}",
+                      style: AppConstants.OPTION_STYLE2,
+                      textAlign: TextAlign.left,
+                    ),
+              ),
+            ],
+          ),
+          lineWidget(),
+        ],
+      ),
+    );
+  }
+}
+
+class _AboutItem{
+
+  String _label;
+  String _value;
+
+  _AboutItem(About about, String label){
+    _label = label;
+    switch(label){
+      case AboutScreen.dateOfEstablishmentLabel:
+        _value = about.date_of_establishment;
+        break;
+      case AboutScreen.feastDayLabel:
+        _value = about.feast_Day;
+        break;
+      case AboutScreen.titularLabel:
+        _value = about.titular;
+        break;
+      case AboutScreen.dioceseLabel:
+        _value = about.diocese;
+        break;
+    }
+  }
+
+  String label(){
+    return _label;
+  }
+
+  String value(){
+    return _value;
+  }
+
 }
