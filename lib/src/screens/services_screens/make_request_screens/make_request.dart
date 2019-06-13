@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/prayer_request_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/mass_request_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/liturgical_service_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/certification_info.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
@@ -41,18 +44,42 @@ class MakeRequest1 extends StatelessWidget {
                   },
                   child: serviceSpecific("Prayer Request")),
                 GestureDetector(
-                  onTap: (){
-                    print("Tapped...");
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        MassRequestInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
                   },
                   child: serviceSpecific("Mass Request")),
                 GestureDetector(
-                  onTap: (){
-                    print("Tapped...");
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        LiturgicalServiceInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
                   },
                   child: serviceSpecific("Liturgical Service")),
                 GestureDetector(
-                  onTap: (){
-                    print("Tapped...");
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        CertificationInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
                   },child: serviceSpecific("Certification")),
                 ],
                 ),
