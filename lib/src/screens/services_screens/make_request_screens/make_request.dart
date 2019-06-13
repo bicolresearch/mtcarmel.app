@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/prayer_request_info.dart';
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
@@ -59,14 +60,7 @@ class MakeRequest1 extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(bottom: 30.0),
-            child: GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-                print("tapped");
-              },
-              child: Icon(Icons.keyboard_arrow_left, 
-              size: 50.0,
-              color: Colors.brown,)),
+            child: leftArrowBackButton(context: context),
           )
           ],
         ),

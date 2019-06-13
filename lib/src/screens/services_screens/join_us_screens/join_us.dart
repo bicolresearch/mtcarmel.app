@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/confraternity_info.dart';
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
@@ -48,14 +49,7 @@ class JoinUs extends StatelessWidget {
           Spacer(),
           Container(
             margin: EdgeInsets.only(bottom: 30.0),
-            child: GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-                print("tapped");
-              },
-              child: Icon(Icons.keyboard_arrow_left, 
-              size: 50.0,
-              color: Colors.brown,)),
+            child: leftArrowBackButton(context: context),
           )
           ],
         ),
