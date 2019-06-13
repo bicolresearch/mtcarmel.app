@@ -15,6 +15,8 @@ import 'package:mt_carmel_app/src/model/priest.dart';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+
 
 class PriestsScreen extends StatefulWidget {
 
@@ -108,18 +110,9 @@ class _PriestsScreenState extends State<PriestsScreen> {
                 ),
               ),
             ),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)
-              ),
-              color: Colors.brown,
-              child: Text("Close", 
-              style: TextStyle(color: Colors.white,
-              fontFamily: "Helvetica"),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: leftArrowBackButton(context: context),
           ),
           ],
         )        

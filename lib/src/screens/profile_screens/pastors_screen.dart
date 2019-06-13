@@ -13,6 +13,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+
 class PastorsScreen extends StatefulWidget {
 
   PastorsScreen(BuildContext context);
@@ -103,19 +105,7 @@ class _PastorsScreenState extends State<PastorsScreen> {
                 ),
               ),
             ),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)
-              ),
-              color: Colors.brown,
-              child: Text("Close", 
-              style: TextStyle(color: Colors.white,
-              fontFamily: "Helvetica"),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-            },
-          ),
+            leftArrowBackButton(context: context),
           ],
         ),                
       ),

@@ -1,3 +1,10 @@
+/*
+*	Filename		:	about_screen.dart
+*	Purpose			:	Show the details about the church.
+* Created			: 2019-06-13 12:37:11 by Detective Conan
+*	Updated			: 2019-06-13 12:37:11 by Detective Conan 
+*	Changes			:
+*/
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
@@ -7,6 +14,7 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/model/about.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 ////
 class AboutScreen extends StatefulWidget {
@@ -130,13 +138,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 Container(
                   alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.only(bottom: 30.0),
-                child: GestureDetector(
-                    onTap: (){
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.keyboard_arrow_left, 
-                    size: 50.0,
-                    color: Colors.brown,)),
+                child: leftArrowBackButton(context: context),
                       )
                     ],
                   ),

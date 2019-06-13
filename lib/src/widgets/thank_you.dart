@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/widgets/back_button.dart';
 
 class ThankYouScreen extends StatefulWidget {
   ThankYouScreen({Key key, this.message}) : super(key: key);
@@ -25,28 +26,17 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
            child: Column(
              mainAxisAlignment: MainAxisAlignment.center,
              children: <Widget>[
-            Icon(MountCarmelIcons.thankyou, color: Colors.brown, size: 150.0,),
+            Icon(MountCarmelIcons.thankyou, color: Colors.brown, size: 120.0,),
             SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: Text("${this.message}", style: AppConstants.OPTION_STYLE2, textAlign: TextAlign.justify,),
             ),
-            Spacer(),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)
-              ),
-              color: Colors.brown,
-              child: Text("Finish", 
-              style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                Navigator.pop(context, true);
-                print("Back pressed");
-              },
-            ),
+            backButton(context: context,
+            isNavigateFurtherToTheRoot: true,
+            label: "Finish"),
            ],
-        ),
+          ),
          ),
       ),
     );
