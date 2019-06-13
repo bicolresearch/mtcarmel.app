@@ -2,12 +2,12 @@
 *	Filename		:	services_screen.dart
 *	Purpose			:	Displays the list of the services of the church
 * Created			: 2019-06-11 15:52:50 by Detective Conan
-*	Updated			: 2019-06-11 15:52:50 by Detective Conan 
-*	Changes			:
+*	Updated			: 2019-06-13 15:39:50 by jo
+*	Changes			: moved passing screens folder under service, add forms 
 */
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/service.dart';
-import 'package:mt_carmel_app/src/screens/passing_screens/passing.dart';
+import 'package:mt_carmel_app/src/screens//services_screens/passing_screens/passing.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/baptism.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/communion.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/confirmation_screens/confirmation.dart';
