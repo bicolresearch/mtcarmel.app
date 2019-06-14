@@ -1,16 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'src/screens/splash.dart';
 import 'src/screens/tab_navigator.dart';
 import 'src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
-import 'package:date_utils/date_utils.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 
 void main(){
-  initializeDateFormatting().then((_) => runApp(MtCarmelApp(),));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+    .then((_) => initializeDateFormatting().then((__) => runApp(MtCarmelApp(),)));
 }
 
 class MtCarmelApp extends StatelessWidget {
