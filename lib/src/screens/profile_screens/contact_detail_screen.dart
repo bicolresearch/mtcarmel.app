@@ -67,42 +67,39 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: Container(
-          // height: double.infinity,
-          padding: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text("Contact Details",
-                style: AppConstants.OPTION_STYLE3,
-                textAlign: TextAlign.center,
-              ),
-              lineWidget(),
-              Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: 
-                      _contactList.isEmpty
-                      ?Container()
-                      :_contactDetailContent(context),
-                ),
-                  ),
-              ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: leftArrowBackButton(context: context),
-              ),
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: Container(
+        padding: const EdgeInsets.fromLTRB(30.0, 60.0, 30.0, 50.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text("Contact Details",
+              style: AppConstants.OPTION_STYLE3,
+              textAlign: TextAlign.center,
             ),
-            ],
+            lineWidget(),
+            Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: 
+                    _contactList.isEmpty
+                    ?Container()
+                    :_contactDetailContent(context),
+              ),
+                ),
+            ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: leftArrowBackButton(context: context),
+            ),
           ),
-        )        
-      )
+          ],
+        ),
+      )        
     );
   }
 

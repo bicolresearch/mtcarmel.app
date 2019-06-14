@@ -2,8 +2,8 @@
 *	Filename		:	priest_screen.dart
 *	Purpose			:	Shows the Carmalites Priests
 * Created			: 2019-06-11 14:14:18 by Detective Conan
-*	Updated			: 2019-06-11 14:14:18 by Detective Conan 
-*	Changes			:
+*	Updated			: 2019-06-14 09:10:21 by Detective Conan 
+*	Changes			: Replaced the lionearProgressIndicator with Container only
 */
 
 
@@ -65,58 +65,58 @@ class _PriestsScreenState extends State<PriestsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: Column(
-          children: <Widget>[
-            Container(   
-                margin: EdgeInsets.only(top: 30.0), 
-                height: 40.0,        
-                decoration: BoxDecoration(
-                  color: Colors.brown[600],
-                border: Border.all(width: 0.8),
-                borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Mount Carmel Church now a National Shrine",
-                  style: TextStyle(color: Colors.white,
-                  fontFamily: "Helvetica"),
-                  textAlign: TextAlign.center,
-                  ),
-                ),
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: Column(
+        children: <Widget>[
+          Container(   
+              margin: EdgeInsets.only(top: 50.0), 
+              height: 40.0,        
+              decoration: BoxDecoration(
+                color: Colors.brown[600],
+              border: Border.all(width: 0.8),
+              borderRadius: BorderRadius.circular(10.0),
               ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Priests",
-                style: AppConstants.OPTION_STYLE3,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Mount Carmel Church now a National Shrine",
+                style: TextStyle(color: Colors.white,
+                fontFamily: "Helvetica"),
                 textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height - 200.0,
-                  child: this._isLoading?LinearProgressIndicator(backgroundColor: Colors.brown,):_priestList.isNotEmpty
-                    ?GridView.count(
-                      primary: true,
-                      crossAxisCount: 2,
-                      children: List.generate(_priestList.length, (index) {
-                        return getStructuredGridCell(_priestList[index]);
-                      }
-                      ),
-                    ):LinearProgressIndicator(),
                 ),
               ),
             ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: leftArrowBackButton(context: context),
+            child: Text("Priests",
+              style: AppConstants.OPTION_STYLE3,
+              textAlign: TextAlign.center,
+            ),
           ),
-          ],
-        )        
-      )
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height - 200.0,
+                child: this._isLoading
+                  ?Container()
+                  :_priestList.isNotEmpty
+                    ?GridView.count(
+                      primary: true,
+                      crossAxisCount: 2,
+                      children: List.generate(_priestList.length, (index) {
+                        return getStructuredGridCell(_priestList[index]);
+                      }   
+                    ),
+                  ):LinearProgressIndicator(),
+              ),
+            ),
+          ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: leftArrowBackButton(context: context),
+        ),
+        ],
+      )        
     );
   }
 

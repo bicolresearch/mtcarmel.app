@@ -60,17 +60,17 @@ class _PastorsScreenState extends State<PastorsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-                                        
-      body: 
-      Column(
+    return Scaffold(                                      
+    body: 
+    Container(
+      margin: EdgeInsets.symmetric(vertical: 50.0),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget> [
           Column(
             children: <Widget>[
               Container(   
-                margin: EdgeInsets.only(top: 30.0), 
+                margin: EdgeInsets.only(top: 10.0, ), 
                 height: 40.0,        
                 decoration: BoxDecoration(
                   color: Colors.brown[600],
@@ -113,8 +113,8 @@ class _PastorsScreenState extends State<PastorsScreen> {
             ),
             leftArrowBackButton(context: context),
           ],
-        ),                
-      ),
+        ),
+    ),                
     );
   }
 
