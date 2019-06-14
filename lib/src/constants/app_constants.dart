@@ -13,6 +13,7 @@ class AppConstants{
   static const PASTORS_JSON_URL = 'http://192.168.254.109/api/pastors.json';
   static const ABOUT_JSON_URL = 'http://192.168.254.109/api/history_details.json';
   static const CONTACT_DETAILS_JSON_URL = 'http://192.168.254.109/api/contact_details.json';
+  static const CHURCH_SCHEDULE_JSON_URL = 'http://192.168.254.109/api/schedule.json';
   static const COMPANY_NAME = "Mount Carmel Basilica";
   static const LOCATION_NAME = "Quezon City, Philippines";
   static const AD_GROUP_HEIGHT = 200.0;
