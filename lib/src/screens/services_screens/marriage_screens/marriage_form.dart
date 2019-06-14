@@ -2,8 +2,8 @@
 *	Filename		:	marriage_form.dart
 *	Purpose			:	marriage add form
 * Created			: 2019-06-13 19:39:12 by jo
-*	Updated			:	2019-06-13 19:39:12 by jo 
-*	Changes			:
+*	Updated			:	2019-06-14 18:19:54 by jo 
+*	Changes			: update dropdown fields
 */
 
 import 'package:flutter/material.dart';
@@ -234,28 +234,27 @@ class MarriageForm extends StatelessWidget {
                 ],
               ),
             ),
-            // Religion of Groom (Dropdown)
+            //  Religion of Groom (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Religion of Groom", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),
+            ),  
             // Occupation of Groom
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
@@ -300,28 +299,27 @@ class MarriageForm extends StatelessWidget {
                 ],
               ),
             ),
-            // Nationality of Groom (Dropdown)
+            //  Nationality of Groom (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Nationality of Groom", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),
+            ),            
             // Contact Number of Groom
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
@@ -476,22 +474,21 @@ class MarriageForm extends StatelessWidget {
                 ],
               ),
             ),
-            // Nationality of Groom's Father (Dropdown)
+            //  Nationality of Groom's Father  (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Nationality of Groom's Father", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
@@ -520,22 +517,21 @@ class MarriageForm extends StatelessWidget {
                 ],
               ),
             ),
-            // Nationality of Groom's Mother (Dropdown)
+            //  Nationality of Groom's Mother  (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Nationality of Groom's Mother", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
@@ -630,28 +626,27 @@ class MarriageForm extends StatelessWidget {
                 ],
               ),
             ),
-            // Religion of Bride (Dropdown)
+            //  Religion of Bride  (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Religion of Bride", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),
+            ),            
             // Occupation of Bride
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
@@ -696,28 +691,27 @@ class MarriageForm extends StatelessWidget {
                 ],
               ),
             ),
-            // Nationality of Bride (Dropdown)
+            //  Nationality of Bride  (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Nationality of Bride", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),
+            ),            
             // Contact Number of Bride
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
@@ -872,28 +866,27 @@ class MarriageForm extends StatelessWidget {
                 ],
               ),
             ),
-            // Nationality of Bride's Father (Dropdown)
+            //  Nationality of Bride's Father  (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Nationality of Bride's Father", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),
+            ),            
             // Name of Bride's Mother
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
@@ -916,22 +909,21 @@ class MarriageForm extends StatelessWidget {
                 ],
               ),
             ),
-            // Nationality of Bride's Mother (Dropdown)
+            //  Nationality of Bride's Mother  (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Nationality of Bride's Mother", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),

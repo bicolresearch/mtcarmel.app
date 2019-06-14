@@ -2,8 +2,8 @@
 *	Filename		:	funeral_service_form.dart
 *	Purpose			:	funeral service add form
 * Created			: 2019-06-13 16:42:41 by jo
-*	Updated			:	2019-06-13 16:42:41 by jo 
-*	Changes			:
+*	Updated			:	2019-06-14 18:04:11 by jo 
+*	Changes			: update dropdown field
 */
 
 import 'package:flutter/material.dart';
@@ -57,28 +57,27 @@ class FuneralServiceForm extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Civil Status
+                //  Civil Status (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Civil Status", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),  
+            ),
             // Date of Birth
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
@@ -145,50 +144,48 @@ class FuneralServiceForm extends StatelessWidget {
                 ],
               ),
             ), 
-            // Place of Funeral Service
+            //  Place of Funeral Service (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Place of Funeral Service", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "Choose Location",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ), 
-            // Type of Service
+            ),
+            //  Type of Service (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Type of Service", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "Choose Type of Service",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ), 
+            ),            
             // Date of Service
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),

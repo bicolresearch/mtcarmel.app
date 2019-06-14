@@ -2,9 +2,10 @@
 *	Filename		:	liturgical_service_form.dart
 *	Purpose			:	liturgical service add form
 * Created			: 2019-06-13 14:44:15 by jo
-*	Updated			:	2019-06-13 14:44:15 by jo 
-*	Changes			: added form comment, remove widget GestureDetector
+*	Updated			:	2019-06-14 17:53:55 by jo
+*	Changes			: update dropdown field
 */
+
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
@@ -100,29 +101,28 @@ class LiturgicalServiceForm extends StatelessWidget {
                   //  lineWidget(),
                 ],
               ),
-            ),     
-            //Occasion
+            ),
+            //  //Occasion (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Occasion", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),  
+            ), 
             // Contact Person
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),

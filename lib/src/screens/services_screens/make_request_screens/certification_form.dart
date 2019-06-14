@@ -2,9 +2,10 @@
 *	Filename		:	certification_form.dart
 *	Purpose			:	certification add form
 * Created			: 2019-06-13 14:35:58 by jo
-*	Updated			:	2019-06-13 14:35:58 by jo 
-*	Changes			: added form comment, remove widget GestureDetector
+*	Updated			:	2019-06-14 18:00:49 by jo 
+*	Changes			: update dropdown field
 */
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
@@ -56,50 +57,48 @@ class CertificationForm extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Certificate
+                //  Certificate (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Certificate", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),  
-            // Purpose
+            ),
+            //  Purpose (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Purpose", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),     
+            ),
             //Contact Person
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),

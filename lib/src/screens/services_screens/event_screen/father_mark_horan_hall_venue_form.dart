@@ -2,9 +2,10 @@
 *	Filename		:	father_mark_horan_hall_venue_form.dart
 *	Purpose			:	father mark horan hall - venue add form
 * Created			: 2019-06-13 15:14:01 by jo
-*	Updated			:	2019-06-13 15:14:01 by jo 
-*	Changes			: added form comment, remove widget GestureDetector
+*	Updated			:	2019-06-14 18:16:51 by jo 
+*	Changes			: update dropdown fields
 */
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
@@ -77,29 +78,28 @@ class FatherMarkHoranHallVenueForm extends StatelessWidget {
                   //  lineWidget(),
                 ],
               ),
-            ),  
-            // Event Type
+            ),
+            //  Event Type (Dropdown)
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
                 Text("Event Type", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: DropdownButtonFormField(
                      decoration: InputDecoration(
                        contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                        border: OutlineInputBorder(),
                        hintText: "",
                       //  labelText: "Name",
                        alignLabelWithHint: false,
-                       ),
+                       ), items: <DropdownMenuItem>[],
                    ),
                   ),
                   //  lineWidget(),
                 ],
               ),
-            ),     
+            ),    
             //contact person
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
