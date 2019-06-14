@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage_info.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
@@ -25,8 +26,17 @@ class Marriage extends StatelessWidget {
           lineWidget(),
            Column(children: <Widget>[
             GestureDetector(
-              onTap: (){
-                print("Tapped...");
+              onTap: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    //builder: (context) => ServicesDetailScreen(service.service_name),
+                    builder: (context) => 
+                    MarriageInfo()
+                  )
+                );
+                if (result)
+                  Navigator.pop(context, true);
               },
               child: serviceSpecific("Marriage")),
             ],

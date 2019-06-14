@@ -1,5 +1,16 @@
+/*
+*	Filename		:	baptism.dart
+*	Purpose			:	
+* Created			: 2019-06-13 19:36:12 by jo
+*	Updated			:	2019-06-13 19:36:12 by jo 
+*	Changes			: added form comment, update form - added navigation to each make request form/screen
+*/
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/individual_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/community_info.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/adult_info.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
@@ -25,19 +36,43 @@ class Baptism extends StatelessWidget {
           lineWidget(),
            Column(children: <Widget>[
             GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        IndividualInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
+                  },
               child: serviceSpecific("Individual Baptism")),
             GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        CommunityInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
+                  },
               child: serviceSpecific("Community Baptism")),
             GestureDetector(
-              onTap: (){
-                print("Tapped...");
-              },
+                  onTap: ()async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => 
+                        AdultInfo()
+                      )
+                    );
+                    if (result)
+                      Navigator.pop(context, true);
+                  },
               child: serviceSpecific("Adult Baptism")),
             ],
             ),
