@@ -2,8 +2,8 @@
 *	Filename		:	prayer_request_form.dart
 *	Purpose			:	prayer request add form
 * Created			: 2019-06-13 14:57:50 by jo
-*	Updated			:	2019-06-13 14:57:50 by jo 
-*	Changes			: added form comment, remove widget GestureDetector
+*	Updated			:	2019-06-14 08:55:15 by Detective Conan
+*	Changes			: Fixed the TextField issue. Made the TextField multiple lines.
 */
 
 import 'package:flutter/material.dart';
@@ -43,16 +43,19 @@ class PrayerRequestForm extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
                         textAlign: TextAlign.start,
                          decoration: InputDecoration(
-                           contentPadding: EdgeInsets.symmetric(vertical: 200.0),
-                           border: OutlineInputBorder(),
+                           border: OutlineInputBorder(
+                             borderSide: BorderSide(
+                               color: Colors.brown,
+                             )
+                           ),
                            hintText: "write here...",
-                           alignLabelWithHint: false,
                            ),
                        ),
                       ),
-                      //  lineWidget(),
                     ],
                   ),
                 ),
@@ -87,11 +90,9 @@ class PrayerRequestForm extends StatelessWidget {
           ),
         ),
         Container(
-          //margin: EdgeInsets.only(bottom: 30.0),
           child: GestureDetector(
             onTap: (){
               Navigator.pop(context, false);
-              print("tapped");
             },
             child: Icon(Icons.keyboard_arrow_left, 
             size: 50.0,
