@@ -14,14 +14,14 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  List<Slide> slides = new List();
+  List<Slide> _slides = new List();
 
   @override
   initState(){
     super.initState();
         
-        
-        slides.add(
+        // First Slide
+        _slides.add(
           Slide([
           SlideContentItem( widget: Container(child: Column(children: <Widget>[
                 
@@ -41,98 +41,40 @@ class _IntroScreenState extends State<IntroScreen> {
           ),
         );
     
-        slides.add(
-          Slide([SlideContentItem( widget: Container(child: Column(children: <Widget>[
-                //Image.asset('assets/images/mt_logo.png'),
-                Icon(MountCarmelIcons.events, size: 100.0, color: Colors.brown,),
-                Text(AppConstants.NEWS_AND_UPDATES,
-                style: TextStyle(fontSize: 20, 
-                fontFamily: 'Helvetica', 
-                color: Colors.brown),
-                textAlign: TextAlign.center),
-                Text(AppConstants.NEWS_AND_UPDATES_DESCRIPTION,
-                style: TextStyle(fontSize: 13, 
-                fontFamily: 'Helvetica', 
-                color: Colors.brown, 
-                fontStyle: FontStyle.italic),
-                textAlign: TextAlign.center, )
-          ],
-          ),
-          margin: EdgeInsets.only(left: 60, right: 60),
-          ),
-    
-          ),
-          SlideContentItem( widget: Container(child: Column(children: <Widget>[
-                
-                Icon(MountCarmelIcons.sendhelp, size: 100.0, color: Colors.brown, ),
-                Text(AppConstants.SEND_HELP,
-                style: TextStyle(fontSize: 20, 
-                fontFamily: 'Helvetica', 
-                color: Colors.brown),
-                textAlign: TextAlign.center),
-                Text(AppConstants.SEND_HELP_DESCRIPTION,
-                style: TextStyle(fontSize: 13, 
-                fontFamily: 'Helvetica', 
-                color: Colors.brown, 
-                fontStyle: FontStyle.italic
-                ),
-                textAlign: TextAlign.center,)
-                ]
-                ),
-                margin: EdgeInsets.only(left: 60, right: 60),
-                ),
-    
-          ),
-          ],
-          ),
+          // Second Slide
+        _slides.add(
+          Slide([
+            // first item 
+          SlideContentItem( widget: 
+            _slideContentItem(
+            iconData: MountCarmelIcons.events, 
+            title: AppConstants.NEWS_AND_UPDATES,
+            content: AppConstants.NEWS_AND_UPDATES_DESCRIPTION),),
+          // second item
+          SlideContentItem( widget: _slideContentItem(
+            iconData: MountCarmelIcons.sendhelp, 
+            title: AppConstants.SEND_HELP,
+            content: AppConstants.SEND_HELP_DESCRIPTION)),
+            ],
+          )
         );
     
-        slides.add(
-          Slide([SlideContentItem( widget: Container(child: Column(children: <Widget>[
-                //Image.asset('assets/images/mt_logo.png'),
-                Icon(MountCarmelIcons.settings, size: 100.0, color: Colors.brown,),
-                Text(AppConstants.SERVICES_OFFERED,
-                style: TextStyle(fontSize: 20, 
-                fontFamily: 'Helvetica', 
-                color: Colors.brown),
-                textAlign: TextAlign.center),
-                Text(AppConstants.SERVICES_OFFERED_DESCRIPTION,
-                style: TextStyle(fontSize: 13, 
-                fontFamily: 'Helvetica', 
-                color: Colors.brown, 
-                fontStyle: FontStyle.italic),
-                textAlign: TextAlign.center, )
-          ],
-          ),
-          margin: EdgeInsets.only(left: 60, right: 60),
-          ),
-    
-          ),
-          SlideContentItem( widget: Container(child: Column(children: <Widget>[
-                
-                Icon(MountCarmelIcons.transparency, size: 100.0, color: Colors.brown, ),
-                Text(AppConstants.TRANSPARENCY_FEATURE,
-                style: TextStyle(fontSize: 20, 
-                fontFamily: 'Helvetica', 
-                color: Colors.brown),
-                textAlign: TextAlign.center),
-                Text(AppConstants.TRANSPARENCY_FEATURE_DESCRIPTION,
-                style: TextStyle(fontSize: 13, 
-                fontFamily: 'Helvetica', 
-                color: Colors.brown, 
-                fontStyle: FontStyle.italic
-                ),
-                textAlign: TextAlign.center,)
-                ]
-                ),
-                margin: EdgeInsets.only(left: 60, right: 60),
-                ),
-    
-          ),
-          ],
-          ),
+        _slides.add(
+          Slide([
+            // first item 
+          SlideContentItem( widget: 
+            _slideContentItem(
+            iconData: MountCarmelIcons.services, 
+            title: AppConstants.SERVICES_OFFERED,
+            content: AppConstants.SERVICES_OFFERED_DESCRIPTION),),
+          // second item
+          SlideContentItem( widget: _slideContentItem(
+            iconData: MountCarmelIcons.transparency, 
+            title: AppConstants.TRANSPARENCY_FEATURE,
+            content: AppConstants.TRANSPARENCY_FEATURE_DESCRIPTION)),
+            ],
+          )
         );
-        
       }
     
       void onDonePress() {
@@ -169,8 +111,8 @@ class _IntroScreenState extends State<IntroScreen> {
     
       List<Widget> renderListCustomTabs() {
         List<Widget> tabs = List();
-        for (int i = 0; i < slides.length; i++) {
-          Slide currentSlide = slides[i];
+        for (int i = 0; i < _slides.length; i++) {
+          Slide currentSlide = _slides[i];
             tabs.add(Container(
               width: double.infinity,
               height: double.infinity,
@@ -193,7 +135,7 @@ class _IntroScreenState extends State<IntroScreen> {
       Widget build(BuildContext context) {
         return ScreenSlider(
           // List slides
-          slides: this.slides,
+          slides: this._slides,
     
           // Skip button
           nameSkipBtn: 'skip',
@@ -222,4 +164,32 @@ class _IntroScreenState extends State<IntroScreen> {
           shouldHideStatusBar: false,
         );
       }
+
+  Widget _slideContentItem({IconData iconData, String title, String content}){
+    return Container(child: Column(
+      children: <Widget>[
+                
+      Icon(iconData, 
+        size: 100.0, 
+        color: Colors.brown, ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Text(title,
+        style: TextStyle(fontSize: 20, 
+        fontFamily: 'Helvetica', 
+        color: Colors.brown),
+        textAlign: TextAlign.center),
+      ),
+      Text(content,
+      style: TextStyle(fontSize: 13, 
+      fontFamily: 'Helvetica', 
+      color: Colors.brown, 
+      fontStyle: FontStyle.italic
+      ),
+      textAlign: TextAlign.center,)
+      ]
+      ),
+      margin: EdgeInsets.only(left: 60, right: 60),
+      );
+  }
 }
