@@ -1,10 +1,11 @@
 /*
 *	Filename		:	passing.dart
 *	Purpose			:	
-* Created			: 2019-06-13 18:22:25 by jo
-*	Updated			:	2019-06-13 18:22:25 by jo 
-*	Changes			: added form comment, update form - added navigation to each make request form/screen
+* Created			: 2019-06-13 18:22:25 by Constantina
+*	Updated			:	2019-06-17 16:04:09 by Constantina 
+*	Changes			: add services messages/content
 */
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/passing_screens/funeral_service_info.dart';
@@ -20,6 +21,7 @@ import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 class Passing extends StatelessWidget {
   //////
   const Passing({Key key}) : super(key: key);
+  static const String passing_message = "Provide christian services and a peaceful resting place for our late loved ones";
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class Passing extends StatelessWidget {
           servicesHeader(),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(AppConstants.PASSING, AppConstants.sample_message),
+          serviceTile(AppConstants.PASSING, passing_message),
           SizedBox(height: 10.0,),
           lineWidget(),
            Container(

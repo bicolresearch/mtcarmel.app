@@ -1,8 +1,8 @@
 /*
 *	Filename		:	liturgical_service_form.dart
 *	Purpose			:	liturgical service add form
-* Created			: 2019-06-13 14:44:15 by jo
-*	Updated			:	2019-06-14 17:53:55 by jo
+* Created			: 2019-06-13 14:44:15 by Constantina
+*	Updated			:	2019-06-14 17:53:55 by Constantina
 *	Changes			: update dropdown field
 */
 

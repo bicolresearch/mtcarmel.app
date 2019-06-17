@@ -2,9 +2,10 @@
 *	Filename		:	services_screen.dart
 *	Purpose			:	Displays the list of the services of the church
 * Created			: 2019-06-11 15:52:50 by Detective Conan
-*	Updated			: 2019-06-13 15:39:50 by jo
-*	Changes			: moved passing screens folder under service, add forms 
+*	Updated			: 2019-06-17 15:20:21 by Constantina 
+*	Changes			: add services messages/content
 */
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/service.dart';
 import 'package:mt_carmel_app/src/screens//services_screens/passing_screens/passing.dart';
@@ -22,7 +23,9 @@ import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 class ServicesScreen extends StatelessWidget {
   
   //TODO temporary text
-  static const String message = "lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
+  static const String message ="lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
+static const String confra_message = "Be an active part of the mission and service of the Carmelite Church";
+
 
   static const String JOIN_US = 'Join us';
   static const String MAKE_REQUEST = 'Make a request';
@@ -34,7 +37,7 @@ class ServicesScreen extends StatelessWidget {
   static const String EVENTS = 'Events';
 
   final List<Service> services = [
-    Service(JOIN_US, message),
+    Service(JOIN_US, confra_message),
     Service(MAKE_REQUEST, message),
     Service(BAPTISIM, message),
     Service(COMMUNION, message),

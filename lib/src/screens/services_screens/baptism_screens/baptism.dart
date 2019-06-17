@@ -1,9 +1,9 @@
 /*
 *	Filename		:	baptism.dart
 *	Purpose			:	
-* Created			: 2019-06-13 19:36:12 by jo
-*	Updated			:	2019-06-13 19:36:12 by jo 
-*	Changes			: added form comment, update form - added navigation to each make request form/screen
+* Created			: 2019-06-13 19:36:12 by Constantina
+*	Updated			:	2019-06-17 15:51:51 by Constantina 
+*	Changes			: add services messages/content
 */
 
 import 'package:flutter/material.dart';
@@ -20,6 +20,7 @@ import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 class Baptism extends StatelessWidget {
   //////
   const Baptism({Key key}) : super(key: key);
+  static const String baptism_message = "Be part of the christian community and follow the word of the Lord";
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class Baptism extends StatelessWidget {
           servicesHeader(),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(AppConstants.BAPTISIM, AppConstants.sample_message),
+          serviceTile(AppConstants.BAPTISIM, baptism_message),
           SizedBox(height: 10.0,),
           lineWidget(),
            Column(children: <Widget>[

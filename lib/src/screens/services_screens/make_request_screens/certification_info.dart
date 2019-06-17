@@ -1,8 +1,8 @@
 /*
 *	Filename		:	certification_info.dart
 *	Purpose			:	certification add form
-* Created			: 2019-06-13 14:34:24 by jo
-*	Updated			:	2019-06-13 14:34:24 by jo 
+* Created			: 2019-06-13 14:34:24 by Constantina
+*	Updated			:	2019-06-13 14:34:24 by Constantina 
 *	Changes			: added form comment, update margins and buttons, remove widget GestureDetector
 */
 

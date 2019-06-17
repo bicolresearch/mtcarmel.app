@@ -1,8 +1,8 @@
 /*
 *	Filename		:	confirmation_form.dart
 *	Purpose			:	confirmation add form
-* Created			: 2019-06-13 15:41:26 by jo
-*	Updated			:	2019-06-13 15:41:26 by jo 
+* Created			: 2019-06-13 15:41:26 by Constantina
+*	Updated			:	2019-06-13 15:41:26 by Constantina 
 *	Changes			: added form comment, remove widget GestureDetector
 */
 import 'package:flutter/material.dart';

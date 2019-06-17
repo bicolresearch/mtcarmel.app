@@ -1,9 +1,9 @@
 /*
 *	Filename		:	communion.dart
 *	Purpose			:	
-* Created			: 2019-06-13 16:34:11 by jo
-*	Updated			:	2019-06-13 16:34:11 by jo 
-*	Changes			: added form comment, update form - added navigation to each make request form/screen
+* Created			: 2019-06-13 16:34:11 by Constantina
+*	Updated			:	2019-06-17 15:59:42 by Constantina 
+*	Changes			: add services messages/content
 */
 
 import 'package:flutter/material.dart';
@@ -18,6 +18,7 @@ import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
 class Communion extends StatelessWidget {
   const Communion({Key key}) : super(key: key);
+  static const String communion_message = "Be united with our God through the christian rite of communion";
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class Communion extends StatelessWidget {
           children: <Widget>[
           servicesHeader(),
           SizedBox(height: 10.0,),
-          serviceTile(AppConstants.COMMUNION, AppConstants.sample_message),
+          serviceTile(AppConstants.COMMUNION, communion_message),
           SizedBox(height: 10.0,),
           lineWidget(),
            Column(children: <Widget>[

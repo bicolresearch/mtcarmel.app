@@ -1,8 +1,8 @@
 /*
 *	Filename		:	father_mark_horan_hall_venue_info.dart
 *	Purpose			:	father mark horan hall - venue add form
-* Created			: 2019-06-13 15:15:58 by jo
-*	Updated			:	2019-06-13 15:15:58 by jo 
+* Created			: 2019-06-13 15:15:58 by Constantina
+*	Updated			:	2019-06-13 15:15:58 by Constantina 
 *	Changes			: added form comment, update margins and buttons, remove widget GestureDetector
 */
 import 'package:flutter/material.dart';

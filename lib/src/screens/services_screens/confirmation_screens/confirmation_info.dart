@@ -1,8 +1,8 @@
 /*
 *	Filename		:	confirmation_info.dart
 *	Purpose			:	confirmation info add form
-* Created			: 2019-06-13 15:42:20 by jo
-*	Updated			:	2019-06-13 15:42:20 by jo 
+* Created			: 2019-06-13 15:42:20 by Constantina
+*	Updated			:	2019-06-13 15:42:20 by Constantina 
 *	Changes			: added form comment, update margins and buttons, remove widget GestureDetector
 */
 import 'package:flutter/material.dart';

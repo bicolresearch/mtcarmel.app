@@ -1,9 +1,9 @@
 /*
 *	Filename		:	make_request.dart
 *	Purpose			:	
-* Created			: 2019-06-13 16:31:23 by jo
-*	Updated			:	2019-06-13 16:31:23 by jo 
-*	Changes			: added form comment
+* Created			: 2019-06-13 16:31:23 by Constantina
+*	Updated			:	2019-06-17 15:47:09 by Constantina 
+*	Changes			: add services messages/content
 */
 
 import 'package:flutter/material.dart';
@@ -21,6 +21,7 @@ import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 class MakeRequest1 extends StatelessWidget {
   //////
   const MakeRequest1({Key key}) : super(key: key);
+  static const String make_request_message = "Be closer to God with the help of the church through prayers, holy masses and liturgy";
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class MakeRequest1 extends StatelessWidget {
           servicesHeader(),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(AppConstants.MAKE_REQUEST, AppConstants.sample_message),
+          serviceTile(AppConstants.MAKE_REQUEST, make_request_message),
           SizedBox(height: 10.0,),
           lineWidget(),
           Expanded(

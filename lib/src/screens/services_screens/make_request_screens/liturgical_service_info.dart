@@ -1,8 +1,8 @@
 /*
 *	Filename		:	liturgical_service_info.dart
 *	Purpose			:	liturgical service add form
-* Created			: 2019-06-13 14:45:06 by jo
-*	Updated			:	2019-06-13 14:45:06 by jo 
+* Created			: 2019-06-13 14:45:06 by Constantina
+*	Updated			:	2019-06-13 14:45:06 by Constantina 
 *	Changes			: added form comment, update margins and buttons, remove widget GestureDetector
 */
 
