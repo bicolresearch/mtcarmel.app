@@ -12,6 +12,7 @@ import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_schedule_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/location_map.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
@@ -299,7 +300,9 @@ Widget _navigateToDetail(String itemText){
       return ContactDetailScreen();
     case ProfileScreen.REGULAR_MASS_SCHEDULE:
       return ChurchScheduleScreen();
-      break;
+    // TODO uncomment when the implementaion is ready
+    // case ProfileScreen.LOCATION_MAP:
+    //   return LocationMap();
     default:
       // show the default if not yet implemented
       return DefaultScreen();

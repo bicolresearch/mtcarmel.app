@@ -1,4 +1,4 @@
-package com.example.mt_carmel_app;
+package com.bicolresearch.mount_carmel_app;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

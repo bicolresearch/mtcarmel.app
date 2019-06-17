@@ -1,5 +1,5 @@
 # /*
-# *	Filename		:	<filename.extension>
+# *	Filename		:	pubspec.yaml
 # *	Purpose			:	
 # * Created			: 2019-06-04 16:35:03 by Detective Conan
 # *	Updated			:	2019-06-04 16:35:03 by Detective Conan 
@@ -27,6 +27,10 @@ dependencies:
   share: ^0.6.1
   table_calendar: ^1.2.2
   rxdart: ^0.22.0
+
+  google_maps_flutter: ^0.5.16
+
+  # permission: ^0.1.2
 
 
 dev_dependencies:
