@@ -45,7 +45,7 @@ class Events extends StatelessWidget {
                 if (result)
                   Navigator.pop(context, true);
               },
-              child: Text("Father Mark HoranHall - Venue", 
+              child: Text("Father Mark Horan Hall - Venue", 
               style: AppConstants.OPTION_STYLE2,
               textAlign: TextAlign.center,
               ),

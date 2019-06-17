@@ -1,3 +1,11 @@
+/*
+*	Filename		:	<filename.extension>
+*	Purpose			:	
+* Created			: 2019-06-17 19:23:44
+*	Updated			:	2019-06-17 19:23:44 by Constantina
+*	Changes			: add services messages/content - add static message for confraternity
+*/
+
 import 'package:flutter/material.dart';
 
 class AppConstants{
@@ -30,6 +38,12 @@ class AppConstants{
 
   static const String sample_message = "lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
 
+  static const String confraternity_message = "Be an active part of the mission and service of the Carmelite Church";
+  static const String make_request_message = "Be closer to God with the help of the church through prayers, holy masses and liturgy";
+  static const String baptism_message = "Be part of the christian community and follow the word of the Lord";
+  static const String communion_message = "Be part of the christian community and follow the word of the Lord";
+  static const String passing_message = "Provide christian services and a peaceful resting place for our late loved ones";
+  static const String event_message = "Celebrate marriage or events in the delightful premises of the church";
   //Textstyle
 
   static const TextStyle OPTION_STYLE1 = TextStyle(
@@ -37,7 +51,7 @@ class AppConstants{
                       fontFamily: "Helvetica");
   static const TextStyle OPTION_STYLE2 = TextStyle(
                       color: Colors.brown, fontSize: 16.0, fontWeight: FontWeight.bold,
-                      fontFamily: "Helvetica");
+                      fontFamily: "Helvetica" );
   static const TextStyle OPTION_STYLE3 = TextStyle(
                       color: Colors.brown, fontSize: 20.0, fontWeight: FontWeight.bold,
                       fontFamily: "Helvetica");

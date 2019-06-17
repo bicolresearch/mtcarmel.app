@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/service.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens//services_screens/passing_screens/passing.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/baptism.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/communion.dart';
@@ -24,7 +25,7 @@ class ServicesScreen extends StatelessWidget {
   
   //TODO temporary text
   static const String message ="lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
-static const String confra_message = "Be an active part of the mission and service of the Carmelite Church";
+  static const String confra_message = "Be an active part of the mission and service of the Carmelite Church";
 
 
   static const String JOIN_US = 'Join us';
@@ -92,7 +93,8 @@ static const String confra_message = "Be an active part of the mission and servi
           )
         );
       },
-      child: serviceTile(service.service_name, message),
+         child: serviceTile(service.service_name, message), 
+      
     );
   }
         

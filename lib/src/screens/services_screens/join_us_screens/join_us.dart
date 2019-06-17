@@ -16,7 +16,7 @@ import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
 class JoinUs extends StatelessWidget {
   const JoinUs({Key key}) : super(key: key);
-  static const String join_us_message = "Be an active part of the mission and service of the Carmelite Church";
+  //static const String join_us_message = "Be an active part of the mission and service of the Carmelite Church";
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class JoinUs extends StatelessWidget {
           children: <Widget>[
           servicesHeader(),
           SizedBox(height: 10.0,),
-          serviceTile(AppConstants.JOIN_US, join_us_message),
+          serviceTile(AppConstants.JOIN_US, AppConstants.confraternity_message),
           SizedBox(height: 10.0,),
           lineWidget(),
           Container(
