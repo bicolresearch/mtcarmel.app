@@ -1,6 +1,6 @@
 /*
 *	Filename		:	feeds_screen.dart
-*	Purpose			:	
+*	Purpose			:	Displays the news feed such as photos, videos
 * Created			: 2019-06-04 16:28:01 by Detective Conan
 *	Updated			:	2019-06-04 16:28:01 by Detective Conan 
 *	Changes			:
@@ -70,7 +70,7 @@ class _FeedScreenState extends State<FeedScreen> {
           ],
         ),
         body: this._isLoading?LinearProgressIndicator(backgroundColor: Colors.brown,):Container(
-          padding: EdgeInsets.only(top: 10, bottom: 10, left: 24, right: 24),
+          padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
           child: _feedList.isNotEmpty
             ?ListView.builder(
             itemCount: _feedList.length,
@@ -127,34 +127,65 @@ class _FeedScreenState extends State<FeedScreen> {
       return Container();
     }
     return Container(
-        
-        height: 200,
-        child: GestureDetector(
-          onTap: () => {
-            Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FeedDetailScreen(feed),
+        padding: EdgeInsets.symmetric(vertical: 4.0),
+        height: 250,
+        child: Container(
+          decoration: BoxDecoration(
+          border: Border.all(width: 0.20),
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+          child: GestureDetector(
+            onTap: () => {
+              Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FeedDetailScreen(feed),
+                    ),
                   ),
-                ),
-             },
-          child: Column(
-            children: <Widget>[ Expanded(
-                child: Container(
-                padding: EdgeInsets.all(20),
-                width: double.infinity, 
-                height: 250, 
-                child: Image.network(url)
-                ),
-            ),                          
-          Text( feed.content,
-            style: AppConstants.OPTION_STYLE1 ,
-            textAlign: TextAlign.justify, 
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,),
-            Divider(color: Colors.brown,)
-              ],          
+               },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[                  
+                  Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.brown,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0)
+                      ),
+                    ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(feed.title, 
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.white,), textAlign: TextAlign.center,),
+                  ),
+                    ),
+                  Expanded(
+                  child: Container(
+                  padding: EdgeInsets.all(20),
+                  width: double.infinity, 
+                  height: 250, 
+                  decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                        image: NetworkImage(url),
+                        fit: BoxFit.cover),
+                  )
+                  ),
+              ),                          
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text( feed.content,
+                style: AppConstants.OPTION_STYLE1 ,
+                textAlign: TextAlign.justify, 
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,),
             ),
+                ],          
+              ),
+          ),
         ),
       );
   }    

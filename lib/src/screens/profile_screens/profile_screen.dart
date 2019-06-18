@@ -2,17 +2,18 @@
 *	Filename		:	profile_screen.dart
 *	Purpose			:	Display the list of the users access and other details of the church
 * Created			: 2019-06-11 15:44:56 by Detective Conan
-*	Updated			: 2019-06-11 15:44:56 by Detective Conan 
-*	Changes			:
+*	Updated			: 2019-06-18 16:10:15 by Detective Conan 
+*	Changes			: Added call for Bible Screen
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_schedule_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/location_map.dart';
+// import 'package:mt_carmel_app/src/screens/profile_screens/location_map.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
@@ -28,7 +29,7 @@ class ProfileScreen extends StatefulWidget {
   ProfileScreen(BuildContext context);
 
     // TODO Get the list from the API
-  static const String PRAYER_BOOK = "Prayer book";
+  static const String BIBLE = "Bible";
   static const String REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
   static const String LOCATION_MAP = "Location Map";
   static const String PRIESTS = "Carmelite Priests";
@@ -58,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _profile = Profile(1, "Ransom", "Rapirap", "October 12, 1990", "");
   
   final List<String> _aboutList = [
-    ProfileScreen.PRAYER_BOOK,
+    ProfileScreen.BIBLE,
     ProfileScreen.REGULAR_MASS_SCHEDULE,
     ProfileScreen.LOCATION_MAP,
     ProfileScreen.PRIESTS,
@@ -69,15 +70,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ];
 
   final List<String> _userList = [
-    ProfileScreen.USER_SCHEDULE,
-    ProfileScreen.PRAYER_REQUESTS,
-    ProfileScreen.MASS_REQUESTS,
-    ProfileScreen.POST_NEWS,
-    ProfileScreen.ADD_PROJECT ,
-    ProfileScreen.ADD_SERVICE_TRANSACTION,
-    ProfileScreen.PRIESTS_SCHEDULES,
-    ProfileScreen.SERVICES_SCHEDULES,
-    ProfileScreen.DONATION_REPORT,
+    // ProfileScreen.USER_SCHEDULE,
+    // ProfileScreen.PRAYER_REQUESTS,
+    // ProfileScreen.MASS_REQUESTS,
+    // ProfileScreen.POST_NEWS,
+    // ProfileScreen.ADD_PROJECT ,
+    // ProfileScreen.ADD_SERVICE_TRANSACTION,
+    // ProfileScreen.PRIESTS_SCHEDULES,
+    // ProfileScreen.SERVICES_SCHEDULES,
+    // ProfileScreen.DONATION_REPORT,
   ];
 
   List<String> _totalList = [];
@@ -300,6 +301,8 @@ Widget _navigateToDetail(String itemText){
       return ContactDetailScreen();
     case ProfileScreen.REGULAR_MASS_SCHEDULE:
       return ChurchScheduleScreen();
+    case ProfileScreen.BIBLE:
+      return BibleScreen(context);
     // TODO uncomment when the implementaion is ready
     // case ProfileScreen.LOCATION_MAP:
     //   return LocationMap();
