@@ -50,11 +50,17 @@ class FeedDetailScreen extends StatelessWidget{
                         ),
                       ),
                     ),
-                    Container(
+                    Divider(),
+                      Container(
                       padding: EdgeInsets.all(20),
                       width: double.infinity, 
-                      height: 300, 
-                      child: Image.network(AppConstants.FEEDS_API_BASE_URL+feed.cover_photo),
+                      height: 250, 
+                      decoration: new BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      image: new DecorationImage(
+                            image: NetworkImage(AppConstants.FEEDS_API_BASE_URL+feed.cover_photo),
+                            fit: BoxFit.cover),
+                      ),
                       ),
                       Text( feed.content ,
                       style: AppConstants.OPTION_STYLE1 ,
