@@ -140,7 +140,7 @@ class FuneralChapelInfo extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("MIcrowave oven", 
+                  child: Text("Microwave oven", 
                   style: AppConstants.OPTION_STYLE2,
                   ),
                 ),
