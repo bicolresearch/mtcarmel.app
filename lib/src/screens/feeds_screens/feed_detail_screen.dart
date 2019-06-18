@@ -31,10 +31,13 @@ class FeedDetailScreen extends StatelessWidget{
                         Container(
                           padding: EdgeInsets.only(top: 30.0),
                           child: Container(   
-                          height: 40.0,        
+                          height: 40.0,  
+                          width: double.infinity,      
                           decoration: BoxDecoration(
                             color: Colors.brown[600],
-                            border: Border.all(width: 0.8),
+                            border: Border.all(
+                              color: Colors.transparent,
+                              width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                           ),
                         child: Padding(
