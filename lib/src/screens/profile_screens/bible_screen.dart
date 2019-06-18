@@ -57,7 +57,7 @@ class _BibleScreenState extends State<BibleScreen> {
                   child: _bibleBooks.oldTestamentBooks.isNotEmpty
                       ?GridView.count(
                         primary: true,
-                        crossAxisCount: 6,
+                        crossAxisCount: 3,
                         children: List.generate(_bibleBooks.oldTestamentBooks.length, (index) {
                           return getStructuredGridCell(_bibleBooks.oldTestamentBooks[index]);
                         }   
