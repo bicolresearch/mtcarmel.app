@@ -16,6 +16,7 @@ class SongsBook extends BibleBook{
 
   SongsBook(){
     super.bookName = 'Songs';
+    super.numberOfChapters = 8;
     _assignChapters();
       }
 

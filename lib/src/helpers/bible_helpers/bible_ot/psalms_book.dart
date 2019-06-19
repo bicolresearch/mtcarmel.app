@@ -16,6 +16,7 @@ class PsalmsBook extends BibleBook{
 
   PsalmsBook(){
     super.bookName = 'Psalms';
+    super.numberOfChapters = 150;
     _assignChapters();
       }
 

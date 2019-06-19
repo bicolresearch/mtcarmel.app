@@ -16,6 +16,7 @@ class FirstSamuelBook extends BibleBook{
 
   FirstSamuelBook(){
     super.bookName = '1Samuel';
+    super.numberOfChapters = 31;
     _assignChapters();
       }
 

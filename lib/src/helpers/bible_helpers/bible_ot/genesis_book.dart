@@ -14,6 +14,7 @@ class GenesisBook extends BibleBook{
 
   GenesisBook(){
     super.bookName = "Genesis";
+    super.numberOfChapters = 50;
     _assignChapters();
   }
     

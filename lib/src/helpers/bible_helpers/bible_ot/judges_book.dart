@@ -16,6 +16,7 @@ class JudgesBook extends BibleBook{
 
   JudgesBook(){
     super.bookName = 'Judges';
+    super.numberOfChapters = 21;
     _assignChapters();
       }
 

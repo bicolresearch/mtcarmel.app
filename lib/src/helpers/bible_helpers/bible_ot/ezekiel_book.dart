@@ -16,6 +16,7 @@ class EzekielBook extends BibleBook{
 
   EzekielBook(){
     super.bookName = 'Ezekiel';
+    super.numberOfChapters = 48;
     _assignChapters();
       }
 

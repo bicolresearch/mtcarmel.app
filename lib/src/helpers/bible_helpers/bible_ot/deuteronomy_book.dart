@@ -16,6 +16,7 @@ class DeuteronomyBook extends BibleBook{
 
   DeuteronomyBook(){
     super.bookName = 'Deuteronomy';
+    super.numberOfChapters = 34;
     _assignChapters();
       }
 

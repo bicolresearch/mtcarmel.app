@@ -16,6 +16,7 @@ class EstherBook extends BibleBook{
 
   EstherBook(){
     super.bookName = 'Esther';
+    super.numberOfChapters = 10;
     _assignChapters();
       }
 

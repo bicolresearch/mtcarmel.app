@@ -16,6 +16,7 @@ class NehemiahBook extends BibleBook{
 
   NehemiahBook(){
     super.bookName = 'Nehemiah';
+    super.numberOfChapters = 13;
     _assignChapters();
       }
 

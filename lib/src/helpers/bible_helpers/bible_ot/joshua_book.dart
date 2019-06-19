@@ -16,6 +16,7 @@ class JoshuaBook extends BibleBook{
 
   JoshuaBook(){
     super.bookName = 'Joshua';
+    super.numberOfChapters = 24;
     _assignChapters();
       }
 

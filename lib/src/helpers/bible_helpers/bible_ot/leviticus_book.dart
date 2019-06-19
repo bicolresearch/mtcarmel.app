@@ -16,6 +16,7 @@ class LeviticusBook extends BibleBook{
 
   LeviticusBook(){
     super.bookName = 'Leviticus';
+    super.numberOfChapters = 27;
     _assignChapters();
       }
 

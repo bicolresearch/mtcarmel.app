@@ -16,6 +16,7 @@ class ProverbsBook extends BibleBook{
 
   ProverbsBook(){
     super.bookName = 'Proverbs';
+    super.numberOfChapters = 31;
     _assignChapters();
       }
 

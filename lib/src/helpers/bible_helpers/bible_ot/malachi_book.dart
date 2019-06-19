@@ -16,6 +16,7 @@ class MalachiBook extends BibleBook{
 
   MalachiBook(){
     super.bookName = 'Malachi';
+    super.numberOfChapters = 4;
     _assignChapters();
       }
 

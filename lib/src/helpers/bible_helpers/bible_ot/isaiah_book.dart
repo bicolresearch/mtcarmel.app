@@ -16,6 +16,7 @@ class IsaiahBook extends BibleBook{
 
   IsaiahBook(){
     super.bookName = 'Isaiah';
+    super.numberOfChapters = 66;
     _assignChapters();
       }
 

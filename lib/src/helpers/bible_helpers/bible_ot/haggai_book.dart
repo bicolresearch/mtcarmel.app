@@ -16,6 +16,7 @@ class HaggaiBook extends BibleBook{
 
   HaggaiBook(){
     super.bookName = 'Haggai';
+    super.numberOfChapters = 2;
     _assignChapters();
       }
 

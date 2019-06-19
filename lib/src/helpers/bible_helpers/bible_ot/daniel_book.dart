@@ -16,6 +16,7 @@ class DanielBook extends BibleBook{
 
   DanielBook(){
     super.bookName = 'Daniel';
+    super.numberOfChapters = 12;
     _assignChapters();
       }
 

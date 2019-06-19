@@ -16,6 +16,7 @@ class HoseaBook extends BibleBook{
 
   HoseaBook(){
     super.bookName = 'Hosea';
+    super.numberOfChapters = 14;
     _assignChapters();
       }
 

@@ -16,6 +16,7 @@ class ZechariahBook extends BibleBook{
 
   ZechariahBook(){
     super.bookName = 'Zechariah';
+    super.numberOfChapters = 14;
     _assignChapters();
       }
 

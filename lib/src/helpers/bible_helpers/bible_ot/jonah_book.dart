@@ -16,6 +16,7 @@ class JonahBook extends BibleBook{
 
   JonahBook(){
     super.bookName = 'Jonah';
+    super.numberOfChapters = 4;
     _assignChapters();
       }
 

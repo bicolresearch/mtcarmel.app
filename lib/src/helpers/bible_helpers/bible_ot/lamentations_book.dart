@@ -16,6 +16,7 @@ class LamentationsBook extends BibleBook{
 
   LamentationsBook(){
     super.bookName = 'Lamentations';
+    super.numberOfChapters = 5;
     _assignChapters();
       }
 

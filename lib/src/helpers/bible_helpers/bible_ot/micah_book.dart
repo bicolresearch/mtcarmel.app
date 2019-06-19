@@ -16,6 +16,7 @@ class MicahBook extends BibleBook{
 
   MicahBook(){
     super.bookName = 'Micah';
+    super.numberOfChapters = 7;
     _assignChapters();
       }
 

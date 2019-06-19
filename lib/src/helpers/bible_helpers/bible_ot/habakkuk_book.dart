@@ -16,6 +16,7 @@ class HabakkukBook extends BibleBook{
 
   HabakkukBook(){
     super.bookName = 'Habakkuk';
+    super.numberOfChapters = 3;
     _assignChapters();
       }
 

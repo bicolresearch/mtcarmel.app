@@ -44,26 +44,53 @@ class _BibleScreenState extends State<BibleScreen> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 12.0),
+              child: Text("Holy Bible",
+                style: AppConstants.OPTION_STYLE3,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
               child: Text("Old Testaments",
                 style: AppConstants.OPTION_STYLE3,
                 textAlign: TextAlign.center,
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height - 200.0,
-                  child: _bibleBooks.oldTestamentBooks.isNotEmpty
-                      ?GridView.count(
-                        primary: true,
-                        crossAxisCount: 3,
-                        children: List.generate(_bibleBooks.oldTestamentBooks.length, (index) {
-                          return getStructuredGridCell(_bibleBooks.oldTestamentBooks[index]);
-                        }   
-                      ),
-                    ):LinearProgressIndicator(),
-                ),
+              child: Container(
+                child: _bibleBooks.oldTestamentBooks.isNotEmpty
+                    ?GridView.count(
+                      shrinkWrap: true,
+                      primary: true,
+                      crossAxisCount: 3,
+                      children: List.generate(_bibleBooks.oldTestamentBooks.length, (index) {
+                        return getStructuredGridCell(_bibleBooks.oldTestamentBooks[index]);
+                      }   
+                    ),
+                  ):Container(),
+              ),
+            ),
+
+          // new testament
+          Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text("New Testaments",
+                style: AppConstants.OPTION_STYLE3,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                child: _bibleBooks.newTestamentBooks.isNotEmpty
+                    ?GridView.count(
+                      primary: true,
+                      crossAxisCount: 3,
+                      children: List.generate(_bibleBooks.newTestamentBooks.length, (index) {
+                        return getStructuredGridCell(_bibleBooks.newTestamentBooks[index]);
+                      }   
+                    ),
+                  ):Container(),
               ),
             ),
           Padding(

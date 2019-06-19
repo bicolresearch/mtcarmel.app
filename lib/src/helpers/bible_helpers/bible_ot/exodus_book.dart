@@ -16,6 +16,7 @@ class ExodusBook extends BibleBook{
 
   ExodusBook(){
     super.bookName = 'Exodus';
+    super.numberOfChapters = 40;
     _assignChapters();
       }
 

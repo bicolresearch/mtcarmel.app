@@ -16,6 +16,7 @@ class JobBook extends BibleBook{
 
   JobBook(){
     super.bookName = 'Job';
+    super.numberOfChapters = 42;
     _assignChapters();
       }
 

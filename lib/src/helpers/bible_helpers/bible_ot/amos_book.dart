@@ -16,6 +16,7 @@ class AmosBook extends BibleBook{
 
   AmosBook(){
     super.bookName = 'Amos';
+    super.numberOfChapters = 9;
     _assignChapters();
       }
 

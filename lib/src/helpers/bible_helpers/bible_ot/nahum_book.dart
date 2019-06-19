@@ -16,6 +16,7 @@ class NahumBook extends BibleBook{
 
   NahumBook(){
     super.bookName = 'Nahum';
+    super.numberOfChapters = 3;
     _assignChapters();
       }
 

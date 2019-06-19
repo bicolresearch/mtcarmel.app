@@ -16,6 +16,7 @@ class JoelBook extends BibleBook{
 
   JoelBook(){
     super.bookName = 'Joel';
+    super.numberOfChapters = 3;
     _assignChapters();
       }
 

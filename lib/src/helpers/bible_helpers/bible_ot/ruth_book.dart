@@ -16,6 +16,7 @@ class RuthBook extends BibleBook{
 
   RuthBook(){
     super.bookName = 'Ruth';
+    super.numberOfChapters = 4;
     _assignChapters();
       }
 

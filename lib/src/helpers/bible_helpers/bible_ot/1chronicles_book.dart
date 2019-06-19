@@ -16,6 +16,7 @@ class FirstChroniclesBook extends BibleBook{
 
   FirstChroniclesBook(){
     super.bookName = '1Chronicles';
+    super.numberOfChapters = 29;
     _assignChapters();
       }
 

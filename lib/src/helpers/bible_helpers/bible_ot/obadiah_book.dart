@@ -16,6 +16,7 @@ class ObadiahBook extends BibleBook{
 
   ObadiahBook(){
     super.bookName = 'Obadiah';
+    super.numberOfChapters = 1;
     _assignChapters();
       }
 

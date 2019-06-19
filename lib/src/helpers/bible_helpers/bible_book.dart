@@ -9,6 +9,7 @@
 abstract class BibleBook{
   String bookName;
   List<Chapter> chapters;
+  int numberOfChapters;
 }
 
 class Chapter{

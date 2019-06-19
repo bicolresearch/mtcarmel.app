@@ -16,6 +16,7 @@ class EcclesiastesBook extends BibleBook{
 
   EcclesiastesBook(){
     super.bookName = 'Ecclesiastes';
+    super.numberOfChapters = 12;
     _assignChapters();
       }
 

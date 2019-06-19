@@ -16,6 +16,7 @@ class JeremiahBook extends BibleBook{
 
   JeremiahBook(){
     super.bookName = 'Jeremiah';
+    super.numberOfChapters = 52;
     _assignChapters();
       }
 

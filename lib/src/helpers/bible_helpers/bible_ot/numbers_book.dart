@@ -16,6 +16,7 @@ class NumbersBook extends BibleBook{
 
   NumbersBook(){
     super.bookName = 'Numbers';
+    super.numberOfChapters = 36;
     _assignChapters();
       }
 

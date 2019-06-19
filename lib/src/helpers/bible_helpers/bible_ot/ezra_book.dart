@@ -16,6 +16,7 @@ class EzraBook extends BibleBook{
 
   EzraBook(){
     super.bookName = 'Ezra';
+    super.numberOfChapters = 10;
     _assignChapters();
       }
 
