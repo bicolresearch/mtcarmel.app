@@ -11,6 +11,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_book.dart';
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_books.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_book_screen.dart';
 
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
@@ -103,16 +104,25 @@ class _BibleScreenState extends State<BibleScreen> {
     );
   }
 
-Card getStructuredGridCell(BibleBook bibleBook) {
-    return Card(
-      elevation: 1.5,
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0,5.0),
-          child: Text(bibleBook.bookName, style: AppConstants.OPTION_STYLE2, 
-            textAlign: TextAlign.center,),
-        ),
-      )
+Widget getStructuredGridCell(BibleBook bibleBook) {
+    return GestureDetector(
+      onTap: () {Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BibleBookScreen(book: bibleBook),
+          )
+        );
+      },
+      child: Card(
+        elevation: 1.5,
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0,5.0),
+            child: Text(bibleBook.bookName, style: AppConstants.OPTION_STYLE2, 
+              textAlign: TextAlign.center,),
+          ),
+        )
+      ),
     );
   }
   

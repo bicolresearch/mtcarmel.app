@@ -6,16 +6,24 @@ part 'feed.g.dart';
 class Feed{
 
 
-  Feed(this.id,this.title, this.content, this.cover_photo);
+  Feed(this.id,
+    this.branchId, 
+    this.title, 
+    this.content, 
+    this.coverPhoto);
 
-  final int id;
+  final String id;
   final String title;
   final String content;
-  final String cover_photo;
+
+  @JsonKey(name: 'branch_id')
+  final String branchId;
+
+  @JsonKey(name: 'cover_photo')
+  final String coverPhoto;
 
   factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeedToJson(this);
 
 }
-

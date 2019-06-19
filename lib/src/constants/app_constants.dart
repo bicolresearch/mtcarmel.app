@@ -13,15 +13,24 @@ class AppConstants{
   // TODO: to be replaced by actual url
   static const ADS_JSON_URL = "http://192.168.254.109/api/ads.json";
   static const ADS_API_BASE_URL = "http://192.168.254.109/api/";
-  static const FEEDS_API_BASE_URL = "http://192.168.254.109/api/";
+  // static const FEEDS_API_BASE_URL = "http://192.168.254.109/api/";
   static const API_BASE_URL = "http://192.168.254.109/api/";
-  static const FEEDS_JSON_URL = "http://192.168.254.109/api/news.json";
+  // static const FEEDS_JSON_URL = "http://192.168.254.109/api/news.json";
   static const TRANSACTION_JSON_URL = 'http://192.168.254.109/api/transparency_list.json';
   static const PRIESTS_JSON_URL = 'http://192.168.254.109/api/priests.json';
   static const PASTORS_JSON_URL = 'http://192.168.254.109/api/pastors.json';
   static const ABOUT_JSON_URL = 'http://192.168.254.109/api/history_details.json';
   static const CONTACT_DETAILS_JSON_URL = 'http://192.168.254.109/api/contact_details.json';
   static const CHURCH_SCHEDULE_JSON_URL = 'http://192.168.254.109/api/schedule.json';
+  
+  //site api
+  static const BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
+  static const KJV_TRANSLATION_PATH = 'tranlation=kjv';
+
+  static const FEEDS_API_BASE_URL = "http://192.168.254.109/mountcarmel.api/";
+  static const FEEDS_JSON_URL = "http://192.168.254.109/mountcarmel.api/api/posts/posts";
+
+
   static const COMPANY_NAME = "Mount Carmel Basilica";
   static const LOCATION_NAME = "Quezon City, Philippines";
   static const AD_GROUP_HEIGHT = 200.0;

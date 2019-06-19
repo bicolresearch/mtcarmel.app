@@ -8,6 +8,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/model/feed.dart';
 
@@ -75,7 +76,13 @@ class _FeedScreenState extends State<FeedScreen> {
             ?ListView.builder(
             itemCount: _feedList.length,
             itemBuilder: (context,index){
-                return _feedContent(_feedList[index]);
+                try{
+                  return _feedContent(_feedList[index]);
+                }
+                catch(e)
+                {
+                  print(e.toString());
+                }
             }
             )
             :Container(
@@ -111,10 +118,12 @@ class _FeedScreenState extends State<FeedScreen> {
 
   
   Widget _feedContent(Feed feed) {
-    if (_isJsonFailed) 
+    if (_isJsonFailed
+      ||feed == null) 
       return Container();
+    
 
-    String url = AppConstants.FEEDS_API_BASE_URL+feed.cover_photo;
+    String url = AppConstants.FEEDS_API_BASE_URL+feed.coverPhoto;
     try{ 
       FadeInImage.assetNetwork(
         fadeInCurve: Curves.bounceIn,
@@ -123,7 +132,7 @@ class _FeedScreenState extends State<FeedScreen> {
       );
     }
     catch(e){
-      print(e.toString());
+      print(e.toString()+"feeds");
       return Container();
     }
     return Container(
@@ -167,7 +176,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   child: Container(
                   padding: EdgeInsets.all(20),
                   width: double.infinity, 
-                  height: 250, 
+                  height: 260, 
                   decoration: new BoxDecoration(
                   image: new DecorationImage(
                         image: NetworkImage(url),
@@ -177,11 +186,19 @@ class _FeedScreenState extends State<FeedScreen> {
               ),                          
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text( feed.content,
+              child: 
+                Text( feed.content,
                 style: AppConstants.OPTION_STYLE1 ,
                 textAlign: TextAlign.justify, 
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,),
+                // Container(
+                //   height: 40,
+                //   child: HtmlTextView(
+                //     data: "<div style='color: #5d4037; width: 150px; height: 40px; overflow: hidden;'><h6>${feed.content}</h6></div>",
+                //     anchorColor: Color(0xFFFF0000),
+                //       ),
+                // )
             ),
                 ],          
               ),

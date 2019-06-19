@@ -94,21 +94,18 @@ class _PriestsScreenState extends State<PriestsScreen> {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                height: MediaQuery.of(context).size.height - 200.0,
-                child: this._isLoading
-                  ?Container()
-                  :_priestList.isNotEmpty
-                    ?GridView.count(
-                      primary: true,
-                      crossAxisCount: 2,
-                      children: List.generate(_priestList.length, (index) {
-                        return getStructuredGridCell(_priestList[index]);
-                      }   
-                    ),
-                  ):LinearProgressIndicator(),
-              ),
+            child: Container(
+              child: this._isLoading
+                ?Container()
+                :_priestList.isNotEmpty
+                  ?GridView.count(
+                    primary: true,
+                    crossAxisCount: 2,
+                    children: List.generate(_priestList.length, (index) {
+                      return getStructuredGridCell(_priestList[index]);
+                    }   
+                  ),
+                ):LinearProgressIndicator(),
             ),
           ),
         Padding(
