@@ -15,18 +15,16 @@ import '..//screens/services_screens/services_screen.dart';
 import '../screens/profile_screens/profile_screen.dart';
 
 class TabNavigator extends StatefulWidget {
+  TabNavigator() : super();
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  TabNavigator():  super();
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  
   @override
   _TabNavigatorState createState() => _TabNavigatorState();
 }
 
-class _TabNavigatorState extends State<TabNavigator> with 
-SingleTickerProviderStateMixin{
-
-
+class _TabNavigatorState extends State<TabNavigator>
+    with SingleTickerProviderStateMixin {
   TabController controller;
 
   @override
@@ -43,20 +41,19 @@ SingleTickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(          
-      body: TabBarView(children: <Widget>[
-          FeedScreen(context), 
-          SendHelpScreen(context), 
+    return Scaffold(
+      body: TabBarView(
+        children: <Widget>[
+          FeedScreen(context),
+          SendHelpScreen(context),
           ServicesScreen(context),
           TransparencyScreen(context),
           ProfileScreen(context),
         ],
         controller: controller,
       ),
-
       bottomNavigationBar: Material(
         color: Colors.white,
-
         child: SafeArea(
           child: TabBar(
             indicatorColor: Color.fromARGB(0, 0, 0, 0),
@@ -64,7 +61,7 @@ SingleTickerProviderStateMixin{
             labelColor: Colors.brown,
             tabs: <Widget>[
               Tab(
-              icon: Icon(MountCarmelIcons.home),
+                icon: Icon(MountCarmelIcons.home),
               ),
               Tab(
                 icon: Icon(MountCarmelIcons.sendhelp),

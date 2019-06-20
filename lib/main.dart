@@ -8,10 +8,11 @@ import 'src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-
-void main(){
+void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-    .then((_) => initializeDateFormatting().then((__) => runApp(MtCarmelApp(),)));
+      .then((_) => initializeDateFormatting().then((__) => runApp(
+            MtCarmelApp(),
+          )));
 }
 
 class MtCarmelApp extends StatelessWidget {
@@ -22,7 +23,9 @@ class MtCarmelApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Page(title: 'Mount Carmel App',),
+      home: Page(
+        title: 'Mount Carmel App',
+      ),
     );
   }
 }
@@ -37,48 +40,52 @@ class Page extends StatefulWidget {
 }
 
 class _PageState extends State<Page> {
-  
-	bool isFirstUsage = true;
+  bool isFirstUsage = true;
 
   @override
   Widget build(BuildContext context) {
     return SplashScreen();
   }
 
-	@override
-	initState()  {
-			super.initState();   
+  @override
+  initState() {
+    super.initState();
 
-      getFirstUsageFlag(); 
+    getFirstUsageFlag();
 
-			Future.delayed(
-				Duration(seconds: 5),
-				(){
-					Navigator.pushReplacement(
-						context,
-						MaterialPageRoute(
-							builder: (context) => showScreen(),
-						)
-					);
-				},
-			);
-	}
+    Future.delayed(
+      Duration(seconds: 5),
+      () {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => showScreen(),
+            ));
+      },
+    );
+  }
 
-  getFirstUsageFlag(){
-    SharedPreferencesHelper.getFirstUsageFlag().then((onValue){
-      setState((){
+  getFirstUsageFlag() {
+    SharedPreferencesHelper.getFirstUsageFlag().then((onValue) {
+      setState(() {
         isFirstUsage = onValue;
         print('$onValue');
       });
     });
   }
 
-	MaterialApp showScreen() {
-
-		if (isFirstUsage){
-    	 return MaterialApp(home: IntroScreen(),theme: ThemeData(fontFamily: "Helvetica",));
+  MaterialApp showScreen() {
+    if (isFirstUsage) {
+      return MaterialApp(
+          home: IntroScreen(),
+          theme: ThemeData(
+            fontFamily: "Helvetica",
+          ));
     }
-		return MaterialApp(home: TabNavigator(), theme: ThemeData(fontFamily: "Helvetica",));
-	}
-      
+    return MaterialApp(
+        home: TabNavigator(),
+        theme: ThemeData(
+          fontFamily: "Helvetica",
+        ));
+  }
 }
