@@ -108,31 +108,31 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
           ],
         ),
-        body: this._isLoading
-            ? LinearProgressIndicator(
-                backgroundColor: Colors.brown,
-              )
-            : Container(
-                padding:
-                    EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                child: _feedList.isNotEmpty
-                    ? ListView.builder(
-                        itemCount: _feedList.length,
-                        itemBuilder: (context, index) {
-                          try {
-                            return _feedContent(_feedList[index]);
-                          } catch (e) {
-                            print(e.toString());
-                          }
-                        })
-                    : Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "No results.\nCheck the network.",
-                          style: AppConstants.OPTION_STYLE3,
+        body: Center(
+          child: this._isLoading
+              ? CircularProgressIndicator()
+              : Container(
+                  padding:
+                      EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                  child: _feedList.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: _feedList.length,
+                          itemBuilder: (context, index) {
+                            try {
+                              return _feedContent(_feedList[index]);
+                            } catch (e) {
+                              print(e.toString());
+                            }
+                          })
+                      : Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "No results.\nCheck the network.",
+                            style: AppConstants.OPTION_STYLE3,
+                          ),
                         ),
-                      ),
-              ),
+                ),
+        ),
       ),
     );
 

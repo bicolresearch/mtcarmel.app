@@ -84,7 +84,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void onDonePress() {
     SharedPreferencesHelper.setFirstUsageFlag(false);
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => TabNavigator(),
