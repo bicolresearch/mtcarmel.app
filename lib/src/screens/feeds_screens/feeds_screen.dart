@@ -44,9 +44,15 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   void initState() { 
     super.initState();   
-    //this.getJasonData();
+    this.getJasonData();
   }
-
+  
+  @override
+  void dispose(){
+    // this.dispose();
+    print("feed clossing...");
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,54 +103,66 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
           ],
         ),
-        body: FutureBuilder(
-          future: getJasonData().timeout(Duration(seconds: 10)),
-          builder: (context, snapshot){
-            if( snapshot.connectionState == 
-              ConnectionState.done){
-                if(snapshot.hasError)
-                  print(snapshot.error);
-                if(_feedList.isEmpty)
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Text("No results found. Please check your connection.", 
-                        style: AppConstants.OPTION_STYLE3,
-                        textAlign: TextAlign.center,),
-                    ),
-                  );
-                return ListView.builder(
-                itemCount: _feedList.length,
-                itemBuilder: (context,index){
-                    try{
-                      return _feedContent(_feedList[index]);
-                    }
-                    catch(e)
-                    {
-                      print(e.toString());
-                    }
-                  }
-                );
-              }
-              else{
-                  return Center(child:CircularProgressIndicator());
-              }
-          },
-        ) 
-      ),
-    );
-    }
+        body: this._isLoading?LinearProgressIndicator(backgroundColor: Colors.brown,):Container(
+          padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+          child: _feedList.isNotEmpty
+            ?ListView.builder(
+            itemCount: _feedList.length,
+            itemBuilder: (context,index){
+                try{
+                  return _feedContent(_feedList[index]);
+                }
+                catch(e)
+                {
+                  print(e.toString());
+                }
+            }
+            )
+            :Container(
+              alignment: Alignment.center,
+              child: Text("No results.\nCheck the network.", style: AppConstants.OPTION_STYLE3,),
+            ),
+            ),   
+        ),
+      );
 
-    _refresh(){
-      _isPanning = false;
-      if (!_isLoading){
-        print("refreshing");
-        //this.getJasonData();
-      }
-    }
-
-    _startPan(){
-      _isPanning= true;
+        // body: FutureBuilder(
+        //   future: getJasonData().timeout(Duration(seconds: 20)),
+        //   initialData: [],
+        //   builder: (context, snapshot){
+        //     print(snapshot.connectionState.toString());
+        //     if( snapshot.connectionState == 
+        //       ConnectionState.done){
+        //         if(snapshot.hasError)
+        //           print(snapshot.error);
+        //         if(_feedList.isEmpty)
+        //           return Center(
+        //             child: Padding(
+        //               padding: const EdgeInsets.all(24.0),
+        //               child: Text("No results found. Please check your connection.", 
+        //                 style: AppConstants.OPTION_STYLE3,
+        //                 textAlign: TextAlign.center,),
+        //             ),
+        //           );
+        //         return ListView.builder(
+        //         itemCount: _feedList.length,
+        //         itemBuilder: (context,index){
+        //           try{
+        //             return _feedContent(_feedList[index]);
+        //           }
+        //           catch(e)
+        //           {
+        //             print(e.toString());
+        //           }
+        //           }
+        //         );
+        //       }
+        //       else{
+        //           return Center(child:CircularProgressIndicator());
+        //       }
+        //   },
+        // ) 
+        
     }
 
     Future<void> getJasonData() async{
@@ -156,7 +174,9 @@ class _FeedScreenState extends State<FeedScreen> {
              _feedList = (json.decode(response.body) as List)
             .map((data) => new Feed.fromJson(data))
             .toList();
-            _isLoading = false;              
+            _isLoading = false;   
+              // print("getJsonData-> response 200");   
+              // print(_feedList.length.toString());        
           } 
           else 
           {
@@ -259,9 +279,5 @@ class _FeedScreenState extends State<FeedScreen> {
       ),
     );
   }    
-
-  void close(){    
-    this.dispose();
-    print("Feed closes...");
-  }    
+  
 }
