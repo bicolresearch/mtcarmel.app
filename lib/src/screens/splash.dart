@@ -25,8 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Stack(children: <Widget>[
+    return Material(
+      child: Stack(children: <Widget>[
         Container(
           child: Scaffold(
             body: Center(

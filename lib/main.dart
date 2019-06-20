@@ -74,18 +74,10 @@ class _PageState extends State<Page> {
     });
   }
 
-  MaterialApp showScreen() {
+  Widget showScreen() {
     if (isFirstUsage) {
-      return MaterialApp(
-          home: IntroScreen(),
-          theme: ThemeData(
-            fontFamily: "Helvetica",
-          ));
+      return IntroScreen();
     }
-    return MaterialApp(
-        home: TabNavigator(),
-        theme: ThemeData(
-          fontFamily: "Helvetica",
-        ));
+    return TabNavigator();
   }
 }
