@@ -19,6 +19,8 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
+import 'package:mt_carmel_app/src/screens/feeds_screens/video_screen.dart';
+import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player.dart';
 
 
 class FeedScreen extends StatefulWidget {
@@ -37,11 +39,14 @@ class _FeedScreenState extends State<FeedScreen> {
   var _isLoading = true;
   var _isJsonFailed = false;
 
+  bool _isPanning = false;
+
   @override
   void initState() { 
     super.initState();   
-    this.getJasonData();
+    //this.getJasonData();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +58,29 @@ class _FeedScreenState extends State<FeedScreen> {
         textAlign: TextAlign.center,),  
         backgroundColor: Colors.white,
         centerTitle: true, 
-        actions: <Widget>[Container(
+        actions: <Widget>[
+          Center(
+            child: GestureDetector(
+              onTap: () => {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VideoScreen(),
+                  // builder: (context) => YoutubePlayerScreen(),
+                  ),
+                )
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Live", 
+                  style: TextStyle(color: Colors.red, 
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0),),
+              ),
+            ),
+          ),
+          Divider(),
+          Container(
           child:GestureDetector(
             onTap: ()=> {
               Navigator.push(
@@ -70,28 +97,54 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
           ],
         ),
-        body: this._isLoading?LinearProgressIndicator(backgroundColor: Colors.brown,):Container(
-          padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-          child: _feedList.isNotEmpty
-            ?ListView.builder(
-            itemCount: _feedList.length,
-            itemBuilder: (context,index){
-                try{
-                  return _feedContent(_feedList[index]);
-                }
-                catch(e)
-                {
-                  print(e.toString());
-                }
-            }
-            )
-            :Container(
-              alignment: Alignment.center,
-              child: Text("No results.\nCheck the network.", style: AppConstants.OPTION_STYLE3,),
-            ),
-            ),   
-        ),
-      );
+        body: FutureBuilder(
+          future: getJasonData().timeout(Duration(seconds: 10)),
+          builder: (context, snapshot){
+            if( snapshot.connectionState == 
+              ConnectionState.done){
+                if(snapshot.hasError)
+                  print(snapshot.error);
+                if(_feedList.isEmpty)
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text("No results found. Please check your connection.", 
+                        style: AppConstants.OPTION_STYLE3,
+                        textAlign: TextAlign.center,),
+                    ),
+                  );
+                return ListView.builder(
+                itemCount: _feedList.length,
+                itemBuilder: (context,index){
+                    try{
+                      return _feedContent(_feedList[index]);
+                    }
+                    catch(e)
+                    {
+                      print(e.toString());
+                    }
+                  }
+                );
+              }
+              else{
+                  return Center(child:CircularProgressIndicator());
+              }
+          },
+        ) 
+      ),
+    );
+    }
+
+    _refresh(){
+      _isPanning = false;
+      if (!_isLoading){
+        print("refreshing");
+        //this.getJasonData();
+      }
+    }
+
+    _startPan(){
+      _isPanning= true;
     }
 
     Future<void> getJasonData() async{
@@ -199,15 +252,16 @@ class _FeedScreenState extends State<FeedScreen> {
                 //     anchorColor: Color(0xFFFF0000),
                 //       ),
                 // )
-            ),
-                ],          
               ),
+            ],          
           ),
         ),
-      );
+      ),
+    );
   }    
 
   void close(){    
     this.dispose();
+    print("Feed closes...");
   }    
 }

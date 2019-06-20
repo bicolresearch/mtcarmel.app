@@ -24,7 +24,7 @@ class FeedDetailScreen extends StatelessWidget{
     child: Scaffold( 
       body: Column(
         children: <Widget>[
-          Expanded(flex: 2,
+          Expanded(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

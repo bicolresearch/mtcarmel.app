@@ -16,32 +16,37 @@ class BibleReference{
   final String reference;
   final List<Verse> verses;
   final String text; 
-  final String translation_name;
-  final String translation_id;
-  final String translation_note;
+  @JsonKey(name: "translation_name")
+  final String translationName;
+  @JsonKey(name: "translation_id")
+  final String translationId;
+  @JsonKey(name: "translation_note")
+  final String translationNote;
   
   BibleReference(this.reference, 
     this.verses, 
     this.text, 
-    this.translation_id, 
-    this.translation_name, 
-    this.translation_note);
+    this.translationId, 
+    this.translationName, 
+    this.translationNote);
   
-    Map<String, dynamic> toJson() => _$BibleReferenceToJson(this);
-
     factory BibleReference.fromJson(Map<String, dynamic> json) => _$BibleReferenceFromJson(json);
+
+    Map<String, dynamic> toJson() => _$BibleReferenceToJson(this);
   }
 
 @JsonSerializable()
 class Verse{
   Verse(this.verse,
-    this.book_id,
-    this.book_name,
+    this.bookId,
+    this.bookName,
     this.chapter,
     this.text);
 
-  final String book_id;
-  final String book_name;
+  @JsonKey(name: "book_id")
+  final String bookId;
+  @JsonKey(name: "book_name")
+  final String bookName;
   final String chapter;
   final String verse;
   final String text;

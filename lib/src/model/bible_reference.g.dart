@@ -24,9 +24,9 @@ Map<String, dynamic> _$BibleReferenceToJson(BibleReference instance) =>
       'reference': instance.reference,
       'verses': instance.verses,
       'text': instance.text,
-      'translation_name': instance.translation_name,
-      'translation_id': instance.translation_id,
-      'translation_note': instance.translation_note
+      'translation_name': instance.translationName,
+      'translation_id': instance.translationId,
+      'translation_note': instance.translationNote
     };
 
 Verse _$VerseFromJson(Map<String, dynamic> json) {
@@ -39,8 +39,8 @@ Verse _$VerseFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$VerseToJson(Verse instance) => <String, dynamic>{
-      'book_id': instance.book_id,
-      'book_name': instance.book_name,
+      'book_id': instance.bookId,
+      'book_name': instance.bookName,
       'chapter': instance.chapter,
       'verse': instance.verse,
       'text': instance.text

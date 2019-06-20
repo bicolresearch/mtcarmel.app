@@ -24,7 +24,7 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
 
   List<Verse> _verses = [];
 
-  BibleReference _reference;
+  List<BibleReference> _references;
 
   var _isLoading = true;
 
@@ -33,22 +33,34 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
   @override
   void initState() { 
     super.initState();   
-    this.getJasonData();
+    //this.getJasonData();
   }
 
   Future<void> getJasonData() async{
-    var response = await http.get(AppConstants.BIBLE_JSON_BASE_URL); 
+    var response = await http.get(AppConstants.BIBLE_JSON_BASE_URL+book.bookName+"1"); 
     if(this.mounted){
       setState(() 
         {
           if (response.statusCode == 200) {
-            //   _verses = (json.decode(response.body) as List)
-            // .map((data) => new Verse.fromJson(data))
-            // .toList();
+            // try{
+            //   var list =parsedJson[""]response.body[1] as List;
+            //   _verses = list
+            //   .map((data) => new Verse.fromJson(data))
+            //   .toList();
+            // }catch(e){
+            //   print(e.toString());
+            // }
+            try{
+              // _references = (json.decode(response.body) as List)
+              // .map((data) => BibleReference.fromJson(data));
+              // print(_references[0].reference);
+                final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
 
-            _reference = json.decode(response.body)
-            .map((data) => BibleReference.fromJson(data));
-            
+                _references = parsed.map<Verse>((json) => Verse.fromJson(json)).toList();
+            }catch(e){
+              print(e.toString());
+              print(response.body);
+            }
             _isLoading = false;              
           } 
           else 
