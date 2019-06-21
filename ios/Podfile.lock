@@ -14,8 +14,6 @@ PODS:
     - Flutter
   - url_launcher (0.0.1):
     - Flutter
-  - video_player (0.0.1):
-    - Flutter
   - ytview (0.0.1):
     - Flutter
 
@@ -25,7 +23,6 @@ DEPENDENCIES:
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-  - video_player (from `.symlinks/plugins/video_player/ios`)
   - ytview (from `.symlinks/plugins/ytview/ios`)
 
 SPEC REPOS:
@@ -43,8 +40,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
-  video_player:
-    :path: ".symlinks/plugins/video_player/ios"
   ytview:
     :path: ".symlinks/plugins/ytview/ios"
 
@@ -55,7 +50,6 @@ SPEC CHECKSUMS:
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
-  video_player: 3964090a33353060ed7f58aa6427c7b4b208ec21
   ytview: 211c9c56fd31223a3be2c8f98942c69921a4c595
 
 PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09

@@ -18,6 +18,7 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
+import 'package:mt_carmel_app/src/screens/feeds_screens/sample_video_player.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/video_screen.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player.dart';
 
@@ -71,8 +72,9 @@ class _FeedScreenState extends State<FeedScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VideoScreen(),
-                          // builder: (context) => YoutubePlayerScreen(),
+//                          builder: (context) => VideoScreen(),
+                          builder: (context) => YoutubePlayerScreen(),
+//                        builder: (context) => VideoExample(),
                         ),
                       )
                     },

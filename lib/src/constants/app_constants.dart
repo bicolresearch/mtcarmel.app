@@ -28,7 +28,7 @@ class AppConstants{
   static const KJV_TRANSLATION_PATH = 'tranlation=kjv';
 
   static const FEEDS_API_BASE_URL = "https://api.mountcarmel.ph/";
-  static const FEEDS_JSON_URL = "https://api.mountcarmel.ph/api/posts/posts";
+  static const FEEDS_JSON_URL = "https://api.mountcarmel.ph/posts";
 
 
   static const COMPANY_NAME = "Mount Carmel Basilica";
