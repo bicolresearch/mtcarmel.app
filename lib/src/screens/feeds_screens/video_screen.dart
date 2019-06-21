@@ -17,6 +17,7 @@ class _VideoScreenState extends State<VideoScreen> {
         // "https://www.youtube.com/watch?v=7IG5kRFIMZw")
         'http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
       ..initialize().then((_) {
+        _controller.setLooping(true);
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
@@ -34,12 +35,14 @@ class _VideoScreenState extends State<VideoScreen> {
         backgroundColor: Colors.white,
       ),
       body: Center(
-        child: _controller.value.initialized
-            ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
-              )
-            :CircularProgressIndicator(),
+        child: Transform.rotate(angle: 3.14/2,
+          child: _controller.value.initialized
+              ? AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                )
+              :CircularProgressIndicator(),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
