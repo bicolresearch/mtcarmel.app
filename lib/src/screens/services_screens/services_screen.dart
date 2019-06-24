@@ -84,7 +84,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   }
 
   Future _initializeArrows() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(milliseconds: 500));
     _scrollListener();
   }
 
@@ -234,12 +234,14 @@ class _ServicesScreenState extends State<ServicesScreen> {
   }
 
   _moveUp() {
-    _scrollController.animateTo(_scrollController.offset - 200,
-        curve: Curves.linear, duration: Duration(milliseconds: 500));
+    if (_scrollController.offset >= _scrollController.position.minScrollExtent)
+      _scrollController.animateTo(_scrollController.offset - 200,
+          curve: Curves.linear, duration: Duration(milliseconds: 500));
   }
 
   _moveDown() {
-    _scrollController.animateTo(_scrollController.offset + 200,
-        curve: Curves.linear, duration: Duration(milliseconds: 500));
+    if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
+      _scrollController.animateTo(_scrollController.offset + 200,
+          curve: Curves.linear, duration: Duration(milliseconds: 500));
   }
 }
