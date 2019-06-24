@@ -21,6 +21,10 @@ class MtCarmelApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mount Carmel',
       theme: ThemeData(
+        iconTheme: IconThemeData(
+          color: Colors.brown,
+        ),
+        dividerColor: Colors.brown,
         primarySwatch: Colors.brown,
         appBarTheme: AppBarTheme(
             brightness: Brightness.light,

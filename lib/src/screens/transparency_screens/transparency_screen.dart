@@ -36,11 +36,9 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
 
   static Icon _arrowUp = Icon(
     Icons.keyboard_arrow_up,
-    color: Colors.brown,
   );
   static Icon _arrowDown = Icon(
     Icons.keyboard_arrow_down,
-    color: Colors.brown,
   );
 
   VisibilityHelper _arrowMoreUp = VisibilityHelper(
@@ -106,125 +104,118 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Center(
-        child: _isTotalLoading
-            ? CircularProgressIndicator()
-            : Container(
-                margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Spacer(flex: 2),
-                          Container(
-                            padding: EdgeInsets.only(bottom: 10.0),
-                            child: Icon(
-                              MountCarmelIcons.transparency,
-                              color: Colors.brown[600],
-                              size: 140,
-                            ),
-                          ),
-                          Column(
+          body: _isTotalLoading
+              ? CircularProgressIndicator()
+              : Container(
+                  margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: Column(
                             children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(top: 10, bottom: 10),
-                                child: Text(
-                                  "Transparency",
-                                  style: AppConstants.OPTION_STYLE3,
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(top: 10, bottom: 10),
-                                child: Center(
-                                  child: Text(
-                                    "Total help received online for this year",
-                                    style: AppConstants.OPTION_STYLE1,
-                                    textAlign: TextAlign.justify,
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.only(bottom: 10.0),
+                                  child: Icon(
+                                    MountCarmelIcons.transparency,
+                                    size: 100,
                                   ),
                                 ),
                               ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                              Expanded(
+                                child: Column(
                                   children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                          width: 200.0,
-                                          height: 20.0,
-                                          decoration: BoxDecoration(
-                                            color: Colors.brown[600],
-                                            border: Border.all(width: 0.8),
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                          ),
-                                          child: getTotal()),
+                                    Text(
+                                      "Transparency",
+                                      style: AppConstants.OPTION_STYLE3,
+                                      textAlign: TextAlign.justify,
                                     ),
-                                    IconButton(
-                                      icon: Icon(
-                                        MountCarmelIcons.refresh,
-                                        color: Colors.brown[600],
+                                    Center(
+                                      child: Text(
+                                        "Total help received online for this year",
+                                        style: AppConstants.OPTION_STYLE1,
+                                        textAlign: TextAlign.justify,
                                       ),
-                                      onPressed: () {
-                                        print("Refresh button pressed.");
-                                      },
-                                    )
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Container(
+                                              width: 200.0,
+                                              height: 20.0,
+                                              decoration: BoxDecoration(
+                                                color: Colors.brown[600],
+                                                border: Border.all(width: 0.8),
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                              ),
+                                              child: getTotal()),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            MountCarmelIcons.refresh,
+                                          ),
+                                          onPressed: () {
+                                            print("Refresh button pressed.");
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(),
                                   ],
                                 ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                      height: (MediaQuery.of(context).size.height) / 2 - 50.0,
-                      width: double.infinity,
-                    ),
-                    Divider(color: Colors.brown),
-
-                    //TRANSACTION LIST
-                    GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
-
-                    Expanded(
-                      child: Container(
-                          height: 500.0,
+                          height: (MediaQuery.of(context).size.height) / 2,
                           width: double.infinity,
-                          alignment: Alignment.center,
-                          child: NotificationListener<ScrollNotification>(
-                            onNotification: (scrollNotification) {
-                              if (scrollNotification
-                                  is ScrollStartNotification) {
-                                _onStartScroll(scrollNotification.metrics);
-                              } else if (scrollNotification
-                                  is ScrollUpdateNotification) {
-                                _onUpdateScroll(scrollNotification.metrics);
-                              } else if (scrollNotification
-                                  is ScrollEndNotification) {
-                                _onEndScroll(scrollNotification.metrics);
-                              }
-                            },
-                            child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount: _transactionList.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                    child: _isLoading
-                                        ? CircularProgressIndicator()
-                                        : _transactionContent(
-                                            _transactionList[index]));
+                        ),
+                      ),
+
+                      //TRANSACTION LIST
+                      GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
+
+                      Expanded(
+                        child: Container(
+//                            height: 500.0,
+                            width: double.infinity,
+//                            alignment: Alignment.topCenter,
+                            child: NotificationListener<ScrollNotification>(
+                              onNotification: (scrollNotification) {
+                                if (scrollNotification
+                                    is ScrollStartNotification) {
+                                  _onStartScroll(scrollNotification.metrics);
+                                } else if (scrollNotification
+                                    is ScrollUpdateNotification) {
+                                  _onUpdateScroll(scrollNotification.metrics);
+                                } else if (scrollNotification
+                                    is ScrollEndNotification) {
+                                  _onEndScroll(scrollNotification.metrics);
+                                }
                               },
-                            ),
-                          )),
-                    ),
-                    GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
-                  ],
-                ),
-                height: MediaQuery.of(context).size.height,
-              ),
-      )),
+                              child: ListView.builder(
+                                controller: _scrollController,
+                                itemCount: _transactionList.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                      child: _isLoading
+                                          ? CircularProgressIndicator()
+                                          : _transactionContent(
+                                              _transactionList[index]));
+                                },
+                              ),
+                            )),
+                      ),
+                      GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
+                    ],
+                  ),
+                  height: MediaQuery.of(context).size.height,
+                )),
     );
   }
 
@@ -238,7 +229,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-              width: 35.0,
+              width: 40.0,
               child: CircleAvatar(
                 backgroundImage: NetworkImage(url),
                 radius: 20,
