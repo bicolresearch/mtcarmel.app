@@ -115,6 +115,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                           child: Column(
                             children: <Widget>[
                               Expanded(
+                                flex: 3,
                                 child: Container(
                                   padding: EdgeInsets.only(bottom: 10.0),
                                   child: Icon(
@@ -123,8 +124,10 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                   ),
                                 ),
                               ),
-                              Expanded(
+                              Flexible(
+                                flex: 2,
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
                                     Text(
                                       "Transparency",
@@ -182,9 +185,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
 
                       Expanded(
                         child: Container(
-//                            height: 500.0,
                             width: double.infinity,
-//                            alignment: Alignment.topCenter,
                             child: NotificationListener<ScrollNotification>(
                               onNotification: (scrollNotification) {
                                 if (scrollNotification
