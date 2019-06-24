@@ -21,13 +21,12 @@ import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marr
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
-
 class ServicesScreen extends StatefulWidget {
-  
   //TODO temporary text
-  static const String message ="lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
-  static const String confra_message = "Be an active part of the mission and service of the Carmelite Church";
-
+  static const String message =
+      "lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
+  static const String confra_message =
+      "Be an active part of the mission and service of the Carmelite Church";
 
   static const String JOIN_US = 'Join us';
   static const String MAKE_REQUEST = 'Make a request';
@@ -37,7 +36,6 @@ class ServicesScreen extends StatefulWidget {
   static const String WEDDING = 'Wedding';
   static const String PASSING = 'Passing';
   static const String EVENTS = 'Events';
-
 
   ServicesScreen(BuildContext context);
 
@@ -59,11 +57,23 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   ScrollController _scrollController;
 
-  static Icon _arrowUp = Icon(Icons.keyboard_arrow_up, color: Colors.brown,);
-  static Icon _arrowDown = Icon(Icons.keyboard_arrow_down, color: Colors.brown,);
+  static Icon _arrowUp = Icon(
+    Icons.keyboard_arrow_up,
+    color: Colors.brown,
+  );
+  static Icon _arrowDown = Icon(
+    Icons.keyboard_arrow_down,
+    color: Colors.brown,
+  );
 
-  VisibilityHelper _arrowMoreUp = VisibilityHelper(child: _arrowUp, visibility: VisibilityFlag.gone,);
-  VisibilityHelper _arrowMoreDown = VisibilityHelper(child: _arrowDown, visibility: VisibilityFlag.gone,);
+  VisibilityHelper _arrowMoreUp = VisibilityHelper(
+    child: _arrowUp,
+    visibility: VisibilityFlag.gone,
+  );
+  VisibilityHelper _arrowMoreDown = VisibilityHelper(
+    child: _arrowDown,
+    visibility: VisibilityFlag.gone,
+  );
 
   @override
   void initState() {
@@ -73,7 +83,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     _initializeArrows();
   }
 
-  Future _initializeArrows()  async {
+  Future _initializeArrows() async {
     await Future.delayed(Duration(seconds: 3));
     _scrollListener();
   }
@@ -88,27 +98,20 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            //
+            GestureDetector(onTap: _scrollListener, child: servicesHeader()),
 
-      body:
-      Column(
-        children: <Widget> [
-        //
-        GestureDetector(
-            onTap: _scrollListener,
-            child: servicesHeader()),
-
-          GestureDetector(
-              onTap: _moveUp,
-              child: _arrowMoreUp),
+            GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
             Expanded(
-                child: Container(
+              child: Container(
                 alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.symmetric(
                   horizontal: 50.0,
                 ),
-
                 child: NotificationListener<ScrollNotification>(
-                  onNotification: (scrollNotification){
+                  onNotification: (scrollNotification) {
                     if (scrollNotification is ScrollStartNotification) {
                       _onStartScroll(scrollNotification.metrics);
                     } else if (scrollNotification is ScrollUpdateNotification) {
@@ -118,53 +121,40 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     }
                   },
                   child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: services.length,
-                    itemBuilder:(context, index){
-                      return _serviceItem(context, services[index]);
-                    }
-                  ),
+                      controller: _scrollController,
+                      itemCount: services.length,
+                      itemBuilder: (context, index) {
+                        return _serviceItem(context, services[index]);
+                      }),
                 ),
               ),
             ),
-          GestureDetector(
-              onTap: _moveDown,
-              child: _arrowMoreDown),
+            GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
           ],
         ),
       ),
     );
   }
 
-  @override
-  void reassemble() {
-    print("reassemble");
-    super.reassemble();
-  }
-
-  Widget _serviceItem(context, Service service){
+  Widget _serviceItem(context, Service service) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-            _navigateToService(service.service_name),
-          )
-        );
+            context,
+            MaterialPageRoute(
+              builder: (context) => _navigateToService(service.service_name),
+            ));
       },
-         child: serviceTile(service.service_name, ServicesScreen.message),
-
+      child: serviceTile(service.service_name, ServicesScreen.message),
     );
   }
 
-  Widget  _navigateToService(String service_name) {
-    switch(service_name)
-    {
+  Widget _navigateToService(String service_name) {
+    switch (service_name) {
       case ServicesScreen.JOIN_US:
         return JoinUs();
       case ServicesScreen.MAKE_REQUEST:
-         return MakeRequest1();
+        return MakeRequest1();
       case ServicesScreen.BAPTISIM:
         return Baptism();
       case ServicesScreen.COMMUNION:
@@ -172,27 +162,27 @@ class _ServicesScreenState extends State<ServicesScreen> {
       case ServicesScreen.CONFIRMATION:
         return Confirmation();
       case ServicesScreen.WEDDING:
-       return Marriage();
+        return Marriage();
       case ServicesScreen.PASSING:
-       return Passing();
+        return Passing();
       case ServicesScreen.EVENTS:
-       return Events();
+        return Events();
     }
   }
 
-  void _onStartScroll(ScrollMetrics metrics) {
-  }
-  void _onUpdateScroll(ScrollMetrics metrics) {
-  }
+  void _onStartScroll(ScrollMetrics metrics) {}
+
+  void _onUpdateScroll(ScrollMetrics metrics) {}
 
   void _onEndScroll(ScrollMetrics metrics) {
     _scrollListener();
   }
 
   _scrollListener() {
+    if (!_scrollController.hasClients) return;
     try {
       if (_scrollController.offset ==
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
         setState(() {
@@ -204,7 +194,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
         return;
       }
       if (_scrollController.offset >=
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
         setState(() {
           _arrowMoreDown = VisibilityHelper(
@@ -215,7 +205,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
         return;
       }
       if (_scrollController.offset <=
-          _scrollController.position.minScrollExtent &&
+              _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
         setState(() {
           _arrowMoreDown = VisibilityHelper(
@@ -225,8 +215,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
         });
         return;
       }
-      if (_scrollController.offset < _scrollController.position.maxScrollExtent
-          && _scrollController.offset >
+      if (_scrollController.offset <
+              _scrollController.position.maxScrollExtent &&
+          _scrollController.offset >
               _scrollController.position.minScrollExtent) {
         setState(() {
           _arrowMoreDown = VisibilityHelper(
@@ -236,8 +227,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
         });
         return;
       }
-    }
-    catch(e){
+    } catch (e) {
       print(e.toString());
       print("error in _scrolListener");
     }
@@ -247,9 +237,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
     _scrollController.animateTo(_scrollController.offset - 200,
         curve: Curves.linear, duration: Duration(milliseconds: 500));
   }
+
   _moveDown() {
     _scrollController.animateTo(_scrollController.offset + 200,
         curve: Curves.linear, duration: Duration(milliseconds: 500));
   }
 }
-

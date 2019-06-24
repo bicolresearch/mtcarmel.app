@@ -42,17 +42,13 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.brown,),
-        backgroundColor: Colors.white,
         title: Text(
           "Video",
-          style: TextStyle(color: Colors.brown),
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
               Icons.video_library,
-              color: Colors.brown,
             ),
             onPressed: () async {
               await Navigator.push(
@@ -97,8 +93,8 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
                   ),
                 ],
                 progressColors: ProgressColors(
-                  playedColor: Colors.brown[300],
-                  handleColor: Colors.brown[600],
+                  playedColor: Colors.red,
+                  handleColor: Colors.redAccent,
                 ),
                 onPlayerInitialized: (controller) {
                   _controller = controller;
@@ -146,28 +142,28 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
                             onPressed: () => _controller.enterFullScreen()),
                       ],
                     ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    TextField(
-                      controller: _seekToController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Seek to seconds",
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(5.0),
-                          child: OutlineButton(
-                            child: Text("Seek"),
-                            onPressed: () => _controller.seekTo(
-                              Duration(
-                                seconds: int.parse(_seekToController.text),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+//                    SizedBox(
+//                      height: 10.0,
+//                    ),
+//                    TextField(
+//                      controller: _seekToController,
+//                      keyboardType: TextInputType.number,
+//                      decoration: InputDecoration(
+//                        border: OutlineInputBorder(),
+//                        hintText: "Seek to seconds",
+//                        suffixIcon: Padding(
+//                          padding: EdgeInsets.all(5.0),
+//                          child: OutlineButton(
+//                            child: Text("Seek"),
+//                            onPressed: () => _controller.seekTo(
+//                              Duration(
+//                                seconds: int.parse(_seekToController.text),
+//                              ),
+//                            ),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
                     SizedBox(
                       height: 10.0,
                     ),
@@ -195,16 +191,16 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Status: $_playerStatus",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+//                    Padding(
+//                      padding: EdgeInsets.all(8.0),
+//                      child: Text(
+//                        "Status: $_playerStatus",
+//                        style: TextStyle(
+//                          fontWeight: FontWeight.w300,
+//                        ),
+//                        textAlign: TextAlign.center,
+//                      ),
+//                    ),
                   ],
                 ),
               ),

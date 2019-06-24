@@ -20,7 +20,7 @@ import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/sample_video_player.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/video_screen.dart';
-import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player.dart';
+import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
 
 class FeedScreen extends StatefulWidget {
   static const TextStyle optionStyle =

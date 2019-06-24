@@ -22,6 +22,19 @@ class MtCarmelApp extends StatelessWidget {
       title: 'Mount Carmel',
       theme: ThemeData(
         primarySwatch: Colors.brown,
+        appBarTheme: AppBarTheme(
+            brightness: Brightness.light,
+            color: Colors.white,
+            textTheme: TextTheme(
+              title: TextStyle(
+                  color: Colors.brown,
+                  fontFamily: "Helvetica",
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
+            ),
+            iconTheme: IconThemeData(
+              color: Colors.brown,
+            )),
       ),
       home: Page(
         title: 'Mount Carmel App',
