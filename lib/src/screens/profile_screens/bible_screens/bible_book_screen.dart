@@ -104,24 +104,12 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
                 ],
               ),
               Expanded(
-//                  child: FutureBuilder<BibleReference>(builder: (context, snapshot){
-//                    if(snapshot.hasData){
-//                      return Text(snapshot.data.text);
-//                    }else if(snapshot.hasError){
-//                      return Text("Has Error");
-//                    }
-//                    else{
-//                      return Center(child: CircularProgressIndicator());
-//                    }
-//                  })
-                child: SingleChildScrollView(
-                    child: Padding(
+                child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: (_reference == null)
-                      ? CircularProgressIndicator()
-                      : Text("${_reference.text}",
-                      style: AppConstants.OPTION_STYLE2)
-                )),
+                  ? CircularProgressIndicator()
+                :_chapterText(),
+                ),
               ),
               leftArrowBackButton(context: context),
             ],
@@ -136,4 +124,16 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
       _chapters.add("Chapter $i");
     }
   }
+
+
+  Widget _chapterText() {
+    return ListView.builder(
+        itemCount: (_reference==null)?0:_reference.verses.length,
+        itemBuilder: (context, index) {
+          return Text("\t${index+1} ${_reference.verses[index].text}",
+                      style: AppConstants.OPTION_STYLE2);
+        });
+  }
+
 }
+
