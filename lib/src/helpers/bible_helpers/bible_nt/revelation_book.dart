@@ -16,7 +16,8 @@ class RevelationBook extends BibleBook{
 
   RevelationBook(){
     super.bookName = 'Revelation';
-    _assignChapters();
+    super.numberOfChapters = 22;
+        _assignChapters();
       }
 
   //TODO add chapters  

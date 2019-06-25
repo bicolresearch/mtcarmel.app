@@ -16,7 +16,8 @@ class GalatiansBook extends BibleBook{
 
   GalatiansBook(){
     super.bookName = 'Galatians';
-    _assignChapters();
+    super.numberOfChapters = 6;
+        _assignChapters();
       }
 
   //TODO add chapters  

@@ -16,7 +16,8 @@ class ActsBook extends BibleBook{
 
   ActsBook(){
     super.bookName = 'Acts';
-    _assignChapters();
+    super.numberOfChapters = 28;
+        _assignChapters();
       }
 
   //TODO add chapters  

@@ -16,7 +16,8 @@ class LukeBook extends BibleBook{
 
   LukeBook(){
     super.bookName = 'Luke';
-    _assignChapters();
+    super.numberOfChapters = 24;
+        _assignChapters();
       }
 
   //TODO add chapters  

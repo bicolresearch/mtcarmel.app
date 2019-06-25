@@ -16,7 +16,8 @@ class FirstPeterBook extends BibleBook{
 
   FirstPeterBook(){
     super.bookName = '1Peter';
-    _assignChapters();
+    super.numberOfChapters = 5;
+        _assignChapters();
       }
 
   //TODO add chapters  

@@ -16,7 +16,8 @@ class SecondTimothyBook extends BibleBook{
 
   SecondTimothyBook(){
     super.bookName = '2Timothy';
-    _assignChapters();
+    super.numberOfChapters = 4;
+        _assignChapters();
       }
 
   //TODO add chapters  

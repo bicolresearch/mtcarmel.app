@@ -16,7 +16,8 @@ class JudeBook extends BibleBook{
 
   JudeBook(){
     super.bookName = 'Jude';
-    _assignChapters();
+    super.numberOfChapters = 1;
+        _assignChapters();
       }
 
   //TODO add chapters  

@@ -16,7 +16,8 @@ class EphesiansBook extends BibleBook{
 
   EphesiansBook(){
     super.bookName = 'Ephesians';
-    _assignChapters();
+    super.numberOfChapters = 6;
+        _assignChapters();
       }
 
   //TODO add chapters  

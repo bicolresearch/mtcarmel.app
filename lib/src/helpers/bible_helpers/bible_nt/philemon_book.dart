@@ -16,7 +16,8 @@ class PhilemonBook extends BibleBook{
 
   PhilemonBook(){
     super.bookName = 'Philemon';
-    _assignChapters();
+    super.numberOfChapters = 1;
+        _assignChapters();
       }
 
   //TODO add chapters  

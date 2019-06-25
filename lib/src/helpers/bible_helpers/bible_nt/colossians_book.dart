@@ -16,7 +16,8 @@ class ColossiansBook extends BibleBook{
 
   ColossiansBook(){
     super.bookName = 'Colossians';
-    _assignChapters();
+    super.numberOfChapters = 4;
+        _assignChapters();
       }
 
   //TODO add chapters  

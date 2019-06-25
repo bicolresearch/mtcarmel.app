@@ -16,7 +16,8 @@ class ThreeJohnBook extends BibleBook{
 
   ThreeJohnBook(){
     super.bookName = '3John';
-    _assignChapters();
+    super.numberOfChapters = 1;
+        _assignChapters();
       }
 
   //TODO add chapters  

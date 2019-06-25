@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_book.dart';
 
-//import 'package:mt_carmel_app/src/model/bible_model.dart';
 import 'package:mt_carmel_app/src/model/bible_reference.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:http/http.dart' as http;
@@ -48,7 +47,7 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
         if (response.statusCode == 200) {
           try {
             final body = json.decode(response.body);
-            
+
             _reference = BibleReference.fromJson(body);
 
           } catch (e) {
@@ -105,24 +104,12 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
                 ],
               ),
               Expanded(
-//                  child: FutureBuilder<BibleReference>(builder: (context, snapshot){
-//                    if(snapshot.hasData){
-//                      return Text(snapshot.data.text);
-//                    }else if(snapshot.hasError){
-//                      return Text("Has Error");
-//                    }
-//                    else{
-//                      return Center(child: CircularProgressIndicator());
-//                    }
-//                  })
-                child: SingleChildScrollView(
-                    child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: (_reference == null)
-                      ? CircularProgressIndicator()
-                      : Text(_reference.text,
-                      style: AppConstants.OPTION_STYLE2)
-                )),
+                  ? CircularProgressIndicator()
+                :_chapterText(),
+                ),
               ),
               leftArrowBackButton(context: context),
             ],
@@ -137,4 +124,16 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
       _chapters.add("Chapter $i");
     }
   }
+
+
+  Widget _chapterText() {
+    return ListView.builder(
+        itemCount: (_reference==null)?0:_reference.verses.length,
+        itemBuilder: (context, index) {
+          return Text("\t${index+1} ${_reference.verses[index].text}",
+                      style: AppConstants.OPTION_STYLE2);
+        });
+  }
+
 }
+

@@ -16,7 +16,8 @@ class HebrewsBook extends BibleBook{
 
   HebrewsBook(){
     super.bookName = 'Hebrews';
-    _assignChapters();
+    super.numberOfChapters = 13;
+        _assignChapters();
       }
 
   //TODO add chapters  
