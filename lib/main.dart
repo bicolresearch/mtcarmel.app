@@ -67,7 +67,6 @@ class _PageState extends State<Page> {
   @override
   initState() {
     super.initState();
-
     getFirstUsageFlag();
 
     Future.delayed(

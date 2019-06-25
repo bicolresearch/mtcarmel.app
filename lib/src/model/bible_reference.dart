@@ -47,8 +47,8 @@ class Verse{
   final String bookId;
   @JsonKey(name: "book_name")
   final String bookName;
-  final String chapter;
-  final String verse;
+  final int chapter;
+  final int verse;
   final String text;
 
   factory Verse.fromJson(Map<String, dynamic> json) => _$VerseFromJson(json);

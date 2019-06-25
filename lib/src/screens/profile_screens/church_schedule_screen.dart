@@ -1,9 +1,9 @@
 /*
 *	Filename		:	church_schedule_screen.dart
-*	Purpose			:	Displays the different schdules of the church
+*	Purpose			:	Displays the different schedules of the church
 * Created			: 2019-06-14 09:42:18 by Detective Conan
-*	Updated			: 2019-06-14 09:42:18 by Detective Conan 
-*	Changes			:
+*	Updated			: 2019-06-25 08:48:12 by Detective Conan
+*	Changes			: Fixed the behavior of scroll and the padding of back button.
 */
 
 
@@ -143,7 +143,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
                 ),
               ),
             Container(
-              height: 40.0,
+              height: 60.0,
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -233,6 +233,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
         Container(
           //height: 300.0,
           child: ListView.builder(
+            physics: ScrollPhysics(parent: ScrollPhysics()),
             shrinkWrap: true,
             itemCount: schedules.length,
             itemBuilder: (context, index){

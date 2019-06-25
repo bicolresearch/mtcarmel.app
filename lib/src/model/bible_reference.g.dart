@@ -31,10 +31,10 @@ Map<String, dynamic> _$BibleReferenceToJson(BibleReference instance) =>
 
 Verse _$VerseFromJson(Map<String, dynamic> json) {
   return Verse(
-      json['verse'] as String,
+      json['verse'] as int,
       json['book_id'] as String,
       json['book_name'] as String,
-      json['chapter'] as String,
+      json['chapter'] as int,
       json['text'] as String);
 }
 

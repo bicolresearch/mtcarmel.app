@@ -15,10 +15,11 @@ import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_bo
 
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
+enum BookPart { OldTestament, NewTestament }
 
 class BibleScreen extends StatefulWidget {
-
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   BibleScreen(BuildContext context);
 
@@ -27,106 +28,108 @@ class BibleScreen extends StatefulWidget {
 }
 
 class _BibleScreenState extends State<BibleScreen> {
-
   BibleBooks _bibleBooks;
 
   @override
-  void initState() {  
+  void initState() {
     _bibleBooks = BibleBooks();
     super.initState();
-  }  
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 12.0),
-              child: Text("Holy Bible",
-                style: AppConstants.OPTION_STYLE3,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text("Old Testaments",
-                style: AppConstants.OPTION_STYLE3,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: _bibleBooks.oldTestamentBooks.isNotEmpty
-                    ?GridView.count(
-                      shrinkWrap: true,
-                      primary: true,
-                      crossAxisCount: 3,
-                      children: List.generate(_bibleBooks.oldTestamentBooks.length, (index) {
-                        return getStructuredGridCell(_bibleBooks.oldTestamentBooks[index]);
-                      }   
+        resizeToAvoidBottomPadding: false,
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          child: Container(
+            height: MediaQuery.of(context).size.height - 200,
+            padding: const EdgeInsets.fromLTRB(30.0, 60.0, 30.0, 50.0),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 12.0),
+                  child: Text(
+                    "Holy Bible",
+                    style: AppConstants.OPTION_STYLE3,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        //Old testamentBooks
+                        _bookPart(BookPart.OldTestament,
+                            _bibleBooks.oldTestamentBooks),
+                        //New testamentBooks
+                        _bookPart(BookPart.NewTestament,
+                            _bibleBooks.newTestamentBooks),
+                      ],
                     ),
-                  ):Container(),
-              ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: leftArrowBackButton(context: context),
+                ),
+              ],
             ),
-
-          // new testament
-          Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text("New Testaments",
-                style: AppConstants.OPTION_STYLE3,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: _bibleBooks.newTestamentBooks.isNotEmpty
-                    ?GridView.count(
-                      primary: true,
-                      crossAxisCount: 3,
-                      children: List.generate(_bibleBooks.newTestamentBooks.length, (index) {
-                        return getStructuredGridCell(_bibleBooks.newTestamentBooks[index]);
-                      }   
-                    ),
-                  ):Container(),
-              ),
-            ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: leftArrowBackButton(context: context),
           ),
-          ],
-        ),
-      )        
-    );
+        ));
   }
 
-Widget getStructuredGridCell(BibleBook bibleBook) {
-    return GestureDetector(
-      onTap: () {Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => BibleBookScreen(book: bibleBook),
-          )
-        );
-      },
-      child: Card(
-        elevation: 1.5,
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0,5.0),
-            child: Text(bibleBook.bookName, style: AppConstants.OPTION_STYLE2, 
-              textAlign: TextAlign.center,),
-          ),
-        )
-      ),
-    );
+  List<String> booksToStrings(List<BibleBook> books) {
+    List<String> bookList = [];
+    for (BibleBook book in books) {
+      bookList.add(book.bookName);
+    }
+    return bookList;
   }
-  
-  void close(){    
+
+  void close() {
     this.dispose();
-  }    
+  }
+
+  Widget _bookPart(BookPart testament, List<BibleBook> bibleBooks) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            (testament == BookPart.OldTestament)
+                ? "Old Testaments"
+                : "New Testament",
+            style: AppConstants.OPTION_STYLE3,
+            textAlign: TextAlign.center,
+          ),
+          Divider(),
+          ListView.builder(
+              physics: ScrollPhysics(parent: ScrollPhysics()),
+              shrinkWrap: true,
+              itemCount: bibleBooks.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                BibleBookScreen(book: bibleBooks[index]),
+                          ));
+                    },
+                    child: Text(
+                      bibleBooks[index].bookName,
+                      style: AppConstants.OPTION_STYLE2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                );
+              })
+        ],
+      );
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_book.dart';
+
+//import 'package:mt_carmel_app/src/model/bible_model.dart';
 import 'package:mt_carmel_app/src/model/bible_reference.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:http/http.dart' as http;
@@ -8,11 +10,10 @@ import 'dart:async';
 import 'dart:convert';
 
 class BibleBookScreen extends StatefulWidget {
-  BibleBookScreen({Key key, 
-    @required this.book}) : super(key: key);
-  
+  BibleBookScreen({Key key, @required this.book}) : super(key: key);
+
   final BibleBook book;
-  
+
   _BibleBookScreenState createState() => _BibleBookScreenState(book);
 }
 
@@ -20,78 +21,120 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
   _BibleBookScreenState(this.book);
 
   final BibleBook book;
-  var currentChapter = 1;
+  var _chapterSelect = "Chapter 1";
+  var _chapterContent = "";
+  List<String> _chapters = [];
 
   List<Verse> _verses = [];
 
-  List<BibleReference> _references;
+  BibleReference _reference;
 
   var _isLoading = true;
 
   var _isJsonFailed = false;
 
   @override
-  void initState() { 
-    super.initState();   
-    //this.getJasonData();
+  void initState() {
+    _initChapters();
+    super.initState();
+    this.getJasonData();
   }
 
-  Future<void> getJasonData() async{
-    var response = await http.get(AppConstants.BIBLE_JSON_BASE_URL+book.bookName+"1"); 
-    if(this.mounted){
-      setState(() 
-        {
-          if (response.statusCode == 200) {
-            // try{
-            //   var list =parsedJson[""]response.body[1] as List;
-            //   _verses = list
-            //   .map((data) => new Verse.fromJson(data))
-            //   .toList();
-            // }catch(e){
-            //   print(e.toString());
-            // }
-            try{
-              // _references = (json.decode(response.body) as List)
-              // .map((data) => BibleReference.fromJson(data));
-              // print(_references[0].reference);
-                final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+  Future<BibleReference> getJasonData() async {
+    var response = await http
+        .get(AppConstants.BIBLE_JSON_BASE_URL + book.bookName + _chapterSelect+ "?translation=kjv");
+    if (this.mounted) {
+      setState(() {
+        if (response.statusCode == 200) {
+          try {
+            final body = json.decode(response.body);
+            
+            _reference = BibleReference.fromJson(body);
 
-                _references = parsed.map<Verse>((json) => Verse.fromJson(json)).toList();
-            }catch(e){
-              print(e.toString());
-              print(response.body);
-            }
-            _isLoading = false;              
-          } 
-          else 
-          {
-            print(response.statusCode);
-            _isJsonFailed = true;
-            _isLoading = false;
+          } catch (e) {
+            print(e.toString() + "...");
+            print(response.body);
           }
+          _isLoading = false;
+        } else {
+          print(response.statusCode);
+          _isJsonFailed = true;
+          _isLoading = false;
         }
-      );
+      });
     }
+    return _reference;
   }
-  
-    
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(book.bookName),
-          // Text(_reference.reference),
-          // Text(_reference.translation_name),
-          // Text(_reference.translation_note),
-          //   Text(_reference.verses[0].book_id),
-          //   Text(_reference.verses[0].book_name),
-          //   Text(_reference.verses[0].verse),
-          SizedBox(height: 40.0,),
-          leftArrowBackButton(context: context),
-        ],
-      ),),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                child: Text("King James Version",
+                    style: AppConstants.OPTION_STYLE2),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(this.book.bookName, style: AppConstants.OPTION_STYLE3),
+                  DropdownButton<String>(
+                    value: _chapterSelect,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        _chapterSelect = newValue;
+                        getJasonData();
+                      });
+                    },
+                    items:
+                        _chapters.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: AppConstants.OPTION_STYLE2,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+              Expanded(
+//                  child: FutureBuilder<BibleReference>(builder: (context, snapshot){
+//                    if(snapshot.hasData){
+//                      return Text(snapshot.data.text);
+//                    }else if(snapshot.hasError){
+//                      return Text("Has Error");
+//                    }
+//                    else{
+//                      return Center(child: CircularProgressIndicator());
+//                    }
+//                  })
+                child: SingleChildScrollView(
+                    child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: (_reference == null)
+                      ? CircularProgressIndicator()
+                      : Text(_reference.text,
+                      style: AppConstants.OPTION_STYLE2)
+                )),
+              ),
+              leftArrowBackButton(context: context),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+
+  void _initChapters() {
+    for (int i = 1; i <= this.book.numberOfChapters; i++) {
+      _chapters.add("Chapter $i");
+    }
   }
 }
