@@ -2,26 +2,30 @@
 *	Filename		:	<filename.extension>
 *	Purpose			:	
 * Created			: 2019-06-17 19:23:44
-*	Updated			:	2019-06-17 19:23:44 by Constantina
-*	Changes			: add services messages/content - add static message for confraternity
+*	Updated			:	2019-06-25 16:23:50 by jo 
+*	Changes			: updated api url, added new api url for services, map and boundaries
 */
+
 
 import 'package:flutter/material.dart';
 
 class AppConstants{
   static const FIRST_USAGE_FLAG_NAME = "first_usage_flag";
   // TODO: to be replaced by actual url
-  static const ADS_JSON_URL = "http://192.168.254.109/api/ads.json";
-  static const ADS_API_BASE_URL = "http://192.168.254.109/api/";
-  // static const FEEDS_API_BASE_URL = "http://192.168.254.109/api/";
-  static const API_BASE_URL = "http://192.168.254.109/api/";
-  // static const FEEDS_JSON_URL = "http://192.168.254.109/api/news.json";
-  static const TRANSACTION_JSON_URL = 'http://192.168.254.109/api/transparency_list.json';
-  static const PRIESTS_JSON_URL = 'http://192.168.254.109/api/priests.json';
-  static const PASTORS_JSON_URL = 'http://192.168.254.109/api/pastors.json';
-  static const ABOUT_JSON_URL = 'http://192.168.254.109/api/history_details.json';
-  static const CONTACT_DETAILS_JSON_URL = 'http://192.168.254.109/api/contact_details.json';
-  static const CHURCH_SCHEDULE_JSON_URL = 'http://192.168.254.109/api/schedule.json';
+  static const ADS_JSON_URL = "https://api.mountcarmel.ph/ads";
+  static const ADS_API_BASE_URL = "https://api.mountcarmel.ph/";
+  // static const FEEDS_API_BASE_URL = "http://localhost/mountcarmel.api/";
+  static const API_BASE_URL = "https://api.mountcarmel.ph/";
+  // static const FEEDS_JSON_URL = "http://localhost/mountcarmel.api/news.json";
+  static const TRANSACTION_JSON_URL = 'https://api.mountcarmel.ph/donations';
+  static const PRIESTS_JSON_URL = 'https://api.mountcarmel.ph/priests';
+  static const PASTORS_JSON_URL = 'https://api.mountcarmel.ph/pastors';
+  static const ABOUT_JSON_URL = 'https://api.mountcarmel.ph/history';
+  static const CONTACT_DETAILS_JSON_URL = 'https://api.mountcarmel.ph/contacts';
+  static const CHURCH_SCHEDULE_JSON_URL = 'https://api.mountcarmel.ph/schedules';
+  static const SERVICES_JSON_URL = 'https://api.mountcarmel.ph/modules';
+  static const MAP_JSON_URL = 'https://api.mountcarmel.ph/maps';
+  static const BOUNDARIES_JSON_URL = 'https://api.mountcarmel.ph/boundaries';
   
   //site api
   static const BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
