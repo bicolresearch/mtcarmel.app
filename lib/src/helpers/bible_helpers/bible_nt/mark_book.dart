@@ -16,7 +16,8 @@ class MarkBook extends BibleBook{
 
   MarkBook(){
     super.bookName = 'Mark';
-    _assignChapters();
+    super.numberOfChapters = 16;
+        _assignChapters();
       }
 
   //TODO add chapters  

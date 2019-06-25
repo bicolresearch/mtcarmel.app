@@ -16,7 +16,8 @@ class TitusBook extends BibleBook{
 
   TitusBook(){
     super.bookName = 'Titus';
-    _assignChapters();
+    super.numberOfChapters = 3;
+        _assignChapters();
       }
 
   //TODO add chapters  

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_book.dart';
 
-//import 'package:mt_carmel_app/src/model/bible_model.dart';
 import 'package:mt_carmel_app/src/model/bible_reference.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:http/http.dart' as http;
@@ -48,7 +47,7 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
         if (response.statusCode == 200) {
           try {
             final body = json.decode(response.body);
-            
+
             _reference = BibleReference.fromJson(body);
 
           } catch (e) {
@@ -117,10 +116,10 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
 //                  })
                 child: SingleChildScrollView(
                     child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: (_reference == null)
                       ? CircularProgressIndicator()
-                      : Text(_reference.text,
+                      : Text("${_reference.text}",
                       style: AppConstants.OPTION_STYLE2)
                 )),
               ),

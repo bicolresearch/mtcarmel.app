@@ -16,7 +16,8 @@ class SecondThessaloniansBook extends BibleBook{
 
   SecondThessaloniansBook(){
     super.bookName = '2Thessalonians';
-    _assignChapters();
+    super.numberOfChapters = 3;
+        _assignChapters();
       }
 
   //TODO add chapters  

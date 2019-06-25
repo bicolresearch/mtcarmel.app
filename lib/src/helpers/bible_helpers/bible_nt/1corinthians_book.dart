@@ -16,7 +16,8 @@ class FirstCorinthiansBook extends BibleBook{
 
   FirstCorinthiansBook(){
     super.bookName = '1Corinthians';
-    _assignChapters();
+    super.numberOfChapters = 16;
+        _assignChapters();
       }
 
   //TODO add chapters  

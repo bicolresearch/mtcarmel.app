@@ -16,7 +16,8 @@ class RomansBook extends BibleBook{
 
   RomansBook(){
     super.bookName = 'Romans';
-    _assignChapters();
+    super.numberOfChapters = 16;
+        _assignChapters();
       }
 
   //TODO add chapters  

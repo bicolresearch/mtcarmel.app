@@ -16,6 +16,7 @@ class MatthewBook extends BibleBook{
 
   MatthewBook(){
     super.bookName = 'Matthew';
+    super.numberOfChapters = 28;
     _assignChapters();
       }
 

@@ -16,7 +16,8 @@ class JohnBook extends BibleBook{
 
   JohnBook(){
     super.bookName = 'John';
-    _assignChapters();
+    super.numberOfChapters = 21;
+        _assignChapters();
       }
 
   //TODO add chapters  

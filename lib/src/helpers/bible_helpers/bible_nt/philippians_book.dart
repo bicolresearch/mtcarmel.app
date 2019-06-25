@@ -16,7 +16,8 @@ class PhilippiansBook extends BibleBook{
 
   PhilippiansBook(){
     super.bookName = 'Philippians';
-    _assignChapters();
+    super.numberOfChapters = 4;
+        _assignChapters();
       }
 
   //TODO add chapters  
