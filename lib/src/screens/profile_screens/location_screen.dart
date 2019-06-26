@@ -10,7 +10,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 
 class LocationScreen extends StatefulWidget {
   @override
@@ -18,14 +18,24 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  static LatLng _location = LatLng(14.614253, 121.030581);
 
+  BitmapDescriptor _markerIcon;
 
-  CameraPosition _initialPosition = CameraPosition(
-      target: LatLng(26.8206, 30.8025));
+  CameraPosition _initialPosition =
+      CameraPosition(zoom: 16.0, target: _location);
   Completer<GoogleMapController> _controller = Completer();
 
+  Set<Marker> _markers = {};
+
   void _onMapCreated(GoogleMapController controller) {
+    _createMarkerImageFromAsset(context);
     _controller.complete(controller);
+    _markers.add(Marker(
+      position: _location,
+      markerId: MarkerId("mountCarmelLocationId"),
+      icon: _markerIcon,
+    ));
   }
 
   @override
@@ -38,12 +48,27 @@ class _LocationScreenState extends State<LocationScreen> {
         body: Stack(
           children: <Widget>[
             GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: _initialPosition,
-            ),
+                myLocationButtonEnabled: false,
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: _initialPosition,
+                markers: _markers),
           ],
         ));
   }
+
+  Future<void> _createMarkerImageFromAsset(BuildContext context) async {
+    if (_markerIcon == null) {
+      final ImageConfiguration imageConfiguration =
+          createLocalImageConfiguration(context);
+      BitmapDescriptor.fromAssetImage(
+              imageConfiguration, 'assets/images/mt_logo.png')
+          .then(_updateBitmap);
+    }
+  }
+
+  void _updateBitmap(BitmapDescriptor bitmap) {
+    setState(() {
+      _markerIcon = bitmap;
+    });
+  }
 }
-
-

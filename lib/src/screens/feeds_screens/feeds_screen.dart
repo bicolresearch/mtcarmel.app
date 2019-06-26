@@ -198,7 +198,7 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget _feedContent(Feed feed) {
     if (_isJsonFailed || feed == null) return Container();
 
-    String url = AppConstants.FEEDS_API_BASE_URL + feed.coverPhoto;
+    String url = AppConstants.API_BASE_URL + feed.coverPhoto;
     try {
       FadeInImage.assetNetwork(
         fadeInCurve: Curves.bounceIn,

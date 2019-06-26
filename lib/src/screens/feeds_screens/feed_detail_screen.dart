@@ -58,7 +58,7 @@ class FeedDetailScreen extends StatelessWidget{
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 image: new DecorationImage(
-                      image: NetworkImage(AppConstants.FEEDS_API_BASE_URL+feed.coverPhoto),
+                      image: NetworkImage(AppConstants.API_BASE_URL+feed.coverPhoto),
                       // fit: BoxFit.cover
                       ),
                   ),
