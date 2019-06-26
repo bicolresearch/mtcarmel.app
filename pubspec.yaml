@@ -60,6 +60,7 @@ flutter:
   assets:
     - assets/images/mt_logo.png
     - assets/images/sample_user.png
+    - assets/images/mount_carmel_logo.svg
   
   fonts:
   - family: Helvetica

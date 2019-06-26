@@ -106,9 +106,11 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: (_reference == null)
-                  ? CircularProgressIndicator()
+                  child: Center(
+                    child: (_reference == null)
+                    ? CircularProgressIndicator()
                 :_chapterText(),
+                  ),
                 ),
               ),
               leftArrowBackButton(context: context),

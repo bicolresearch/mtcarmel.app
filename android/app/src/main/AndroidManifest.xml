@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bicolresearch.mount_carmel_app">
+    package="ph.mountcarmel.mountcarmelsystem">
 
     <!-- <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -17,7 +17,7 @@
         
         <!-- Google Map API KEY -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyBd6RKLY7FMNX65YJWpzFa1PNbsPJMpazo"/>
+                android:value="AIzaSyD-UCm_ZdIOo6RUyU7TBmgNjH1GHgaDrig"/>
         
         <activity
             android:name=".MainActivity"
