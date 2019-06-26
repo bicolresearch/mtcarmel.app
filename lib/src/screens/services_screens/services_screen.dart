@@ -45,7 +45,7 @@ class ServicesScreen extends StatefulWidget {
 
 class _ServicesScreenState extends State<ServicesScreen> {
   final List<Service> services = [
-    Service(ServicesScreen.JOIN_US, ServicesScreen.confra_message),
+    Service(ServicesScreen.JOIN_US, ServicesScreen.message),
     Service(ServicesScreen.MAKE_REQUEST, ServicesScreen.message),
     Service(ServicesScreen.BAPTISIM, ServicesScreen.message),
     Service(ServicesScreen.COMMUNION, ServicesScreen.message),
@@ -142,10 +142,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => _navigateToService(service.service_name),
+              builder: (context) => _navigateToService(service.name),
             ));
       },
-      child: serviceTile(service.service_name, ServicesScreen.message),
+      child: serviceTile(service.name, ServicesScreen.message),
     );
   }
 

@@ -2,9 +2,10 @@
 *	Filename		:	priest_screen.dart
 *	Purpose			:	Shows the Carmalites Priests
 * Created			: 2019-06-11 14:14:18 by Detective Conan
-*	Updated			: 2019-06-14 09:10:21 by Detective Conan 
-*	Changes			: Replaced the lionearProgressIndicator with Container only
+*	Updated			: 2019-06-26 17:30:01 by jo 
+*	Changes			: update model names
 */
+
 
 
 import 'package:flutter/material.dart';
@@ -118,7 +119,7 @@ class _PriestsScreenState extends State<PriestsScreen> {
   }
 
 Card getStructuredGridCell(Priest priest) {
-  String url = AppConstants.API_BASE_URL+priest.cover_photo;
+  String url = AppConstants.API_BASE_URL+priest.coverPhoto;
     return Card(
       elevation: 1.5,
       child: Column(

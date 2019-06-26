@@ -2,9 +2,10 @@
 *	Filename		:	about_screen.dart
 *	Purpose			:	Show the details about the church.
 * Created			: 2019-06-13 12:37:11 by Detective Conan
-*	Updated			: 2019-06-13 12:37:11 by Detective Conan 
-*	Changes			:
+*	Updated			: 2019-06-26 17:21:04 by jo 
+*	Changes			: update variable names
 */
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
@@ -194,10 +195,10 @@ class _AboutItem{
     _label = label;
     switch(label){
       case AboutScreen.dateOfEstablishmentLabel:
-        _value = about.date_of_establishment;
+        _value = about.dateOfEstablishment;
         break;
       case AboutScreen.feastDayLabel:
-        _value = about.feast_Day;
+        _value = about.feastDay;
         break;
       case AboutScreen.titularLabel:
         _value = about.titular;

@@ -1,3 +1,11 @@
+/*
+*	Filename		:	tranparency_screen.dart
+*	Purpose			:	
+* Created			: 
+*	Updated			:	2019-06-26 17:33:34 by jo 
+*	Changes			: update model name
+*/
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
@@ -222,7 +230,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
 
   Widget _transactionContent(Transaction transaction) {
     if (_isJsonFailed) return Container();
-    String url = AppConstants.API_BASE_URL + transaction.photo;
+    String url = AppConstants.API_BASE_URL + transaction.coverPhoto;
     if (Image.network(url) != null) {
       return Container(
         alignment: Alignment.center,
@@ -238,14 +246,14 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
               ),
             ),
             Spacer(),
-            Container(width: 90.0, child: Text(transaction.name)),
+            Container(width: 90.0, child: Text(transaction.firstName)),
             Spacer(flex: 2),
             Container(
-                width: 70.0, child: Text(_formattedAmount(transaction.amount))),
+                width: 70.0, child: Text(transaction.amount)),
             Spacer(),
-            Container(width: 25.0, child: Text(transaction.hour)),
+            Container(width: 25.0, child: Text(transaction.postedOn)),
             Spacer(flex: 2),
-            Container(width: 60.0, child: Text(transaction.module)),
+            Container(width: 60.0, child: Text(transaction.donationType)),
             Spacer(),
           ],
         ),

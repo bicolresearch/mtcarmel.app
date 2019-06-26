@@ -2,9 +2,10 @@
 *	Filename		:	contact_detail_scree.dart
 *	Purpose			:	Displays the church contact details
 * Created			: 2019-06-13 15:07:14 by Detective Conan
-*	Updated			: 2019-06-13 15:07:14 by Detective Conan 
-*	Changes			:
+*	Updated			: 2019-06-26 17:24:38 by jo 
+*	Changes			: update model names
 */
+
 
 
 import 'package:flutter/material.dart';
@@ -113,11 +114,11 @@ Widget _contactDetailContent(BuildContext context){
       value: _contactList[0].name)
     :Container(),
     // address
-    _contactList[0].address.isNotEmpty
+    _contactList[0].address1.isNotEmpty
     ?itemWidget(
       context: context, 
       label: "Address", 
-      value: _contactList[0].address)
+      value: _contactList[0].address1)
     :Container(),
     // email
     _contactList[0].email.isNotEmpty
@@ -127,11 +128,11 @@ Widget _contactDetailContent(BuildContext context){
       value: _contactList[0].email)
     :Container(),
     // Social media
-    _contactList[0].social_media.isNotEmpty
+    _contactList[0].socialMedia.isNotEmpty
     ?itemWidget(
       context: context, 
       label: "Social Media", 
-      value: _contactList[0].social_media)
+      value: _contactList[0].socialMedia)
     :Container(),
     //landline
     _contactList[0].landline.isNotEmpty

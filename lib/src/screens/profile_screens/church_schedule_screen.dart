@@ -2,9 +2,10 @@
 *	Filename		:	church_schedule_screen.dart
 *	Purpose			:	Displays the different schedules of the church
 * Created			: 2019-06-14 09:42:18 by Detective Conan
-*	Updated			: 2019-06-25 08:48:12 by Detective Conan
-*	Changes			: Fixed the behavior of scroll and the padding of back button.
+*	Updated			: 2019-06-26 17:23:20 by jo 
+*	Changes			: update variablenames
 */
+
 
 
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
 
   _sortSchedules(){
     for (ChurchSchedule schedule in _churchScheduleList) {
-      switch(schedule.schedule_type){
+      switch(schedule.name){
         case "1": // holy mass
           _holyMassSchedule.add(schedule);
           break;
@@ -189,7 +190,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
       child: Column(
         children: <Widget>[
-          Text("${schedules[0].schedule_name}", 
+          Text("${schedules[0].name}", 
             style: TextStyle(color: Colors.brown,
             fontSize: 20.0,
             fontFamily: "Helvetica",
@@ -240,7 +241,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
             return 
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 40.0),
-                child: Text("${schedules[index].time_from} - ${schedules[index].time_to}", 
+                child: Text("${schedules[index].timeFrom} - ${schedules[index].timeTo}", 
                   style: TextStyle(color: Colors.black,
                     fontSize: 16.0,
                     fontFamily: "Helvetica",
