@@ -6,14 +6,22 @@ part 'transaction.g.dart';
 class Transaction{
 
 
-  Transaction(this.id,this.name, this.amount, this.hour, this.module, this.photo);
+  Transaction(this.id, this.branchId, this.firstName, this.lastName, this.amount, this.postedOn, this.donationType, this.coverPhoto);
 
-  final int id;
-  final String name;
-  final double amount;
-  final String hour;
-  final String module;
-  final String photo;
+  final String id;  
+  @JsonKey(name: "branch_id")
+  final String branchId;
+  @JsonKey(name: "first_name")
+  final String firstName;
+  @JsonKey(name: "last_name")
+  final String lastName;
+  final String amount;
+  @JsonKey(name: "posted_on")
+  final String postedOn;
+  @JsonKey(name: "donation_type")
+  final String donationType;
+  @JsonKey(name: "cover_photo")
+  final String coverPhoto;
 
   factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
 

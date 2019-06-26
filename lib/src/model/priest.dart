@@ -4,12 +4,16 @@ part 'priest.g.dart';
 
 @JsonSerializable()
 class Priest{
-  Priest(this.id,this.name, this.position, this.cover_photo);
+  Priest(this.id, this.branchId, this.name, this.position, this.rank, this.coverPhoto);
   
-  final int id;
+  final String id;
+  @JsonKey(name: "branch_id")
+  final String branchId;
   final String name;
   final String position;
-  final String cover_photo;
+  final String rank;
+  @JsonKey(name: "cover_photo")
+  final String coverPhoto;
 
   factory Priest.fromJson(Map<String, dynamic> json) => _$PriestFromJson(json);
 

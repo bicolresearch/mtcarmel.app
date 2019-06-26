@@ -5,20 +5,33 @@ part 'contact.g.dart';
 @JsonSerializable()
 class Contact{
   Contact(this.id,
+    this.branchId,
     this.name,
-    this.address,
-    this.email,
-    this.social_media,
+    this.address1,
+    this.address2,
+    this.city,
+    this.province,
+    this.country,
     this.landline,
-    this.mobile);
+    this.mobile,
+    this.email,
+    this.socialMedia);
   
-  final int id;
+  final String id;
+  @JsonKey(name: "branch_id")
+  final String branchId;
   final String name;
-  final String address;
-  final String email;
-  final String social_media;
+  final String address1;
+  final String address2;
+  final String city;
+  final String province;
+  final String country;
   final String landline;
   final String mobile;
+  final String email;
+  @JsonKey(name: "social_media")
+  final String socialMedia;
+  
 
   factory Contact.fromJson(Map<String, dynamic> json) => _$ContactFromJson(json);
 

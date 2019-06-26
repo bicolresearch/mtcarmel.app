@@ -6,13 +6,18 @@ part 'about.g.dart';
 
 @JsonSerializable()
 class About{
-  About(this.id,this.titular, this.diocese, this.date_of_establishment, this.feast_Day);
+  About(this.id, this.branchId, this.titular, this.diocese, this.dateOfEstablishment, this.feastDay, this.content);
   
-  final int id;
+  final String id;
+  @JsonKey(name: "branch_id")
+  final String branchId;
   final String titular;
   final String diocese;
-  final String date_of_establishment;
-  final String feast_Day;
+  @JsonKey(name: "date_of_establishment")
+  final String dateOfEstablishment;
+  @JsonKey(name: "feast_Day")
+  final String feastDay;
+  final String content;
 
   factory About.fromJson(Map<String, dynamic> json) => _$AboutFromJson(json);
 

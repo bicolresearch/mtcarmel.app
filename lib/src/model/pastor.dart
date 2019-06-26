@@ -11,11 +11,14 @@ part 'pastor.g.dart';
 
 @JsonSerializable()
 class Pastor{
-  Pastor(this.id,this.name, this.position);
+  Pastor(this.id, this.branchId, this.name, this.position, this.rank);
   
-  final int id;
+  final String id;
+  @JsonKey(name: "branch_id")
+  final String branchId;
   final String name;
   final String position;
+  final String rank;
 
   factory Pastor.fromJson(Map<String, dynamic> json) => _$PastorFromJson(json);
 

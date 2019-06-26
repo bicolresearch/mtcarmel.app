@@ -13,24 +13,25 @@ part 'church_schedule.g.dart';
 @JsonSerializable()
 class ChurchSchedule{
   ChurchSchedule(
-    this.id,
-  this.schedule_type,
-  this.schedule_name,
+  this.id,
+  this.branchId,
+  this.name,
   this.day,
-  this.time_from,
-  this.time_to,
   this.language,
-  this.language_name,
+  this.timeFrom,
+  this.timeTo,
   );
   
-  final int id;
-  final String schedule_type;
-  final String schedule_name;
-  final String day;
-  final String time_from;
-  final String time_to;
+  final String id;
+  @JsonKey(name: "branch_id")
+  final String branchId;
+  final String name;  
+  final String day;  
   final String language;
-  final String language_name;
+  @JsonKey(name: "time_from")
+  final String timeFrom;
+  @JsonKey(name: "time_to")
+  final String timeTo;
 
   factory ChurchSchedule.fromJson(Map<String, dynamic> json) => _$ChurchScheduleFromJson(json);
 
