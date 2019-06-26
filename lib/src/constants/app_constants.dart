@@ -12,11 +12,17 @@ import 'package:flutter/material.dart';
 class AppConstants{
   static const FIRST_USAGE_FLAG_NAME = "first_usage_flag";
   // TODO: to be replaced by actual url
-  static const ADS_JSON_URL = "https://api.mountcarmel.ph/ads";
-  static const ADS_API_BASE_URL = "https://api.mountcarmel.ph/";
-  // static const FEEDS_API_BASE_URL = "http://localhost/mountcarmel.api/";
+  static const TOTAL_TRANSACTION_JSON_URL = 'http://192.168.254.109/api/transparency.json';
+  
+  // site api
   static const API_BASE_URL = "https://api.mountcarmel.ph/";
-  // static const FEEDS_JSON_URL = "http://localhost/mountcarmel.api/news.json";
+
+  static const BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
+  static const KJV_TRANSLATION_PATH = 'tranlation=kjv';
+
+  static const FEEDS_JSON_URL = "https://api.mountcarmel.ph/posts";
+  static const ADS_JSON_URL = "https://api.mountcarmel.ph/ads";
+
   static const TRANSACTION_JSON_URL = 'https://api.mountcarmel.ph/donations';
   static const PRIESTS_JSON_URL = 'https://api.mountcarmel.ph/priests';
   static const PASTORS_JSON_URL = 'https://api.mountcarmel.ph/pastors';
@@ -26,13 +32,6 @@ class AppConstants{
   static const SERVICES_JSON_URL = 'https://api.mountcarmel.ph/modules';
   static const MAP_JSON_URL = 'https://api.mountcarmel.ph/maps';
   static const BOUNDARIES_JSON_URL = 'https://api.mountcarmel.ph/boundaries';
-  
-  //site api
-  static const BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
-  static const KJV_TRANSLATION_PATH = 'tranlation=kjv';
-
-  static const FEEDS_API_BASE_URL = "https://api.mountcarmel.ph/";
-  static const FEEDS_JSON_URL = "https://api.mountcarmel.ph/posts";
 
 
   static const COMPANY_NAME = "Mount Carmel Basilica";

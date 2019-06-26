@@ -29,7 +29,7 @@ class ProfileScreen extends StatefulWidget {
   ProfileScreen(BuildContext context);
 
   // TODO Get the list from the API
-  static const String BIBLE = "Bible";
+  static const String BIBLE = "Holy Bible";
   static const String REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
   static const String LOCATION_MAP = "Location Map";
   static const String PRIESTS = "Carmelite Priests";
@@ -54,7 +54,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final _isLoggedIn = true;
+  bool _isLoggedIn = false;
 
   final _profile = Profile(1, "Ransom", "Rapirap", "October 12, 1990", "");
 
@@ -69,15 +69,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ];
 
   final List<String> _userList = [
-    // ProfileScreen.USER_SCHEDULE,
-    // ProfileScreen.PRAYER_REQUESTS,
-    // ProfileScreen.MASS_REQUESTS,
-    // ProfileScreen.POST_NEWS,
-    // ProfileScreen.ADD_PROJECT ,
-    // ProfileScreen.ADD_SERVICE_TRANSACTION,
-    // ProfileScreen.PRIESTS_SCHEDULES,
-    // ProfileScreen.SERVICES_SCHEDULES,
-    // ProfileScreen.DONATION_REPORT,
+     ProfileScreen.USER_SCHEDULE,
+     ProfileScreen.PRAYER_REQUESTS,
+     ProfileScreen.MASS_REQUESTS,
+     ProfileScreen.POST_NEWS,
+     ProfileScreen.ADD_PROJECT ,
+     ProfileScreen.ADD_SERVICE_TRANSACTION,
+     ProfileScreen.PRIESTS_SCHEDULES,
+     ProfileScreen.SERVICES_SCHEDULES,
+     ProfileScreen.DONATION_REPORT,
   ];
 
   List<String> _totalList = [];
@@ -85,6 +85,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    _updateList();
+  }
+
+  void _updateList(){
     if (_isLoggedIn)
       _totalList = _userList + _aboutList;
     else
@@ -195,6 +199,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       onPressed: () {
                         print("Login pressed");
+                        setState(() {
+                          _isLoggedIn = true;
+                          _updateList();
+                        }
+                        );
                       },
                     ),
                   ),

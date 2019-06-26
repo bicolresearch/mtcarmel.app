@@ -104,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Container getOneAd(int index) {
     return Container(
-      child: Image.network(AppConstants.ADS_API_BASE_URL + adList[index].icon),
+      child: Image.network(AppConstants.API_BASE_URL + adList[index].coverPhoto),
       padding: EdgeInsets.all(15.0),
     );
   }
