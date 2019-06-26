@@ -54,6 +54,7 @@ class _AboutScreenState extends State<AboutScreen> {
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
+
           _aboutList = (json.decode(response.body) as List)
               .map((data) => new About.fromJson(data))
               .toList();
@@ -84,86 +85,75 @@ class _AboutScreenState extends State<AboutScreen> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
         child: Column(
-            children: <Widget>[
-        Expanded(
-        child: SingleChildScrollView(
-            child: Column(
-            children: <Widget>[
+          children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 30.0),
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        color: Colors.brown[600],
+                        border: Border.all(width: 0.0),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Mount Carmel Church now a National Shrine",
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: "Helvetica"),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Image.asset("assets/images/mt_logo.png"),
+                    ),
+                    _aboutBlock(),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    _history(),
+                  ],
+                ),
+              ),
+            ),
             Container(
-            margin: EdgeInsets.only(top: 30.0),
-        height: 40.0,
-        decoration: BoxDecoration(
-          color: Colors.brown[600],
-          border: Border.all(width: 0.0),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Mount Carmel Church now a National Shrine",
-            style: TextStyle(
-                color: Colors.white, fontFamily: "Helvetica"),
-            textAlign: TextAlign.center,
-          ),
+              alignment: Alignment.bottomCenter,
+              margin: EdgeInsets.only(bottom: 30.0),
+              child: leftArrowBackButton(context: context),
+            )
+          ],
         ),
       ),
-      Container(
-        alignment: Alignment.center,
-        child: Image.asset("assets/images/mt_logo.png"),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          "About the Church",
-          style: AppConstants.OPTION_STYLE3,
-          textAlign: TextAlign.center,
-        ),
-      ),
-      ListView.builder(
-          shrinkWrap: true,
-          physics: ScrollPhysics(parent: ScrollPhysics()),
-          itemCount: _aboutItems.length,
-          itemBuilder: (context, index) {
-            return _aboutItem(_aboutItems[index]);
-          }),
-      Divider(),
-      SizedBox(
-        height: 20.0,
-      ),
-      _history(),
-      ],
-    ),
-    ),
-    ),
-    Container(
-    alignment: Alignment.bottomCenter,
-    margin: EdgeInsets.only(bottom: 30.0),
-    child: leftArrowBackButton(context: context),
-    )
-    ],
-    ),
-    ),
     );
-
-
   }
 
-
   Widget _history() {
-    if (_aboutList[0].content == null
-        || _aboutList[0].content.isEmpty)
+    if (_aboutList.isEmpty ||
+        _aboutList[0].content == null ||
+        _aboutList[0].content.isEmpty)
       return Container();
     else {
-      return Column(children: <Widget>[
-        Text("History", style: AppConstants.OPTION_STYLE3,),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: HtmlTextView(
-            data: "<div style='color: #5d4037'>${_aboutList[0].content}</div>",
-            anchorColor: Color(0xFFFF0000),
+      return Column(
+        children: <Widget>[
+          Text(
+            "History",
+            style: AppConstants.OPTION_STYLE3,
           ),
-        )
-      ],);
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: HtmlTextView(
+              data:
+                  "<div style='color: #5d4037'>${_aboutList[0].content}</div>",
+              anchorColor: Color(0xFFFF0000),
+            ),
+          )
+        ],
+      );
     }
   }
 
@@ -203,6 +193,30 @@ class _AboutScreenState extends State<AboutScreen> {
       ),
     );
   }
+
+  Widget _aboutBlock() {
+    if (_aboutList.isEmpty) return Container();
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "About the Church",
+            style: AppConstants.OPTION_STYLE3,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        ListView.builder(
+            shrinkWrap: true,
+            physics: ScrollPhysics(parent: ScrollPhysics()),
+            itemCount: _aboutItems.length,
+            itemBuilder: (context, index) {
+              return _aboutItem(_aboutItems[index]);
+            }),
+        Divider(),
+      ],
+    );
+  }
 }
 
 class _AboutItem {
@@ -224,9 +238,9 @@ class _AboutItem {
       case AboutScreen.dioceseLabel:
         _value = about.diocese;
         break;
-      case AboutScreen.historyLabel:
-        _value = about.content;
-        break;
+//      case AboutScreen.historyLabel:
+//        _value = about.content;
+//        break;
     }
   }
 
