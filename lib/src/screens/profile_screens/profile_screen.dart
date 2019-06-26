@@ -22,6 +22,12 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import '../../constants/app_constants.dart';
 
+enum Header {
+  User,
+  NonUser,
+  Skipped,
+}
+
 class ProfileScreen extends StatefulWidget {
   static const TextStyle optionStyle = TextStyle(
       color: Colors.brown, fontSize: 13.0, fontWeight: FontWeight.bold);
@@ -54,7 +60,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool _isLoggedIn = false;
+//  bool _isLoggedIn = false;
+  var currentHeader = Header.NonUser;
+  Widget _header = Container();
 
   final _profile = Profile(1, "Ransom", "Rapirap", "October 12, 1990", "");
 
@@ -69,15 +77,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ];
 
   final List<String> _userList = [
-     ProfileScreen.USER_SCHEDULE,
-     ProfileScreen.PRAYER_REQUESTS,
-     ProfileScreen.MASS_REQUESTS,
-     ProfileScreen.POST_NEWS,
-     ProfileScreen.ADD_PROJECT ,
-     ProfileScreen.ADD_SERVICE_TRANSACTION,
-     ProfileScreen.PRIESTS_SCHEDULES,
-     ProfileScreen.SERVICES_SCHEDULES,
-     ProfileScreen.DONATION_REPORT,
+    ProfileScreen.USER_SCHEDULE,
+    ProfileScreen.PRAYER_REQUESTS,
+    ProfileScreen.MASS_REQUESTS,
+    ProfileScreen.POST_NEWS,
+    ProfileScreen.ADD_PROJECT,
+    ProfileScreen.ADD_SERVICE_TRANSACTION,
+    ProfileScreen.PRIESTS_SCHEDULES,
+    ProfileScreen.SERVICES_SCHEDULES,
+    ProfileScreen.DONATION_REPORT,
   ];
 
   List<String> _totalList = [];
@@ -85,11 +93,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    _updateHeader();
     _updateList();
   }
 
-  void _updateList(){
-    if (_isLoggedIn)
+  void _updateList() {
+    if (currentHeader == Header.User)
       _totalList = _userList + _aboutList;
     else
       _totalList = _aboutList;
@@ -111,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: <Widget>[
             Container(
                 margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                child: _isLoggedIn ? _userHeader() : loginWidget()),
+                child: _header),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
                 child: lineWidget()),
@@ -200,10 +209,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () {
                         print("Login pressed");
                         setState(() {
-                          _isLoggedIn = true;
-                          _updateList();
-                        }
-                        );
+                          currentHeader = Header.User;
+                          _updateHeader();
+                        });
                       },
                     ),
                   ),
@@ -225,15 +233,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () {
                   print("Sign-up pressed");
                 },
-                child: Text(
-                  "Sign-up",
-                  style: TextStyle(
-                      color: Colors.brown, fontWeight: FontWeight.bold),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(children: <Widget>[
+                    Text(
+                      "Sign-up",
+                      style: TextStyle(
+                          color: Colors.brown, fontWeight: FontWeight.bold),
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        currentHeader = Header.Skipped;
+                        _updateHeader();
+                      },
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(
+                            color: Colors.brown, fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                  ]),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _skippedHeader() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          currentHeader = Header.NonUser;
+          _updateHeader();
+        });
+      },
+      child: Row(
+        children: <Widget>[
+          Icon(
+            Icons.keyboard_arrow_down,
+            size: 20,
+          ),
+          Text(
+            "Login",
+            style: TextStyle(color: Colors.brown, fontSize: 12),
+          )
+        ],
       ),
     );
   }
@@ -272,11 +320,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 borderRadius: BorderRadius.circular(20.0)),
                           ),
                         ),
-                        GestureDetector(
-                            child: Icon(
+                        IconButton(
+                            icon: Icon(
                           MountCarmelIcons.settings,
                           color: Colors.brown,
-                        ))
+                        ),
+                        onPressed: (){
+                              print("settings pressed");
+                              
+                        },)
+
                       ],
                     ),
                   ),
@@ -287,6 +340,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  void _updateHeader() {
+    setState(() {
+      switch (currentHeader) {
+        case Header.User:
+          _header = _userHeader();
+          break;
+        case Header.NonUser:
+          _header = loginWidget();
+          break;
+        default:
+          _header = _skippedHeader();
+      }
+      _updateList();
+    });
   }
 
   Widget _aboutItem(context, String itemText) {
@@ -323,8 +392,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return ChurchScheduleScreen();
       case ProfileScreen.BIBLE:
         return BibleScreen(context);
-       case ProfileScreen.LOCATION_MAP:
-         return LocationScreen();
+      case ProfileScreen.LOCATION_MAP:
+        return LocationScreen();
       default:
         // show the default if not yet implemented
         return DefaultScreen();
