@@ -13,6 +13,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_schedule_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/location_screen.dart';
 
 // import 'package:mt_carmel_app/src/screens/profile_screens/location_map.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
@@ -313,9 +314,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return ChurchScheduleScreen();
       case ProfileScreen.BIBLE:
         return BibleScreen(context);
-      // TODO uncomment when the implementaion is ready
-      // case ProfileScreen.LOCATION_MAP:
-      //   return LocationMap();
+       case ProfileScreen.LOCATION_MAP:
+         return LocationScreen();
       default:
         // show the default if not yet implemented
         return DefaultScreen();

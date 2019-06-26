@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset('assets/images/mount_carmel_logo.svg'),
+                  Image.asset('assets/images/mt_logo.png'),
                   Text(AppConstants.COMPANY_NAME,
                       style: TextStyle(
                         color: Colors.brown,
