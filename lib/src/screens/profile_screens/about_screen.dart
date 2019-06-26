@@ -127,6 +127,9 @@ class _AboutScreenState extends State<AboutScreen> {
             return _aboutItem(_aboutItems[index]);
           }),
       Divider(),
+      SizedBox(
+        height: 20.0,
+      ),
       _history(),
       ],
     ),
