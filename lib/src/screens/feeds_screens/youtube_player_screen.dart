@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/video_list.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -35,6 +36,13 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
     // This pauses video while navigating to next page.
     _controller.pause();
     super.deactivate();
+  }
+
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
