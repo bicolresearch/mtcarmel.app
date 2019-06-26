@@ -45,14 +45,14 @@ class ServicesScreen extends StatefulWidget {
 
 class _ServicesScreenState extends State<ServicesScreen> {
   final List<Service> services = [
-    Service(ServicesScreen.JOIN_US, ServicesScreen.message),
-    Service(ServicesScreen.MAKE_REQUEST, ServicesScreen.message),
-    Service(ServicesScreen.BAPTISIM, ServicesScreen.message),
-    Service(ServicesScreen.COMMUNION, ServicesScreen.message),
-    Service(ServicesScreen.CONFIRMATION, ServicesScreen.message),
-    Service(ServicesScreen.WEDDING, ServicesScreen.message),
-    Service(ServicesScreen.PASSING, ServicesScreen.message),
-    Service(ServicesScreen.EVENTS, ServicesScreen.message),
+    Service('', '', ServicesScreen.JOIN_US, ServicesScreen.message, ''),
+    Service('', '', ServicesScreen.MAKE_REQUEST, ServicesScreen.message, ''),
+    Service('', '', ServicesScreen.BAPTISIM, ServicesScreen.message, ''),
+    Service('', '', ServicesScreen.COMMUNION, ServicesScreen.message, ''),
+    Service('', '', ServicesScreen.CONFIRMATION, ServicesScreen.message, ''),
+    Service('', '', ServicesScreen.WEDDING, ServicesScreen.message, ''),
+    Service('', '', ServicesScreen.PASSING, ServicesScreen.message, ''),
+    Service('', '', ServicesScreen.EVENTS, ServicesScreen.message, ''),
   ];
 
   ScrollController _scrollController;
