@@ -2,8 +2,8 @@
 *	Filename		:	profile_screen.dart
 *	Purpose			:	Display the list of the users access and other details of the church
 * Created			: 2019-06-11 15:44:56 by Detective Conan
-*	Updated			: 2019-06-27 09:47:55 by Detective Conan
-*	Changes			: Added call for Bible Screen
+*	Updated			: 2019-06-27 10:52:54 by Detective Conan
+*	Changes			: Changed the logo height to 160 px. Adjusted spacing of item list
 */
 
 import 'package:flutter/material.dart';
@@ -197,13 +197,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                child: Image.asset("assets/images/mt_logo.png"),
+                child: Image.asset("assets/images/mt_logo.png", height: 160,),
               ),
               SizedBox(
                 height: 10.0,
               ),
               SizedBox(
-                height: 50.0,
+                height: 30.0,
                 child: TextField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
@@ -217,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 10.0,
               ),
               SizedBox(
-                height: 50.0,
+                height: 30.0,
                 child: TextField(
                   obscureText: true,
                   keyboardType: TextInputType.emailAddress,
@@ -289,7 +289,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             "Skip",
                             style: TextStyle(
-                                color: Colors.brown, fontStyle: FontStyle.italic),
+                                color: Colors.brown,
+                                fontStyle: FontStyle.italic),
                           ),
                           Icon(
                             Icons.keyboard_arrow_up,
@@ -298,7 +299,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                     ),
-
                   ]),
                 ),
               ),
@@ -442,8 +442,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ));
         //Navigator.pop(context);
       },
-      child: ListTile(
-        title: Text(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
           itemText,
           style: AppConstants.OPTION_STYLE2,
           textAlign: TextAlign.center,

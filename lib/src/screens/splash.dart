@@ -1,3 +1,11 @@
+/*
+*	Filename		:	splash.dart
+*	Purpose			:	Displays log and ads before the main screen.
+* Created			: 2019-05-27 11:47:55 by Detective Conan
+*	Updated			: 2019-06-27 09:47:55 by Detective Conan
+*	Changes			: Changed logo height to 160 px.
+*/
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/model/ad.dart';
@@ -33,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset('assets/images/mt_logo.png'),
+                  Image.asset('assets/images/mt_logo.png', height: 160),
                   Text(AppConstants.COMPANY_NAME,
                       style: TextStyle(
                         color: Colors.brown,

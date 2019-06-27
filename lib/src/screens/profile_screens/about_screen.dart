@@ -2,8 +2,8 @@
 *	Filename		:	about_screen.dart
 *	Purpose			:	Show the details about the church.
 * Created			: 2019-06-13 12:37:11 by Detective Conan
-*	Updated			: 2019-06-26 17:21:04 by jo 
-*	Changes			: update variable names
+*	Updated			: 2019-06-27 10:52:54 by Detective Conan
+*	Changes			: Changed the logo height to 160 px.
 */
 
 import 'package:flutter/material.dart';
@@ -110,7 +110,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                     Container(
                       alignment: Alignment.center,
-                      child: Image.asset("assets/images/mt_logo.png"),
+                      child: Image.asset("assets/images/mt_logo.png", height: 160),
                     ),
                     _aboutBlock(),
                     SizedBox(
