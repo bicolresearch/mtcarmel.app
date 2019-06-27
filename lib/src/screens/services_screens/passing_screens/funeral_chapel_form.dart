@@ -2,8 +2,8 @@
 *	Filename		:	funeral_chapel_form.dart
 *	Purpose			:	funeral chapel add form
 * Created			: 2019-06-13 17:10:50 by Constantina
-*	Updated			:	2019-06-13 17:10:50 by Constantina 
-*	Changes			:
+*	Updated			:	2019-06-27 18:25:30 by Constantina 
+*	Changes			: added new fields 
 */
 
 import 'package:flutter/material.dart';
@@ -56,7 +56,181 @@ class FuneralChapelForm extends StatelessWidget {
                       //  lineWidget(),
                     ],
                   ),
-                ),                
+                ), 
+                //  Age
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Age", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: DropdownButtonFormField(
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ), items: <DropdownMenuItem>[],
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ),
+                //  Marital Status (Dropdown)
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Marital Status", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: DropdownButtonFormField(
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ), items: <DropdownMenuItem>[],
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ),
+            // Address
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Address", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ),
+            // Date of Birth
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ), 
+            // Date of Death
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Date of Death", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ), 
+            // Cause of Death
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Cause of Death", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ), 
+            //  Date of Burial
+             Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Date of Burial", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ), 
+            //  Place of Burial
+             Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Place of Burial", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ),                          
             //Contact Person
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
@@ -79,11 +253,77 @@ class FuneralChapelForm extends StatelessWidget {
                 ],
               ),
             ),  
-            // Contact Number
+            //Relationship with the deceased
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
+                Text("Relationship with the deceased", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ), 
+            // Mobile Number
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Mobile Number", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ), 
+            // Landline Number
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Landline Number", style: AppConstants.OPTION_STYLE2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                     decoration: InputDecoration(
+                       contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+                       border: OutlineInputBorder(),
+                       hintText: "",
+                      //  labelText: "Name",
+                       alignLabelWithHint: false,
+                       ),
+                   ),
+                  ),
+                  //  lineWidget(),
+                ],
+              ),
+            ),
+            // Email
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30),
+              child: Column(children: <Widget>[
+                Text("Email", style: AppConstants.OPTION_STYLE2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
