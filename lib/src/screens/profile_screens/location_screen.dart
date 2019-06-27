@@ -2,8 +2,8 @@
 *  Filename    :    location_screen.dart
 *  Purpose     :    Displays the location of church in map.
 *  Created     :    2019-06-26 08:47 by Detective Conan
-*  Updated     :    2019-06-26 08:47 by Detective Conan
-*  Changes     :
+*  Updated     :    2019-06-27 15:51:47 by Detective Conan
+*  Changes     :    Changed the opacity of the polygon
 */
 
 import 'dart:async';
@@ -52,8 +52,8 @@ class _LocationScreenState extends State<LocationScreen> {
             }
             _boundary = <Polygon>{Polygon(polygonId: PolygonId("boundary"
             ),
-                fillColor: Color.fromARGB(191, 0x7E , 0x52, 0x32),
-                strokeColor: Color.fromARGB(255, 0x7E , 0x52, 0x32),
+                fillColor: Color.fromARGB(65, 0x7E , 0x52, 0x32),
+                strokeColor: Color.fromARGB(191, 0x7E , 0x52, 0x32),
                 strokeWidth: 3,
                 points: points)};
           }
