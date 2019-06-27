@@ -63,7 +63,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    this.getJasonData();
+    this.getJsonTransactionData();
     this.getTotalAmt();
   }
 
@@ -72,7 +72,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     _scrollListener();
   }
 
-  Future<void> getJasonData() async {
+  Future<void> getJsonTransactionData() async {
     var response = await http.get(AppConstants.TRANSACTION_JSON_URL);
     if (this.mounted) {
       setState(() {

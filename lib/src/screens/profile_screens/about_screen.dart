@@ -123,7 +123,6 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             Container(
               alignment: Alignment.bottomCenter,
-              margin: EdgeInsets.only(bottom: 30.0),
               child: leftArrowBackButton(context: context),
             )
           ],

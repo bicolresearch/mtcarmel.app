@@ -2,11 +2,12 @@
 *	Filename		:	profile_screen.dart
 *	Purpose			:	Display the list of the users access and other details of the church
 * Created			: 2019-06-11 15:44:56 by Detective Conan
-*	Updated			: 2019-06-18 16:10:15 by Detective Conan 
+*	Updated			: 2019-06-27 09:47:55 by Detective Conan
 *	Changes			: Added call for Bible Screen
 */
 
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/model/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
@@ -66,6 +67,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   final _profile = Profile(1, "Ransom", "Rapirap", "October 12, 1990", "");
 
+  ScrollController _scrollController;
+
+  static Icon _arrowUp = Icon(
+    Icons.keyboard_arrow_up,
+  );
+  static Icon _arrowDown = Icon(
+    Icons.keyboard_arrow_down,
+  );
+
+  VisibilityHelper _arrowMoreUp = VisibilityHelper(
+    child: _arrowUp,
+    visibility: VisibilityFlag.gone,
+  );
+  VisibilityHelper _arrowMoreDown = VisibilityHelper(
+    child: _arrowDown,
+    visibility: VisibilityFlag.gone,
+  );
+
   final List<String> _aboutList = [
     ProfileScreen.BIBLE,
     ProfileScreen.REGULAR_MASS_SCHEDULE,
@@ -92,9 +111,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
     super.initState();
     _updateHeader();
     _updateList();
+    _initializeArrows();
   }
 
   void _updateList() {
@@ -102,6 +124,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _totalList = _userList + _aboutList;
     else
       _totalList = _aboutList;
+  }
+
+  Future _initializeArrows() async {
+    await Future.delayed(Duration(milliseconds: 500));
+    _scrollListener();
   }
 
   @override
@@ -124,20 +151,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
                 child: lineWidget()),
+            GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
             Expanded(
               child: Container(
                 alignment: Alignment.center,
-                child: ListView.builder(
-                  itemCount: _totalList.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 40.0),
-                      child: _aboutItem(context, _totalList[index]),
-                    );
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (scrollNotification) {
+                    if (scrollNotification is ScrollStartNotification) {
+                      _onStartScroll(scrollNotification.metrics);
+                    } else if (scrollNotification is ScrollUpdateNotification) {
+                      _onUpdateScroll(scrollNotification.metrics);
+                    } else if (scrollNotification is ScrollEndNotification) {
+                      _onEndScroll(scrollNotification.metrics);
+                    }
                   },
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: _totalList.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 40.0),
+                        child: _aboutItem(context, _totalList[index]),
+                      );
+                    },
+                  ),
                 ),
               ),
-            )
+            ),
+            GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
           ],
         )),
       ),
@@ -156,12 +197,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                  margin: EdgeInsets.only(top: 50.0, left: 10.0),
-                  child: Icon(
-                    MountCarmelIcons.logo,
-                    color: Colors.brown,
-                    size: 100,
-                  )),
+                child: Image.asset("assets/images/mt_logo.png"),
+              ),
               SizedBox(
                 height: 10.0,
               ),
@@ -247,12 +284,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         currentHeader = Header.Skipped;
                         _updateHeader();
                       },
-                      child: Text(
-                        "Skip",
-                        style: TextStyle(
-                            color: Colors.brown, fontStyle: FontStyle.italic),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            "Skip",
+                            style: TextStyle(
+                                color: Colors.brown, fontStyle: FontStyle.italic),
+                          ),
+                          Icon(
+                            Icons.keyboard_arrow_up,
+                            size: 20,
+                          ),
+                        ],
                       ),
                     ),
+
                   ]),
                 ),
               ),
@@ -271,17 +317,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _updateHeader();
         });
       },
-      child: Row(
-        children: <Widget>[
-          Icon(
-            Icons.keyboard_arrow_down,
-            size: 20,
-          ),
-          Text(
-            "Login",
-            style: TextStyle(color: Colors.brown, fontSize: 12),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: Row(
+          children: <Widget>[
+            Icon(
+              Icons.keyboard_arrow_down,
+              size: 20,
+            ),
+            Text(
+              "Login",
+              style: TextStyle(color: Colors.brown, fontSize: 12),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -320,16 +369,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 borderRadius: BorderRadius.circular(20.0)),
                           ),
                         ),
-                        IconButton(
-                            icon: Icon(
-                          MountCarmelIcons.settings,
-                          color: Colors.brown,
-                        ),
-                        onPressed: (){
-                              print("settings pressed");
-                              
-                        },)
-
+                        PopupMenuButton<int>(
+                          itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  value: 1,
+                                  child: Text(
+                                    "Logout",
+                                    style: AppConstants.OPTION_STYLE2,
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 2,
+                                  child: Text(
+                                    "Cancel",
+                                    style: AppConstants.OPTION_STYLE2,
+                                  ),
+                                ),
+                              ],
+                          initialValue: 2,
+                          onCanceled: () {
+                            print("You have canceled the menu.");
+                          },
+                          onSelected: (value) {
+                            if (value == 1) {
+                              setState(() {
+                                currentHeader = Header.NonUser;
+                                _updateHeader();
+                              });
+                            }
+                          },
+                          icon: Icon(
+                            MountCarmelIcons.settings,
+                            color: Colors.brown,
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -355,6 +428,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _header = _skippedHeader();
       }
       _updateList();
+      _initializeArrows();
     });
   }
 
@@ -398,6 +472,87 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // show the default if not yet implemented
         return DefaultScreen();
     }
+  }
+
+  _scrollListener() {
+    if (!_scrollController.hasClients) return;
+    try {
+      if (_scrollController.offset ==
+              _scrollController.position.maxScrollExtent &&
+          _scrollController.offset ==
+              _scrollController.position.minScrollExtent) {
+        setState(() {
+          _arrowMoreDown = VisibilityHelper(
+              child: _arrowDown, visibility: VisibilityFlag.gone);
+          _arrowMoreUp = VisibilityHelper(
+              child: _arrowUp, visibility: VisibilityFlag.gone);
+        });
+        return;
+      }
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        setState(() {
+          _arrowMoreDown = VisibilityHelper(
+              child: _arrowDown, visibility: VisibilityFlag.gone);
+          _arrowMoreUp = VisibilityHelper(
+              child: _arrowUp, visibility: VisibilityFlag.visible);
+        });
+        return;
+      }
+      if (_scrollController.offset <=
+              _scrollController.position.minScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        setState(() {
+          _arrowMoreDown = VisibilityHelper(
+              child: _arrowDown, visibility: VisibilityFlag.visible);
+          _arrowMoreUp = VisibilityHelper(
+              child: _arrowUp, visibility: VisibilityFlag.gone);
+        });
+        return;
+      }
+      if (_scrollController.offset <
+              _scrollController.position.maxScrollExtent &&
+          _scrollController.offset >
+              _scrollController.position.minScrollExtent) {
+        setState(() {
+          _arrowMoreDown = VisibilityHelper(
+              child: _arrowDown, visibility: VisibilityFlag.visible);
+          _arrowMoreUp = VisibilityHelper(
+              child: _arrowUp, visibility: VisibilityFlag.visible);
+        });
+        return;
+      }
+    } catch (e) {
+      print(e.toString());
+      print("error in _scrolListener");
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  _moveUp() {
+    if (_scrollController.offset >= _scrollController.position.minScrollExtent)
+      _scrollController.animateTo(_scrollController.offset - 200,
+          curve: Curves.linear, duration: Duration(milliseconds: 500));
+  }
+
+  _moveDown() {
+    if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
+      _scrollController.animateTo(_scrollController.offset + 200,
+          curve: Curves.linear, duration: Duration(milliseconds: 500));
+  }
+
+  void _onStartScroll(ScrollMetrics metrics) {}
+
+  void _onUpdateScroll(ScrollMetrics metrics) {}
+
+  void _onEndScroll(ScrollMetrics metrics) {
+    _scrollListener();
   }
 }
 
