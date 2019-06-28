@@ -70,7 +70,7 @@ class _LocationScreenState extends State<LocationScreen> {
   BitmapDescriptor _markerIcon;
 
   CameraPosition _initialPosition =
-      CameraPosition(zoom: 16.0, target: _location);
+      CameraPosition(zoom: 14.0, target: _location);
   Completer<GoogleMapController> _controller = Completer();
 
   Set<Marker> _markers = {};
