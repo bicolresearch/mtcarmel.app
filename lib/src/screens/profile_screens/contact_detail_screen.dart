@@ -111,13 +111,6 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
       _ContactItem("Social Media", _contactList[0].socialMedia),
       _ContactItem("Landline", _contactList[0].landline),
       _ContactItem("Mobile", _contactList[0].mobile),
-      _ContactItem("Church name", _contactList[0].name),
-      _ContactItem("Address",
-          "${_contactList[0].address1}\n${_contactList[0].address2}"),
-      _ContactItem("Email", _contactList[0].email),
-      _ContactItem("Social Media", _contactList[0].socialMedia),
-      _ContactItem("Landline", _contactList[0].landline),
-      _ContactItem("Mobile", _contactList[0].mobile),
     ];
 
     return Container(
