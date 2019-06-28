@@ -2,8 +2,8 @@
 *	Filename		:	pastor_screen.dart
 *	Purpose			:	Displays the list of pastors
 * Created			: 2019-06-11 15:56:33 by Detective Conan
-*	Updated			: 2019-06-11 15:56:33 by Detective Conan 
-*	Changes			:
+*	Updated			: 2019-06-28 14:40:37 by Detective Conan
+*	Changes			: Added CircularProgressIndicator when loading
 */
 
 import 'package:flutter/material.dart';
@@ -16,7 +16,6 @@ import 'dart:convert';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class PastorsScreen extends StatefulWidget {
-
   PastorsScreen(BuildContext context);
 
   @override
@@ -31,105 +30,118 @@ class _PastorsScreenState extends State<PastorsScreen> {
   var _isJsonFailed = false;
 
   @override
-  void initState() { 
-    super.initState();   
+  void initState() {
+    super.initState();
     this.getJasonData();
   }
 
-  Future<void> getJasonData() async{
-    var response = await http.get(AppConstants.PRIESTS_JSON_URL); 
-    if(this.mounted){
-      setState(() 
-        {
-          if (response.statusCode == 200) {
-              _pastorList = (json.decode(response.body) as List)
-            .map((data) => new Pastor.fromJson(data))
-            .toList();
-            _isLoading = false;              
-          } 
-          else 
-          {
-            print(response.statusCode);
+  Future<void> getJasonData() async {
+    var response = await http.get(AppConstants.PRIESTS_JSON_URL);
+    if (this.mounted) {
+      setState(() {
+        if (response.statusCode == 200) {
+          _pastorList = (json.decode(response.body) as List)
+              .map((data) => new Pastor.fromJson(data))
+              .toList();
+          _isLoading = false;
+        } else {
+          print(response.statusCode);
           _isJsonFailed = true;
           _isLoading = false;
-          }
         }
-      );
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(                                      
-    body: 
-    Container(
-      margin: EdgeInsets.symmetric(vertical: 50.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget> [
-          Column(
-            children: <Widget>[
-              Container(   
-                margin: EdgeInsets.only(top: 10.0, ), 
-                height: 40.0,        
-                decoration: BoxDecoration(
-                  color: Colors.brown[600],
-                border: Border.all(width: 0.8),
-                borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Mount Carmel Church now a National Shrine",
-                  style: TextStyle(color: Colors.white,
-                  fontFamily: "Helvetica"),
-                  textAlign: TextAlign.center,
+    return Scaffold(
+      body: Container(
+        margin: EdgeInsets.symmetric(vertical: 50.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: (_isLoading)
+                  ? Center(child: CircularProgressIndicator())
+                  : Container(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                              top: 10.0,
+                            ),
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              color: Colors.brown[600],
+                              border: Border.all(width: 0.8),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Mount Carmel Church now a National Shrine",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Helvetica"),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Pastors",
+                              style: AppConstants.OPTION_STYLE3,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 50.0,
+                              ),
+                              child: ListView.builder(
+                                  physics:
+                                      ScrollPhysics(parent: ScrollPhysics()),
+                                  shrinkWrap: true,
+                                  reverse: true,
+                                  itemCount: _pastorList.length,
+                                  itemBuilder: (context, index) {
+                                    return _pastorItem(
+                                        context, _pastorList[index]);
+                                  }),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Pastors",
-                style: AppConstants.OPTION_STYLE3,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            ],
-          ),
-            Expanded(
-                child: Container(
-                  height: 200.0,
-                alignment: Alignment.topCenter,
-                margin: EdgeInsets.symmetric(
-                  horizontal: 50.0,
-                ),
-                child: ListView.builder(
-                  reverse: true,
-                  itemCount: _pastorList.length,
-                  itemBuilder:(context, index){
-                    return _pastorItem(context, _pastorList[index]);
-                  }
-                ),
-              ),
             ),
             leftArrowBackButton(context: context),
           ],
         ),
-    ),                
+      ),
     );
   }
 
-  Widget _pastorItem(context, Pastor pastor){
-    return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 0.0),
-    child: Column(
-      children: <Widget>[        
-        ListTile(title: Text('${pastor.name}', 
-          style: AppConstants.OPTION_STYLE2),
-          subtitle: Text('${pastor.position}',
-          style: AppConstants.OPTION_STYLE1),
+  Widget _pastorItem(context, Pastor pastor) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            '${pastor.name}',
+            style: AppConstants.OPTION_STYLE2,
+            textAlign: TextAlign.center,
           ),
+          subtitle: Text(
+            '${pastor.position}',
+            style: AppConstants.OPTION_STYLE1,
+            textAlign: TextAlign.center,
+          ),
+        ),
       ],
-    ),
     );
   }
 }

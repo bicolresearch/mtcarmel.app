@@ -1,8 +1,8 @@
 /*
 *	Filename		:	priest_screen.dart
-*	Purpose			:	Shows the Carmalites Priests
+*	Purpose			:	Shows the Carmelites Priests
 * Created			: 2019-06-11 14:14:18 by Detective Conan
-*	Updated			: 2019-06-28 14:27:11 by Detctive Conan
+*	Updated			: 2019-06-28 14:27:11 by Detective Conan
 *	Changes			: Changed the screen. and added CircularProgressIndicator when loading data.
 */
 
@@ -67,58 +67,56 @@ class _PriestsScreenState extends State<PriestsScreen> {
               child: Container(
                 child: (this._isLoading || _priestList.isEmpty)
                     ? Center(child: CircularProgressIndicator())
-                    :
-                Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 50.0),
-                      height: 40.0,
-                      decoration: BoxDecoration(
-                        color: Colors.brown[600],
-                        border: Border.all(width: 0.8),
-                        borderRadius: BorderRadius.circular(10.0),
+                    : Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 50.0),
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              color: Colors.brown[600],
+                              border: Border.all(width: 0.8),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Mount Carmel Church now a National Shrine",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Helvetica"),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Priests",
+                              style: AppConstants.OPTION_STYLE3,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                                child: GridView.count(
+                              physics: ScrollPhysics(parent: ScrollPhysics()),
+                              shrinkWrap: true,
+                              primary: true,
+                              crossAxisCount: 2,
+                              children:
+                                  List.generate(_priestList.length, (index) {
+                                try {
+                                  return getStructuredGridCell(
+                                      _priestList[index]);
+                                } catch (e) {
+                                  print(e.toString());
+                                  return Container();
+                                }
+                              }),
+                            )),
+                          ),
+                        ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Mount Carmel Church now a National Shrine",
-                          style:
-                              TextStyle(color: Colors.white, fontFamily: "Helvetica"),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Priests",
-                        style: AppConstants.OPTION_STYLE3,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child:
-                        GridView.count(
-                          physics: ScrollPhysics(parent: ScrollPhysics()),
-                          shrinkWrap: true,
-                          primary: true,
-                          crossAxisCount: 2,
-                          children:
-                          List.generate(_priestList.length, (index) {
-                            try {
-                              return getStructuredGridCell(
-                                  _priestList[index]);
-                            } catch (e) {
-                              print(e.toString());
-                              return Container();
-                            }
-                          }),
-                        )
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
 //            Spacer(),
