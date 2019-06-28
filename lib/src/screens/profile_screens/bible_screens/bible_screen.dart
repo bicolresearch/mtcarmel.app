@@ -2,8 +2,8 @@
 *	Filename		:	bible_screen.dart
 *	Purpose			:	displays the list of bible books
 * Created			: 2019-06-18 10:02:34 by Detective Conan
-*	Updated			: 2019-06-18 10:02:34 by Detective Conan 
-*	Changes			:
+*	Updated			: 2019-06-28 23:43:34 by Detective Conan
+*	Changes			: Adjusted the holy bible screen.
 */
 
 import 'package:flutter/material.dart';
@@ -44,12 +44,10 @@ class _BibleScreenState extends State<BibleScreen> {
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
           child: Container(
-            height: MediaQuery.of(context).size.height - 200,
-            padding: const EdgeInsets.fromLTRB(30.0, 60.0, 30.0, 50.0),
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 12.0),
+                  padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 0.0),
                   child: Text(
                     "Holy Bible",
                     style: AppConstants.OPTION_STYLE3,
@@ -95,41 +93,48 @@ class _BibleScreenState extends State<BibleScreen> {
 
   Widget _bookPart(BookPart testament, List<BibleBook> bibleBooks) {
     return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            (testament == BookPart.OldTestament)
-                ? "Old Testaments"
-                : "New Testament",
-            style: AppConstants.OPTION_STYLE3,
-            textAlign: TextAlign.center,
-          ),
-          Divider(),
-          ListView.builder(
-              physics: ScrollPhysics(parent: ScrollPhysics()),
-              shrinkWrap: true,
-              itemCount: bibleBooks.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                BibleBookScreen(book: bibleBooks[index]),
-                          ));
-                    },
-                    child: Text(
-                      bibleBooks[index].bookName,
-                      style: AppConstants.OPTION_STYLE2,
-                      textAlign: TextAlign.center,
-                    ),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Divider(),
+        ),
+        Text(
+          (testament == BookPart.OldTestament)
+              ? "Old Testaments"
+              : "New Testament",
+          style: AppConstants.OPTION_STYLE3,
+          textAlign: TextAlign.center,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Divider(),
+        ),
+        ListView.builder(
+            physics: ScrollPhysics(parent: ScrollPhysics()),
+            shrinkWrap: true,
+            itemCount: bibleBooks.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BibleBookScreen(book: bibleBooks[index]),
+                        ));
+                  },
+                  child: Text(
+                    bibleBooks[index].bookName,
+                    style: AppConstants.OPTION_STYLE2,
+                    textAlign: TextAlign.center,
                   ),
-                );
-              })
-        ],
-      );
+                ),
+              );
+            })
+      ],
+    );
   }
 }
