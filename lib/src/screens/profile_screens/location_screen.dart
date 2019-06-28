@@ -2,7 +2,7 @@
 *  Filename    :    location_screen.dart
 *  Purpose     :    Displays the location of church in map.
 *  Created     :    2019-06-26 08:47 by Detective Conan
-*  Updated     :    2019-06-27 15:51:47 by Detective Conan
+*  Updated     :    2019-06-28 11:05 by Detective Conan
 *  Changes     :    Changed the opacity of the polygon
 */
 
@@ -22,8 +22,6 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-
-
   //TODO change the model name to MapLocation
   List<Maps> _mapList = [];
   Set<Polygon> _boundary;
@@ -44,26 +42,27 @@ class _LocationScreenState extends State<LocationScreen> {
               .toList();
           List<LatLng> points = [];
 
-          if(_mapList.isNotEmpty) {
+          if (_mapList.isNotEmpty) {
             for (var point in _mapList) {
-              points.add(LatLng(
-                  double.parse(point.lat),
-                  double.parse(point.lng)));
+              points.add(
+                  LatLng(double.parse(point.lat), double.parse(point.lng)));
             }
-            _boundary = <Polygon>{Polygon(polygonId: PolygonId("boundary"
-            ),
-                fillColor: Color.fromARGB(65, 0x7E , 0x52, 0x32),
-                strokeColor: Color.fromARGB(191, 0x7E , 0x52, 0x32),
-                strokeWidth: 3,
-                points: points)};
+            _boundary = <Polygon>{
+              Polygon(
+                  polygonId: PolygonId("boundary"),
+                  fillColor: Color.fromARGB(65, 0x7E, 0x52, 0x32),
+                  strokeColor: Color.fromARGB(191, 0x7E, 0x52, 0x32),
+                  strokeWidth: 3,
+                  points: points)
+            };
           }
-
         } else {
           print(response.statusCode);
         }
       });
     }
   }
+
   //TODO replace with the location from api
   static LatLng _location = LatLng(14.614253, 121.030581);
 
@@ -88,14 +87,25 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Location Map'),
-          centerTitle: true,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.keyboard_arrow_left,
+              size: 40.0,
+              color: Colors.brown,
+            ),
+            backgroundColor: Colors.white,
+          ),
         ),
         body: Stack(
           children: <Widget>[
             GoogleMap(
-              polygons: _boundary,
+                polygons: _boundary,
                 myLocationButtonEnabled: false,
                 onMapCreated: _onMapCreated,
                 initialCameraPosition: _initialPosition,
