@@ -8,7 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/service.dart';
+import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens//services_screens/passing_screens/passing.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/baptism.dart';
@@ -18,8 +18,12 @@ import 'package:mt_carmel_app/src/screens/services_screens/event_screen/event.da
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/join_us.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/make_request.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage.dart';
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class ServicesScreen extends StatefulWidget {
   //TODO temporary text
@@ -28,12 +32,12 @@ class ServicesScreen extends StatefulWidget {
   static const String confra_message =
       "Be an active part of the mission and service of the Carmelite Church";
 
-  static const String JOIN_US = 'Join us';
-  static const String MAKE_REQUEST = 'Make a request';
-  static const String BAPTISIM = 'Baptism';
+  static const String JOIN_US = 'Join Us!';
+  static const String MAKE_REQUEST = 'Make a Request';
+  static const String BAPTISM = 'Baptism';
   static const String COMMUNION = 'Communion';
   static const String CONFIRMATION = 'Confirmation';
-  static const String WEDDING = 'Wedding';
+  static const String WEDDING = 'Marriage';
   static const String PASSING = 'Passing';
   static const String EVENTS = 'Events';
 
@@ -44,18 +48,12 @@ class ServicesScreen extends StatefulWidget {
 }
 
 class _ServicesScreenState extends State<ServicesScreen> {
-  final List<Service> services = [
-    Service('', '', ServicesScreen.JOIN_US, ServicesScreen.message, ''),
-    Service('', '', ServicesScreen.MAKE_REQUEST, ServicesScreen.message, ''),
-    Service('', '', ServicesScreen.BAPTISIM, ServicesScreen.message, ''),
-    Service('', '', ServicesScreen.COMMUNION, ServicesScreen.message, ''),
-    Service('', '', ServicesScreen.CONFIRMATION, ServicesScreen.message, ''),
-    Service('', '', ServicesScreen.WEDDING, ServicesScreen.message, ''),
-    Service('', '', ServicesScreen.PASSING, ServicesScreen.message, ''),
-    Service('', '', ServicesScreen.EVENTS, ServicesScreen.message, ''),
-  ];
-
   ScrollController _scrollController;
+
+  List<ServiceItem> _serviceItemList = [];
+
+  bool _isLoading = true;
+  bool _isJsonFailed = false;
 
   static Icon _arrowUp = Icon(
     Icons.keyboard_arrow_up,
@@ -80,12 +78,34 @@ class _ServicesScreenState extends State<ServicesScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
+    getJsonData();
     _initializeArrows();
   }
 
   Future _initializeArrows() async {
     await Future.delayed(Duration(milliseconds: 500));
     _scrollListener();
+  }
+
+  Future<void> getJsonData() async {
+    _isJsonFailed = false;
+    _isLoading = true;
+    var response = await http.get(AppConstants.SERVICES_JSON_URL);
+    if (this.mounted) {
+      setState(() {
+        if (response.statusCode == 200) {
+          _serviceItemList = (json.decode(response.body) as List)
+              .map((data) => new ServiceItem.fromJson(data))
+              .toList();
+          print(_serviceItemList.length);
+          _isLoading = false;
+        } else {
+          //throw Exception('Failed to load photos');
+          _isJsonFailed = true;
+          _isLoading = false;
+        }
+      });
+    }
   }
 
   @override
@@ -97,77 +117,84 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            //
-            GestureDetector(onTap: _scrollListener, child: servicesHeader()),
+      child: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Scaffold(
+              body: Column(
+                children: <Widget>[
+                  //
+                  GestureDetector(
+                      onTap: _scrollListener, child: servicesHeader()),
 
-            GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
-            Expanded(
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                margin: EdgeInsets.symmetric(
-                  horizontal: 50.0,
-                ),
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: (scrollNotification) {
-                    if (scrollNotification is ScrollStartNotification) {
-                      _onStartScroll(scrollNotification.metrics);
-                    } else if (scrollNotification is ScrollUpdateNotification) {
-                      _onUpdateScroll(scrollNotification.metrics);
-                    } else if (scrollNotification is ScrollEndNotification) {
-                      _onEndScroll(scrollNotification.metrics);
-                    }
-                  },
-                  child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: services.length,
-                      itemBuilder: (context, index) {
-                        return _serviceItem(context, services[index]);
-                      }),
-                ),
+                  GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 20.0,
+                      ),
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (scrollNotification) {
+                          if (scrollNotification is ScrollStartNotification) {
+                            _onStartScroll(scrollNotification.metrics);
+                          } else if (scrollNotification
+                              is ScrollUpdateNotification) {
+                            _onUpdateScroll(scrollNotification.metrics);
+                          } else if (scrollNotification
+                              is ScrollEndNotification) {
+                            _onEndScroll(scrollNotification.metrics);
+                          }
+                        },
+                        child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: _serviceItemList.length,
+                            itemBuilder: (context, index) {
+                              return _serviceItem(
+                                  context, _serviceItemList[index]);
+                            }),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
+                ],
               ),
             ),
-            GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
-          ],
-        ),
-      ),
     );
   }
 
-  Widget _serviceItem(context, Service service) {
+  Widget _serviceItem(context, ServiceItem serviceItem) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => _navigateToService(service.name),
+              builder: (context) => _navigateToService(serviceItem),
             ));
       },
-      child: serviceTile(service.name, ServicesScreen.message),
+      child: serviceTile(serviceItem),
     );
   }
 
-  Widget _navigateToService(String service_name) {
-    switch (service_name) {
+  Widget _navigateToService(ServiceItem serviceItem) {
+    switch (serviceItem.name) {
       case ServicesScreen.JOIN_US:
-        return JoinUs();
+        return JoinUs(serviceItem: serviceItem);
       case ServicesScreen.MAKE_REQUEST:
-        return MakeRequest1();
-      case ServicesScreen.BAPTISIM:
-        return Baptism();
+        return MakeRequest1(serviceItem: serviceItem);
+      case ServicesScreen.BAPTISM:
+        return Baptism(serviceItem: serviceItem);
       case ServicesScreen.COMMUNION:
-        return Communion();
+        return Communion(serviceItem: serviceItem);
       case ServicesScreen.CONFIRMATION:
-        return Confirmation();
+        return Confirmation(serviceItem: serviceItem);
       case ServicesScreen.WEDDING:
-        return Marriage();
+        return Marriage(serviceItem: serviceItem);
       case ServicesScreen.PASSING:
-        return Passing();
+        return Passing(serviceItem: serviceItem);
       case ServicesScreen.EVENTS:
-        return Events();
+        return Events(serviceItem: serviceItem);
     }
+    return NoService(serviceItem: serviceItem);
   }
 
   void _onStartScroll(ScrollMetrics metrics) {}
@@ -243,5 +270,31 @@ class _ServicesScreenState extends State<ServicesScreen> {
     if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
       _scrollController.animateTo(_scrollController.offset + 200,
           curve: Curves.linear, duration: Duration(milliseconds: 500));
+  }
+}
+
+class NoService extends StatelessWidget {
+  const NoService({Key key, this.serviceItem}) : super(key: key);
+  final ServiceItem serviceItem;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+      child: Column(
+        children: <Widget>[
+          Spacer(),
+          Text(
+            "No service for ${serviceItem.name}",
+            style: AppConstants.OPTION_STYLE2,
+          ),
+          Spacer(),
+          Container(
+            margin: EdgeInsets.only(bottom: 30.0),
+            child: leftArrowBackButton(context: context),
+          )
+        ],
+      ),
+    ));
   }
 }

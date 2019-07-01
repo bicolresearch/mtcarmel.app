@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/individual_info.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/community_info.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/adult_info.dart';
@@ -19,7 +20,8 @@ import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 ////
 class Baptism extends StatelessWidget {
   //////
-  const Baptism({Key key}) : super(key: key);
+  const Baptism({Key key, this.serviceItem}) : super(key: key);
+  final ServiceItem serviceItem;
   static const String baptism_message = "Be part of the christian community and follow the word of the Lord";
 
   @override
@@ -32,7 +34,7 @@ class Baptism extends StatelessWidget {
           servicesHeader(),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(AppConstants.BAPTISM, baptism_message),
+          serviceTile(this.serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
            Column(children: <Widget>[

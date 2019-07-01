@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'service.g.dart';
+part 'service_item.g.dart';
 
 @JsonSerializable()
-class Service{
-  Service(
+class ServiceItem{
+  ServiceItem(
   this.id,
   this.branchId,
   this.name,
@@ -19,7 +19,7 @@ class Service{
   @JsonKey(name: "cover_photo")
   final String coverPhoto;
 
-  factory Service.fromJson(Map<String, dynamic> json) => _$ServiceFromJson(json);
+  factory ServiceItem.fromJson(Map<String, dynamic> json) => _$ServiceItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ServiceToJson(this);
+  Map<String, dynamic> toJson() => _$ServiceItemToJson(this);
 }
