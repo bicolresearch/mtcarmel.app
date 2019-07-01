@@ -2,15 +2,15 @@
 *	Filename		:	contact_detail_scree.dart
 *	Purpose			:	Displays the church contact details
 * Created			: 2019-06-13 15:07:14 by Detective Conan
-*	Updated			: 2019-06-28 15:29:18 by Detective Conan
-*	Changes			: Added CircularProgressIndicator when loading
+*	Updated			: 2019-07-01 11:45:23 by Detective Conan
+*	Changes			: Replaced the import packagename model to models
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/model/contact.dart';
+import 'package:mt_carmel_app/src/models/contact.dart';
 import 'package:mt_carmel_app/src/widgets/item_widget.dart';
 import 'dart:async';
 import 'dart:convert';

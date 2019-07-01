@@ -8,7 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/model/feed.dart';
+import 'package:mt_carmel_app/src/models/feed.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
 
 class FeedDetailScreen extends StatelessWidget{

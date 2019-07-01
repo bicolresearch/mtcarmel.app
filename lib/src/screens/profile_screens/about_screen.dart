@@ -2,8 +2,8 @@
 *	Filename		:	about_screen.dart
 *	Purpose			:	Show the details about the church.
 * Created			: 2019-06-13 12:37:11 by Detective Conan
-*	Updated			: 2019-06-27 10:52:54 by Detective Conan
-*	Changes			: Changed the logo height to 160 px.
+*	Updated			: 2019-07-01 11:45:23 by Detective Conan
+*	Changes			: Replaced the import packagename model to models
 */
 
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:mt_carmel_app/src/model/about.dart';
+import 'package:mt_carmel_app/src/models/about.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';

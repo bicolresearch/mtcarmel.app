@@ -2,8 +2,8 @@
 *	Filename		:	church_schedule_screen.dart
 *	Purpose			:	Displays the different schedules of the church
 * Created			: 2019-06-14 09:42:18 by Detective Conan
-*	Updated			: 2019-06-26 17:23:20 by jo 
-*	Changes			: update variablenames
+*	Updated			: 2019-07-01 11:45:23 by Detective Conan
+*	Changes			: Replaced the import packagename model to models
 */
 
 
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/model/church_schedule.dart';
+import 'package:mt_carmel_app/src/models/church_schedule.dart';
 import 'dart:async';
 import 'dart:convert';
 

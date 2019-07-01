@@ -2,8 +2,8 @@
 *  Filename    :    location_screen.dart
 *  Purpose     :    Displays the location of church in map.
 *  Created     :    2019-06-26 08:47 by Detective Conan
-*  Updated     :    2019-06-28 11:05 by Detective Conan
-*  Changes     :    Changed the opacity of the polygon
+*	 Updated	   :    2019-07-01 11:45:23 by Detective Conan
+*	 Changes		 :    Replaced the import packagename model to models
 */
 
 import 'dart:async';
@@ -14,7 +14,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:mt_carmel_app/src/model/maps.dart';
+import 'package:mt_carmel_app/src/models/maps.dart';
 
 class LocationScreen extends StatefulWidget {
   @override

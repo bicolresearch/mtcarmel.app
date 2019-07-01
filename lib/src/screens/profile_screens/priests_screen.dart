@@ -2,15 +2,15 @@
 *	Filename		:	priest_screen.dart
 *	Purpose			:	Shows the Carmelites Priests
 * Created			: 2019-06-11 14:14:18 by Detective Conan
-*	Updated			: 2019-06-28 14:27:11 by Detective Conan
-*	Changes			: Changed the screen. and added CircularProgressIndicator when loading data.
+*	Updated			: 2019-07-01 11:45:23 by Detective Conan
+*	Changes			: Replaced the import packagename model to models
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/model/priest.dart';
+import 'package:mt_carmel_app/src/models/priest.dart';
 import 'dart:async';
 import 'dart:convert';
 

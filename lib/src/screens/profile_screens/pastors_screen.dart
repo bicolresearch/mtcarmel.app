@@ -2,13 +2,13 @@
 *	Filename		:	pastor_screen.dart
 *	Purpose			:	Displays the list of pastors
 * Created			: 2019-06-11 15:56:33 by Detective Conan
-*	Updated			: 2019-06-28 14:40:37 by Detective Conan
-*	Changes			: Added CircularProgressIndicator when loading
+*	Updated			: 2019-07-01 11:45:23 by Detective Conan
+*	Changes			: Replaced the import packagename model to models
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/model/pastor.dart';
+import 'package:mt_carmel_app/src/models/pastor.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';

@@ -2,13 +2,13 @@
 *	Filename		:	profile_screen.dart
 *	Purpose			:	Display the list of the users access and other details of the church
 * Created			: 2019-06-11 15:44:56 by Detective Conan
-*	Updated			: 2019-06-27 10:52:54 by Detective Conan
-*	Changes			: Changed the logo height to 160 px. Adjusted spacing of item list
+*	Updated			: 2019-07-01 11:45:23 by Detective Conan
+*	Changes			: Replaced the import packagename model to models
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/model/profile.dart';
+import 'package:mt_carmel_app/src/models/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';

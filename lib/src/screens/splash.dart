@@ -2,13 +2,13 @@
 *	Filename		:	splash.dart
 *	Purpose			:	Displays log and ads before the main screen.
 * Created			: 2019-05-27 11:47:55 by Detective Conan
-*	Updated			: 2019-06-27 09:47:55 by Detective Conan
-*	Changes			: Changed logo height to 160 px.
+*	Updated			: 2019-07-01 11:45:23 by Detective Conan
+*	Changes			: Replaced the import packagename model to models
 */
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/model/ad.dart';
+import 'package:mt_carmel_app/src/models/ad.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import '../constants/app_constants.dart';
 import 'package:http/http.dart' as http;

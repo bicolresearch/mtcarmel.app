@@ -2,14 +2,14 @@
 *	Filename		:	feeds_screen.dart
 *	Purpose			:	Displays the news feed such as photos, videos
 * Created			: 2019-06-04 16:28:01 by Detective Conan
-*	Updated			:	2019-06-25 16:29:05 by jo 
-*	Changes			: remove import for sample_video dart file
+*	Updated			: 2019-07-01 11:45:23 by Detective Conan
+*	Changes			: Replaced the import packagename model to models
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/model/feed.dart';
+import 'package:mt_carmel_app/src/models/feed.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
