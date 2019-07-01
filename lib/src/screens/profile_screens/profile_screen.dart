@@ -197,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                child: Image.asset("assets/images/mt_logo.png", height: 160,),
+                child: Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 160,),
               ),
               SizedBox(
                 height: 10.0,

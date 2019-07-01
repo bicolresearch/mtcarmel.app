@@ -119,7 +119,7 @@ class _LocationScreenState extends State<LocationScreen> {
       final ImageConfiguration imageConfiguration =
           createLocalImageConfiguration(context);
       BitmapDescriptor.fromAssetImage(
-              imageConfiguration, 'assets/images/mt_logo.png')
+              imageConfiguration, AppConstants.MT_CARMEL_LOGO_PATH)
           .then(_updateBitmap);
     }
   }

@@ -25,7 +25,7 @@ IconData  _serviceIcon(String serviceName) {
         return MountCarmelIcons.joinus;
       case AppConstants.MAKE_REQUEST:
         return MountCarmelIcons.makearequest;
-      case AppConstants.BAPTISIM:
+      case AppConstants.BAPTISM:
         return MountCarmelIcons.baptism;
       case AppConstants.COMMUNION:
         return MountCarmelIcons.communion;

@@ -58,7 +58,7 @@ flutter_icons:
 
 flutter:
   assets:
-    - assets/images/mt_logo.png
+    - assets/images/mt_carmel_logo.png
     - assets/images/sample_user.png
   
   fonts:

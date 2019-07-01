@@ -203,7 +203,7 @@ class _FeedScreenState extends State<FeedScreen> {
       FadeInImage.assetNetwork(
         fadeInCurve: Curves.bounceIn,
         image: url,
-        placeholder: 'assets/images/mt_logo.png',
+        placeholder: AppConstants.MT_CARMEL_LOGO_PATH,
       );
     } catch (e) {
       print(e.toString() + "feeds");

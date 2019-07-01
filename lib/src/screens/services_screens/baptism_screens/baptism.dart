@@ -32,7 +32,7 @@ class Baptism extends StatelessWidget {
           servicesHeader(),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(AppConstants.BAPTISIM, baptism_message),
+          serviceTile(AppConstants.BAPTISM, baptism_message),
           SizedBox(height: 10.0,),
           lineWidget(),
            Column(children: <Widget>[
