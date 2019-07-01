@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/first_communion_info.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/communion_of_the_sick_info.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
@@ -17,7 +18,9 @@ import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
 class Communion extends StatelessWidget {
-  const Communion({Key key}) : super(key: key);
+  const Communion({Key key, this.serviceItem}) : super(key: key);
+
+  final ServiceItem serviceItem;
   static const String communion_message = "Be united with our God through the christian rite of communion";
 
   @override
@@ -29,7 +32,7 @@ class Communion extends StatelessWidget {
           children: <Widget>[
           servicesHeader(),
           SizedBox(height: 10.0,),
-          serviceTile(AppConstants.COMMUNION, communion_message),
+          serviceTile(serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
            Column(children: <Widget>[

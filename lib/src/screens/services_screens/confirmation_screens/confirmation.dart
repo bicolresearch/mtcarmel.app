@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/confirmation_screens/confirmation_info.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
@@ -15,7 +16,8 @@ import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
 class Confirmation extends StatelessWidget {
-  const Confirmation({Key key}) : super(key: key);
+  const Confirmation({Key key, this.serviceItem}) : super(key: key);
+  final ServiceItem serviceItem;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class Confirmation extends StatelessWidget {
           children: <Widget>[
           servicesHeader(),
           SizedBox(height: 10.0,),
-          serviceTile(AppConstants.CONFIRMATION, AppConstants.sample_message),
+          serviceTile(this.serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
           Container(

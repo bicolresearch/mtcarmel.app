@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/prayer_request_info.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/mass_request_info.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/liturgical_service_info.dart';
@@ -20,7 +21,8 @@ import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 ////
 class MakeRequest1 extends StatelessWidget {
   //////
-  const MakeRequest1({Key key}) : super(key: key);
+  const MakeRequest1({Key key, this.serviceItem}) : super(key: key);
+  final ServiceItem serviceItem;
   static const String make_request_message = "Be closer to God with the help of the church through prayers, holy masses and liturgy";
 
   @override
@@ -33,7 +35,7 @@ class MakeRequest1 extends StatelessWidget {
           servicesHeader(),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(AppConstants.MAKE_REQUEST, make_request_message),
+          serviceTile(this.serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
           Expanded(
