@@ -12,7 +12,7 @@ Widget servicesHeader(){
         Container(
           padding: EdgeInsets.only(top: 5.0, bottom: 10.0),
           width: double.infinity,
-          child: Text('National Shirne of Our Lady of Mount Carmel', 
+          child: Text(AppConstants.NATIONAL_SHRINE_TEXT,
                                 style: AppConstants.OPTION_STYLE1,textAlign: TextAlign.center,),
       ),
     ],

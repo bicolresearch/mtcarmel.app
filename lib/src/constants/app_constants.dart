@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 class AppConstants{
   static const String FIRST_USAGE_FLAG_NAME = "first_usage_flag";
-  static const String MT_CARMEL_LOGO_PATH = 'assets/images/mt_logo.png';
+  static const String MT_CARMEL_LOGO_PATH = 'assets/images/mt_carmel_logo.png';
   // TODO: to be replaced by actual url
   static const String TOTAL_TRANSACTION_JSON_URL = 'http://192.168.254.109/api/transparency.json';
   
@@ -37,6 +37,7 @@ class AppConstants{
 
   static const String COMPANY_NAME = "Mount Carmel Basilica";
   static const String LOCATION_NAME = "Ordo Carmelitarum Discalceatorum";
+  static const String NATIONAL_SHRINE_TEXT = 'National Shrine of Our Lady of Mount Carmel';
   static const double AD_GROUP_HEIGHT = 200.0;
   static const String INTRO_WELCOME = 'Welcome! This is the official mobile application of the National Shrine of Our Lady of Mount Carmel located at Dona Juana, New Manila Quezon City, Philippines';
   static const String SWIPE_LEFT_INSTRUCTION = "Swipe left to continue";
