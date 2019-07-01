@@ -2,7 +2,7 @@
 *	Filename		:	<filename.extension>
 *	Purpose			:	
 * Created			: 2019-06-17 19:23:44
-*	Updated			:	2019-06-25 16:23:50 by jo 
+*	Updated			:	2019-06-25 16:23:50 Scarlet Witch 
 *	Changes			: updated api url, added new api url for services, map and boundaries
 */
 

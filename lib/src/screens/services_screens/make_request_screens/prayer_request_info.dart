@@ -1,8 +1,8 @@
 /*
 *	Filename		:	prayer_request_info.dart
 *	Purpose			:	prayer request info add form
-* Created			: 2019-06-13 14:58:43 by Constantina
-*	Updated			:	2019-06-13 14:58:43 by Constantina 
+* Created			: 2019-06-13 14:58:43 by Scarlet Witch
+*	Updated			:	2019-06-13 14:58:43 by Scarlet Witch 
 *	Changes			: dded form comment, update margins and buttons, remove widget GestureDetector
 */
 import 'package:flutter/material.dart';

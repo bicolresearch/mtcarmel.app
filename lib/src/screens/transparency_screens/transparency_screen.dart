@@ -2,7 +2,7 @@
 *	Filename		:	tranparency_screen.dart
 *	Purpose			:	
 * Created			: 
-*	Updated			:	2019-06-26 17:33:34 by jo 
+*	Updated			:	2019-06-26 17:33:34 Scarlet Witch 
 *	Changes			: update model name
 */
 

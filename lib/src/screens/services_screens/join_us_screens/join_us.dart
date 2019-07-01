@@ -2,7 +2,7 @@
 *	Filename		:	join_us.dart
 *	Purpose			:	
 * Created			: 2019-06-11 15:52:50 by Detective Conan
-*	Updated			:	2019-06-17 15:48:25 by Constantina 
+*	Updated			:	2019-06-17 15:48:25 by Scarlet Witch 
 *	Changes			: add services messages/content
 */
 
