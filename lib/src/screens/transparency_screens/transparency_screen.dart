@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/total_transaction_amount.dart';
-import 'package:mt_carmel_app/src/models/transaction.dart';
+import 'package:mt_carmel_app/src/models/donations.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
@@ -29,14 +28,9 @@ class TransparencyScreen extends StatefulWidget {
 }
 
 class _TransparencyScreenState extends State<TransparencyScreen> {
-  var _totalDonated = 0.0;
-  var _isLoading = true;
   var _isJsonFailed = false;
-  var _isTotalLoading = true;
-  var _isJsonTotalFailed = false;
-  List<TotalTransactionAmount> _totalTransactionAmountList = [];
-
-  List<Transaction> _transactionList = [];
+  var _isJsonLoading = true;
+  Donations _donations;
 
   NumberFormat _formatCurrency;
 
@@ -63,8 +57,10 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    this.getJsonTransactionData();
-    this.getTotalAmt();
+    this.getDonationsJson().timeout(Duration(seconds: 1)).then((result) {
+      _isJsonLoading = false;
+      print(_isJsonLoading);
+    });
   }
 
   Future _initializeArrows() async {
@@ -72,165 +68,162 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     _scrollListener();
   }
 
-  Future<void> getJsonTransactionData() async {
+  Future<bool> getDonationsJson() async {
     var response = await http.get(AppConstants.TRANSACTION_JSON_URL);
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
-          _transactionList = (json.decode(response.body) as List)
-              .map((data) => new Transaction.fromJson(data))
-              .toList();
-          _isLoading = false;
-        } else {
-          _isJsonFailed = true;
-          _isLoading = false;
-        }
-      });
-      _initializeArrows();
-    }
-  }
+          final body = json.decode(response.body);
+          _donations = Donations.fromJson(body);
 
-  Future<void> getTotalAmt() async {
-    var response =
-        await http.get('http://192.168.254.109/api/transparency.json');
-    if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          _totalTransactionAmountList = (json.decode(response.body) as List)
-              .map((data) => new TotalTransactionAmount.fromJson(data))
-              .toList();
-          _isTotalLoading = false;
+          _isJsonLoading = false;
+          _initializeArrows();
         } else {
-          _isJsonTotalFailed = true;
-          _isTotalLoading = false;
+          _isJsonLoading = false;
+          _isJsonFailed = true;
         }
       });
     }
+    print("getDonations");
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: _isTotalLoading
+          body: _isJsonLoading
               ? CircularProgressIndicator()
-              : Container(
-                  margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 3,
-                                child: Container(
-                                  padding: EdgeInsets.only(bottom: 10.0),
-                                  child: Icon(
-                                    MountCarmelIcons.transparency,
-                                    size: 100,
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                flex: 2,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      "Transparency",
-                                      style: AppConstants.OPTION_STYLE3,
-                                      textAlign: TextAlign.justify,
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        "Total help received online for this year",
-                                        style: AppConstants.OPTION_STYLE1,
-                                        textAlign: TextAlign.justify,
+              : _isJsonFailed
+                  ? _failedContent()
+                  : Container(
+                      margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 3,
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: 10.0),
+                                      child: Icon(
+                                        MountCarmelIcons.transparency,
+                                        size: 100,
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                  ),
+                                  Flexible(
+                                    flex: 2,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
-                                        Container(
-                                          child: Container(
-                                              width: 200.0,
-                                              height: 20.0,
-                                              decoration: BoxDecoration(
-                                                color: Colors.brown[600],
-                                                border: Border.all(width: 0.8),
-                                                borderRadius:
-                                                    BorderRadius.circular(20.0),
-                                              ),
-                                              child: getTotal()),
+                                        Text(
+                                          "Transparency",
+                                          style: AppConstants.OPTION_STYLE3,
+                                          textAlign: TextAlign.justify,
                                         ),
-                                        IconButton(
-                                          icon: Icon(
-                                            MountCarmelIcons.refresh,
+                                        Center(
+                                          child: Text(
+                                            "Total help received online for this year",
+                                            style: AppConstants.OPTION_STYLE1,
+                                            textAlign: TextAlign.justify,
                                           ),
-                                          onPressed: () {
-                                            print("Refresh button pressed.");
-                                          },
                                         ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Container(
+                                              child: Container(
+                                                  width: 200.0,
+                                                  height: 20.0,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.brown[600],
+                                                    border:
+                                                        Border.all(width: 0.8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20.0),
+                                                  ),
+                                                  child: getTotal()),
+                                            ),
+                                            IconButton(
+                                              icon: Icon(
+                                                MountCarmelIcons.refresh,
+                                              ),
+                                              onPressed: () {
+                                                print(
+                                                    "Refresh button pressed.");
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(),
                                       ],
                                     ),
-                                    Divider(),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
+                              height: (MediaQuery.of(context).size.height) / 2,
+                              width: double.infinity,
+                            ),
                           ),
-                          height: (MediaQuery.of(context).size.height) / 2,
-                          width: double.infinity,
-                        ),
-                      ),
 
-                      //TRANSACTION LIST
-                      GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
+                          //TRANSACTION LIST
+                          GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
 
-                      Expanded(
-                        child: Container(
-                            width: double.infinity,
-                            child: NotificationListener<ScrollNotification>(
-                              onNotification: (scrollNotification) {
-                                if (scrollNotification
-                                    is ScrollStartNotification) {
-                                  _onStartScroll(scrollNotification.metrics);
-                                } else if (scrollNotification
-                                    is ScrollUpdateNotification) {
-                                  _onUpdateScroll(scrollNotification.metrics);
-                                } else if (scrollNotification
-                                    is ScrollEndNotification) {
-                                  _onEndScroll(scrollNotification.metrics);
-                                }
-                              },
-                              child: ListView.builder(
-                                controller: _scrollController,
-                                itemCount: _transactionList.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                      child: _isLoading
-                                          ? CircularProgressIndicator()
-                                          : _transactionContent(
-                                              _transactionList[index]));
-                                },
-                              ),
-                            )),
+                          Expanded(
+                            child: Container(
+                                width: double.infinity,
+                                child: NotificationListener<ScrollNotification>(
+                                  onNotification: (scrollNotification) {
+                                    if (scrollNotification
+                                        is ScrollStartNotification) {
+                                      _onStartScroll(
+                                          scrollNotification.metrics);
+                                    } else if (scrollNotification
+                                        is ScrollUpdateNotification) {
+                                      _onUpdateScroll(
+                                          scrollNotification.metrics);
+                                    } else if (scrollNotification
+                                        is ScrollEndNotification) {
+                                      _onEndScroll(scrollNotification.metrics);
+                                    }
+                                  },
+                                  child: ListView.builder(
+                                    controller: _scrollController,
+                                    itemCount:
+                                        (_donations.donationsList == null)
+                                            ? 0
+                                            : _donations.donationsList.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                          child: _isJsonLoading
+                                              ? Center(
+                                                  child:
+                                                      CircularProgressIndicator())
+                                              : _transactionContent(_donations
+                                                  .donationsList[index]));
+                                    },
+                                  ),
+                                )),
+                          ),
+                          GestureDetector(
+                              onTap: _moveDown, child: _arrowMoreDown),
+                        ],
                       ),
-                      GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
-                    ],
-                  ),
-                  height: MediaQuery.of(context).size.height,
-                )),
+                      height: MediaQuery.of(context).size.height,
+                    )),
     );
   }
 
-  Widget _transactionContent(Transaction transaction) {
+  Widget _transactionContent(Donation donation) {
     if (_isJsonFailed) return Container();
-    String url = AppConstants.API_BASE_URL + transaction.coverPhoto;
+    String url = AppConstants.API_BASE_URL + donation.profilePhoto;
     if (Image.network(url) != null) {
       return Container(
         alignment: Alignment.center,
@@ -246,14 +239,17 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
               ),
             ),
             Spacer(),
-            Container(width: 90.0, child: Text(transaction.firstName)),
+            Container(
+                width: 90.0,
+                child: Text("${donation.firstName} ${donation.lastName}")),
             Spacer(flex: 2),
             Container(
-                width: 70.0, child: Text(transaction.amount)),
+                width: 70.0,
+                child: Text(_formattedAmount(double.parse(donation.amount)))),
             Spacer(),
-            Container(width: 25.0, child: Text(transaction.postedOn)),
+            Container(width: 60.0, child: Text(donation.postedOn, style: TextStyle(fontSize: 10.0),), ),
             Spacer(flex: 2),
-            Container(width: 60.0, child: Text(transaction.donationType)),
+            Container(width: 60.0, child: Text(donation.donationType)),
             Spacer(),
           ],
         ),
@@ -263,15 +259,17 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   }
 
   Widget getTotal() {
-    double total = 0.0;
-
-    if (_totalTransactionAmountList.isNotEmpty &&
-        _totalTransactionAmountList[0] != null) {
-      total = _totalTransactionAmountList[0].total;
-    }
-
-    return Text(_formattedAmount(total),
+    //TODO Fixed API for total
+    return Text(_formattedAmount(double.parse("36000.00")),
         textAlign: TextAlign.center, style: TextStyle(color: Colors.white));
+//    if (_donations == null || _donations.total == null) {
+//      print("null total");
+//      return Container();
+//    }
+//    return Container();
+//    print(double.parse(_donations.total.totalDonations));
+//    return Text(_formattedAmount(double.parse(_donations.total.totalDonations)),
+//        textAlign: TextAlign.center, style: TextStyle(color: Colors.white));
   }
 
   @override
@@ -365,5 +363,17 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
 
   void _onEndScroll(ScrollMetrics metrics) {
     _scrollListener();
+  }
+
+  Widget _failedContent() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(50.0),
+        child: Text(
+          "No results. Please check the network connection.",
+          style: AppConstants.OPTION_STYLE3,
+        ),
+      ),
+    );
   }
 }
