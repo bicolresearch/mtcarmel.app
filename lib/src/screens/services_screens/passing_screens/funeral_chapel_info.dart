@@ -1,8 +1,8 @@
 /*
 *	Filename		:	funeral_chapel_info.dart
 *	Purpose			:	funeral chapel info add form
-* Created			: 2019-06-13 17:13:32 by Constantina
-*	Updated			:	2019-06-27 18:25:30 by Constantina 
+* Created			: 2019-06-13 17:13:32 by Scarlet Witch
+*	Updated			:	2019-06-27 18:25:30 by Scarlet Witch 
 *	Changes			: added terms and conditions for the use of the chapel
 */
 

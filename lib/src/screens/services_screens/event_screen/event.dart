@@ -2,7 +2,7 @@
 *	Filename		:	event.dart
 *	Purpose			:	
 * Created			: 2019-06-11 15:52:50 by Detective Conan
-*	Updated			:	2019-06-17 16:04:09 by Constantina  
+*	Updated			:	2019-06-17 16:04:09 by Scarlet Witch  
 *	Changes			: add services messages/content
 */
 

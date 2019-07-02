@@ -2,7 +2,7 @@
 *	Filename		:	services_screen.dart
 *	Purpose			:	Displays the list of the services of the church
 * Created			: 2019-06-11 15:52:50 by Detective Conan
-*	Updated			: 2019-06-17 15:20:21 by Constantina 
+*	Updated			: 2019-06-17 15:20:21 by Scarlet Witch 
 *	Changes			: add services messages/content
 */
 
