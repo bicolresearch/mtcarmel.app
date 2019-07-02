@@ -62,7 +62,7 @@ class _LocationScreenState extends State<LocationScreen> {
           if (locationMap.mapCenter.isNotEmpty) {
             _location = LatLng(
                 double.parse(locationMap.mapCenter[0].lat_center),
-                double.parse(locationMap.mapCenter[0].lat_center));
+                double.parse(locationMap.mapCenter[0].lng_center));
           }
         } else {
           print(response.statusCode);

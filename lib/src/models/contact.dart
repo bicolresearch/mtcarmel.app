@@ -37,12 +37,3 @@ class Contact{
 
   Map<String, dynamic> toJson() => _$ContactToJson(this);
 }
-
-        // "id": 1,
-        // "name": "Minor Basilica of the National Shrine of Our Ladyof Mount Carmel",
-        // "address": "J.Rodriguez Ave. cor 5th St., New Manila, Quezon City 1112 Philippines",
-        // "email": "basilica@mountcarmel.ph",
-        // "social_media": "@mountcarmel.ph",
-        // "landline": "(632) 7245938, (632) 7015867, (632) 7015868, (632) 7015869",
-        // "mobile": "0918-4077760 and 0956-6583660"
-

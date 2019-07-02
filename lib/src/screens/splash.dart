@@ -49,6 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: TextStyle(
                         color: Colors.brown,
                         fontSize: 20.0,
+                        fontWeight: FontWeight.bold
                       )),
                   Text(AppConstants.LOCATION_NAME,
                       style: TextStyle(

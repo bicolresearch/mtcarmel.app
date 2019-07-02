@@ -74,16 +74,16 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
   _sortSchedules(){
     for (ChurchSchedule schedule in _churchScheduleList) {
       switch(schedule.name){
-        case "1": // holy mass
+        case "Holy Mass": // holy mass
           _holyMassSchedule.add(schedule);
           break;
-        case "2": //confesions
+        case "Confession": //confesions
           _confessionSchedule.add(schedule);
           break;
-        case "3": // Blessings
+        case "Blessings": // Blessings
           _blessingSchedule.add(schedule);
           break;
-        case "4": // Live Mass
+        case "Live Mass": // Live Mass
           _liveMassSchedule.add(schedule);
           break;
         default:
@@ -167,13 +167,13 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
 
     for (ChurchSchedule schedule in schedules) {
       switch(schedule.day){
-        case "Sundays":
+        case "Sunday":
           sundaySchedules.add(schedule);
           break;
-        case "Weekdays":
+        case "Weekday":
           weekdaySchedules.add(schedule);
           break;
-        case "Saturdays":
+        case "Saturday":
           saturdaySchedules.add(schedule);
           break;
         case "Everyday":
@@ -257,10 +257,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
     );
   }
 
-  
-  void close(){    
-    this.dispose();
-  }    
+
 }
 
 
