@@ -2,8 +2,8 @@
 *	Filename		:	contact_detail_scree.dart
 *	Purpose			:	Displays the church contact details
 * Created			: 2019-06-13 15:07:14 by Detective Conan
-*	Updated			: 2019-07-01 11:45:23 by Detective Conan
-*	Changes			: Replaced the import packagename model to models
+*	Updated			: 2019-07-02 13:27:13 by Detective Conan
+*	Changes			: Adjusted the back button.
 */
 
 import 'package:flutter/material.dart';
@@ -11,6 +11,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/models/contact.dart';
+import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/item_widget.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -46,12 +47,11 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
           _contactList = (json.decode(response.body) as List)
               .map((data) => new Contact.fromJson(data))
               .toList();
-          _isLoading = false;
         } else {
           print(response.statusCode);
           _isJsonFailed = true;
-          _isLoading = false;
         }
+        _isLoading = false;
       });
     }
   }
@@ -60,7 +60,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: const EdgeInsets.fromLTRB(30.0, 60.0, 30.0, 50.0),
+      padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 0.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,25 +68,27 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
           Expanded(
             child: (_isLoading)
                 ? Center(child: CircularProgressIndicator())
-                : Container(
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          "Contact Details",
-                          style: AppConstants.OPTION_STYLE3,
-                          textAlign: TextAlign.center,
+                : _isJsonFailed
+                    ? failedMessage()
+                    : Container(
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Contact Details",
+                              style: AppConstants.OPTION_STYLE3,
+                              textAlign: TextAlign.center,
+                            ),
+                            Divider(),
+                            Expanded(
+                              child: Container(
+                                child: _contactList.isEmpty
+                                    ? Container()
+                                    : _contactDetailContent(context),
+                              ),
+                            ),
+                          ],
                         ),
-                        Divider(),
-                        Expanded(
-                          child: Container(
-                            child: _contactList.isEmpty
-                                ? Container()
-                                : _contactDetailContent(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
           ),
           Container(
             alignment: Alignment.bottomCenter,
