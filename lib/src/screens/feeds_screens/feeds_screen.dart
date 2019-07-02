@@ -44,7 +44,6 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   void dispose() {
-    this.dispose();
     print("feed clossing...");
     super.dispose();
   }

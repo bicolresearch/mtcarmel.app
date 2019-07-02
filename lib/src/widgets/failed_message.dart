@@ -6,14 +6,17 @@
 *  Changes     :
 */
 
-
-
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
-Widget failedMessage(){
-  return Center(child: Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Text("No results. Please check the network connection", style: AppConstants.OPTION_STYLE2,),
+Widget failedMessage() {
+  return Center(
+      child: Padding(
+    padding: const EdgeInsets.all(40.0),
+    child: Text(
+      "No results. Please check the network connection",
+      style: AppConstants.OPTION_STYLE2,
+      textAlign: TextAlign.center,
+    ),
   ));
 }
