@@ -2,8 +2,8 @@
 *	Filename		:	about_screen.dart
 *	Purpose			:	Show the details about the church.
 * Created			: 2019-06-13 12:37:11 by Detective Conan
-*	Updated			: 2019-07-01 11:45:23 by Detective Conan
-*	Changes			: Replaced the import packagename model to models
+*	Updated			: 2019-07-02 12:20:13 by Detective Conan
+*	Changes			: Adjusted the contents, Added CircularProgressIndicator and FailedMessage
 */
 
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/about.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 
@@ -54,7 +55,6 @@ class _AboutScreenState extends State<AboutScreen> {
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
-
           _aboutList = (json.decode(response.body) as List)
               .map((data) => new About.fromJson(data))
               .toList();
@@ -67,14 +67,12 @@ class _AboutScreenState extends State<AboutScreen> {
             _aboutItems.add(_AboutItem(about, AboutScreen.feastDayLabel));
             _aboutItems.add(_AboutItem(about, AboutScreen.titularLabel));
             _aboutItems.add(_AboutItem(about, AboutScreen.dioceseLabel));
-//              _aboutItems.add(_AboutItem(about, AboutScreen.historyLabel));
           }
-          _isLoading = false;
         } else {
           print(response.statusCode);
           _isJsonFailed = true;
-          _isLoading = false;
         }
+        _isLoading = false;
       });
     }
   }
@@ -83,48 +81,52 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+        padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 0.0),
         child: Column(
           children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 30.0),
-                      height: 40.0,
-                      decoration: BoxDecoration(
-                        color: Colors.brown[600],
-                        border: Border.all(width: 0.0),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Mount Carmel Church now a National Shrine",
-                          style: TextStyle(
-                              color: Colors.white, fontFamily: "Helvetica"),
-                          textAlign: TextAlign.center,
+            _isLoading
+                ? Expanded(child: Center(child: CircularProgressIndicator()))
+                : _isJsonFailed
+                    ? failedMessage()
+                    : Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(top: 30.0),
+                                height: 40.0,
+                                decoration: BoxDecoration(
+                                  color: Colors.brown[600],
+                                  border: Border.all(width: 0.0),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Mount Carmel Church now a National Shrine",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Helvetica"),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                    AppConstants.MT_CARMEL_LOGO_PATH,
+                                    height: 160),
+                              ),
+                              _aboutBlock(),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              _history(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 160),
-                    ),
-                    _aboutBlock(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    _history(),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: leftArrowBackButton(context: context),
-            )
+            leftArrowBackButton(context: context)
           ],
         ),
       ),

@@ -1,3 +1,11 @@
+/*
+*	Filename		:	about.dart
+*	Purpose			:	model for the about the parish screen
+* Created			: 2019-06-04 17:52:50 by Detective Conan
+*	Updated			:	2019-07-02 09:56:21 by Detective Conan
+*	Changes			: Changed the feast_Day to feast_day
+*/
+
 import 'dart:collection';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -15,7 +23,7 @@ class About{
   final String diocese;
   @JsonKey(name: "date_of_establishment")
   final String dateOfEstablishment;
-  @JsonKey(name: "feast_Day")
+  @JsonKey(name: "feast_day")
   final String feastDay;
   final String content;
 

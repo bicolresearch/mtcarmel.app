@@ -119,7 +119,6 @@ class _PriestsScreenState extends State<PriestsScreen> {
                       ),
               ),
             ),
-//            Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: leftArrowBackButton(context: context),

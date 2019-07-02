@@ -56,8 +56,8 @@ class _PastorsScreenState extends State<PastorsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.symmetric(vertical: 50.0),
+      resizeToAvoidBottomPadding: false,
+      body: Container(margin: EdgeInsets.only(top: 50.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,59 +66,59 @@ class _PastorsScreenState extends State<PastorsScreen> {
               child: (_isLoading)
                   ? Center(child: CircularProgressIndicator())
                   : _isJsonFailed
-                      ? failedMessage()
-                      : Container(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 10.0,
-                                ),
-                                height: 40.0,
-                                decoration: BoxDecoration(
-                                  color: Colors.brown[600],
-                                  border: Border.all(width: 0.8),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Mount Carmel Church now a National Shrine",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Helvetica"),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Pastors",
-                                  style: AppConstants.OPTION_STYLE3,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 50.0,
-                                  ),
-                                  child: ListView.builder(
-                                      physics: ScrollPhysics(
-                                          parent: ScrollPhysics()),
-                                      shrinkWrap: true,
-                                      reverse: true,
-                                      itemCount: _pastorList.length,
-                                      itemBuilder: (context, index) {
-                                        return _pastorItem(
-                                            context, _pastorList[index]);
-                                      }),
-                                ),
-                              ),
-                            ],
-                          ),
+                  ? failedMessage()
+                  : Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 10.0,
+                      ),
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        color: Colors.brown[600],
+                        border: Border.all(width: 0.8),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Mount Carmel Church now a National Shrine",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Helvetica"),
+                          textAlign: TextAlign.center,
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Pastors",
+                        style: AppConstants.OPTION_STYLE3,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 50.0,
+                        ),
+                        child: ListView.builder(
+                            physics: ScrollPhysics(
+                                parent: ScrollPhysics()),
+                            shrinkWrap: true,
+                            reverse: true,
+                            itemCount: _pastorList.length,
+                            itemBuilder: (context, index) {
+                              return _pastorItem(
+                                  context, _pastorList[index]);
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             leftArrowBackButton(context: context),
           ],
