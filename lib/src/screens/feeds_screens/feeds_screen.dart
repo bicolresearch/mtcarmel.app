@@ -2,12 +2,11 @@
 *	Filename		:	feeds_screen.dart
 *	Purpose			:	Displays the news feed such as photos, videos
 * Created			: 2019-06-04 16:28:01 by Detective Conan
-*	Updated			: 2019-07-01 11:45:23 by Detective Conan
-*	Changes			: Replaced the import packagename model to models
+*	Updated			: 2019-07-02 15:33:23 by Detective Conan
+*	Changes			: Removed Tags in post feeds content
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 
@@ -18,7 +17,6 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
-import 'package:mt_carmel_app/src/screens/feeds_screens/video_screen.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -46,7 +44,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   void dispose() {
-    // this.dispose();
+    this.dispose();
     print("feed clossing...");
     super.dispose();
   }
@@ -261,27 +259,30 @@ class _FeedScreenState extends State<FeedScreen> {
                           image: NetworkImage(url), fit: BoxFit.cover),
                     )),
               ),
-              Padding(
+              Container(
+                height: 50.0,
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  feed.content,
+                  _noTags(feed.content),
                   style: AppConstants.OPTION_STYLE1,
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
+                  maxLines: 2,
                 ),
-                // Container(
-                //   height: 40,
-                //   child: HtmlTextView(
-                //     data: "<div style='color: #5d4037; width: 150px; height: 40px; overflow: hidden;'><h6>${feed.content}</h6></div>",
-                //     anchorColor: Color(0xFFFF0000),
-                //       ),
-                // )
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  String _noTags(String content) {
+    String newText = content;
+    newText = newText
+        .replaceAll("<p>", "")
+        .replaceAll("</p>", "")
+        .replaceAll("/br", "");
+    return newText;
   }
 }
