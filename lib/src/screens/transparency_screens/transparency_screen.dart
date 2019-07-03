@@ -1,9 +1,9 @@
 /*
-*	Filename		:	tranparency_screen.dart
+*	Filename		:	transparency_screen.dart
 *	Purpose			:	Displays the recent donation transactions
 * Created			: 2019-06-05 09:10:50 Detective Conan
-*	Updated			: 2019-07-03 11:47 by Detective conan
-*	Changes			: Fixed the total donations api call.
+*	Updated			: 2019-07-03 11:57 by Detective conan
+*	Changes			: Implemented Refreshing of donation transaction list.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -94,7 +94,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     return SafeArea(
       child: Scaffold(
           body: _isJsonLoading
-              ? CircularProgressIndicator()
+              ? Center(child: CircularProgressIndicator())
               : _isJsonFailed
                   ? _failedContent()
                   : Container(
@@ -159,6 +159,10 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                               onPressed: () {
                                                 print(
                                                     "Refresh button pressed.");
+                                                setState(() {
+                                                  _isJsonLoading = true;
+                                                  this.getDonationsJson();
+                                                });
                                               },
                                             ),
                                           ],
@@ -248,7 +252,13 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                 width: 70.0,
                 child: Text(_formattedAmount(double.parse(donation.amount)))),
             Spacer(),
-            Container(width: 60.0, child: Text(donation.postedOn, style: TextStyle(fontSize: 10.0),), ),
+            Container(
+              width: 60.0,
+              child: Text(
+                donation.postedOn,
+                style: TextStyle(fontSize: 10.0),
+              ),
+            ),
             Spacer(flex: 2),
             Container(width: 60.0, child: Text(donation.donationType)),
             Spacer(),
@@ -260,8 +270,10 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   }
 
   Widget getTotal() {
-    return Text(_formattedAmount(double.parse(_donations.totalDonations.amount)),
-        textAlign: TextAlign.center, style: TextStyle(color: Colors.white));
+    return Text(
+        _formattedAmount(double.parse(_donations.totalDonations.amount)),
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.white));
   }
 
   @override
