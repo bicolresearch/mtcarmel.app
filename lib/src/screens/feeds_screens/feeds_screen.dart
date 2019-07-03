@@ -2,10 +2,11 @@
 *	Filename		:	feeds_screen.dart
 *	Purpose			:	Displays the news feed such as photos, videos
 * Created			: 2019-06-04 16:28:01 by Detective Conan
-*	Updated			: 2019-07-02 15:33:23 by Detective Conan
-*	Changes			: Removed Tags in post feeds content
+*	Updated			: 2019-07-03 09:29:23 by Detective Conan
+*	Changes			: Implemented caching of images.
 */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
@@ -250,13 +251,16 @@ class _FeedScreenState extends State<FeedScreen> {
               ),
               Expanded(
                 child: Container(
-                    padding: EdgeInsets.all(20),
-                    width: double.infinity,
-                    height: 260,
-                    decoration: new BoxDecoration(
-                      image: new DecorationImage(
-                          image: NetworkImage(url), fit: BoxFit.cover),
-                    )),
+                  width: double.infinity,
+                  height: 260,
+                  child: CachedNetworkImage(
+                      imageUrl: url,
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          new Icon(Icons.error),
+                      fit: BoxFit.cover),
+                ),
               ),
               Container(
                 height: 50.0,
