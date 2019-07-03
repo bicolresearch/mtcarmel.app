@@ -2,9 +2,8 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*  Updated     :   2019-07-02 16:13 by Detective Conan
-*  Changes     :   Implemented pulling of data from api
-*                  Implemented the display of the available donations.
+*  Updated     :   2019-07-03 09:19 by Detective Conan
+*  Changes     :   Implemented Caching of images.
 */
 
 import 'package:flutter/material.dart';
@@ -18,6 +17,8 @@ import 'send_help_detail_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SendHelpScreen extends StatefulWidget {
   static const TextStyle optionStyle = TextStyle(
@@ -122,14 +123,12 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-              child: Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                  image: NetworkImage(
-                      AppConstants.API_BASE_URL + sendHelp.coverPhoto),
-                  fit: BoxFit.cover),
-            ),
-          )),
+            child: CachedNetworkImage(
+                imageUrl: AppConstants.API_BASE_URL + sendHelp.coverPhoto,
+                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => new Icon(Icons.error),
+                fit: BoxFit.cover),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
