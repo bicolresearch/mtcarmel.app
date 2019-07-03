@@ -110,7 +110,7 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
         body: Center(
           child: this._isLoading
-              ? CircularProgressIndicator()
+              ? LoadingIndicator()
               : Container(
                   padding:
                       EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
