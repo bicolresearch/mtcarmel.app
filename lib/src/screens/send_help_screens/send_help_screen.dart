@@ -1,9 +1,9 @@
 /*
-*  Filename    :   send_help_screen.dart
-*  Purpose     :	 Displays the different type of donations
-*  Created     :   2019-06-02 09:10 by Detective Conan
-*  Updated     :   2019-07-03 09:19 by Detective Conan
-*  Changes     :   Implemented Caching of images.
+* Filename    : send_help_screen.dart
+* Purpose     :	Displays the different type of donations
+* Created     : 2019-06-02 09:10 by Detective Conan
+*	Updated			: 2019-07-03 11:19 by Detective conan
+*	Changes			: Added caching key.
 */
 
 import 'package:flutter/material.dart';
@@ -124,6 +124,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
         children: <Widget>[
           Container(
             child: CachedNetworkImage(
+                key: Key(sendHelp.coverPhoto.replaceAll("/", "")),
                 imageUrl: AppConstants.API_BASE_URL + sendHelp.coverPhoto,
                 placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => new Icon(Icons.error),

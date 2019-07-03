@@ -12,7 +12,6 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 
-
 Widget serviceTile(ServiceItem serviceItem) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -21,8 +20,8 @@ Widget serviceTile(ServiceItem serviceItem) {
         Container(
           height: 60.0,
           child: CachedNetworkImage(
-              imageUrl:
-                  AppConstants.API_BASE_URL + serviceItem.coverPhoto,
+              key: Key(serviceItem.coverPhoto.replaceAll("/", "")),
+              imageUrl: AppConstants.API_BASE_URL + serviceItem.coverPhoto,
               placeholder: (context, url) =>
                   Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => Padding(

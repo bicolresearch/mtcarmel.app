@@ -2,8 +2,8 @@
 *	Filename		:	feeds_screen.dart
 *	Purpose			:	Displays the news feed such as photos, videos
 * Created			: 2019-06-04 16:28:01 by Detective Conan
-*	Updated			: 2019-07-03 09:29:23 by Detective Conan
-*	Changes			: Implemented caching of images.
+*	Updated			: 2019-07-03 11:18 by Detective conan
+*	Changes			: Added caching key.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -254,6 +254,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   width: double.infinity,
                   height: 260,
                   child: CachedNetworkImage(
+                      key: Key(url.replaceAll("/", "")),
                       imageUrl: url,
                       placeholder: (context, url) =>
                           Center(child: CircularProgressIndicator()),
