@@ -1,12 +1,13 @@
 /*
-*   Filename	:   tab_navigator.dart
-*   Purpose		:   Navigates to different tabs
-*   Created		:   05/21/2019 by Conan
-*   Updated		:   06/04/2019 by Conan
-*   Changes		:   Added comments
+* Filename	  : tab_navigator.dart
+* Purpose		  : Navigates to different tabs
+* Created		  : 2019-05-21 by Detective Conan
+*	Updated			: 2019-07-03 12:59 by Detective conan
+*	Changes			: Hid the bottom control for android screens.
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/screens/transparency_screens/transparency_screen.dart';
 import '../presentations/mount_carmel_icons.dart';
 import '..//screens/feeds_screens/feeds_screen.dart';
@@ -41,6 +42,7 @@ class _TabNavigatorState extends State<TabNavigator>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     return Scaffold(
       body: TabBarView(
         children: <Widget>[
