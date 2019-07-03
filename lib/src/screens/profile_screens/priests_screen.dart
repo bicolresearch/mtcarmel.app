@@ -2,10 +2,11 @@
 *	Filename		:	priest_screen.dart
 *	Purpose			:	Shows the Carmelites Priests
 * Created			: 2019-06-11 14:14:18 by Detective Conan
-*	Updated			: 2019-07-01 11:45:23 by Detective Conan
-*	Changes			: Replaced the import packagename model to models
+*	Updated			: 2019-07-03 09:36:23 by Detective Conan
+*	Changes			: Implemented caching of images.
 */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
@@ -129,6 +130,7 @@ class _PriestsScreenState extends State<PriestsScreen> {
 
   Card getStructuredGridCell(Priest priest) {
     String url = AppConstants.API_BASE_URL + priest.coverPhoto;
+
     return Card(
         elevation: 1.5,
         child: Column(
@@ -141,7 +143,7 @@ class _PriestsScreenState extends State<PriestsScreen> {
               width: 100.0,
               height: 100.0,
               child: CircleAvatar(
-                backgroundImage: NetworkImage(url),
+                backgroundImage: CachedNetworkImageProvider(url),
                 backgroundColor: Colors.brown,
               ),
             ),
