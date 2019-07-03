@@ -1,5 +1,5 @@
 /*
-*	Filename		:	services_screen.dart
+*	Filename		:	services_tiles.dart
 *	Purpose			:	Displays the list of the services of the church
 * Created			: 2019-06-11 15:52:50 by Detective Conan
 *	Updated			: 2019-07-03 10:08:21 by Detective conan
