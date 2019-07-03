@@ -1,9 +1,9 @@
 /*
 *	Filename		:	tranparency_screen.dart
-*	Purpose			:	
+*	Purpose			:	Displays the recent donation transactions
 * Created			: 2019-06-05 09:10:50 Detective Conan
-*	Updated			:	2019-07-03 09:49:34 Detective Conan
-*	Changes			: Implemented caching of images.
+*	Updated			: 2019-07-03 11:47 by Detective conan
+*	Changes			: Fixed the total donations api call.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -260,17 +260,8 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   }
 
   Widget getTotal() {
-    //TODO Fixed API for total
-    return Text(_formattedAmount(double.parse("36000.00")),
+    return Text(_formattedAmount(double.parse(_donations.totalDonations.amount)),
         textAlign: TextAlign.center, style: TextStyle(color: Colors.white));
-//    if (_donations == null || _donations.total == null) {
-//      print("null total");
-//      return Container();
-//    }
-//    return Container();
-//    print(double.parse(_donations.total.totalDonations));
-//    return Text(_formattedAmount(double.parse(_donations.total.totalDonations)),
-//        textAlign: TextAlign.center, style: TextStyle(color: Colors.white));
   }
 
   @override

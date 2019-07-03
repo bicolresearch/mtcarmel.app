@@ -12,9 +12,10 @@ part 'donations.g.dart';
 
 @JsonSerializable()
 class Donations{
-  Donations(this.total, this.donationsList);
+  Donations(this.totalDonations, this.donationsList);
 
-  final TotalDonations total;
+  @JsonKey(name: "total_donations")
+  final TotalDonations totalDonations;
   @JsonKey(name: "donations_list")
   final List<Donation> donationsList;
 
@@ -26,10 +27,9 @@ class Donations{
 
 @JsonSerializable()
 class TotalDonations{
-  TotalDonations(this.totalDonations,);
+  TotalDonations(this.amount,);
 
-  @JsonKey(name: "total_donations")
-  final String totalDonations;
+  final String amount;
 
 
   factory TotalDonations.fromJson(Map<String, dynamic> json) => _$TotalDonationsFromJson(json);

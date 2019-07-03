@@ -8,9 +8,10 @@ part of 'donations.dart';
 
 Donations _$DonationsFromJson(Map<String, dynamic> json) {
   return Donations(
-      json['total'] == null
+      json['total_donations'] == null
           ? null
-          : TotalDonations.fromJson(json['total'] as Map<String, dynamic>),
+          : TotalDonations.fromJson(
+              json['total_donations'] as Map<String, dynamic>),
       (json['donations_list'] as List)
           ?.map((e) =>
               e == null ? null : Donation.fromJson(e as Map<String, dynamic>))
@@ -18,16 +19,16 @@ Donations _$DonationsFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$DonationsToJson(Donations instance) => <String, dynamic>{
-      'total': instance.total,
+      'total_donations': instance.totalDonations,
       'donations_list': instance.donationsList
     };
 
 TotalDonations _$TotalDonationsFromJson(Map<String, dynamic> json) {
-  return TotalDonations(json['total_donations'] as String);
+  return TotalDonations(json['amount'] as String);
 }
 
 Map<String, dynamic> _$TotalDonationsToJson(TotalDonations instance) =>
-    <String, dynamic>{'total_donations': instance.totalDonations};
+    <String, dynamic>{'amount': instance.amount};
 
 Donation _$DonationFromJson(Map<String, dynamic> json) {
   return Donation(
