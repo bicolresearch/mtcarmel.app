@@ -17,6 +17,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
 
 class TransparencyScreen extends StatefulWidget {
   static const TextStyle optionStyle = TextStyle(
@@ -94,7 +95,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     return SafeArea(
       child: Scaffold(
           body: _isJsonLoading
-              ? Center(child: CircularProgressIndicator())
+              ? LoadingIndicator()
               : _isJsonFailed
                   ? _failedContent()
                   : Container(
@@ -208,9 +209,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                     itemBuilder: (context, index) {
                                       return Container(
                                           child: _isJsonLoading
-                                              ? Center(
-                                                  child:
-                                                      CircularProgressIndicator())
+                                              ? LoadingIndicator()
                                               : _transactionContent(_donations
                                                   .donationsList[index]));
                                     },

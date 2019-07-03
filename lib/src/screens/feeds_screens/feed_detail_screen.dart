@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
+import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
 
 class FeedDetailScreen extends StatelessWidget {
   final Feed feed;
@@ -59,7 +60,7 @@ class FeedDetailScreen extends StatelessWidget {
                             imageUrl:
                                 AppConstants.API_BASE_URL + feed.coverPhoto,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                LoadingIndicator(),
                             errorWidget: (context, url, error) =>
                                 new Icon(Icons.error),
                             fit: BoxFit.contain),

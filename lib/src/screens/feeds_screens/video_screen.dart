@@ -41,7 +41,7 @@
 //                  aspectRatio: _controller.value.aspectRatio,
 //                  child: VideoPlayer(_controller),
 //                )
-//              :CircularProgressIndicator(),
+//              :LoadingIndicator(),
 //        ),
 //      ),
 //      floatingActionButton: FloatingActionButton(

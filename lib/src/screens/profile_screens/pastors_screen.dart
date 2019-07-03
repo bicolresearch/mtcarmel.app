@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/pastor.dart';
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -64,7 +65,7 @@ class _PastorsScreenState extends State<PastorsScreen> {
           children: <Widget>[
             Expanded(
               child: (_isLoading)
-                  ? Center(child: CircularProgressIndicator())
+                  ? Center(child: LoadingIndicator())
                   : _isJsonFailed
                   ? failedMessage()
                   : Container(
