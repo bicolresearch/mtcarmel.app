@@ -1,11 +1,12 @@
 /*
 *	Filename		:	tranparency_screen.dart
 *	Purpose			:	
-* Created			: 
-*	Updated			:	2019-06-26 17:33:34 Scarlet Witch 
-*	Changes			: update model name
+* Created			: 2019-06-05 09:10:50 Detective Conan
+*	Updated			:	2019-07-03 09:49:34 Detective Conan
+*	Changes			: Implemented caching of images.
 */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
@@ -233,7 +234,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
               margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               width: 40.0,
               child: CircleAvatar(
-                backgroundImage: NetworkImage(url),
+                backgroundImage: CachedNetworkImageProvider(url),
                 radius: 20,
                 backgroundColor: Colors.brown,
               ),
