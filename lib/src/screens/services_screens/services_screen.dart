@@ -18,6 +18,7 @@ import 'package:mt_carmel_app/src/screens/services_screens/event_screen/event.da
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/join_us.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/make_request.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage.dart';
+import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
@@ -118,7 +119,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? LoadingIndicator()
           : Scaffold(
               body: Column(
                 children: <Widget>[

@@ -11,6 +11,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/models/church_schedule.dart';
+import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -101,7 +102,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           _isLoading
-              ? Expanded(child: Center(child: CircularProgressIndicator()))
+              ? Expanded(child: LoadingIndicator())
               : _isJsonFailed
                   ? failedMessage()
                   : Expanded(

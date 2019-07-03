@@ -12,6 +12,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/models/priest.dart';
+import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -67,7 +68,7 @@ class _PriestsScreenState extends State<PriestsScreen> {
             Expanded(
               child: Container(
                 child: (this._isLoading || _priestList.isEmpty)
-                    ? Center(child: CircularProgressIndicator())
+                    ? LoadingIndicator()
                     : Column(
                         children: <Widget>[
                           Container(

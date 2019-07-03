@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
+import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/login_screen.dart';
 import 'send_help_detail_screen.dart';
@@ -68,7 +69,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
     return Scaffold(
         body: SafeArea(
             child: _isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? LoadingIndicator()
                 : _isJsonFailed
                     ? failedMessage()
                     : Container(
@@ -126,7 +127,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
             child: CachedNetworkImage(
                 key: Key(sendHelp.coverPhoto.replaceAll("/", "")),
                 imageUrl: AppConstants.API_BASE_URL + sendHelp.coverPhoto,
-                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) => LoadingIndicator(),
                 errorWidget: (context, url, error) => new Icon(Icons.error),
                 fit: BoxFit.cover),
           ),

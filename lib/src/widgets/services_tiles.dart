@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
 
 Widget serviceTile(ServiceItem serviceItem) {
   return Padding(
@@ -23,7 +24,7 @@ Widget serviceTile(ServiceItem serviceItem) {
               key: Key(serviceItem.coverPhoto.replaceAll("/", "")),
               imageUrl: AppConstants.API_BASE_URL + serviceItem.coverPhoto,
               placeholder: (context, url) =>
-                  Center(child: CircularProgressIndicator()),
+                  LoadingIndicator(),
               errorWidget: (context, url, error) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(MountCarmelIcons.services)),
