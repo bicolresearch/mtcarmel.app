@@ -2,8 +2,8 @@
 * Filename	  : tab_navigator.dart
 * Purpose		  : Navigates to different tabs
 * Created		  : 2019-05-21 by Detective Conan
-*	Updated			: 2019-07-03 12:59 by Detective conan
-*	Changes			: Hid the bottom control for android screens.
+*	Updated			: 2019-07-04 13:33:26 by Scarlet Witch 
+*	Changes			: removed SystemChrome.setEnabledSystemUIOverlays
 */
 
 import 'package:flutter/material.dart';
@@ -42,7 +42,6 @@ class _TabNavigatorState extends State<TabNavigator>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     return Scaffold(
       body: TabBarView(
         children: <Widget>[
