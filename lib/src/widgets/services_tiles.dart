@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 Widget serviceTile(ServiceItem serviceItem) {
   return Padding(

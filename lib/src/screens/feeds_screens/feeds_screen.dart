@@ -19,7 +19,7 @@ import 'dart:convert';
 import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
-import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedScreen extends StatefulWidget {
   static const TextStyle optionStyle =

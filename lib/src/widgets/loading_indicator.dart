@@ -1,5 +1,5 @@
 /*
-*  Filename    :   LoadingIndicator.dart
+*  Filename    :   loading_indicator.dart
 *  Purpose     :	 Displays CircularProgressIndicator when loading
 *  Created     :   2019-07-03 16:40 by Detective Conan
 *  Updated     :   2019-07-04 08:46 by Detective conan 

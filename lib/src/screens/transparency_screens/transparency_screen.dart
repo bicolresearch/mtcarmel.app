@@ -17,7 +17,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class TransparencyScreen extends StatefulWidget {
   static const TextStyle optionStyle = TextStyle(

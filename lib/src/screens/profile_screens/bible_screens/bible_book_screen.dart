@@ -3,7 +3,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_book.dart';
 
 import 'package:mt_carmel_app/src/models/bible_reference.dart';
-import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';

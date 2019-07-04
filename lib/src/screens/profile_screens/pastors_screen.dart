@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/pastor.dart';
 import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/widgets/LoadingIndicator.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'dart:async';
 import 'dart:convert';
