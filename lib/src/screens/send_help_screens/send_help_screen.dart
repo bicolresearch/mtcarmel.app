@@ -2,8 +2,8 @@
 * Filename    : send_help_screen.dart
 * Purpose     :	Displays the different type of donations
 * Created     : 2019-06-02 09:10 by Detective Conan
-*	Updated			: 2019-07-03 11:19 by Detective conan
-*	Changes			: Added caching key.
+*	Updated			: 07/04/2019 17:19:41 by Scarlet Witch
+*	Changes			: Update naming Send Help to Help Now
 */
 
 import 'package:flutter/material.dart';
@@ -198,7 +198,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                         },
                     color: Colors.white,
                     child: Text(
-                      "Send help",
+                      "Help Now",
                       style: TextStyle(
                           fontFamily: 'Helvetica', color: Colors.brown),
                     ),
