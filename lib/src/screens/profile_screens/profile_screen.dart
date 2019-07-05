@@ -1,15 +1,13 @@
 /*
-*	 Filename	   :	profile_screen.dart
-*	 Purpose		 :	Display the list of the users access and other details of the church
-*  Created		 :  2019-06-11 15:44:56 by Detective Conan
-*  Updated     :  2019-07-05 10:10 by Detective conan
-*  Changes     :  Changed the behaviour of profile tab. (the about list is hidden in login user screen)
+*	 Filename	   :	 profile_screen.dart
+*	 Purpose		 :   Display the list of the users access and other details of the church
+*  Created		 :   2019-06-11 15:44:56 by Detective Conan
+*  Updated     :   2019-07-05 14:42 by Detective conan
+*  Changes     :   Removed hint on TextFields
 */
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/helpers/crypt.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -23,7 +21,6 @@ import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
-import 'package:mt_carmel_app/src/widgets/login_screen.dart';
 import '../../constants/app_constants.dart';
 
 enum ProfileFilter {
@@ -212,125 +209,119 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget loginWidget() {
     return Container(
       width: double.infinity,
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 50.0,
-          ),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: Image.asset(
-                  AppConstants.MT_CARMEL_LOGO_PATH,
-                  height: 160,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 50.0,
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Image.asset(
+                AppConstants.MT_CARMEL_LOGO_PATH,
+                height: 160,
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            SizedBox(
+              height: 30.0,
+              child: TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Email",
                 ),
               ),
-              SizedBox(
-                height: 10.0,
-              ),
-              SizedBox(
-                height: 30.0,
-                child: TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Enter email",
-                    labelText: "Email",
-                  ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            SizedBox(
+              height: 30.0,
+              child: TextField(
+                obscureText: true,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Password",
                 ),
               ),
-              SizedBox(
-                height: 10.0,
-              ),
-              SizedBox(
-                height: 30.0,
-                child: TextField(
-                  obscureText: true,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Input password",
-                    labelText: "Password",
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      color: Colors.brown,
-                      child: Text(
-                        "Login",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Login pressed");
-                        setState(() {
-                          _currentProfileFilter = ProfileFilter.User;
-                          _updateProfileScreen();
-                        });
-                      },
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 4,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Login",
+                      style: TextStyle(color: Colors.white),
                     ),
+                    onPressed: () {
+                      print("Login pressed");
+                      setState(() {
+                        _currentProfileFilter = ProfileFilter.User;
+                        _updateProfileScreen();
+                      });
+                    },
+                  ),
+                ),
+                Spacer(),
+                GestureDetector(
+                    onTap: () {
+                      print("Forgot password pressed");
+                    },
+                    child: Text(
+                      "Forgot password",
+                      style: TextStyle(color: Colors.brown),
+                    )),
+              ],
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                print("Sign-up pressed");
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(children: <Widget>[
+                  Text(
+                    "Sign-up",
+                    style: TextStyle(
+                        color: Colors.brown, fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
                   GestureDetector(
-                      onTap: () {
-                        print("Forgot password pressed");
-                      },
-                      child: Text(
-                        "Forgot password",
-                        style: TextStyle(color: Colors.brown),
-                      )),
-                ],
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              GestureDetector(
-                onTap: () {
-                  print("Sign-up pressed");
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(children: <Widget>[
-                    Text(
-                      "Sign-up",
-                      style: TextStyle(
-                          color: Colors.brown, fontWeight: FontWeight.bold),
+                    onTap: () {
+                      _currentProfileFilter = ProfileFilter.Guest;
+                      _updateProfileScreen();
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          "Skip",
+                          style: TextStyle(
+                              color: Colors.brown, fontStyle: FontStyle.italic),
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_up,
+                          size: 20,
+                        ),
+                      ],
                     ),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        _currentProfileFilter = ProfileFilter.Guest;
-                        _updateProfileScreen();
-                      },
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "Skip",
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontStyle: FontStyle.italic),
-                          ),
-                          Icon(
-                            Icons.keyboard_arrow_up,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ]),
-                ),
+                  ),
+                ]),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -443,17 +434,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future _updateProfileScreen() async {
-//    if (_currentProfileFilter == ProfileFilter.Login) {
-//      final result = await Navigator.push(
-//          context,
-//          MaterialPageRoute(
-//            builder: (context) => LoginScreen(),
-//          ));
-//      if (result)
-//        _currentProfileFilter = ProfileFilter.User;
-//      else //skipped
-//        _currentProfileFilter = ProfileFilter.Guest;
-//    }
     setState(() {
       switch (_currentProfileFilter) {
         case ProfileFilter.User:
@@ -478,7 +458,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             MaterialPageRoute(
               builder: (context) => _navigateToDetail(itemText),
             ));
-        //Navigator.pop(context);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
