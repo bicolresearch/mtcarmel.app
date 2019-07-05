@@ -116,6 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
+    print("initializing profile screen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
@@ -569,6 +570,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void dispose() {
+    print("disposing profile screen...");
     _scrollController.dispose();
     super.dispose();
   }

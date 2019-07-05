@@ -56,6 +56,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
 
   @override
   void initState() {
+    print("initializing transparency screen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
@@ -277,6 +278,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
 
   @override
   void dispose() {
+    print("disposing transparency Screen...");
     _scrollController.dispose();
     super.dispose();
   }

@@ -60,6 +60,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
 
   @override
   void initState() {
+    print("initializing sendHelp screen...");
     super.initState();
     this.getJsonData();
   }
@@ -111,6 +112,12 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                           ],
                         ),
                       )));
+  }
+
+  @override
+  void dispose() {
+    print("disposing sendHelpScreen...");
+    super.dispose();
   }
 
   Widget _donationItem(

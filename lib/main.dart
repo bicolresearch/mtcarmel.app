@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mt_carmel_app/src/screens/bottom_tab_navigation.dart';
 import 'src/screens/splash.dart';
 import 'src/screens/tab_navigator.dart';
 import 'src/screens/introduction_screen.dart';
@@ -94,6 +95,7 @@ class _PageState extends State<Page> {
     if (isFirstUsage) {
       return IntroScreen();
     }
-    return TabNavigator();
+//    return TabNavigator();
+  return BottomTabNavigator();
   }
 }

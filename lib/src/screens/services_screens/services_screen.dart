@@ -76,6 +76,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   @override
   void initState() {
+    print("initializing serviceScreen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
@@ -111,6 +112,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   @override
   void dispose() {
+    print("disposing servicesScreen...");
     _scrollController.dispose();
     super.dispose();
   }

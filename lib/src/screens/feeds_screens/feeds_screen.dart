@@ -40,13 +40,14 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   void initState() {
+    print("initializing feed screen...");
     super.initState();
     this.getJasonData();
   }
 
   @override
   void dispose() {
-    print("feed clossing...");
+    print("disposing feed screen");
     super.dispose();
   }
 
