@@ -1,9 +1,10 @@
 /*
-*	Filename		:	transparency_screen.dart
-*	Purpose			:	Displays the recent donation transactions
-* Created			: 2019-06-05 09:10:50 Detective Conan
-*	Updated			: 2019-07-03 11:57 by Detective conan
-*	Changes			: Implemented Refreshing of donation transaction list.
+*	 Filename		 :	transparency_screen.dart
+*	 Purpose		 :	Displays the recent donation transactions
+*  Created		 :  2019-06-05 09:10:50 Detective Conan
+*  Updated     :  2019-07-05 12:05 by Detective conan
+*  Changes     :  Added swipe refresh implementation. and changed the refreshing
+*                 implementation of refresh button.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -30,8 +31,12 @@ class TransparencyScreen extends StatefulWidget {
 }
 
 class _TransparencyScreenState extends State<TransparencyScreen> {
-  var _isJsonFailed = false;
-  var _isJsonLoading = true;
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  new GlobalKey<RefreshIndicatorState>();
+
+  bool _isJsonFailed = false;
+  bool _isJsonLoading = true;
   Donations _donations;
 
   NumberFormat _formatCurrency;
@@ -162,8 +167,8 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                                 print(
                                                     "Refresh button pressed.");
                                                 setState(() {
-                                                  _isJsonLoading = true;
-                                                  this.getDonationsJson();
+                                                  //_isJsonLoading = true;
+                                                  _refreshIndicatorKey.currentState.show();
                                                 });
                                               },
                                             ),
@@ -201,19 +206,23 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                       _onEndScroll(scrollNotification.metrics);
                                     }
                                   },
-                                  child: ListView.builder(
-                                    controller: _scrollController,
-                                    itemCount:
-                                        (_donations.donationsList == null)
-                                            ? 0
-                                            : _donations.donationsList.length,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                          child: _isJsonLoading
-                                              ? LoadingIndicator()
-                                              : _transactionContent(_donations
-                                                  .donationsList[index]));
-                                    },
+                                  child: RefreshIndicator(
+                                    key: _refreshIndicatorKey,
+                                    onRefresh: _refresh,
+                                    child: ListView.builder(
+                                      controller: _scrollController,
+                                      itemCount:
+                                          (_donations.donationsList == null)
+                                              ? 0
+                                              : _donations.donationsList.length,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                            child: _isJsonLoading
+                                                ? LoadingIndicator()
+                                                : _transactionContent(_donations
+                                                    .donationsList[index]));
+                                      },
+                                    ),
                                   ),
                                 )),
                           ),
@@ -380,5 +389,13 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _refresh() {
+    return this.getDonationsJson().then((_donations){
+      setState(() {
+
+      });
+    });
   }
 }
