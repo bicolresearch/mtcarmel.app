@@ -1,9 +1,9 @@
 /*
-*	Filename		:	feeds_screen.dart
-*	Purpose			:	Displays the news feed such as photos, videos
-* Created			: 2019-06-04 16:28:01 by Detective Conan
-*	Updated			: 2019-07-03 11:18 by Detective conan
-*	Changes			: Added caching key.
+*	 Filename		 :	feeds_screen.dart
+*	 Purpose		 :	Displays the news feed such as photos, videos
+*  Created		 :  2019-06-04 16:28:01 by Detective Conan
+*  Updated     :  2019-07-05 11:42 by Detective conan
+*  Changes     :  Implemented swipe refreshing.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -23,7 +23,7 @@ import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedScreen extends StatefulWidget {
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   FeedScreen(BuildContext context);
 
@@ -37,6 +37,9 @@ class _FeedScreenState extends State<FeedScreen> {
   var _isJsonFailed = false;
 
   bool _isPanning = false;
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  new GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -67,16 +70,17 @@ class _FeedScreenState extends State<FeedScreen> {
           actions: <Widget>[
             Center(
               child: GestureDetector(
-                onTap: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
+                onTap: () =>
+                {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
 //                          builder: (context) => VideoScreen(),
-                          builder: (context) => YoutubePlayerScreen(),
+                      builder: (context) => YoutubePlayerScreen(),
 //                        builder: (context) => VideoExample(),
-                        ),
-                      )
-                    },
+                    ),
+                  )
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -92,14 +96,15 @@ class _FeedScreenState extends State<FeedScreen> {
             Divider(),
             Container(
               child: GestureDetector(
-                onTap: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CalendarPage(),
-                        ),
-                      )
-                    },
+                onTap: () =>
+                {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CalendarPage(),
+                    ),
+                  )
+                },
                 child: Icon(
                   MountCarmelIcons.calendar,
                   color: Colors.brown,
@@ -113,66 +118,33 @@ class _FeedScreenState extends State<FeedScreen> {
           child: this._isLoading
               ? LoadingIndicator()
               : Container(
-                  padding:
-                      EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                  child: _feedList.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: _feedList.length,
-                          itemBuilder: (context, index) {
-                            try {
-                              return _feedContent(_feedList[index]);
-                            } catch (e) {
-                              print(e.toString());
-                            }
-                          })
-                      : Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "No results.\nCheck the network.",
-                            style: AppConstants.OPTION_STYLE3,
-                          ),
-                        ),
+            padding:
+            EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+            child: RefreshIndicator(
+              key: _refreshIndicatorKey,
+              onRefresh: _refresh,
+              child: _feedList.isNotEmpty
+                  ? ListView.builder(
+                  itemCount: _feedList.length,
+                  itemBuilder: (context, index) {
+                    try {
+                      return _feedContent(_feedList[index]);
+                    } catch (e) {
+                      print(e.toString());
+                    }
+                  })
+                  : Container(
+                alignment: Alignment.center,
+                child: Text(
+                  "No results.\nCheck the network.",
+                  style: AppConstants.OPTION_STYLE3,
                 ),
+              ),
+            ),
+          ),
         ),
       ),
     );
-
-    // body: FutureBuilder(
-    //   future: getJasonData().timeout(Duration(seconds: 20)),
-    //   initialData: [],
-    //   builder: (context, snapshot){
-    //     print(snapshot.connectionState.toString());
-    //     if( snapshot.connectionState ==
-    //       ConnectionState.done){
-    //         if(snapshot.hasError)
-    //           print(snapshot.error);
-    //         if(_feedList.isEmpty)
-    //           return Center(
-    //             child: Padding(
-    //               padding: const EdgeInsets.all(24.0),
-    //               child: Text("No results found. Please check your connection.",
-    //                 style: AppConstants.OPTION_STYLE3,
-    //                 textAlign: TextAlign.center,),
-    //             ),
-    //           );
-    //         return ListView.builder(
-    //         itemCount: _feedList.length,
-    //         itemBuilder: (context,index){
-    //           try{
-    //             return _feedContent(_feedList[index]);
-    //           }
-    //           catch(e)
-    //           {
-    //             print(e.toString());
-    //           }
-    //           }
-    //         );
-    //       }
-    //       else{
-    //           return LoadingIndicator();
-    //       }
-    //   },
-    // )
   }
 
   Future<void> getJasonData() async {
@@ -218,14 +190,15 @@ class _FeedScreenState extends State<FeedScreen> {
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         child: GestureDetector(
-          onTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FeedDetailScreen(feed),
-                  ),
-                ),
-              },
+          onTap: () =>
+          {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FeedDetailScreen(feed),
+              ),
+            ),
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -261,7 +234,7 @@ class _FeedScreenState extends State<FeedScreen> {
                       placeholder: (context, url) =>
                           LoadingIndicator(),
                       errorWidget: (context, url, error) =>
-                          new Icon(Icons.error),
+                      new Icon(Icons.error),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -290,5 +263,11 @@ class _FeedScreenState extends State<FeedScreen> {
         .replaceAll("</p>", "")
         .replaceAll("/br", "");
     return newText;
+  }
+
+  Future<void> _refresh() {
+    return this.getJasonData().then((_feedList) {
+      this.setState(() {});
+    });
   }
 }
