@@ -1,9 +1,9 @@
 /*
-*	Filename		:	services_screen.dart
-*	Purpose			:	Displays the list of the services of the church
-* Created			: 2019-06-11 15:52:50 by Detective Conan
-*	Updated			: 2019-06-17 15:20:21 by Scarlet Witch 
-*	Changes			: add services messages/content
+*	 Filename		 :	services_screen.dart
+*	 Purpose		 :	Displays the list of the services of the church
+*  Created		 :  2019-06-11 15:52:50 by Detective Conan
+*  Updated     :  2019-07-05 12:19 by Detective conan
+*  Changes     :  Fixed initialization of button arrow of ServicesScreen.
 */
 
 import 'package:flutter/material.dart';
@@ -80,12 +80,13 @@ class _ServicesScreenState extends State<ServicesScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    getJsonData();
-    _initializeArrows();
+    getJsonData().then((_) {
+      _initializeArrows();
+    });
   }
 
   Future _initializeArrows() async {
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 800));
     _scrollListener();
   }
 
