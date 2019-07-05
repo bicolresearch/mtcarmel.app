@@ -1,12 +1,15 @@
 /*
-*	Filename		:	profile_screen.dart
-*	Purpose			:	Display the list of the users access and other details of the church
-* Created			: 2019-06-11 15:44:56 by Detective Conan
-*	Updated			: 2019-07-01 11:45:23 by Detective Conan
-*	Changes			: Replaced the import packagename model to models
+*	 Filename	   :	profile_screen.dart
+*	 Purpose		 :	Display the list of the users access and other details of the church
+*  Created		 :  2019-06-11 15:44:56 by Detective Conan
+*  Updated     :  2019-07-05 10:10 by Detective conan
+*  Changes     :  Changed the behaviour of profile tab. (the about list is hidden in login user screen)
 */
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/helpers/crypt.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -16,17 +19,17 @@ import 'package:mt_carmel_app/src/screens/profile_screens/church_schedule_screen
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screen.dart';
 
-// import 'package:mt_carmel_app/src/screens/profile_screens/location_map.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
+import 'package:mt_carmel_app/src/widgets/login_screen.dart';
 import '../../constants/app_constants.dart';
 
-enum Header {
+enum ProfileFilter {
   User,
-  NonUser,
-  Skipped,
+  Guest,
+  Login,
 }
 
 class ProfileScreen extends StatefulWidget {
@@ -61,8 +64,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-//  bool _isLoggedIn = false;
-  var currentHeader = Header.NonUser;
+  bool _isLoggedIn = false;
+  bool _isFirstView = true;
+  ProfileFilter _currentProfileFilter = ProfileFilter.Login;
+
   Widget _header = Container();
 
   final _profile = Profile(1, "Ransom", "Rapirap", "October 12, 1990", "");
@@ -114,16 +119,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    _updateHeader();
+    _checkLoginStatus();
+    _updateProfileScreen();
     _updateList();
     _initializeArrows();
   }
 
   void _updateList() {
-    if (currentHeader == Header.User)
-      _totalList = _userList + _aboutList;
-    else
-      _totalList = _aboutList;
+    switch (_currentProfileFilter) {
+      case ProfileFilter.User:
+        _totalList = _userList + _aboutList;
+        break;
+      case ProfileFilter.Guest:
+        _totalList = _aboutList;
+        break;
+      default:
+        _totalList = [];
+    }
   }
 
   Future _initializeArrows() async {
@@ -138,6 +150,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+//    var crypto = PasswordCrypto();
+//    print(crypto.sha512("365-Days"));
+//    print("-pcks-32,3-,32-933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754");
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -145,12 +160,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            (_currentProfileFilter == ProfileFilter.Login)
+                ? Spacer()
+                : Container(),
             Container(
                 margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
                 child: _header),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
-                child: lineWidget()),
+                child: (_currentProfileFilter == ProfileFilter.Login)
+                    ? Container()
+                    : lineWidget()),
             GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
             Expanded(
               child: Container(
@@ -179,6 +199,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
+            (_currentProfileFilter == ProfileFilter.Login)
+                ? Spacer()
+                : Container(),
           ],
         )),
       ),
@@ -197,7 +220,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                child: Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 160,),
+                child: Image.asset(
+                  AppConstants.MT_CARMEL_LOGO_PATH,
+                  height: 160,
+                ),
               ),
               SizedBox(
                 height: 10.0,
@@ -246,8 +272,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () {
                         print("Login pressed");
                         setState(() {
-                          currentHeader = Header.User;
-                          _updateHeader();
+                          _currentProfileFilter = ProfileFilter.User;
+                          _updateProfileScreen();
                         });
                       },
                     ),
@@ -281,8 +307,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Spacer(),
                     GestureDetector(
                       onTap: () {
-                        currentHeader = Header.Skipped;
-                        _updateHeader();
+                        _currentProfileFilter = ProfileFilter.Guest;
+                        _updateProfileScreen();
                       },
                       child: Row(
                         children: <Widget>[
@@ -313,8 +339,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          currentHeader = Header.NonUser;
-          _updateHeader();
+          _currentProfileFilter = ProfileFilter.Login;
+          _updateProfileScreen();
         });
       },
       child: Padding(
@@ -393,8 +419,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onSelected: (value) {
                             if (value == 1) {
                               setState(() {
-                                currentHeader = Header.NonUser;
-                                _updateHeader();
+                                _currentProfileFilter = ProfileFilter.Login;
+                                _updateProfileScreen();
                               });
                             }
                           },
@@ -415,17 +441,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _updateHeader() {
+  Future _updateProfileScreen() async {
+//    if (_currentProfileFilter == ProfileFilter.Login) {
+//      final result = await Navigator.push(
+//          context,
+//          MaterialPageRoute(
+//            builder: (context) => LoginScreen(),
+//          ));
+//      if (result)
+//        _currentProfileFilter = ProfileFilter.User;
+//      else //skipped
+//        _currentProfileFilter = ProfileFilter.Guest;
+//    }
     setState(() {
-      switch (currentHeader) {
-        case Header.User:
+      switch (_currentProfileFilter) {
+        case ProfileFilter.User:
           _header = _userHeader();
           break;
-        case Header.NonUser:
-          _header = loginWidget();
-          break;
-        default:
+        case ProfileFilter.Guest:
           _header = _skippedHeader();
+          break;
+        default: //ProfileFilter.Login
+          _header = loginWidget();
       }
       _updateList();
       _initializeArrows();
@@ -554,6 +591,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _onEndScroll(ScrollMetrics metrics) {
     _scrollListener();
+  }
+
+  void _checkLoginStatus() {
+    if (_isLoggedIn)
+      _currentProfileFilter = ProfileFilter.User;
+    else
+      _currentProfileFilter = ProfileFilter.Login;
   }
 }
 
