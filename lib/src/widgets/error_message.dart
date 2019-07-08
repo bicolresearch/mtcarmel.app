@@ -2,8 +2,8 @@
 *  Filename    :   error_message.dart
 *  Purpose     :	 Use to display error messages. Customizable
 *  Created     :   2019-07-08 08:41 by Detective conan 
-*  Updated     :   2019-07-08 08:41 by Detective conan
-*  Changes     :
+*  Updated     :   2019-07-08 09:29 by Detective conan
+*  Changes     :   replaced the icon image when Loading failed.
 */
 
 import 'package:flutter/material.dart';
@@ -27,10 +27,11 @@ class ErrorMessage extends BasicMessage {
           color: iconColor,
         );
         break;
-      default:
-        text = "No results found. Failure loading data.";
+      default: // Loading failed
+        text = """No results found.
+        Check internet connection.""";
         icon = Icon(
-          Icons.perm_scan_wifi,
+          Icons.event_busy,
           size: iconSize,
           color: iconColor,
         );

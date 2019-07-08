@@ -1,9 +1,9 @@
 /*
-*	 Filename		 :	feeds_screen.dart
-*	 Purpose		 :	Displays the news feed such as photos, videos
-*  Created		 :  2019-06-04 16:28:01 by Detective Conan
-*  Updated     :  2019-07-05 11:42 by Detective conan
-*  Changes     :  Implemented swipe refreshing.
+*	 Filename		 :	 feeds_screen.dart
+*	 Purpose		 :	 Displays the news feed such as photos, videos
+*  Created		 :   2019-06-04 16:28:01 by Detective Conan
+*  Updated     :   2019-07-08 09:31 by Detective conan
+*  Changes     :   Added data loading failure message. 
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -51,13 +51,14 @@ class _FeedScreenState extends State<FeedScreen> {
     ConnectivityChecker.hasDataConnection().then((value) {
       if (value && value != null) {
         _dataLoadingStatusStatus = DataLoadingStatus.LoadingData;
-        this.getFeedData();
+        this.getFeedData().catchError((error) {
+          _dataLoadingStatusStatus = DataLoadingStatus.LoadingFailed;
+          setState(() {});
+        });
       } else {
         _dataLoadingStatusStatus = DataLoadingStatus.ConnectionFailed;
-        setState(() {
-
-        });
       }
+      setState(() {});
     });
   }
 
@@ -125,53 +126,61 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
           ],
         ),
-        body: Center(
-          child: (_dataLoadingStatusStatus ==
-                  DataLoadingStatus.ConnectionFailed)
-              ? ErrorMessage.errMsg(errorMessage: ErrorMessageEnum.NoInternetError)
-              : ((_dataLoadingStatusStatus == DataLoadingStatus.LoadingData) ||
-                      (_dataLoadingStatusStatus ==
-                          DataLoadingStatus.ConnectivityChecking))
-                  ? LoadingIndicator()
-                  : Container(
-                      padding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 10, right: 10),
-                      child: RefreshIndicator(
-                        key: _refreshIndicatorKey,
-                        onRefresh: _refresh,
-                        child: _feedList.isNotEmpty
-                            ? ListView.builder(
-                                itemCount: _feedList.length,
-                                itemBuilder: (context, index) {
-                                  try {
-                                    return _feedContent(_feedList[index]);
-                                  } catch (e) {
-                                    print(e.toString());
-                                  }
-                                })
-                            : ErrorMessage.errMsg(errorMessage: ErrorMessageEnum.NoInternetError),
-                      ),
-                    ),
-        ),
+        body: Center(child: _feeds()),
       ),
     );
   }
 
   Future<void> getFeedData() async {
-    var response = await http.get(AppConstants.FEEDS_JSON_URL);
-    if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          _feedList = (json.decode(response.body) as List)
-              .map((data) => new Feed.fromJson(data))
-              .toList();
-        } else {
-          print(response.statusCode);
-          _dataLoadingStatusStatus = DataLoadingStatus.ConnectionFailed;
-        }
-        _dataLoadingStatusStatus = DataLoadingStatus.SuccessfulDataLoading;
-      });
+    await http.get(AppConstants.FEEDS_JSON_URL).then((value) {
+      if (this.mounted) {
+        setState(() {
+          if (value.statusCode == 200) {
+            _feedList = (json.decode(value.body) as List)
+                .map((data) => new Feed.fromJson(data))
+                .toList();
+          } else {
+            print(value.statusCode);
+            _dataLoadingStatusStatus = DataLoadingStatus.ConnectionFailed;
+          }
+          _dataLoadingStatusStatus = DataLoadingStatus.SuccessfulDataLoading;
+        });
+        return;
+      }
+    }).timeout(Duration(seconds: 5));
+    return;
+  }
+
+  Widget _feeds() {
+    switch (_dataLoadingStatusStatus) {
+      case DataLoadingStatus.ConnectionFailed:
+        return ErrorMessage.errMsg(
+            errorMessage: ErrorMessageEnum.NoInternetError);
+      case DataLoadingStatus.ConnectivityChecking:
+      // fall through
+      case DataLoadingStatus.LoadingData:
+        return LoadingIndicator();
+      case DataLoadingStatus.LoadingFailed:
+        return ErrorMessage.errMsg(errorMessage: ErrorMessageEnum.LoadingError);
+      case DataLoadingStatus.SuccessfulDataLoading:
+        return Container(
+          padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+          child: RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: _refresh,
+            child: ListView.builder(
+                itemCount: _feedList.length,
+                itemBuilder: (context, index) {
+                  try {
+                    return _feedContent(_feedList[index]);
+                  } catch (e) {
+                    print(e.toString());
+                  }
+                }),
+          ),
+        );
     }
+    return LoadingIndicator();
   }
 
   Widget _feedContent(Feed feed) {
@@ -276,6 +285,4 @@ class _FeedScreenState extends State<FeedScreen> {
       this.setState(() {});
     });
   }
-
-
 }
