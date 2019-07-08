@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/screens/bottom_tab_navigation.dart';
 import 'src/screens/splash.dart';
-import 'src/screens/tab_navigator.dart';
 import 'src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -71,7 +70,7 @@ class _PageState extends State<Page> {
     getFirstUsageFlag();
 
     Future.delayed(
-      Duration(seconds: 5),
+      Duration(seconds: 3),
       () {
         Navigator.pushReplacement(
             context,
@@ -95,7 +94,6 @@ class _PageState extends State<Page> {
     if (isFirstUsage) {
       return IntroScreen();
     }
-//    return TabNavigator();
   return BottomTabNavigator();
   }
 }

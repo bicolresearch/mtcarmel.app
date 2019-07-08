@@ -9,6 +9,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
+import 'package:mt_carmel_app/src/helpers/data_loading_status.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 
 import 'package:http/http.dart' as http;
@@ -19,11 +21,13 @@ import 'dart:convert';
 import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
+import 'package:mt_carmel_app/src/widgets/error_message.dart';
+import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedScreen extends StatefulWidget {
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   FeedScreen(BuildContext context);
 
@@ -33,19 +37,28 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
   List<Feed> _feedList = [];
-  var _isLoading = true;
-  var _isJsonFailed = false;
 
-  bool _isPanning = false;
+  DataLoadingStatus _dataLoadingStatusStatus =
+      DataLoadingStatus.ConnectivityChecking;
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
+      new GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
     print("initializing feed screen...");
     super.initState();
-    this.getJasonData();
+    ConnectivityChecker.hasDataConnection().then((value) {
+      if (value && value != null) {
+        _dataLoadingStatusStatus = DataLoadingStatus.LoadingData;
+        this.getFeedData();
+      } else {
+        _dataLoadingStatusStatus = DataLoadingStatus.ConnectionFailed;
+        setState(() {
+
+        });
+      }
+    });
   }
 
   @override
@@ -70,17 +83,16 @@ class _FeedScreenState extends State<FeedScreen> {
           actions: <Widget>[
             Center(
               child: GestureDetector(
-                onTap: () =>
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
+                onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
 //                          builder: (context) => VideoScreen(),
-                      builder: (context) => YoutubePlayerScreen(),
+                          builder: (context) => YoutubePlayerScreen(),
 //                        builder: (context) => VideoExample(),
-                    ),
-                  )
-                },
+                        ),
+                      )
+                    },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -96,15 +108,14 @@ class _FeedScreenState extends State<FeedScreen> {
             Divider(),
             Container(
               child: GestureDetector(
-                onTap: () =>
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CalendarPage(),
-                    ),
-                  )
-                },
+                onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CalendarPage(),
+                        ),
+                      )
+                    },
                 child: Icon(
                   MountCarmelIcons.calendar,
                   color: Colors.brown,
@@ -115,39 +126,38 @@ class _FeedScreenState extends State<FeedScreen> {
           ],
         ),
         body: Center(
-          child: this._isLoading
-              ? LoadingIndicator()
-              : Container(
-            padding:
-            EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-            child: RefreshIndicator(
-              key: _refreshIndicatorKey,
-              onRefresh: _refresh,
-              child: _feedList.isNotEmpty
-                  ? ListView.builder(
-                  itemCount: _feedList.length,
-                  itemBuilder: (context, index) {
-                    try {
-                      return _feedContent(_feedList[index]);
-                    } catch (e) {
-                      print(e.toString());
-                    }
-                  })
+          child: (_dataLoadingStatusStatus ==
+                  DataLoadingStatus.ConnectionFailed)
+              ? ErrorMessage.errMsg(errorMessage: ErrorMessageEnum.NoInternetError)
+              : ((_dataLoadingStatusStatus == DataLoadingStatus.LoadingData) ||
+                      (_dataLoadingStatusStatus ==
+                          DataLoadingStatus.ConnectivityChecking))
+                  ? LoadingIndicator()
                   : Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "No results.\nCheck the network.",
-                  style: AppConstants.OPTION_STYLE3,
-                ),
-              ),
-            ),
-          ),
+                      padding: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 10, right: 10),
+                      child: RefreshIndicator(
+                        key: _refreshIndicatorKey,
+                        onRefresh: _refresh,
+                        child: _feedList.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: _feedList.length,
+                                itemBuilder: (context, index) {
+                                  try {
+                                    return _feedContent(_feedList[index]);
+                                  } catch (e) {
+                                    print(e.toString());
+                                  }
+                                })
+                            : ErrorMessage.errMsg(errorMessage: ErrorMessageEnum.NoInternetError),
+                      ),
+                    ),
         ),
       ),
     );
   }
 
-  Future<void> getJasonData() async {
+  Future<void> getFeedData() async {
     var response = await http.get(AppConstants.FEEDS_JSON_URL);
     if (this.mounted) {
       setState(() {
@@ -155,20 +165,18 @@ class _FeedScreenState extends State<FeedScreen> {
           _feedList = (json.decode(response.body) as List)
               .map((data) => new Feed.fromJson(data))
               .toList();
-          _isLoading = false;
-          // print("getJsonData-> response 200");
-          // print(_feedList.length.toString());
         } else {
           print(response.statusCode);
-          _isJsonFailed = true;
-          _isLoading = false;
+          _dataLoadingStatusStatus = DataLoadingStatus.ConnectionFailed;
         }
+        _dataLoadingStatusStatus = DataLoadingStatus.SuccessfulDataLoading;
       });
     }
   }
 
   Widget _feedContent(Feed feed) {
-    if (_isJsonFailed || feed == null) return Container();
+    if (_dataLoadingStatusStatus == DataLoadingStatus.ConnectionFailed ||
+        feed == null) return Container();
 
     String url = AppConstants.API_BASE_URL + feed.coverPhoto;
     try {
@@ -190,15 +198,14 @@ class _FeedScreenState extends State<FeedScreen> {
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         child: GestureDetector(
-          onTap: () =>
-          {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FeedDetailScreen(feed),
-              ),
-            ),
-          },
+          onTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FeedDetailScreen(feed),
+                  ),
+                ),
+              },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -231,10 +238,9 @@ class _FeedScreenState extends State<FeedScreen> {
                   child: CachedNetworkImage(
                       key: Key(url.replaceAll("/", "")),
                       imageUrl: url,
-                      placeholder: (context, url) =>
-                          LoadingIndicator(),
+                      placeholder: (context, url) => LoadingIndicator(),
                       errorWidget: (context, url, error) =>
-                      new Icon(Icons.error),
+                          new Icon(Icons.error),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -266,8 +272,10 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Future<void> _refresh() {
-    return this.getJasonData().then((_feedList) {
+    return this.getFeedData().then((_feedList) {
       this.setState(() {});
     });
   }
+
+
 }

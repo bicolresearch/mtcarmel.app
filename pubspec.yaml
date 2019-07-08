@@ -43,6 +43,7 @@ dependencies:
 
   bloc: ^0.14.4
   password: ^1.0.0
+  connectivity: ^0.4.3+2
 
 
 dev_dependencies:
