@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mt_carmel_app/src/screens/bottom_tab_navigation.dart';
+import 'package:mt_carmel_app/src/screens/bottom_tab_navigator.dart';
 import 'src/screens/splash.dart';
 import 'src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';

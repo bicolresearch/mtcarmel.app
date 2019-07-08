@@ -3,7 +3,7 @@
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
 *  Updated     :   2019-07-08 09:31 by Detective conan
-*  Changes     :   Added data loading failure message. 
+*  Changes     :   Added data loading failure message.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';

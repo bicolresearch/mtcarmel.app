@@ -1,5 +1,5 @@
 /*
-*  Filename    :   bottom_tab_navigation.dart
+*  Filename    :   bottom_tab_navigator.dart
 *  Purpose     :	 Responsible for navigation from different tabs.
 *  Created     :   2019-07-05 10:21 by Detective Conan
 *  Updated     :   2019-07-05 10:21 by Detective Conan 
@@ -28,23 +28,18 @@ class _State extends State<BottomTabNavigator> {
       _cIndex = index;
       switch (index) {
         case 0:
-          print(index);
           _body = FeedScreen(context);
           break;
         case 1:
-          print(index);
           _body = SendHelpScreen(context);
           break;
         case 2:
-          print(index);
           _body = ServicesScreen(context);
           break;
         case 3:
-          print(index);
           _body = TransparencyScreen(context);
           break;
         default:
-          print(index);
           _body = ProfileScreen(context);
       }
     });
