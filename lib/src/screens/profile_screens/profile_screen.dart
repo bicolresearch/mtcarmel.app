@@ -2,8 +2,9 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-09 17:38 by Detective conan 
-*  Changes     :   Added sha-512 encryption.
+*  Updated     :   2019-07-09 18:35 by Detective conan
+*  Changes     :   Added guard for non-"@" sign email inputted. Hides logo on
+*                  text editing.
 */
 
 import 'package:flutter/material.dart';
@@ -65,6 +66,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoggedIn = false;
   bool _isLoginFailed = false;
+  bool _logoHidden = false;
   ProfileFilter _currentProfileFilter = ProfileFilter.Login;
 
   Widget _header = Container();
@@ -219,18 +221,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: Column(
           children: <Widget>[
-            Container(
-              child: Image.asset(
-                AppConstants.MT_CARMEL_LOGO_PATH,
-                height: 160,
-              ),
-            ),
+            _logoHidden
+                ? Container()
+                : Container(
+                    child: Image.asset(
+                      AppConstants.MT_CARMEL_LOGO_PATH,
+                      height: 160,
+                    ),
+                  ),
             SizedBox(
               height: 10.0,
             ),
             SizedBox(
               height: 40.0,
               child: TextField(
+                onSubmitted: (_) {
+                  _logoHidden = false;
+                  _updateProfileScreen();
+                },
+                onTap: () {
+                  _logoHidden = true;
+                  _updateProfileScreen();
+                },
                 controller: _textControllerEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
@@ -245,6 +257,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 40.0,
               child: TextField(
+                onTap: () {
+                  _logoHidden = true;
+                  _updateProfileScreen();
+                },
+                onSubmitted: (_) {
+                  _logoHidden = false;
+                  _updateProfileScreen();
+                },
                 controller: _textControllerPassword,
                 obscureText: true,
                 keyboardType: TextInputType.emailAddress,
@@ -271,25 +291,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     onPressed: () {
                       print("Login pressed");
-                      locator<LoginModel>()
-                          .login(_textControllerEmail.value.text,
-                              _encrypted(_textControllerPassword.value.text))
-                          .then((value) {
-                        _isLoggedIn = value;
-                        print(value);
-                        if (_isLoggedIn)
-                          setState(() {
-                            _clearLoginForm();
-                            _isLoginFailed = false;
-                            _currentProfileFilter = ProfileFilter.User;
-                            _updateProfileScreen();
-                          });
-                        else
-                          setState(() {
-                            _isLoginFailed = true;
-                            _updateProfileScreen();
-                          });
-                      });
+                      validate(_textControllerEmail.value.text,
+                          _textControllerPassword.value.text);
                     },
                   ),
                 ),
@@ -376,6 +379,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _clearLoginForm() {
+    _logoHidden = false;
     _isLoginFailed = false;
     _textControllerPassword.clear();
     _textControllerEmail.clear();
@@ -640,6 +644,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _encrypted(String text) {
     final crypto = PasswordCrypto();
     return crypto.sha512(text);
+  }
+
+  void validate(String email, String password) {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        !email.contains("@") ||
+        email.contains(" ")) {
+      setState(() {
+        _isLoginFailed = true;
+        _updateProfileScreen();
+      });
+      return;
+    }
+    locator<LoginModel>().login(email, _encrypted(password)).then((value) {
+      _isLoggedIn = value;
+      print(value);
+      if (_isLoggedIn)
+        setState(() {
+          _clearLoginForm();
+          _isLoginFailed = false;
+          _currentProfileFilter = ProfileFilter.User;
+          _updateProfileScreen();
+        });
+      else
+        setState(() {
+          _isLoginFailed = true;
+          _updateProfileScreen();
+        });
+    });
   }
 }
 
