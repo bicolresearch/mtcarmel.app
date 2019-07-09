@@ -8,6 +8,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/core/models/login_model.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -117,10 +119,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    _checkLoginStatus();
-    _updateProfileScreen();
-    _updateList();
-    _initializeArrows();
+    locator<LoginModel>().login("filename", "password").then((value){
+      _isLoggedIn = value;
+      _currentProfileFilter = ProfileFilter.User;
+      _checkLoginStatus();
+      _updateProfileScreen();
+      _updateList();
+      _initializeArrows();
+    });
   }
 
   void _updateList() {

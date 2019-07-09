@@ -72,7 +72,7 @@ flutter:
   fonts:
   - family: Helvetica
     fonts:
-      - asset: assets/fonts/Helvetica/Normal/helvetica-normal.ttf
+      - asset: assets/fonts/Helvetica/Normal/Helvetica-normal.ttf
       - asset: assets/fonts/Helvetica/Bold/Helvetica-Bold.otf
         style: italic
 

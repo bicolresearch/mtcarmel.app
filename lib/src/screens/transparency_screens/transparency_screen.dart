@@ -1,10 +1,10 @@
 /*
-*	 Filename		 :	transparency_screen.dart
-*	 Purpose		 :	Displays the recent donation transactions
-*  Created		 :  2019-06-05 09:10:50 Detective Conan
-*  Updated     :  2019-07-05 12:05 by Detective conan
-*  Changes     :  Added swipe refresh implementation. and changed the refreshing
-*                 implementation of refresh button.
+*	 Filename		 :	 transparency_screen.dart
+*	 Purpose		 :	 Displays the recent donation transactions
+*  Created		 :   2019-06-05 09:10:50 Detective Conan
+*  Updated     :   2019-07-09 11:15 by Detective conan
+*  Changes     :   Changed the posted date donation to time passed donated
+*                  in transaction table
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -31,9 +31,8 @@ class TransparencyScreen extends StatefulWidget {
 }
 
 class _TransparencyScreenState extends State<TransparencyScreen> {
-
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
+      new GlobalKey<RefreshIndicatorState>();
 
   bool _isJsonFailed = false;
   bool _isJsonLoading = true;
@@ -65,7 +64,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    this.getDonationsJson().timeout(Duration(seconds: 1)).then((result) {
+    this.getDonationsJson().then((result) {
       _isJsonLoading = false;
       print(_isJsonLoading);
     });
@@ -168,7 +167,9 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                                     "Refresh button pressed.");
                                                 setState(() {
                                                   //_isJsonLoading = true;
-                                                  _refreshIndicatorKey.currentState.show();
+                                                  _refreshIndicatorKey
+                                                      .currentState
+                                                      .show();
                                                 });
                                               },
                                             ),
@@ -255,21 +256,26 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
             Spacer(),
             Container(
                 width: 90.0,
-                child: Text("${donation.firstName} ${donation.lastName}")),
+                child: Text("${donation.firstName} ${donation.lastName}",
+                    style: TextStyle(fontSize: 12.0))),
             Spacer(flex: 2),
             Container(
                 width: 70.0,
-                child: Text(_formattedAmount(double.parse(donation.amount)))),
+                child: Text(_formattedAmount(double.parse(donation.amount)),
+                    style: TextStyle(fontSize: 12.0))),
             Spacer(),
             Container(
-              width: 60.0,
+              width: 35.0,
               child: Text(
-                donation.postedOn,
-                style: TextStyle(fontSize: 10.0),
+                timePassTransaction(DateTime.parse("${donation.postedOn}Z")),
+                style: TextStyle(fontSize: 12.0),
               ),
             ),
             Spacer(flex: 2),
-            Container(width: 60.0, child: Text(donation.donationType)),
+            Container(
+                width: 60.0,
+                child: Text(donation.donationType,
+                    style: TextStyle(fontSize: 12.0))),
             Spacer(),
           ],
         ),
@@ -301,6 +307,19 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     } catch (e) {
       print(e.toString());
       return "\u20b1 $amount";
+    }
+  }
+
+  String timePassTransaction(DateTime date) {
+    int hourPassed = DateTime.now().difference(date).inHours;
+    int dayPassed = DateTime.now().difference(date).inDays;
+
+    if (hourPassed < 24)
+      return "$hourPassed h";
+    else if (hourPassed >= 24 && dayPassed < 30)
+      return "$dayPassed d";
+    else {
+      return "${(dayPassed / 30).floor()} m";
     }
   }
 
@@ -392,10 +411,8 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   }
 
   Future<void> _refresh() {
-    return this.getDonationsJson().then((_donations){
-      setState(() {
-
-      });
+    return this.getDonationsJson().then((_donations) {
+      setState(() {});
     });
   }
 }
