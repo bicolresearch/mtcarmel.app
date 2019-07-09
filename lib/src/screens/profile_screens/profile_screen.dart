@@ -2,9 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-09 18:35 by Detective conan
-*  Changes     :   Added guard for non-"@" sign email inputted. Hides logo on
-*                  text editing.
+*  Updated     :   2019-07-09 19:13 by Detective conan 
+*  Changes     :   Fixed the transition from text editing to full screen.
 */
 
 import 'package:flutter/material.dart';
@@ -235,8 +234,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 40.0,
               child: TextField(
-                onSubmitted: (_) {
-                  _logoHidden = false;
+                onSubmitted: (_) async {
+                  await Future.delayed(Duration(milliseconds: 500)).then((_){
+                    _logoHidden = false;
+                  });
                   _updateProfileScreen();
                 },
                 onTap: () {
@@ -261,8 +262,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _logoHidden = true;
                   _updateProfileScreen();
                 },
-                onSubmitted: (_) {
-                  _logoHidden = false;
+                onSubmitted: (_) async {
+                  await Future.delayed(Duration(milliseconds: 500)).then((_){
+                    _logoHidden = false;
+                  });
                   _updateProfileScreen();
                 },
                 controller: _textControllerPassword,
