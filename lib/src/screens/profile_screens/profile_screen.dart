@@ -2,10 +2,9 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-05 14:42 by Detective conan
-*  Changes     :   Removed hint on TextFields
+*  Updated     :   2019-07-09 15:24 by Detective conan
+*  Changes     :   Added email and password.
 */
-
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
@@ -64,7 +63,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoggedIn = false;
-  bool _isFirstView = true;
+  bool _isLoginFailed = false;
   ProfileFilter _currentProfileFilter = ProfileFilter.Login;
 
   Widget _header = Container();
@@ -72,6 +71,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _profile = Profile(1, "Ransom", "Rapirap", "October 12, 1990", "");
 
   ScrollController _scrollController;
+
+  final _textControllerEmail = TextEditingController();
+  final _textControllerPassword = TextEditingController();
 
   static Icon _arrowUp = Icon(
     Icons.keyboard_arrow_up,
@@ -119,14 +121,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    locator<LoginModel>().login("filename", "password").then((value){
-      _isLoggedIn = value;
-      _currentProfileFilter = ProfileFilter.User;
-      _checkLoginStatus();
-      _updateProfileScreen();
-      _updateList();
-      _initializeArrows();
-    });
+//    locator<LoginModel>().login("email", "password").then((value){
+//      _isLoggedIn = value;
+    _currentProfileFilter = ProfileFilter.User;
+    _checkLoginStatus();
+    _updateProfileScreen();
+    _updateList();
+    _initializeArrows();
+//    });
   }
 
   void _updateList() {
@@ -231,8 +233,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 10.0,
             ),
             SizedBox(
-              height: 30.0,
+              height: 40.0,
               child: TextField(
+                controller: _textControllerEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -244,8 +247,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 10.0,
             ),
             SizedBox(
-              height: 30.0,
+              height: 40.0,
               child: TextField(
+                controller: _textControllerPassword,
                 obscureText: true,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
@@ -271,9 +275,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     onPressed: () {
                       print("Login pressed");
-                      setState(() {
-                        _currentProfileFilter = ProfileFilter.User;
-                        _updateProfileScreen();
+                      locator<LoginModel>()
+                          .login(_textControllerEmail.value.text,
+                              _textControllerPassword.value.text)
+                          .then((value) {
+                        _isLoggedIn = value;
+                        print(value);
+                        if (_isLoggedIn)
+                          setState(() {
+                            _isLoginFailed = false;
+                            _currentProfileFilter = ProfileFilter.User;
+                            _updateProfileScreen();
+                          });
+                        else
+                          setState((){
+                            _isLoginFailed = true;
+                            _updateProfileScreen();
+                          });
                       });
                     },
                   ),
@@ -308,6 +326,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   GestureDetector(
                     onTap: () {
                       _currentProfileFilter = ProfileFilter.Guest;
+                      _clearLoginForm();
                       _updateProfileScreen();
                     },
                     child: Row(
@@ -327,10 +346,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ]),
               ),
             ),
+            (!_isLoggedIn && _isLoginFailed)
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.error, color: Colors.red,),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Login failed! Make sure the email and password are correct.",
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontFamily: "Helvetica",
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red),
+                              softWrap: true,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
+                : Container(),
           ],
         ),
       ),
     );
+  }
+
+  void _clearLoginForm(){
+    _isLoginFailed = false;
+    _textControllerPassword.clear();
+    _textControllerEmail.clear();
   }
 
   Widget _skippedHeader() {
@@ -556,6 +604,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void dispose() {
     print("disposing profile screen...");
+    _textControllerEmail.dispose();
+    _textControllerPassword.dispose();
     _scrollController.dispose();
     super.dispose();
   }
