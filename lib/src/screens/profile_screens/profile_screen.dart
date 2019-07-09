@@ -2,13 +2,14 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-09 15:24 by Detective conan
-*  Changes     :   Added email and password.
+*  Updated     :   2019-07-09 17:38 by Detective conan 
+*  Changes     :   Added sha-512 encryption.
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -121,8 +122,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-//    locator<LoginModel>().login("email", "password").then((value){
-//      _isLoggedIn = value;
     _currentProfileFilter = ProfileFilter.User;
     _checkLoginStatus();
     _updateProfileScreen();
@@ -156,9 +155,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-//    var crypto = PasswordCrypto();
-//    print(crypto.sha512("365-Days"));
-//    print("-pcks-32,3-,32-933e52712f2663bad0322db2e74fa2af8411c55a2611e193cb1076327c014f20fcea5e37355c92be7a43c89409dce639b207e2ea0ab3739e740283bde8479754");
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -277,18 +273,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       print("Login pressed");
                       locator<LoginModel>()
                           .login(_textControllerEmail.value.text,
-                              _textControllerPassword.value.text)
+                              _encrypted(_textControllerPassword.value.text))
                           .then((value) {
                         _isLoggedIn = value;
                         print(value);
                         if (_isLoggedIn)
                           setState(() {
+                            _clearLoginForm();
                             _isLoginFailed = false;
                             _currentProfileFilter = ProfileFilter.User;
                             _updateProfileScreen();
                           });
                         else
-                          setState((){
+                          setState(() {
                             _isLoginFailed = true;
                             _updateProfileScreen();
                           });
@@ -351,7 +348,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: <Widget>[
-                        Icon(Icons.error, color: Colors.red,),
+                        Icon(
+                          Icons.error,
+                          color: Colors.red,
+                        ),
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -375,7 +375,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _clearLoginForm(){
+  void _clearLoginForm() {
     _isLoginFailed = false;
     _textControllerPassword.clear();
     _textControllerEmail.clear();
@@ -635,6 +635,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _currentProfileFilter = ProfileFilter.User;
     else
       _currentProfileFilter = ProfileFilter.Login;
+  }
+
+  String _encrypted(String text) {
+    final crypto = PasswordCrypto();
+    return crypto.sha512(text);
   }
 }
 
