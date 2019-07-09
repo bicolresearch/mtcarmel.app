@@ -2,9 +2,8 @@
 *	 Filename		 :	 transparency_screen.dart
 *	 Purpose		 :	 Displays the recent donation transactions
 *  Created		 :   2019-06-05 09:10:50 Detective Conan
-*  Updated     :   2019-07-09 11:15 by Detective conan
-*  Changes     :   Changed the posted date donation to time passed donated
-*                  in transaction table
+*  Updated     :   2019-07-09 12:23 by Detective conan
+*  Changes     :   Adjusted the above content.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -111,21 +110,18 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                             child: Container(
                               child: Column(
                                 children: <Widget>[
-                                  Expanded(
-                                    flex: 3,
-                                    child: Container(
-                                      padding: EdgeInsets.only(bottom: 10.0),
-                                      child: Icon(
-                                        MountCarmelIcons.transparency,
-                                        size: 100,
-                                      ),
-                                    ),
-                                  ),
                                   Flexible(
                                     flex: 2,
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
+                                        Container(
+                                          padding: EdgeInsets.only(bottom: 10.0),
+                                          child: Icon(
+                                            MountCarmelIcons.transparency,
+                                            size: 100,
+                                          ),
+                                        ),
                                         Text(
                                           "Transparency",
                                           style: AppConstants.OPTION_STYLE3,
