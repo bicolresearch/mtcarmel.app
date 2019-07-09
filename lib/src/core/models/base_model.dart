@@ -7,7 +7,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/core/models/view_state.dart';
+import 'package:mt_carmel_app/src/core/view_models/view_state.dart';
 
 class BaseModel extends ChangeNotifier {
   ViewState _state = ViewState.Idle;

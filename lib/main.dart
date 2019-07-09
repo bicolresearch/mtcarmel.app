@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/screens/bottom_tab_navigator.dart';
 import 'src/screens/splash.dart';
 import 'src/screens/introduction_screen.dart';
@@ -18,6 +19,7 @@ void main() {
 class MtCarmelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    setupLocator();
     return MaterialApp(
       title: 'Mount Carmel',
       theme: ThemeData(
