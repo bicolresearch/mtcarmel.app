@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-10 15:29 by Detective conan
-*  Changes     :   Added login check on initState.
+*  Updated     :   2019-07-10 16:59 by Detective conan
+*  Changes     :   Sets login state in persistent when logout.
 */
 
 import 'package:flutter/material.dart';
@@ -475,6 +475,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             if (value == 1) {
                               setState(() {
                                 _currentProfileFilter = ProfileFilter.Login;
+                                locator<Api>().setLogin(false);
                                 _updateProfileScreen();
                               });
                             }

@@ -2,8 +2,8 @@
 *  Filename    :   login_screen.dart
 *  Purpose     :   Displays the login screen.
 *  Created     :   2019-07-04 10:01 by Detective Conan
-*  Updated     :   2019-07-04 10:01 by Detective Conan
-*  Changes     :   Replaced logo. Added skip button
+*  Updated     :   2019-07-10 16:57 by Detective conan
+*  Changes     :   Shows error message on login failure. Aligned spacing.
 */
 
 import 'package:flutter/material.dart';
@@ -147,7 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ]),
                   ),
                 ),
-                Spacer(),
                 (_isLoginFailed)
                     ? Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -175,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       )
                     : Container(),
+                Spacer(),
               ],
             ),
           ),
@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pop(context, true);
       else
         setState(() {
-          _isLoginFailed = false;
+          _isLoginFailed = true;
         });
     });
   }

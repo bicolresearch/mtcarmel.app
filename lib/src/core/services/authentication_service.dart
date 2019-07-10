@@ -2,8 +2,8 @@
 *  Filename    :   authentication_service.dart
 *  Purpose     :	 Service for authenticating user
 *  Created     :   2019-07-08 14:23 by Detective Conan
-*  Updated     :   2019-07-09 15:25 by Detective conan
-*  Changes     :   Added validation for email and password
+*  Updated     :   2019-07-10 16:59 by Detective conan
+*  Changes     :   Added setter for login state.
 */
 
 import 'dart:async';
@@ -28,24 +28,31 @@ class AuthenticationService {
 
 class Api {
   UserAuthentication _userAuthentication;
+  bool _isLoggedIn;
 
   Future<bool> validateEmailPassword(String email, String password) {
+    _isLoggedIn = false;
     var isValid = _getUser(email, password).then((value) {
       if (_userAuthentication != null) {
-        return (_userAuthentication.username + _userAuthentication.password) ==
-            (email + password);
+        _isLoggedIn =
+            ((_userAuthentication.username + _userAuthentication.password) ==
+                (email + password));
+        return _isLoggedIn;
       } else {
-        print("null _userAuthentication");
+        _isLoggedIn = false;
         return false;
       }
-    }).catchError((value) {
+    }).catchError((e) {
+      _isLoggedIn = false;
       return false;
     });
     return isValid;
   }
 
   Future<bool> _getUser(String email, String password) async {
-    var hasUser = await http
+    _isLoggedIn = false;
+    var hasUser;
+    await http
         .get(AppConstants.API_BASE_URL +
             "/auth/auth/" +
             "username/" +
@@ -56,11 +63,17 @@ class Api {
       if (value.statusCode == 200) {
         final body = json.decode(value.body);
         _userAuthentication = UserAuthentication.fromJson(body);
+        hasUser = true;
       } else {
         print(value.statusCode);
       }
-      return;
     }).timeout(Duration(seconds: 5));
-    return hasUser;
+    return hasUser != null;
+  }
+
+  get isLoggedIn => _isLoggedIn ?? false;
+
+  void setLogin(bool login){
+    _isLoggedIn = login;
   }
 }
