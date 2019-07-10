@@ -2,8 +2,8 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-07-08 09:31 by Detective conan
-*  Changes     :   Added data loading failure message.
+*  Updated     :   2019-07-10 09:33 by Detective conan
+*  Changes     :   Hides the appbar during loading data.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -22,7 +22,6 @@ import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
-import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -48,6 +47,10 @@ class _FeedScreenState extends State<FeedScreen> {
   void initState() {
     print("initializing feed screen...");
     super.initState();
+    _loadFeeds();
+  }
+
+  void _loadFeeds() {
     ConnectivityChecker.hasDataConnection().then((value) {
       if (value && value != null) {
         _dataLoadingStatusStatus = DataLoadingStatus.LoadingData;
@@ -71,63 +74,7 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          title: Text(
-            "The Basilica",
-            style: TextStyle(color: Colors.brown),
-            textAlign: TextAlign.center,
-          ),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          actions: <Widget>[
-            Center(
-              child: GestureDetector(
-                onTap: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-//                          builder: (context) => VideoScreen(),
-                          builder: (context) => YoutubePlayerScreen(),
-//                        builder: (context) => VideoExample(),
-                        ),
-                      )
-                    },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Live",
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0),
-                  ),
-                ),
-              ),
-            ),
-            Divider(),
-            Container(
-              child: GestureDetector(
-                onTap: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CalendarPage(),
-                        ),
-                      )
-                    },
-                child: Icon(
-                  MountCarmelIcons.calendar,
-                  color: Colors.brown,
-                ),
-              ),
-              padding: EdgeInsets.only(right: 20.0),
-            ),
-          ],
-        ),
-        body: Center(child: _feeds()),
-      ),
+      child: _feedScaffold(),
     );
   }
 
@@ -151,7 +98,7 @@ class _FeedScreenState extends State<FeedScreen> {
     return;
   }
 
-  Widget _feeds() {
+  Widget _feedScaffold() {
     switch (_dataLoadingStatusStatus) {
       case DataLoadingStatus.ConnectionFailed:
         return ErrorMessage.errMsg(
@@ -163,24 +110,82 @@ class _FeedScreenState extends State<FeedScreen> {
       case DataLoadingStatus.LoadingFailed:
         return ErrorMessage.errMsg(errorMessage: ErrorMessageEnum.LoadingError);
       case DataLoadingStatus.SuccessfulDataLoading:
-        return Container(
-          padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-          child: RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: _refresh,
-            child: ListView.builder(
-                itemCount: _feedList.length,
-                itemBuilder: (context, index) {
-                  try {
-                    return _feedContent(_feedList[index]);
-                  } catch (e) {
-                    print(e.toString());
-                  }
-                }),
+        return Scaffold(
+          resizeToAvoidBottomPadding: false,
+          appBar: AppBar(
+            title: Text(
+              "The Basilica",
+              style: TextStyle(color: Colors.brown),
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            actions: <Widget>[
+              Center(
+                child: GestureDetector(
+                  onTap: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => YoutubePlayerScreen(),
+                          ),
+                        )
+                      },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Live",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0),
+                    ),
+                  ),
+                ),
+              ),
+              Divider(),
+              Container(
+                child: GestureDetector(
+                  onTap: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CalendarPage(),
+                          ),
+                        )
+                      },
+                  child: Icon(
+                    MountCarmelIcons.calendar,
+                    color: Colors.brown,
+                  ),
+                ),
+                padding: EdgeInsets.only(right: 20.0),
+              ),
+            ],
           ),
+          body: Center(child: _feeds()),
         );
     }
     return LoadingIndicator();
+  }
+
+  Widget _feeds() {
+    return Container(
+      padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+      child: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: _refresh,
+        child: ListView.builder(
+            itemCount: _feedList.length,
+            itemBuilder: (context, index) {
+              try {
+                return _feedContent(_feedList[index]);
+              } catch (e) {
+                print(e.toString());
+              }
+            }),
+      ),
+    );
   }
 
   Widget _feedContent(Feed feed) {
