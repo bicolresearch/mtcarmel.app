@@ -1,14 +1,17 @@
 /*
-* Filename    : send_help_screen.dart
-* Purpose     :	Displays the different type of donations
-* Created     : 2019-06-02 09:10 by Detective Conan
-*	Updated			: 07/04/2019 17:19:41 by Scarlet Witch
-*	Changes			: Update naming Send Help to Help Now
+*  Filename    :   send_help_screen.dart
+*  Purpose     :	 Displays the different type of donations
+*  Created     :   2019-06-02 09:10 by Detective Conan
+*  Updated     :   2019-07-10 15:31 by Detective conan
+*  Changes     :   Added login check on initState.
+*                  Added algorithm for switching between login screen and
+*                  particular donation screen
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
@@ -20,6 +23,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class SendHelpScreen extends StatefulWidget {
   static const TextStyle optionStyle = TextStyle(
@@ -32,7 +36,7 @@ class SendHelpScreen extends StatefulWidget {
 }
 
 class _SendHelpScreenState extends State<SendHelpScreen> {
-  final _isLoggedIn = true;
+  bool _isLoggedIn = false;
 
   List<SendHelp> _sendHelpList = [];
 
@@ -62,6 +66,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
   void initState() {
     print("initializing sendHelp screen...");
     super.initState();
+    _isLoggedIn = locator<Api>().isLoggedIn;
     this.getJsonData();
   }
 
@@ -185,16 +190,28 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: RaisedButton(
-                    //TODO implement the onPress button
-                    onPressed: () => {
-//                          Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                builder: (context) => _isLoggedIn
-//                                    ? SendHelpDetails()
-//                                    : LoginScreen(),
-//                              ))
-                          print("${sendHelp.name} selected")
+                    onPressed: () async => {
+                          print("${sendHelp.name} selected"),
+                          if (!_isLoggedIn)
+                            {
+                              await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginScreen(),
+                                  )).then((value) {
+                                _isLoggedIn = value;
+                              }),
+                            },
+                      //after login form
+                          if (_isLoggedIn)
+                            {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SendHelpDetails(sendHelp),
+                                  ))
+                            }
                         },
                     color: Colors.white,
                     child: Text(
@@ -212,13 +229,5 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
         ],
       ),
     );
-  }
-
-  void _sendHelpNavigation(context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SendHelpDetails(),
-        ));
   }
 }

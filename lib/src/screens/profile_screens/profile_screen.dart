@@ -2,12 +2,13 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-09 19:13 by Detective conan 
-*  Changes     :   Fixed the transition from text editing to full screen.
+*  Updated     :   2019-07-10 15:29 by Detective conan
+*  Changes     :   Added login check on initState.
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
@@ -123,6 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
+    _isLoggedIn = locator<Api>().isLoggedIn;
     _currentProfileFilter = ProfileFilter.User;
     _checkLoginStatus();
     _updateProfileScreen();
