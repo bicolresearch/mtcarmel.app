@@ -2,8 +2,9 @@
 *  Filename    :   send_help_detail_screen.dart
 *  Purpose     :   Displays the details of a selected donation.
 *  Created     :   2019-07-10 15:30 by Detective Conan
-*  Updated     :   2019-07-10 15:30 by Detective Conan
-*  Changes     :
+*  Updated     :   2019-07-11 09:10 by Detective conan
+*  Changes     :   Fixed the overflowing of details box.
+*                  Hides the details box when textEditing.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -25,6 +26,7 @@ class SendHelpDetails extends StatefulWidget {
 class _SendHelpDetailsState extends State<SendHelpDetails>
     with TickerProviderStateMixin {
   final _textControllerAmount = TextEditingController();
+  bool _isTextEditing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +47,17 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
             ),
             Column(
               children: <Widget>[
-                Expanded(
-                  child: Center(
-                      child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: _detailsBox(context),
-                  )),
-                ),
+                _isTextEditing
+                    ? Container(
+                        height: 100.0,
+                      )
+                    : Expanded(
+                        child: Center(
+                            child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: _detailsBox(context),
+                        )),
+                      ),
                 _buttonsAndFields(),
               ],
             ),
@@ -72,6 +78,12 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
             child: SizedBox(
               height: 40.0,
               child: TextField(
+                onTap: () {
+                  _isTextEditing = true;
+                },
+                onSubmitted: (_) {
+                  _isTextEditing = false;
+                },
                 controller: _textControllerAmount,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
@@ -96,15 +108,16 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
             },
           ),
           GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Back",
-                  style: TextStyle(
-                      color: Colors.brown, fontWeight: FontWeight.bold),
-                ),
-              ))
+            onTap: () => Navigator.pop(context),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Back",
+                style:
+                    TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -119,10 +132,9 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   }
 
   Widget _firstItem() {
-    return SingleChildScrollView(
-      child: Container(
-        height: 400.0,
-        color: Color.fromARGB(100, 255, 255, 255),
+    return Container(
+      color: Color.fromARGB(100, 255, 255, 255),
+      child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -139,7 +151,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
               ),
               Divider(color: Colors.brown),
               Text(
-                AppConstants.sample_message,
+                AppConstants.sample_message + AppConstants.sample_message,
                 style: AppConstants.OPTION_STYLE2,
                 textAlign: TextAlign.center,
               ),
@@ -148,6 +160,12 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _textControllerAmount.dispose();
+    super.dispose();
   }
 
   Widget _second_item() {
