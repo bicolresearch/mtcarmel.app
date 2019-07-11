@@ -1,9 +1,9 @@
 /*
-*	Filename		:	feed_detail_screen.dart
-*	Purpose			:	Displays the particular post
-* Created			: 2019-06-04 16:52:31 by Detective Conan
-*	Updated			: 2019-07-03 11:17 by Detective conan
-*	Changes			: Implemented caching of image.
+*	 Filename		 :	 feed_detail_screen.dart
+*	 Purpose		 :	 Displays the particular post
+*  Created		 :   2019-06-04 16:52:31 by Detective Conan
+*  Updated     :   2019-07-12 07:50 by Detective conan
+*  Changes     :   Modified according to new api fields
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,13 +14,13 @@ import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedDetailScreen extends StatelessWidget {
-  final Feed feed;
+  final PostData postData;
 
-  FeedDetailScreen(this.feed);
+  FeedDetailScreen(this.postData);
 
   @override
   Widget build(BuildContext context) {
-    print(feed.title);
+    print(postData.title);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -44,7 +44,7 @@ class FeedDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Text(
-                          feed.title,
+                          postData.title,
                           style: TextStyle(
                               color: Colors.white, fontFamily: "Helvetica"),
                           textAlign: TextAlign.center,
@@ -56,11 +56,10 @@ class FeedDetailScreen extends StatelessWidget {
                         height: 250,
                         child: CachedNetworkImage(
                             key: Key(AppConstants.API_BASE_URL +
-                                feed.coverPhoto.replaceAll("/", "")),
+                                postData.coverPhoto.replaceAll("/", "")),
                             imageUrl:
-                                AppConstants.API_BASE_URL + feed.coverPhoto,
-                            placeholder: (context, url) =>
-                                LoadingIndicator(),
+                                AppConstants.API_BASE_URL + postData.coverPhoto,
+                            placeholder: (context, url) => LoadingIndicator(),
                             errorWidget: (context, url, error) =>
                                 new Icon(Icons.error),
                             fit: BoxFit.contain),
@@ -70,7 +69,7 @@ class FeedDetailScreen extends StatelessWidget {
                           margin: EdgeInsets.symmetric(horizontal: 20.0),
                           child: HtmlTextView(
                             data:
-                                "<div style='color: #5d4037'>${feed.content}</div>",
+                                "<div style='color: #5d4037'>${postData.content}</div>",
                             anchorColor: Color(0xFFFF0000),
                           )),
                     ],

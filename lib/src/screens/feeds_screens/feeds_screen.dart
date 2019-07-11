@@ -2,8 +2,8 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-07-10 09:33 by Detective conan
-*  Changes     :   Hides the appbar during loading data.
+*  Updated     :   2019-07-12 07:50 by Detective conan
+*  Changes     :   Modified according to new api fields
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -35,7 +35,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  List<Feed> _feedList = [];
+  Feed _feed;
 
   DataLoadingStatus _dataLoadingStatusStatus =
       DataLoadingStatus.ConnectivityChecking;
@@ -83,9 +83,8 @@ class _FeedScreenState extends State<FeedScreen> {
       if (this.mounted) {
         setState(() {
           if (value.statusCode == 200) {
-            _feedList = (json.decode(value.body) as List)
-                .map((data) => new Feed.fromJson(data))
-                .toList();
+            final body = json.decode(value.body);
+            _feed = Feed.fromJson(body);
           } else {
             print(value.statusCode);
             _dataLoadingStatusStatus = DataLoadingStatus.ConnectionFailed;
@@ -176,23 +175,24 @@ class _FeedScreenState extends State<FeedScreen> {
         key: _refreshIndicatorKey,
         onRefresh: _refresh,
         child: ListView.builder(
-            itemCount: _feedList.length,
+            itemCount: _feed.data.length,
             itemBuilder: (context, index) {
               try {
-                return _feedContent(_feedList[index]);
+                return _feedContent(_feed.data[index]);
               } catch (e) {
                 print(e.toString());
               }
+              return Container();
             }),
       ),
     );
   }
 
-  Widget _feedContent(Feed feed) {
+  Widget _feedContent(PostData postData) {
     if (_dataLoadingStatusStatus == DataLoadingStatus.ConnectionFailed ||
-        feed == null) return Container();
+        postData == null) return Container();
 
-    String url = AppConstants.API_BASE_URL + feed.coverPhoto;
+    String url = AppConstants.API_BASE_URL + postData.coverPhoto;
     try {
       FadeInImage.assetNetwork(
         fadeInCurve: Curves.bounceIn,
@@ -216,7 +216,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FeedDetailScreen(feed),
+                    builder: (context) => FeedDetailScreen(postData),
                   ),
                 ),
               },
@@ -236,7 +236,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
-                    feed.title,
+                    postData.title,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.white,
@@ -262,7 +262,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 height: 50.0,
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  _noTags(feed.content),
+                  _noTags(postData.content),
                   style: AppConstants.OPTION_STYLE1,
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,
