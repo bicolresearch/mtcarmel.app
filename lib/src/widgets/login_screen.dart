@@ -80,6 +80,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 40.0,
                   child: TextField(
+                    onTap: () {
+                      _isTextEditing = true;
+                    },
+                    onSubmitted: (_) {
+                      _isTextEditing = false;
+                    },
                     controller: _textControllerPassword,
                     obscureText: true,
                     keyboardType: TextInputType.emailAddress,
