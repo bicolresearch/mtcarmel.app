@@ -73,8 +73,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _header = Container();
 
-  final _profile = Profile(1, "Ransom", "Rapirap", "October 12, 1990", "");
-
   ScrollController _scrollController;
 
   final _textControllerEmail = TextEditingController();
@@ -123,14 +121,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     print("initializing profile screen...");
-    _checkLoginStatus();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    _updateProfileScreen();
+    _checkLoginStatus();
     _updateList();
+    _updateProfileScreen();
     _initializeArrows();
-//    });
   }
 
   void _updateList() {

@@ -1,9 +1,9 @@
 /*
-*	Filename		:	contact_detail_scree.dart
-*	Purpose			:	Displays the church contact details
-* Created			: 2019-06-13 15:07:14 by Detective Conan
-*	Updated			: 2019-07-02 13:27:13 by Detective Conan
-*	Changes			: Adjusted the back button.
+*	 Filename		 :	 contact_detail_scree.dart
+*	 Purpose		 :	 Displays the church contact details
+*  Created		 :   2019-06-13 15:07:14 by Detective Conan
+*  Updated     :   2019-07-11 15:37 by Detective conan
+*  Changes     :   Removed tags on contact details.
 */
 
 import 'package:flutter/material.dart';
@@ -107,13 +107,13 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
     if (_contactList.isEmpty) return Container();
 
     final List<_ContactItem> contactItems = [
-      _ContactItem("Church name", _contactList[0].name),
+      _ContactItem("Church name", _contactList[0].name ?? ""),
       _ContactItem("Address",
-          "${_contactList[0].address1}\n${_contactList[0].address2}"),
-      _ContactItem("Email", _contactList[0].email),
-      _ContactItem("Social Media", _contactList[0].socialMedia),
-      _ContactItem("Landline", _contactList[0].landline),
-      _ContactItem("Mobile", _contactList[0].mobile),
+          "${_contactList[0].address1 ?? ""}\n${_contactList[0].address2 ?? ""}"),
+      _ContactItem("Email", _contactList[0].email ?? ""),
+      _ContactItem("Social Media", _contactList[0].socialMedia ?? ""),
+      _ContactItem("Landline", _contactList[0].landline ?? ""),
+      _ContactItem("Mobile", _contactList[0].mobile ?? ""),
     ];
 
     return Container(
@@ -129,13 +129,23 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
           }),
     );
   }
-}
 
-Widget _contactItem(BuildContext context, _ContactItem contactItem) {
-  if (contactItem.value == null || contactItem.value.isEmpty)
-    return Container();
-  return itemWidget(
-      context: context, label: contactItem.label, value: contactItem.value);
+  Widget _contactItem(BuildContext context, _ContactItem contactItem) {
+    if (contactItem.value == null || contactItem.value.isEmpty)
+      return Container();
+    return itemWidget(
+        context: context,
+        label: contactItem.label,
+        value: noTags(contactItem.value));
+  }
+
+  String noTags(String text) {
+    return text
+        .replaceAll("<p>", "")
+        .replaceAll("</p> ", "\n")
+        .replaceAll("</p>", "")
+        .replaceAll("/br", "\n");
+  }
 }
 
 class _ContactItem {
