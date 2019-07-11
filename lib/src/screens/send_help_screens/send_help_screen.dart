@@ -2,16 +2,15 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*  Updated     :   2019-07-10 15:31 by Detective conan
-*  Changes     :   Added login check on initState.
-*                  Added algorithm for switching between login screen and
-*                  particular donation screen
+*  Updated     :   2019-07-11 14:43 by Detective conan
+*  Changes     :   Get the login status from shared preferences.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
+import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
@@ -66,7 +65,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
   void initState() {
     print("initializing sendHelp screen...");
     super.initState();
-    _isLoggedIn = locator<Api>().isLoggedIn;
+    _checkLoginStatus();
     this.getJsonData();
   }
 
@@ -191,28 +190,27 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                   padding: const EdgeInsets.only(right: 10.0),
                   child: RaisedButton(
                     onPressed: () async => {
-                          print("${sendHelp.name} selected"),
-                          if (!_isLoggedIn)
-                            {
-                              await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  )).then((value) {
-                                _isLoggedIn = value;
-                              }),
-                            },
-                      //after login form
-                          if (_isLoggedIn)
-                            {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        SendHelpDetails(sendHelp),
-                                  ))
-                            }
+                      print("${sendHelp.name} selected"),
+                      if (!_isLoggedIn)
+                        {
+                          await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              )).then((value) {
+                            _isLoggedIn = value;
+                          }),
                         },
+                      //after login form
+                      if (_isLoggedIn)
+                        {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SendHelpDetails(sendHelp),
+                              ))
+                        }
+                    },
                     color: Colors.white,
                     child: Text(
                       "Help Now",
@@ -229,5 +227,14 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
         ],
       ),
     );
+  }
+
+  void _checkLoginStatus() {
+    locator<AuthenticationService>().isLoggedIn().then((value) {
+      _isLoggedIn = value;
+    }).catchError((error) {
+      print(error);
+      _isLoggedIn = false;
+    });
   }
 }

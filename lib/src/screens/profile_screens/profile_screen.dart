@@ -2,17 +2,19 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-10 16:59 by Detective conan
-*  Changes     :   Sets login state in persistent when logout.
+*  Updated     :   2019-07-11 14:44 by Detective conan
+*  Changes     :   Get the login status from shared preferences.
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
 import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/profile.dart';
+import 'package:mt_carmel_app/src/models/user_authentication.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
@@ -66,7 +68,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoggedIn = false;
   bool _isLoginFailed = false;
-  bool _logoHidden = false;
+  bool _isTextEditing = false;
   ProfileFilter _currentProfileFilter = ProfileFilter.Login;
 
   Widget _header = Container();
@@ -121,12 +123,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     print("initializing profile screen...");
+    _checkLoginStatus();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    _isLoggedIn = locator<Api>().isLoggedIn;
-    _currentProfileFilter = ProfileFilter.User;
-    _checkLoginStatus();
     _updateProfileScreen();
     _updateList();
     _initializeArrows();
@@ -222,7 +222,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: Column(
           children: <Widget>[
-            _logoHidden
+            _isTextEditing
                 ? Container()
                 : Container(
                     child: Image.asset(
@@ -237,13 +237,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 40.0,
               child: TextField(
                 onSubmitted: (_) async {
-                  await Future.delayed(Duration(milliseconds: 500)).then((_){
-                    _logoHidden = false;
+                  await Future.delayed(Duration(milliseconds: 500)).then((_) {
+                    _isTextEditing = false;
                   });
                   _updateProfileScreen();
                 },
                 onTap: () {
-                  _logoHidden = true;
+                  _isTextEditing = true;
                   _updateProfileScreen();
                 },
                 controller: _textControllerEmail,
@@ -261,12 +261,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 40.0,
               child: TextField(
                 onTap: () {
-                  _logoHidden = true;
+                  _isTextEditing = true;
                   _updateProfileScreen();
                 },
                 onSubmitted: (_) async {
-                  await Future.delayed(Duration(milliseconds: 500)).then((_){
-                    _logoHidden = false;
+                  await Future.delayed(Duration(milliseconds: 500)).then((_) {
+                    _isTextEditing = false;
                   });
                   _updateProfileScreen();
                 },
@@ -384,7 +384,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _clearLoginForm() {
-    _logoHidden = false;
+    _isTextEditing = false;
     _isLoginFailed = false;
     _textControllerPassword.clear();
     _textControllerEmail.clear();
@@ -452,21 +452,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         PopupMenuButton<int>(
                           itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  value: 1,
-                                  child: Text(
-                                    "Logout",
-                                    style: AppConstants.OPTION_STYLE2,
-                                  ),
-                                ),
-                                PopupMenuItem(
-                                  value: 2,
-                                  child: Text(
-                                    "Cancel",
-                                    style: AppConstants.OPTION_STYLE2,
-                                  ),
-                                ),
-                              ],
+                            PopupMenuItem(
+                              value: 1,
+                              child: Text(
+                                "Logout",
+                                style: AppConstants.OPTION_STYLE2,
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 2,
+                              child: Text(
+                                "Cancel",
+                                style: AppConstants.OPTION_STYLE2,
+                              ),
+                            ),
+                          ],
                           initialValue: 2,
                           onCanceled: () {
                             print("You have canceled the menu.");
@@ -475,7 +475,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             if (value == 1) {
                               setState(() {
                                 _currentProfileFilter = ProfileFilter.Login;
-                                locator<Api>().setLogin(false);
+                                locator<AuthenticationService>().logout();
                                 _updateProfileScreen();
                               });
                             }
@@ -640,11 +640,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scrollListener();
   }
 
-  void _checkLoginStatus() {
+  Future _checkLoginStatus() async {
+    _isLoggedIn =
+        await locator<AuthenticationService>().isLoggedIn().catchError((error) {
+      print(error);
+      _isLoggedIn = false;
+    });
     if (_isLoggedIn)
       _currentProfileFilter = ProfileFilter.User;
     else
       _currentProfileFilter = ProfileFilter.Login;
+    _updateProfileScreen();
   }
 
   String _encrypted(String text) {
