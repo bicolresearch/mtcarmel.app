@@ -41,9 +41,7 @@ class AuthenticationService {
     var success = await _api.validateEmailPassword(email, password);
 
     if (success) {
-      print("authenticationService success");
-      print(
-          "DateTime.now().toIso8601String() ${DateTime.now().toIso8601String()}");
+      SharedPreferencesHelper.setUserId(_api.userId());
       SharedPreferencesHelper.setAuthenticationTime(
           DateTime.now().toIso8601String());
       SharedPreferencesHelper.setUsername(email);
@@ -53,6 +51,7 @@ class AuthenticationService {
   }
 
   void logout() async {
+    SharedPreferencesHelper.setUserId("");
     SharedPreferencesHelper.setAuthenticationTime("");
     SharedPreferencesHelper.setUsername("");
     SharedPreferencesHelper.setPassword("");
@@ -79,6 +78,10 @@ class AuthenticationService {
       isTimeout = true;
     }
     return isTimeout;
+  }
+
+  get userId {
+    SharedPreferencesHelper.getUserId();
   }
 
   int _timeoutValue(TimeDurationEnum timeout) {

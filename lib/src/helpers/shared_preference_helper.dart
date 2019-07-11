@@ -12,6 +12,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 class SharedPreferencesHelper {
   //Shared preferences constants
   static const String _FIRST_USAGE_FLAG_NAME = "first_usage_flag";
+  static const String _USER_ID_SHARED_PREFS_KEY = "userIdPrefsKey";
   static const String _USERNAME_SHARED_PREFS_KEY = "usernamePrefsKey";
   static const String _PASSWORD_SHARED_PREFS_KEY = "passwordPrefsKey";
   static const String _AUTHENTICATION_TIME_KEY = "authenticationTimeKey";
@@ -27,6 +28,19 @@ class SharedPreferencesHelper {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return prefs.setBool(_FIRST_USAGE_FLAG_NAME, isFirstUsage);
+  }
+
+  // user id
+  static Future<bool> getUserId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getBool(_USER_ID_SHARED_PREFS_KEY) ?? true;
+  }
+
+  static Future<void> setUserId(String id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.setString(_USER_ID_SHARED_PREFS_KEY, id);
   }
 
   // username

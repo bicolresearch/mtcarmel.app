@@ -49,4 +49,6 @@ class UserAuthenticationApi {
     }).timeout(Duration(seconds: 5));
     return hasUser != null;
   }
+
+  get userId => _userAuthentication.id;
 }
