@@ -2,8 +2,8 @@
 *  Filename    :   login_screen.dart
 *  Purpose     :   Displays the login screen.
 *  Created     :   2019-07-04 10:01 by Detective Conan
-*  Updated     :   2019-07-10 16:57 by Detective conan
-*  Changes     :   Shows error message on login failure. Aligned spacing.
+*  Updated     :   2019-07-11 09:22 by Detective conan
+*  Changes     :   Hides the logo when Text editing.
 */
 
 import 'package:flutter/material.dart';
@@ -22,6 +22,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoginFailed = false;
+  bool _isTextEditing = false;
 
   @override
   void dispose() {
@@ -44,12 +45,14 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             child: Column(
               children: <Widget>[
-                Spacer(),
                 Container(
-                  child: Image.asset(
-                    AppConstants.MT_CARMEL_LOGO_PATH,
-                    height: 160,
-                  ),
+                  margin: EdgeInsets.only(top: 50.0),
+                  child: _isTextEditing
+                      ? Container()
+                      : Image.asset(
+                          AppConstants.MT_CARMEL_LOGO_PATH,
+                          height: 160,
+                        ),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -57,6 +60,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 40.0,
                   child: TextField(
+                    onTap: () {
+                      _isTextEditing = true;
+                    },
+                    onSubmitted: (_) {
+                      _isTextEditing = false;
+                    },
                     controller: _textControllerEmail,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
