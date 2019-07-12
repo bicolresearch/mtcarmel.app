@@ -2,21 +2,21 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-07-12 07:50 by Detective conan
-*  Changes     :   Modified according to new api fields
+*  Updated     :   2019-07-12 11:39 by Detective conan
+*  Changes     :   Moved the gathering of news feed to PostService class.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/post_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/helpers/data_loading_status.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
@@ -37,8 +37,7 @@ class FeedScreen extends StatefulWidget {
 class _FeedScreenState extends State<FeedScreen> {
   Feed _feed;
 
-  DataLoadingStatus _dataLoadingStatusStatus =
-      DataLoadingStatus.ConnectivityChecking;
+  DataLoadingStatus _dataLoadingStatus = DataLoadingStatus.ConnectivityChecking;
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
@@ -53,15 +52,13 @@ class _FeedScreenState extends State<FeedScreen> {
   void _loadFeeds() {
     ConnectivityChecker.hasDataConnection().then((value) {
       if (value && value != null) {
-        _dataLoadingStatusStatus = DataLoadingStatus.LoadingData;
-        this.getFeedData().catchError((error) {
-          _dataLoadingStatusStatus = DataLoadingStatus.LoadingFailed;
-          setState(() {});
-        });
+        _dataLoadingStatus = DataLoadingStatus.LoadingData;
+        getFeedData();
+        setState(() {});
       } else {
-        _dataLoadingStatusStatus = DataLoadingStatus.ConnectionFailed;
+        _dataLoadingStatus = DataLoadingStatus.ConnectionFailed;
+        setState(() {});
       }
-      setState(() {});
     });
   }
 
@@ -79,26 +76,23 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Future<void> getFeedData() async {
-    await http.get(AppConstants.FEEDS_JSON_URL).then((value) {
-      if (this.mounted) {
-        setState(() {
-          if (value.statusCode == 200) {
-            final body = json.decode(value.body);
-            _feed = Feed.fromJson(body);
-          } else {
-            print(value.statusCode);
-            _dataLoadingStatusStatus = DataLoadingStatus.ConnectionFailed;
-          }
-          _dataLoadingStatusStatus = DataLoadingStatus.SuccessfulDataLoading;
-        });
-        return;
+    await locator<PostService>().getFeed().then((feed) {
+      if (feed == null)
+        _dataLoadingStatus = DataLoadingStatus.LoadingFailed;
+      else {
+        _feed = feed;
+        _dataLoadingStatus = DataLoadingStatus.SuccessfulDataLoading;
+        setState(() {});
       }
-    }).timeout(Duration(seconds: 5));
-    return;
+    }).catchError((error) {
+      print(error);
+      _dataLoadingStatus = DataLoadingStatus.LoadingFailed;
+      setState(() {});
+    });
   }
 
   Widget _feedScaffold() {
-    switch (_dataLoadingStatusStatus) {
+    switch (_dataLoadingStatus) {
       case DataLoadingStatus.ConnectionFailed:
         return ErrorMessage.errMsg(
             errorMessage: ErrorMessageEnum.NoInternetError);
@@ -123,13 +117,13 @@ class _FeedScreenState extends State<FeedScreen> {
               Center(
                 child: GestureDetector(
                   onTap: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => YoutubePlayerScreen(),
-                          ),
-                        )
-                      },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => YoutubePlayerScreen(),
+                      ),
+                    )
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -146,13 +140,13 @@ class _FeedScreenState extends State<FeedScreen> {
               Container(
                 child: GestureDetector(
                   onTap: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CalendarPage(),
-                          ),
-                        )
-                      },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CalendarPage(),
+                      ),
+                    )
+                  },
                   child: Icon(
                     MountCarmelIcons.calendar,
                     color: Colors.brown,
@@ -173,7 +167,7 @@ class _FeedScreenState extends State<FeedScreen> {
       padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
       child: RefreshIndicator(
         key: _refreshIndicatorKey,
-        onRefresh: _refresh,
+        onRefresh: getFeedData,
         child: ListView.builder(
             itemCount: _feed.data.length,
             itemBuilder: (context, index) {
@@ -189,7 +183,7 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget _feedContent(PostData postData) {
-    if (_dataLoadingStatusStatus == DataLoadingStatus.ConnectionFailed ||
+    if (_dataLoadingStatus == DataLoadingStatus.ConnectionFailed ||
         postData == null) return Container();
 
     String url = AppConstants.API_BASE_URL + postData.coverPhoto;
@@ -213,13 +207,13 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
         child: GestureDetector(
           onTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FeedDetailScreen(postData),
-                  ),
-                ),
-              },
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FeedDetailScreen(postData),
+              ),
+            ),
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -285,9 +279,4 @@ class _FeedScreenState extends State<FeedScreen> {
     return newText;
   }
 
-  Future<void> _refresh() {
-    return this.getFeedData().then((_feedList) {
-      this.setState(() {});
-    });
-  }
 }
