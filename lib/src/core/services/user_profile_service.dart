@@ -2,8 +2,8 @@
 *  Filename    :   user_profile_service.dart
 *  Purpose     :
 *  Created     :   2019-07-11 16:37 by Detective Conan
-*  Updated     :   2019-07-11 16:37 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-07-12 15:20 by Detective conan
+*  Changes     :   Simplified query of user profile id.
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
@@ -22,7 +22,7 @@ class UserProfileService {
             .toList();
         try {
           _userProfile =
-              userProfileList.where((user) => user.id == id ?? "").elementAt(0);
+              userProfileList.firstWhere((user) => user.id == id ?? "");
         } catch (e) {
           print(e);
         }
