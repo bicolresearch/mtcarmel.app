@@ -2,19 +2,19 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-11 14:44 by Detective conan
-*  Changes     :   Get the login status from shared preferences.
+*  Updated     :   2019-07-12 11:01 by Detective conan
+*  Changes     :   Implement user profile from server.
 */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
+import 'package:mt_carmel_app/src/core/services/user_profile_service.dart';
 import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/profile.dart';
-import 'package:mt_carmel_app/src/models/user_authentication.dart';
+import 'package:mt_carmel_app/src/models/user_profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
@@ -26,6 +26,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import '../../constants/app_constants.dart';
 
 enum ProfileFilter {
@@ -69,6 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoggedIn = false;
   bool _isLoginFailed = false;
   bool _isTextEditing = false;
+  bool _isLoading = true;
+
+  UserProfile _userProfile;
   ProfileFilter _currentProfileFilter = ProfileFilter.Login;
 
   Widget _header = Container();
@@ -156,57 +160,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            (_currentProfileFilter == ProfileFilter.Login)
-                ? Spacer()
-                : Container(),
-            Container(
-                margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                child: _header),
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.0),
-                child: (_currentProfileFilter == ProfileFilter.Login)
-                    ? Container()
-                    : lineWidget()),
-            GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
-            Expanded(
-              child: Container(
-                alignment: Alignment.center,
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: (scrollNotification) {
-                    if (scrollNotification is ScrollStartNotification) {
-                      _onStartScroll(scrollNotification.metrics);
-                    } else if (scrollNotification is ScrollUpdateNotification) {
-                      _onUpdateScroll(scrollNotification.metrics);
-                    } else if (scrollNotification is ScrollEndNotification) {
-                      _onEndScroll(scrollNotification.metrics);
-                    }
-                  },
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: _totalList.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 40.0),
-                        child: _aboutItem(context, _totalList[index]),
-                      );
-                    },
+      child: _isLoading
+          ? LoadingIndicator()
+          : Scaffold(
+              body: Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  (_currentProfileFilter == ProfileFilter.Login)
+                      ? Spacer()
+                      : Container(),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
+                      child: _header),
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: (_currentProfileFilter == ProfileFilter.Login)
+                          ? Container()
+                          : lineWidget()),
+                  GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (scrollNotification) {
+                          if (scrollNotification is ScrollStartNotification) {
+                            _onStartScroll(scrollNotification.metrics);
+                          } else if (scrollNotification
+                              is ScrollUpdateNotification) {
+                            _onUpdateScroll(scrollNotification.metrics);
+                          } else if (scrollNotification
+                              is ScrollEndNotification) {
+                            _onEndScroll(scrollNotification.metrics);
+                          }
+                          return true;
+                        },
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          itemCount: _totalList.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: EdgeInsets.symmetric(horizontal: 40.0),
+                              child: _aboutItem(context, _totalList[index]),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                  GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
+                  (_currentProfileFilter == ProfileFilter.Login)
+                      ? Spacer()
+                      : Container(),
+                ],
+              )),
             ),
-            GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
-            (_currentProfileFilter == ProfileFilter.Login)
-                ? Spacer()
-                : Container(),
-          ],
-        )),
-      ),
     );
   }
 
@@ -414,78 +423,105 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _userHeader() {
+    final imageUrl = AppConstants.API_BASE_URL + _userProfile.coverPhoto ?? "";
     return Container(
-      height: 150,
+      height: 100,
+      width: double.infinity,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-            "assets/images/sample_user.png",
+          Container(
+            margin: EdgeInsets.all(5.0),
+            width: 80.0,
+            height: 80.0,
+            child: (imageUrl == "")
+                ? Icon(
+                    MountCarmelIcons.profile,
+                    size: 80,
+                  )
+                : CircleAvatar(
+                    backgroundImage: CachedNetworkImageProvider(imageUrl),
+                    backgroundColor: Colors.brown,
+                  ),
           ),
           Container(
-            //padding: EdgeInsets.only(top: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Ransom Rapirap', style: AppConstants.OPTION_STYLE2),
-                Text('October 12, 1990', style: AppConstants.OPTION_STYLE1),
-                Container(
-                  child: Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: RaisedButton(
-                            //TODO implement the onPress button
-                            onPressed: () => "",
-                            color: Colors.brown,
-                            child: Text(
-                              "My Donations",
-                              style: TextStyle(
-                                  fontFamily: 'Helvetica', color: Colors.white),
-                            ),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
+                Text(
+                  '${_userProfile.firstName} ${_userProfile.lastName}',
+                  style: AppConstants.OPTION_STYLE2,
+                  textAlign: TextAlign.left,
+                ),
+
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: RaisedButton(
+                        //TODO implement the onPress button
+                        onPressed: () => "",
+                        color: Colors.brown,
+                        child: Text(
+                          "My Donations",
+                          style: TextStyle(
+                              fontFamily: 'Helvetica', color: Colors.white),
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                      ),
+                    ),
+                    PopupMenuButton<int>(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 1,
+                          child: Text(
+                            "Logout",
+                            style: AppConstants.OPTION_STYLE2,
                           ),
                         ),
-                        PopupMenuButton<int>(
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: 1,
-                              child: Text(
-                                "Logout",
-                                style: AppConstants.OPTION_STYLE2,
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 2,
-                              child: Text(
-                                "Cancel",
-                                style: AppConstants.OPTION_STYLE2,
-                              ),
-                            ),
-                          ],
-                          initialValue: 2,
-                          onCanceled: () {
-                            print("You have canceled the menu.");
-                          },
-                          onSelected: (value) {
-                            if (value == 1) {
-                              setState(() {
-                                _currentProfileFilter = ProfileFilter.Login;
-                                locator<AuthenticationService>().logout();
-                                _updateProfileScreen();
-                              });
-                            }
-                          },
-                          icon: Icon(
-                            MountCarmelIcons.settings,
-                            color: Colors.brown,
+                        PopupMenuItem(
+                          value: 2,
+                          child: Text(
+                            "Edit profile",
+                            style: AppConstants.OPTION_STYLE2,
                           ),
-                        )
+                        ),
+                        PopupMenuItem(
+                          value: 3,
+                          child: Text(
+                            "Cancel",
+                            style: AppConstants.OPTION_STYLE2,
+                          ),
+                        ),
                       ],
-                    ),
-                  ),
-                )
+                      initialValue: 3,
+                      onCanceled: () {
+                        print("You have canceled the menu.");
+                      },
+                      onSelected: (value) {
+                        switch(value){
+                          case 1:
+                            setState(() {
+                              _currentProfileFilter = ProfileFilter.Login;
+                              locator<AuthenticationService>().logout();
+                              _updateProfileScreen();
+                            });
+                            break;
+                          case 2: //TODO implement code
+                          default:
+
+                        }
+                      },
+                      icon: Icon(
+                        MountCarmelIcons.settings,
+                        color: Colors.brown,
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           ),
@@ -638,16 +674,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future _checkLoginStatus() async {
-    _isLoggedIn =
-        await locator<AuthenticationService>().isLoggedIn().catchError((error) {
+    await locator<AuthenticationService>()
+        .isLoggedIn()
+        .then((isLoggedIn) async {
+      _isLoggedIn = isLoggedIn;
+      if (_isLoggedIn) {
+        _currentProfileFilter = ProfileFilter.User;
+        await locator<AuthenticationService>().getUserId().then((id) async {
+          await locator<UserProfileService>().getUserProfile(id).then((user) {
+            _userProfile = user;
+          });
+          _isLoading = false;
+          _updateProfileScreen();
+        });
+      } else {
+        _currentProfileFilter = ProfileFilter.Login;
+        _isLoading = false;
+        _updateProfileScreen();
+      }
+    }).catchError((error) {
       print(error);
       _isLoggedIn = false;
     });
-    if (_isLoggedIn)
-      _currentProfileFilter = ProfileFilter.User;
-    else
-      _currentProfileFilter = ProfileFilter.Login;
-    _updateProfileScreen();
   }
 
   String _encrypted(String text) {
@@ -668,7 +716,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
     locator<LoginModel>().login(email, _encrypted(password)).then((value) {
       _isLoggedIn = value;
-      print(value);
       if (_isLoggedIn)
         setState(() {
           _clearLoginForm();

@@ -18,6 +18,7 @@ class UserAuthenticationApi {
   Future<bool> validateEmailPassword(String email, String password) {
     var isValid = _isValid(email, password).then((value) {
       if (_userAuthentication != null) {
+        print(_userAuthentication.id);
         return ((_userAuthentication.username + _userAuthentication.password) ==
             (email + password));
       } else {
@@ -30,7 +31,7 @@ class UserAuthenticationApi {
   }
 
   Future<bool> _isValid(String email, String password) async {
-    var hasUser;
+    var valid;
     await http
         .get(AppConstants.API_BASE_URL +
             "/auth/auth/" +
@@ -38,17 +39,17 @@ class UserAuthenticationApi {
             email +
             "/password/" +
             password)
-        .then((value) {
+        .then((value) async {
       if (value.statusCode == 200) {
         final body = json.decode(value.body);
         _userAuthentication = UserAuthentication.fromJson(body);
-        hasUser = true;
+        valid = true;
       } else {
         print(value.statusCode);
       }
     }).timeout(Duration(seconds: 5));
-    return hasUser != null;
+    return valid != null;
   }
 
-  get userId => _userAuthentication.id;
+  get userAuthentication => _userAuthentication;
 }

@@ -41,20 +41,20 @@ class AuthenticationService {
     var success = await _api.validateEmailPassword(email, password);
 
     if (success) {
-      SharedPreferencesHelper.setUserId(_api.userId());
-      SharedPreferencesHelper.setAuthenticationTime(
+      await SharedPreferencesHelper.setUserId(_api.userAuthentication.id);
+      await SharedPreferencesHelper.setAuthenticationTime(
           DateTime.now().toIso8601String());
-      SharedPreferencesHelper.setUsername(email);
-      SharedPreferencesHelper.setPassword(password);
+      await SharedPreferencesHelper.setUsername(email);
+      await SharedPreferencesHelper.setPassword(password);
     }
     return success;
   }
 
   void logout() async {
-    SharedPreferencesHelper.setUserId("");
-    SharedPreferencesHelper.setAuthenticationTime("");
-    SharedPreferencesHelper.setUsername("");
-    SharedPreferencesHelper.setPassword("");
+    await SharedPreferencesHelper.setUserId("");
+    await SharedPreferencesHelper.setAuthenticationTime("");
+    await SharedPreferencesHelper.setUsername("");
+    await SharedPreferencesHelper.setPassword("");
   }
 
   Future<bool> isLoggedIn() async {
@@ -80,8 +80,8 @@ class AuthenticationService {
     return isTimeout;
   }
 
-  get userId {
-    SharedPreferencesHelper.getUserId();
+  Future<String> getUserId() async {
+    return await SharedPreferencesHelper.getUserId();
   }
 
   int _timeoutValue(TimeDurationEnum timeout) {

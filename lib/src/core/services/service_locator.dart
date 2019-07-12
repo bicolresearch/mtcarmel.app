@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
+import 'package:mt_carmel_app/src/core/services/user_profile_service.dart';
 
 GetIt locator = GetIt();
 
@@ -18,4 +19,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(() => UserAuthenticationApi());
   locator.registerLazySingleton(() => LoginModel());
+  locator.registerLazySingleton(() => UserProfileService());
 }

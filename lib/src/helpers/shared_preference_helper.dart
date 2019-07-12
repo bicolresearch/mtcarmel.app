@@ -31,10 +31,10 @@ class SharedPreferencesHelper {
   }
 
   // user id
-  static Future<bool> getUserId() async {
+  static Future<String> getUserId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.getBool(_USER_ID_SHARED_PREFS_KEY) ?? true;
+    return prefs.getString(_USER_ID_SHARED_PREFS_KEY) ?? "0";
   }
 
   static Future<void> setUserId(String id) async {
