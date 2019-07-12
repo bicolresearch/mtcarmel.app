@@ -53,7 +53,7 @@ class _FeedScreenState extends State<FeedScreen> {
     ConnectivityChecker.hasDataConnection().then((value) {
       if (value && value != null) {
         _dataLoadingStatus = DataLoadingStatus.LoadingData;
-        getFeedData();
+        _getFeedData();
         setState(() {});
       } else {
         _dataLoadingStatus = DataLoadingStatus.ConnectionFailed;
@@ -75,8 +75,9 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  Future<void> getFeedData() async {
-    await locator<PostService>().getFeed().then((feed) {
+  Future<void> _getFeedData() async {
+    PostService postService = PostService();
+    await postService.getFeed().then((feed) {
       if (feed == null)
         _dataLoadingStatus = DataLoadingStatus.LoadingFailed;
       else {
@@ -167,7 +168,7 @@ class _FeedScreenState extends State<FeedScreen> {
       padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
       child: RefreshIndicator(
         key: _refreshIndicatorKey,
-        onRefresh: getFeedData,
+        onRefresh: _getFeedData,
         child: ListView.builder(
             itemCount: _feed.data.length,
             itemBuilder: (context, index) {
