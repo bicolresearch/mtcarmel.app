@@ -23,8 +23,7 @@ Widget serviceTile(BuildContext context, ServiceItem serviceItem) {
           child: CachedNetworkImage(
               key: Key(serviceItem.coverPhoto.replaceAll("/", "")),
               imageUrl: AppConstants.API_BASE_URL + serviceItem.coverPhoto,
-              placeholder: (context, url) =>
-                  LoadingIndicator(),
+              placeholder: (context, url) => LoadingIndicator(),
               errorWidget: (context, url, error) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(MountCarmelIcons.services)),
@@ -37,9 +36,13 @@ Widget serviceTile(BuildContext context, ServiceItem serviceItem) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(serviceItem.name, style: Theme.of(context).textTheme.title),
+                Text(serviceItem.name,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead
+                        .copyWith(fontWeight: FontWeight.bold)),
                 Text(serviceItem.description,
-                    style: Theme.of(context).textTheme.subtitle),
+                    style: Theme.of(context).primaryTextTheme.caption),
               ],
             ),
           ),

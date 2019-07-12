@@ -26,7 +26,10 @@ Widget servicesHeader(context) {
         width: double.infinity,
         child: Text(
           AppConstants.NATIONAL_SHRINE_TEXT,
-          style: Theme.of(context).textTheme.headline,
+          style: Theme.of(context)
+              .primaryTextTheme
+              .title
+              .copyWith(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
       ),

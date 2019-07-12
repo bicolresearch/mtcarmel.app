@@ -258,7 +258,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   _noTags(postData.content),
-                  style: AppConstants.OPTION_STYLE1,
+                  style: Theme.of(context).textTheme.subtitle,
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
