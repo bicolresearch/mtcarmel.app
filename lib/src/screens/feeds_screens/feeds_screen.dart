@@ -2,15 +2,15 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-07-12 11:39 by Detective conan
-*  Changes     :   Moved the gathering of news feed to PostService class.
+*  Updated     :   2019-07-12 14:26 by Detective conan
+*  Changes     :   Added guard on setState. Setting of state is not allowed
+*                  if the state already dispose
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/post_service.dart';
-import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/helpers/data_loading_status.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
@@ -54,10 +54,10 @@ class _FeedScreenState extends State<FeedScreen> {
       if (value && value != null) {
         _dataLoadingStatus = DataLoadingStatus.LoadingData;
         _getFeedData();
-        setState(() {});
+        if (this.mounted) setState(() {});
       } else {
         _dataLoadingStatus = DataLoadingStatus.ConnectionFailed;
-        setState(() {});
+        if (this.mounted) setState(() {});
       }
     });
   }
@@ -83,12 +83,12 @@ class _FeedScreenState extends State<FeedScreen> {
       else {
         _feed = feed;
         _dataLoadingStatus = DataLoadingStatus.SuccessfulDataLoading;
-        setState(() {});
+        if (this.mounted) setState(() {});
       }
     }).catchError((error) {
       print(error);
       _dataLoadingStatus = DataLoadingStatus.LoadingFailed;
-      setState(() {});
+      if (this.mounted) setState(() {});
     });
   }
 
@@ -279,5 +279,4 @@ class _FeedScreenState extends State<FeedScreen> {
         .replaceAll("/br", "");
     return newText;
   }
-
 }

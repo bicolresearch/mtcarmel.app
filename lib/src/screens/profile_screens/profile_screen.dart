@@ -2,8 +2,9 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-12 11:01 by Detective conan
-*  Changes     :   Implement user profile from server.
+*  Updated     :   2019-07-12 14:30 by Detective conan
+*  Changes     :   Fixed the login behaviour during first login.
+*                  Changed the intended screen after successful login.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -399,10 +400,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _skippedHeader() {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _currentProfileFilter = ProfileFilter.Login;
-          _updateProfileScreen();
-        });
+        if (this.mounted)
+          setState(() {
+            _currentProfileFilter = ProfileFilter.Login;
+            _updateProfileScreen();
+          });
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 20.0),
@@ -423,7 +425,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _userHeader() {
-    final imageUrl = AppConstants.API_BASE_URL + _userProfile.coverPhoto ?? "";
+    final userPhotoSuffix = _userProfile?.coverPhoto ?? "";
+
+    var imageUrl;
+    if (userPhotoSuffix == null || userPhotoSuffix == "")
+      imageUrl = "";
+    else
+      imageUrl = AppConstants.API_BASE_URL + _userProfile.coverPhoto;
+
     return Container(
       height: 100,
       width: double.infinity,
@@ -455,7 +464,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: AppConstants.OPTION_STYLE2,
                   textAlign: TextAlign.left,
                 ),
-
                 Row(
                   children: <Widget>[
                     Padding(
@@ -478,14 +486,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         PopupMenuItem(
                           value: 1,
                           child: Text(
-                            "Logout",
+                            "Edit profile",
                             style: AppConstants.OPTION_STYLE2,
                           ),
                         ),
                         PopupMenuItem(
                           value: 2,
                           child: Text(
-                            "Edit profile",
+                            "Logout",
                             style: AppConstants.OPTION_STYLE2,
                           ),
                         ),
@@ -497,22 +505,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ],
-                      initialValue: 3,
+                      initialValue: 1,
                       onCanceled: () {
                         print("You have canceled the menu.");
                       },
                       onSelected: (value) {
-                        switch(value){
-                          case 1:
-                            setState(() {
-                              _currentProfileFilter = ProfileFilter.Login;
-                              locator<AuthenticationService>().logout();
-                              _updateProfileScreen();
-                            });
+                        switch (value) {
+                          case 2: // Logout
+                            if (this.mounted)
+                              setState(() {
+                                _currentProfileFilter = ProfileFilter.Login;
+                                locator<AuthenticationService>().logout();
+                                _updateProfileScreen();
+                              });
                             break;
                           case 2: //TODO implement code
                           default:
-
                         }
                       },
                       icon: Icon(
@@ -530,21 +538,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future _updateProfileScreen() async {
-    setState(() {
-      switch (_currentProfileFilter) {
-        case ProfileFilter.User:
-          _header = _userHeader();
-          break;
-        case ProfileFilter.Guest:
-          _header = _skippedHeader();
-          break;
-        default: //ProfileFilter.Login
-          _header = loginWidget();
-      }
-      _updateList();
-      _initializeArrows();
-    });
+  _updateProfileScreen() {
+    if (this.mounted)
+      setState(() {
+        switch (_currentProfileFilter) {
+          case ProfileFilter.User:
+            _header = _userHeader();
+            break;
+          case ProfileFilter.Guest:
+            _header = _skippedHeader();
+            break;
+          default: //ProfileFilter.Login
+            _header = loginWidget();
+        }
+        _updateList();
+        _initializeArrows();
+      });
   }
 
   Widget _aboutItem(context, String itemText) {
@@ -596,46 +605,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.gone);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-        });
+        if (this.mounted)
+          setState(() {
+            _arrowMoreDown = VisibilityHelper(
+                child: _arrowDown, visibility: VisibilityFlag.gone);
+            _arrowMoreUp = VisibilityHelper(
+                child: _arrowUp, visibility: VisibilityFlag.gone);
+          });
         return;
       }
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.gone);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.visible);
-        });
+        if (this.mounted)
+          setState(() {
+            _arrowMoreDown = VisibilityHelper(
+                child: _arrowDown, visibility: VisibilityFlag.gone);
+            _arrowMoreUp = VisibilityHelper(
+                child: _arrowUp, visibility: VisibilityFlag.visible);
+          });
         return;
       }
       if (_scrollController.offset <=
               _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-        });
+        if (this.mounted)
+          setState(() {
+            _arrowMoreDown = VisibilityHelper(
+                child: _arrowDown, visibility: VisibilityFlag.visible);
+            _arrowMoreUp = VisibilityHelper(
+                child: _arrowUp, visibility: VisibilityFlag.gone);
+          });
         return;
       }
       if (_scrollController.offset <
               _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.visible);
-        });
+        if (this.mounted)
+          setState(() {
+            _arrowMoreDown = VisibilityHelper(
+                child: _arrowDown, visibility: VisibilityFlag.visible);
+            _arrowMoreUp = VisibilityHelper(
+                child: _arrowUp, visibility: VisibilityFlag.visible);
+          });
         return;
       }
     } catch (e) {
@@ -682,6 +695,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _currentProfileFilter = ProfileFilter.User;
         await locator<AuthenticationService>().getUserId().then((id) async {
           await locator<UserProfileService>().getUserProfile(id).then((user) {
+            print(_userProfile);
             _userProfile = user;
           });
           _isLoading = false;
@@ -703,31 +717,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return crypto.sha512(text);
   }
 
-  void validate(String email, String password) {
+  validate(String email, String password) {
     if (email.isEmpty ||
         password.isEmpty ||
         !email.contains("@") ||
         email.contains(" ")) {
-      setState(() {
-        _isLoginFailed = true;
-        _updateProfileScreen();
-      });
+//      if(this.mounted) setState(() {
+      _isLoginFailed = true;
+      _updateProfileScreen();
+//      });
       return;
     }
-    locator<LoginModel>().login(email, _encrypted(password)).then((value) {
+    locator<LoginModel>()
+        .login(email, _encrypted(password))
+        .then((value) async {
+      print(value);
       _isLoggedIn = value;
-      if (_isLoggedIn)
-        setState(() {
-          _clearLoginForm();
-          _isLoginFailed = false;
-          _currentProfileFilter = ProfileFilter.User;
-          _updateProfileScreen();
+      if (_isLoggedIn) {
+        await locator<AuthenticationService>().getUserId().then((id) async {
+          await locator<UserProfileService>().getUserProfile(id).then((user) {
+            _userProfile = user;
+          });
         });
-      else
-        setState(() {
-          _isLoginFailed = true;
-          _updateProfileScreen();
-        });
+        print("success");
+        _clearLoginForm();
+        _isLoginFailed = false;
+        _currentProfileFilter = ProfileFilter.User;
+        _updateProfileScreen();
+      } else {
+        print("failed");
+        _isLoginFailed = true;
+        _updateProfileScreen();
+      }
     });
   }
 }
