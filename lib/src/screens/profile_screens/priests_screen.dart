@@ -2,10 +2,9 @@
 *	 Filename		 :	 priest_screen.dart
 *	 Purpose		 :	 Shows the Carmelites Priests
 *  Created		 :   2019-06-11 14:14:18 by Detective Conan
-*  Updated     :   2019-07-12 08:43 by Detective conan
-*  Changes     :   Adjusted the image size of the priest and the alignment.
+*  Updated     :   2019-07-12 09:08 by Detective conan
+*  Changes     :   Resized the priest name.
 */
-
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -142,9 +141,9 @@ class _PriestsScreenState extends State<PriestsScreen> {
           verticalDirection: VerticalDirection.down,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-              width: 92.0,
-              height: 92.0,
+              margin: EdgeInsets.all(5.0),
+              width: 88.0,
+              height: 88.0,
               child: CircleAvatar(
                 backgroundImage: CachedNetworkImageProvider(url),
                 backgroundColor: Colors.brown,
@@ -160,9 +159,10 @@ class _PriestsScreenState extends State<PriestsScreen> {
                     style: TextStyle(
                         color: Colors.brown,
                         fontFamily: "Helvetica",
-                        fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                        softWrap: true,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11),
+                    textAlign: TextAlign.center,
+                    softWrap: true,
                   ),
                   (priest.position != null)
                       ? Text(
