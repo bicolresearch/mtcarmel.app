@@ -27,9 +27,9 @@ class Events extends StatelessWidget {
         margin: EdgeInsets.all(30.0),
         child: Column(
           children: <Widget>[
-          servicesHeader(),
+          servicesHeader(context),
           SizedBox(height: 10.0,),
-          serviceTile(this.serviceItem),
+          serviceTile(context, this.serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
           Container(

@@ -1,9 +1,9 @@
 /*
-*	Filename		:	baptism.dart
-*	Purpose			:	
-* Created			: 2019-06-13 19:36:12 by Scarlet Witch
-*	Updated			:	2019-06-17 15:51:51 by Scarlet Witch 
-*	Changes			: add services messages/content
+*	 Filename		 :	 baptism.dart
+*	 Purpose		 :
+*  Created		 :   2019-06-13 19:36:12 by Scarlet Witch
+*  Updated     :   2019-07-12 16:48 by Detective conan
+*  Changes     :   Pass the context to the header and serviceTile
 */
 
 import 'package:flutter/material.dart';
@@ -31,10 +31,10 @@ class Baptism extends StatelessWidget {
         margin: EdgeInsets.all(30.0),
         child: Column(
           children: <Widget>[
-          servicesHeader(),
+          servicesHeader(context),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(this.serviceItem),
+          serviceTile(context, this.serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
            Column(children: <Widget>[

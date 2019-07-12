@@ -1,9 +1,9 @@
 /*
-*	Filename		:	services_tiles.dart
-*	Purpose			:	Displays the list of the services of the church
-* Created			: 2019-06-11 15:52:50 by Detective Conan
-*	Updated			: 2019-07-03 10:08:21 by Detective conan
-*	Changes			: Implemented caching of images.
+*	 Filename		 :	 services_tiles.dart
+*	 Purpose		 :	 Displays the list of the services of the church
+*  Created		 :   2019-06-11 15:52:50 by Detective Conan
+*  Updated     :   2019-07-12 16:46 by Detective conan
+*  Changes     :   The text style inherits the property to the provider.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,7 +13,7 @@ import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
-Widget serviceTile(ServiceItem serviceItem) {
+Widget serviceTile(BuildContext context, ServiceItem serviceItem) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Row(
@@ -37,9 +37,9 @@ Widget serviceTile(ServiceItem serviceItem) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(serviceItem.name, style: AppConstants.OPTION_STYLE2),
+                Text(serviceItem.name, style: Theme.of(context).textTheme.title),
                 Text(serviceItem.description,
-                    style: AppConstants.OPTION_STYLE1),
+                    style: Theme.of(context).textTheme.subtitle),
               ],
             ),
           ),

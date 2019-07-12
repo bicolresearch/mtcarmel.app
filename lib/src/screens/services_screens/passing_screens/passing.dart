@@ -1,9 +1,9 @@
 /*
-*	Filename		:	passing.dart
-*	Purpose			:	
-* Created			: 2019-06-13 18:22:25 by Scarlet Witch
-*	Updated			:	2019-06-17 16:04:09 by Scarlet Witch 
-*	Changes			: add services messages/content
+*	 Filename		 :	 passing.dart
+*	 Purpose		 :
+*  Created		 :   2019-06-13 18:22:25 by Scarlet Witch
+*  Updated     :   2019-07-12 16:52 by Detective conan
+*  Changes     :   Pass the context to the header and serviceTile
 */
 
 import 'package:flutter/material.dart';
@@ -32,10 +32,10 @@ class Passing extends StatelessWidget {
         margin: EdgeInsets.all(30.0),
         child: Column(
           children: <Widget>[
-          servicesHeader(),
+          servicesHeader(context),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(this.serviceItem),
+          serviceTile(context, this.serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
            Container(

@@ -1,9 +1,9 @@
 /*
-*	Filename		:	join_us.dart
-*	Purpose			:	
-* Created			: 2019-06-11 15:52:50 by Detective Conan
-*	Updated			:	2019-06-17 15:48:25 by Scarlet Witch 
-*	Changes			: add services messages/content
+*	 Filename		 :	 join_us.dart
+*	 Purpose		 :
+*  Created		 :   2019-06-11 15:52:50 by Detective Conan
+*  Updated     :   2019-07-12 16:50 by Detective conan
+*  Changes     :   Pass the context to the header and serviceTile
 */
 
 import 'package:flutter/material.dart';
@@ -27,9 +27,9 @@ class JoinUs extends StatelessWidget {
         margin: EdgeInsets.all(30.0),
         child: Column(
           children: <Widget>[
-          servicesHeader(),
+          servicesHeader(context),
           SizedBox(height: 10.0,),
-          serviceTile(this.serviceItem),
+          serviceTile(context, this.serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
           Container(

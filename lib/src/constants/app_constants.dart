@@ -2,13 +2,15 @@
 *	 Filename		 :	 app_constants.dart
 *	 Purpose		 :	 Constants used within the app.
 *  Created		 :   2019-06-17 19:23:44
-*  Updated     :   2019-07-11 11:43 by Detective conan
-*  Changes     :   Moved the constants for shared preferences use.
+*  Updated     :   2019-07-12 16:45 by Detective conan
+*  Changes     :   Added constants for font family and app title
 */
 
 import 'package:flutter/material.dart';
 
 class AppConstants {
+  static const String APP_TITLE = "Mount Carmel";
+  static const String FONT_FAMILY = 'Helvetica';
   static const String MT_CARMEL_LOGO_PATH = 'assets/images/mt_carmel_logo.png';
 
   // TODO: to be replaced by actual url

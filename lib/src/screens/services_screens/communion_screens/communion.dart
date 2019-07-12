@@ -30,9 +30,9 @@ class Communion extends StatelessWidget {
         margin: EdgeInsets.all(30.0),
         child: Column(
           children: <Widget>[
-          servicesHeader(),
+          servicesHeader(context),
           SizedBox(height: 10.0,),
-          serviceTile(serviceItem),
+          serviceTile(context, serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
            Column(children: <Widget>[

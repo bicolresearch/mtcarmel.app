@@ -2,8 +2,8 @@
 *	 Filename		 :	services_screen.dart
 *	 Purpose		 :	Displays the list of the services of the church
 *  Created		 :  2019-06-11 15:52:50 by Detective Conan
-*  Updated     :  2019-07-05 12:19 by Detective conan
-*  Changes     :  Fixed initialization of button arrow of ServicesScreen.
+*  Updated     :   2019-07-12 16:50 by Detective conan
+*  Changes     :   Pass the context to the header and serviceTile
 */
 
 import 'package:flutter/material.dart';
@@ -128,7 +128,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 children: <Widget>[
                   //
                   GestureDetector(
-                      onTap: _scrollListener, child: servicesHeader()),
+                      onTap: _scrollListener, child: servicesHeader(context)),
 
                   GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
                   Expanded(
@@ -148,6 +148,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                               is ScrollEndNotification) {
                             _onEndScroll(scrollNotification.metrics);
                           }
+                          return;
                         },
                         child: ListView.builder(
                             controller: _scrollController,
@@ -175,7 +176,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               builder: (context) => _navigateToService(serviceItem),
             ));
       },
-      child: serviceTile(serviceItem),
+      child: serviceTile(context, serviceItem),
     );
   }
 

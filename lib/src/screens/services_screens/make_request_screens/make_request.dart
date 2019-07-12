@@ -1,9 +1,9 @@
 /*
-*	Filename		:	make_request.dart
-*	Purpose			:	
-* Created			: 2019-06-13 16:31:23 by Scarlet Witch
-*	Updated			:	2019-06-17 15:47:09 by Scarlet Witch 
-*	Changes			: add services messages/content
+*	 Filename		 :	 make_request.dart
+*	 Purpose		 :
+*  Created		 :   2019-06-13 16:31:23 by Scarlet Witch
+*  Updated     :   2019-07-12 16:51 by Detective conan
+*  Changes     :   Pass the context to the header and serviceTile
 */
 
 import 'package:flutter/material.dart';
@@ -32,10 +32,10 @@ class MakeRequest1 extends StatelessWidget {
         margin: EdgeInsets.all(30.0),
         child: Column(
           children: <Widget>[
-          servicesHeader(),
+          servicesHeader(context),
           SizedBox(height: 10.0,),
           ////////
-          serviceTile(this.serviceItem),
+          serviceTile(context, this.serviceItem),
           SizedBox(height: 10.0,),
           lineWidget(),
           Expanded(
