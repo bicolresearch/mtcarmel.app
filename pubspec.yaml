@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/images/mt_carmel_logo.png
     - assets/images/sample_user.png
+    - assets/images/fr_alan_rieger.png
   
   fonts:
   - family: Helvetica

@@ -1,9 +1,9 @@
 /*
-*	Filename		:	priest_screen.dart
-*	Purpose			:	Shows the Carmelites Priests
-* Created			: 2019-06-11 14:14:18 by Detective Conan
-*	Updated			: 2019-07-03 19:13:53 by Scarlet Witch
-*	Changes			: Center the name and position
+*	 Filename		 :	 priest_screen.dart
+*	 Purpose		 :	 Shows the Carmelites Priests
+*  Created		 :   2019-06-11 14:14:18 by Detective Conan
+*  Updated     :   2019-07-12 08:43 by Detective conan
+*  Changes     :   Adjusted the image size of the priest and the alignment.
 */
 
 
@@ -136,14 +136,15 @@ class _PriestsScreenState extends State<PriestsScreen> {
     return Card(
         elevation: 1.5,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           verticalDirection: VerticalDirection.down,
           children: <Widget>[
             Container(
               margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-              width: 100.0,
-              height: 100.0,
+              width: 92.0,
+              height: 92.0,
               child: CircleAvatar(
                 backgroundImage: CachedNetworkImageProvider(url),
                 backgroundColor: Colors.brown,
