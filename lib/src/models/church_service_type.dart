@@ -39,7 +39,7 @@ class ChurchServiceSubtype {
 @JsonSerializable()
 class ChurchFormField {
   ChurchFormField(this.attribute, this.textFieldType, this.value, this.hint,
-      this.labelText, this.validators);
+      this.labelText, this.validators, this.selections);
 
   final String attribute;
   @JsonKey(name: "label_text")
@@ -49,6 +49,7 @@ class ChurchFormField {
   @JsonKey(name: "text_field_type")
   final String textFieldType;
   final ChurchFormValidators validators;
+  final List<String> selections;
 
   factory ChurchFormField.fromJson(Map<String, dynamic> json) =>
       _$ChurchFormFieldFromJson(json);

@@ -23,14 +23,15 @@ class ServiceForm extends StatelessWidget {
         "",
         "enter any text",
         "Enter message",
-        ChurchFormValidators("false", "true", "", "", "must not empty"));
-    final ChurchFormField _churchFormFieldsPlain2 = ChurchFormField(
-        "plain_text2",
-        "plain_text",
+        ChurchFormValidators("false", "true", "", "", "must not empty"), []);
+    final ChurchFormField _churchFormFieldsGender = ChurchFormField(
+        "gender",
+        "gender_selection",
         "",
         "enter any text2",
         "Enter message2",
-        ChurchFormValidators("false", "true", "", "", "must not empty"));
+        ChurchFormValidators("false", "true", "", "", "must not empty"),
+        ["male", "female"]);
     return Material(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -150,7 +151,7 @@ class ServiceForm extends StatelessWidget {
 //                height: 100,
 //              ),
                   ServiceFormField(_churchFormFieldsPlain),
-                  ServiceFormField(_churchFormFieldsPlain2),
+                  ServiceFormField(_churchFormFieldsGender),
                 ],
               ),
             ),
