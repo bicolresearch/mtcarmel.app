@@ -24,14 +24,16 @@ ChurchServiceSubtype _$ChurchServiceSubtypeFromJson(Map<String, dynamic> json) {
           ?.map((e) => e == null
               ? null
               : ChurchFormField.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList(),
+      json['thankYouText'] as String);
 }
 
 Map<String, dynamic> _$ChurchServiceSubtypeToJson(
         ChurchServiceSubtype instance) =>
     <String, dynamic>{
       'infoText': instance.infoText,
-      'formFields': instance.formFields
+      'formFields': instance.formFields,
+      'thankYouText': instance.thankYouText
     };
 
 ChurchFormField _$ChurchFormFieldFromJson(Map<String, dynamic> json) {

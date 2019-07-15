@@ -2,8 +2,8 @@
 *  Filename    :   church_service_type.dart
 *  Purpose     :	 Model for church service
 *  Created     :   2019-07-15 11:08 by Detective Conan
-*  Updated     :   2019-07-15 11:08 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-07-15 11:40 by Detective conan 
+*  Changes     :   Added thank you text.
 */
 
 import 'package:json_annotation/json_annotation.dart';
@@ -24,10 +24,11 @@ class ChurchServiceType {
 
 @JsonSerializable()
 class ChurchServiceSubtype {
-  ChurchServiceSubtype(this.infoText, this.formFields);
+  ChurchServiceSubtype(this.infoText, this.formFields, this.thankYouText);
 
   final String infoText;
   final List<ChurchFormField> formFields;
+  final String thankYouText;
 
   factory ChurchServiceSubtype.fromJson(Map<String, dynamic> json) =>
       _$ChurchServiceSubtypeFromJson(json);
