@@ -29,13 +29,22 @@ class GenderFormField extends StatelessWidget implements ServiceFormAbstract {
       return Container();
     }
     return FormBuilderDropdown(
+      style: Theme.of(context).primaryTextTheme.caption,
       attribute: _churchFormField.attribute,
       decoration: InputDecoration(labelText: _churchFormField.labelText),
-      hint: Text(_churchFormField.hint),
+      hint: Text(
+        _churchFormField.hint,
+        textAlign: TextAlign.center,
+      ),
       validators: [FormBuilderValidators.required()],
       items: ['Male', 'Female']
-          .map((gender) =>
-              DropdownMenuItem(value: gender, child: Text("$gender")))
+          .map((gender) => DropdownMenuItem(
+              value: gender,
+              child: Text(
+                "$gender",
+                style: Theme.of(context).primaryTextTheme.caption,
+                textAlign: TextAlign.center,
+              )))
           .toList(),
     );
   }

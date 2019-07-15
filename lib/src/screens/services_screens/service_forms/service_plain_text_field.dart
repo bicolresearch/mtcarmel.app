@@ -28,6 +28,7 @@ class ServicePlainTextField extends StatelessWidget
       attribute: _churchFormField.attribute,
       decoration: InputDecoration(labelText: _churchFormField.labelText),
       validators: _validators(),
+      style: Theme.of(context).primaryTextTheme.caption,
     );
   }
 
@@ -43,14 +44,16 @@ class ServicePlainTextField extends StatelessWidget
 
     if (_churchFormField.validators.isNumeric.isNotEmpty)
       validators.add(FormBuilderValidators.numeric());
-    if (_churchFormField.validators.minValue.isNotEmpty)
+    if (_churchFormField.validators.minValue != null &&
+        _churchFormField.validators.minValue.isNotEmpty)
       try {
         validators.add(FormBuilderValidators.min(
             int.tryParse(_churchFormField.validators.minValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (_churchFormField.validators.maxValue.isNotEmpty)
+    if (_churchFormField.validators.maxValue != null &&
+        _churchFormField.validators.maxValue.isNotEmpty)
       try {
         validators.add(FormBuilderValidators.max(
             int.tryParse(_churchFormField.validators.maxValue)));
@@ -58,8 +61,8 @@ class ServicePlainTextField extends StatelessWidget
         print("not an integer");
       }
     if (_churchFormField.validators.errorText.isNotEmpty)
-      validators.add(FormBuilderValidators.required(errorText:
-          _churchFormField.validators.errorText));
+      validators.add(FormBuilderValidators.required(
+          errorText: _churchFormField.validators.errorText));
 
     return validators;
   }

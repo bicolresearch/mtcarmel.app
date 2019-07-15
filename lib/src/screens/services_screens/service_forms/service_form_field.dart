@@ -20,6 +20,8 @@ class ServiceFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(_churchFormField == null)
+      return Container();
     return _formField();
   }
 
