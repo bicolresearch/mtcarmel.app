@@ -13,10 +13,17 @@ import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/screens/bottom_tab_navigator.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form.dart';
+import 'package:mt_carmel_app/src/utils/development_production_enum.dart';
 import 'src/screens/splash.dart';
 import 'src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:intl/date_symbol_data_local.dart';
+
+final DevelopmentProductionEnum developmentProductionEnum =
+//    DevelopmentProductionEnum.PartialTest;
+      DevelopmentProductionEnum.Development;
+
 
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
@@ -123,6 +130,21 @@ class _PageState extends State<Page> {
 
   @override
   Widget build(BuildContext context) {
+    switch (developmentProductionEnum) {
+      case DevelopmentProductionEnum.Development:
+      // Fallthrough
+      case DevelopmentProductionEnum.Production:
+        return SplashScreen();
+        break;
+      case DevelopmentProductionEnum.Testing:
+        // TODO: Handle this case.
+        break;
+      case DevelopmentProductionEnum.PartialTest:
+        print("started partial test");
+        // add widget to be test partially
+        return ServiceForm();
+        break;
+    }
     return SplashScreen();
   }
 
@@ -131,16 +153,17 @@ class _PageState extends State<Page> {
     super.initState();
     getFirstUsageFlag();
 
-    Future.delayed(
-      Duration(seconds: 3),
-      () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => showScreen(),
-            ));
-      },
-    );
+    if (developmentProductionEnum != DevelopmentProductionEnum.PartialTest)
+      Future.delayed(
+        Duration(seconds: 3),
+        () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => showScreen(),
+              ));
+        },
+      );
   }
 
   getFirstUsageFlag() {

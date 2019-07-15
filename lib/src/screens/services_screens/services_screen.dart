@@ -90,6 +90,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     _scrollListener();
   }
 
+  //TODO move to dedicated business logic class.
   Future<void> getJsonData() async {
     _isJsonFailed = false;
     _isLoading = true;
@@ -176,6 +177,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               builder: (context) => _navigateToService(serviceItem),
             ));
       },
+      // TODO tobe refactor for dynamic forms and tabs
       child: serviceTile(context, serviceItem),
     );
   }
