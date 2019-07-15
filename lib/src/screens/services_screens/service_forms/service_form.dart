@@ -18,20 +18,24 @@ class ServiceForm extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO temporary replace with actual data
     final ChurchFormField _churchFormFieldsPlain = ChurchFormField(
-        "plain_text",
-        "plain_text",
-        "",
-        "enter any text",
-        "Enter message",
-        ChurchFormValidators("false", "true", "", "", "must not empty"), []);
+        attribute: "plain_text",
+        textFieldType: "plain_text",
+        hint: "enter any text",
+        labelText: "Enter message",
+        validators: ChurchFormValidators(
+            isNumeric: "false",
+            isRequired: "true",
+            errorText: "must not empty"));
     final ChurchFormField _churchFormFieldsGender = ChurchFormField(
-        "gender",
-        "gender_selection",
-        "",
-        "enter any text2",
-        "Enter message2",
-        ChurchFormValidators("false", "true", "", "", "must not empty"),
-        ["male", "female"]);
+        attribute: "gender",
+        textFieldType: "gender_selection",
+        hint: "enter any text2",
+        labelText: "Enter message2",
+        validators: ChurchFormValidators(
+            isNumeric: "false",
+            isRequired: "true",
+            errorText: "must not empty"),
+        selections: ["male", "female"]);
     return Material(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),

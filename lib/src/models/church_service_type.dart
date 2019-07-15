@@ -1,9 +1,9 @@
 /*
 *  Filename    :   church_service_type.dart
-*  Purpose     :	 Model for church service
+*  Purpose     :	  Model for church service
 *  Created     :   2019-07-15 11:08 by Detective Conan
-*  Updated     :   2019-07-15 16:00 by Detective conan
-*  Changes     :   Added validators
+*	 Updated			:   15/07/2019 10:09 PM PM by Detective Conan
+*	 Changes			:   Changed the parameters in the constructor optional.
 */
 
 import 'package:json_annotation/json_annotation.dart';
@@ -14,7 +14,7 @@ part 'church_service_type.g.dart';
 class ChurchServiceType {
   final List<ChurchServiceSubtype> churchServiceSubtypes;
 
-  ChurchServiceType(this.churchServiceSubtypes);
+  ChurchServiceType({this.churchServiceSubtypes});
 
   factory ChurchServiceType.fromJson(Map<String, dynamic> json) =>
       _$ChurchServiceTypeFromJson(json);
@@ -24,7 +24,7 @@ class ChurchServiceType {
 
 @JsonSerializable()
 class ChurchServiceSubtype {
-  ChurchServiceSubtype(this.infoText, this.formFields, this.thankYouText);
+  ChurchServiceSubtype({this.infoText, this.formFields, this.thankYouText});
 
   final String infoText;
   final List<ChurchFormField> formFields;
@@ -38,8 +38,14 @@ class ChurchServiceSubtype {
 
 @JsonSerializable()
 class ChurchFormField {
-  ChurchFormField(this.attribute, this.textFieldType, this.value, this.hint,
-      this.labelText, this.validators, this.selections);
+  ChurchFormField(
+      {this.attribute,
+      this.textFieldType,
+      this.value,
+      this.hint,
+      this.labelText,
+      this.validators,
+      this.selections});
 
   final String attribute;
   @JsonKey(name: "label_text")
@@ -59,8 +65,12 @@ class ChurchFormField {
 
 @JsonSerializable()
 class ChurchFormValidators {
-  ChurchFormValidators(this.isNumeric, this.isRequired, this.maxValue,
-      this.minValue, this.errorText);
+  ChurchFormValidators(
+      {this.isNumeric,
+      this.isRequired,
+      this.maxValue,
+      this.minValue,
+      this.errorText});
 
   @JsonKey(name: "is_required")
   final String isRequired;

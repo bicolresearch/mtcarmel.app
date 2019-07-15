@@ -7,11 +7,12 @@ part of 'church_service_type.dart';
 // **************************************************************************
 
 ChurchServiceType _$ChurchServiceTypeFromJson(Map<String, dynamic> json) {
-  return ChurchServiceType((json['churchServiceSubtypes'] as List)
-      ?.map((e) => e == null
-          ? null
-          : ChurchServiceSubtype.fromJson(e as Map<String, dynamic>))
-      ?.toList());
+  return ChurchServiceType(
+      churchServiceSubtypes: (json['churchServiceSubtypes'] as List)
+          ?.map((e) => e == null
+              ? null
+              : ChurchServiceSubtype.fromJson(e as Map<String, dynamic>))
+          ?.toList());
 }
 
 Map<String, dynamic> _$ChurchServiceTypeToJson(ChurchServiceType instance) =>
@@ -19,13 +20,13 @@ Map<String, dynamic> _$ChurchServiceTypeToJson(ChurchServiceType instance) =>
 
 ChurchServiceSubtype _$ChurchServiceSubtypeFromJson(Map<String, dynamic> json) {
   return ChurchServiceSubtype(
-      json['infoText'] as String,
-      (json['formFields'] as List)
+      infoText: json['infoText'] as String,
+      formFields: (json['formFields'] as List)
           ?.map((e) => e == null
               ? null
               : ChurchFormField.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      json['thankYouText'] as String);
+      thankYouText: json['thankYouText'] as String);
 }
 
 Map<String, dynamic> _$ChurchServiceSubtypeToJson(
@@ -38,16 +39,17 @@ Map<String, dynamic> _$ChurchServiceSubtypeToJson(
 
 ChurchFormField _$ChurchFormFieldFromJson(Map<String, dynamic> json) {
   return ChurchFormField(
-      json['attribute'] as String,
-      json['text_field_type'] as String,
-      json['value'] as String,
-      json['hint'] as String,
-      json['label_text'] as String,
-      json['validators'] == null
+      attribute: json['attribute'] as String,
+      textFieldType: json['text_field_type'] as String,
+      value: json['value'] as String,
+      hint: json['hint'] as String,
+      labelText: json['label_text'] as String,
+      validators: json['validators'] == null
           ? null
           : ChurchFormValidators.fromJson(
               json['validators'] as Map<String, dynamic>),
-      (json['selections'] as List)?.map((e) => e as String)?.toList());
+      selections:
+          (json['selections'] as List)?.map((e) => e as String)?.toList());
 }
 
 Map<String, dynamic> _$ChurchFormFieldToJson(ChurchFormField instance) =>
@@ -63,11 +65,11 @@ Map<String, dynamic> _$ChurchFormFieldToJson(ChurchFormField instance) =>
 
 ChurchFormValidators _$ChurchFormValidatorsFromJson(Map<String, dynamic> json) {
   return ChurchFormValidators(
-      json['is_numeric'] as String,
-      json['is_required'] as String,
-      json['max_value'] as String,
-      json['min_value'] as String,
-      json['error_text'] as String);
+      isNumeric: json['is_numeric'] as String,
+      isRequired: json['is_required'] as String,
+      maxValue: json['max_value'] as String,
+      minValue: json['min_value'] as String,
+      errorText: json['error_text'] as String);
 }
 
 Map<String, dynamic> _$ChurchFormValidatorsToJson(
