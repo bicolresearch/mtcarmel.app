@@ -24,7 +24,9 @@ class PrayerRequestInfo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: Text("Prayer Request", 
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
             textAlign: TextAlign.center,
             ),
           ),
@@ -41,7 +43,9 @@ class PrayerRequestInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                 Text("Prayer Request is free of charge.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,),
             ],
             ),

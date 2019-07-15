@@ -2,12 +2,11 @@
 *	 Filename		 :	 baptism.dart
 *	 Purpose		 :
 *  Created		 :   2019-06-13 19:36:12 by Scarlet Witch
-*  Updated     :   2019-07-12 16:48 by Detective conan
-*  Changes     :   Pass the context to the header and serviceTile
+*  Updated     :   2019-07-15 09:42 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/individual_info.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/community_info.dart';
@@ -50,7 +49,7 @@ class Baptism extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-              child: serviceSpecific("Individual Baptism")),
+              child: serviceSpecific(context, "Individual Baptism")),
             GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -63,7 +62,7 @@ class Baptism extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-              child: serviceSpecific("Community Baptism")),
+              child: serviceSpecific(context, "Community Baptism")),
             GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -76,7 +75,7 @@ class Baptism extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-              child: serviceSpecific("Adult Baptism")),
+              child: serviceSpecific(context, "Adult Baptism")),
             ],
             ),
             Spacer(),

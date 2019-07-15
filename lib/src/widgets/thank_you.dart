@@ -30,7 +30,9 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
             SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-              child: Text("${this.message}", style: AppConstants.OPTION_STYLE2, textAlign: TextAlign.justify,),
+              child: Text("${this.message}", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead, textAlign: TextAlign.justify,),
             ),
             backButton(context: context,
             isNavigateFurtherToTheRoot: true,

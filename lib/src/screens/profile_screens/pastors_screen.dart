@@ -1,9 +1,9 @@
 /*
-*	Filename		:	pastor_screen.dart
-*	Purpose			:	Displays the list of pastors
-* Created			: 2019-06-11 15:56:33 by Detective Conan
-*	Updated			: 2019-07-01 11:45:23 by Detective Conan
-*	Changes			: Replaced the import packagename model to models
+*	 Filename		 :	 pastor_screen.dart
+*	 Purpose		 :	 Displays the list of pastors
+*  Created	 	 :   2019-06-11 15:56:33 by Detective Conan
+*  Updated     :   2019-07-15 09:47 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
@@ -67,7 +67,7 @@ class _PastorsScreenState extends State<PastorsScreen> {
               child: (_isLoading)
                   ? Center(child: LoadingIndicator())
                   : _isJsonFailed
-                  ? failedMessage()
+                  ? failedMessage(context)
                   : Container(
                 child: Column(
                   children: <Widget>[
@@ -96,7 +96,9 @@ class _PastorsScreenState extends State<PastorsScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Pastors",
-                        style: AppConstants.OPTION_STYLE3,
+                        style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -135,12 +137,16 @@ class _PastorsScreenState extends State<PastorsScreen> {
         ListTile(
           title: Text(
             '${pastor.name}',
-            style: AppConstants.OPTION_STYLE2,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subhead,
             textAlign: TextAlign.center,
           ),
           subtitle: Text(
             '${pastor.position}',
-            style: AppConstants.OPTION_STYLE1,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .caption,
             textAlign: TextAlign.center,
           ),
         ),

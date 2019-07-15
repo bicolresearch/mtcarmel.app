@@ -1,13 +1,12 @@
 /*
-*	Filename		:	bible_screen.dart
-*	Purpose			:	displays the list of bible books
-* Created			: 2019-06-18 10:02:34 by Detective Conan
-*	Updated			: 2019-06-28 23:43:34 by Detective Conan
-*	Changes			: Adjusted the holy bible screen.
+*	 Filename		 :	 bible_screen.dart
+*	 Purpose		 :	 displays the list of bible books
+*  Created		 :   2019-06-18 10:02:34 by Detective Conan
+*  Updated     :   2019-07-15 09:45 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_book.dart';
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_books.dart';
@@ -50,7 +49,9 @@ class _BibleScreenState extends State<BibleScreen> {
                   padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 0.0),
                   child: Text(
                     "Holy Bible",
-                    style: AppConstants.OPTION_STYLE3,
+                    style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -103,7 +104,9 @@ class _BibleScreenState extends State<BibleScreen> {
           (testament == BookPart.OldTestament)
               ? "Old Testaments"
               : "New Testament",
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         Padding(
@@ -128,7 +131,9 @@ class _BibleScreenState extends State<BibleScreen> {
                   },
                   child: Text(
                     bibleBooks[index].bookName,
-                    style: AppConstants.OPTION_STYLE2,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead,
                     textAlign: TextAlign.center,
                   ),
                 ),

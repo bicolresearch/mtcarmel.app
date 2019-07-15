@@ -20,7 +20,9 @@ class ConfraternityInfo extends StatelessWidget {
                 print("Tapped item");
               },
               child: Text("Confraternity of Our Lady of Mount Carmel", 
-              style: AppConstants.OPTION_STYLE3,
+              style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
               textAlign: TextAlign.center,
               ),
             ),
@@ -36,20 +38,28 @@ class ConfraternityInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
               Text("Fees:", 
-              style: AppConstants.OPTION_STYLE2,
+              style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
               textAlign: TextAlign.left,), 
               SizedBox(height: 10.0),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Application Fee, Scapular, Confraternity manual and Certificate of Confraternity", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text("200 php", style: AppConstants.OPTION_STYLE2,),
+                child: Text("200 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
               ),
-              Text("You may settle your bill using your debit card, credit card or cash.", style: AppConstants.OPTION_STYLE2,),
+              Text("You may settle your bill using your debit card, credit card or cash.", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
             ],
             ),
             ),

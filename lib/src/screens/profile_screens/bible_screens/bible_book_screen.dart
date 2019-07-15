@@ -1,3 +1,12 @@
+/*
+*  Filename    :   bible_book_screen.dart
+*  Purpose     :
+*  Created     :   2019-07-15 09:45 by Detective Conan
+*  Updated     :   2019-07-15 09:45 by Detective Conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
+*  */
+
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_book.dart';
@@ -77,12 +86,16 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
                 child: Text("King James Version",
-                    style: AppConstants.OPTION_STYLE2),
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(this.book.bookName, style: AppConstants.OPTION_STYLE3),
+                  Text(this.book.bookName, style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold)),
                   DropdownButton<String>(
                     value: _chapterSelect,
                     onChanged: (String newValue) {
@@ -97,7 +110,9 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
                         value: value,
                         child: Text(
                           value,
-                          style: AppConstants.OPTION_STYLE2,
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .subhead,
                         ),
                       );
                     }).toList(),
@@ -134,7 +149,9 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
         itemCount: (_reference==null)?0:_reference.verses.length,
         itemBuilder: (context, index) {
           return Text("\t${index+1} ${_reference.verses[index].text}",
-                      style: AppConstants.OPTION_STYLE2);
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .subhead);
         });
   }
 

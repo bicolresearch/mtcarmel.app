@@ -24,7 +24,9 @@ class ConfirmationInfo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: Text("Confirmation", 
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
             textAlign: TextAlign.center,
             ),
           ),
@@ -41,38 +43,56 @@ class ConfirmationInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                 Text("Applicant may only have 1 or 2 sponsors during confirmation.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Text("Fees:", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Application Fee", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("500 php", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("500 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 Text("Upon submission, you may contact Catechetical Ministry office to schedule your catechesis.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Text("Call 727-94-32 local 411", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 Text("Tuesday to Saturdays", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 Text("9am-5pm", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
-                Text("You may settle your bill using your debit card, credit card or cash.", style: AppConstants.OPTION_STYLE2,),
+                Text("You may settle your bill using your debit card, credit card or cash.", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
             ],
             ),
             ),

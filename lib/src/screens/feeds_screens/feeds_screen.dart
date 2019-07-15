@@ -2,9 +2,8 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-07-12 14:26 by Detective conan
-*  Changes     :   Added guard on setState. Setting of state is not allowed
-*                  if the state already dispose
+*  Updated     :   2019-07-15 09:40 by Detective conan
+*  Changes     :   Replaced the ststyl constants with Inheritted provider
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -258,7 +257,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   _noTags(postData.content),
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).primaryTextTheme.subtitle,
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,

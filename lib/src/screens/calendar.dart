@@ -157,7 +157,9 @@ class _CalendarPageState extends State<CalendarPage>
                   onTap: () => Navigator.pop(context),
                   child: Container(
                       padding: EdgeInsets.only(bottom: 20.0),
-                      child: Text('Back', style: AppConstants.OPTION_STYLE3))),
+                      child: Text('Back', style: Theme.of(context)
+                      .primaryTextTheme
+                      .title))),
             ],
           ),
         ),

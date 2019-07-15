@@ -25,7 +25,9 @@ class LiturgicalServiceForm extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
           child: Text("Liturgical Service", 
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           textAlign: TextAlign.center,
           ),
         ),
@@ -40,7 +42,9 @@ class LiturgicalServiceForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Date", style: AppConstants.OPTION_STYLE2),
+                    Text("Date", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -62,7 +66,9 @@ class LiturgicalServiceForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Time", style: AppConstants.OPTION_STYLE2),
+                Text("Time", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -84,7 +90,9 @@ class LiturgicalServiceForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Venue Address", style: AppConstants.OPTION_STYLE2),
+                Text("Venue Address", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -106,7 +114,9 @@ class LiturgicalServiceForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Occasion", style: AppConstants.OPTION_STYLE2),
+                Text("Occasion", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -127,7 +137,9 @@ class LiturgicalServiceForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Person", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Person", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -149,7 +161,9 @@ class LiturgicalServiceForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(

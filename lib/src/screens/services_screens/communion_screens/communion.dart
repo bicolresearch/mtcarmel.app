@@ -1,13 +1,12 @@
 /*
-*	Filename		:	communion.dart
-*	Purpose			:	
-* Created			: 2019-06-13 16:34:11 by Scarlet Witch
-*	Updated			:	2019-06-17 15:59:42 by Scarlet Witch 
-*	Changes			: add services messages/content
+*	 Filename		 :   communion.dart
+*	 Purpose		 :
+*  Created		 :   2019-06-13 16:34:11 by Scarlet Witch
+*  Updated     :   2019-07-15 09:53 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/first_communion_info.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/communion_of_the_sick_info.dart';
@@ -48,7 +47,7 @@ class Communion extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-              child: serviceSpecific("First Communion")),
+              child: serviceSpecific(context, "First Communion")),
             GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -61,7 +60,7 @@ class Communion extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-              child: serviceSpecific("Communion of the Sick")),            
+              child: serviceSpecific(context, "Communion of the Sick")),
             ],
             ),
             Spacer(),

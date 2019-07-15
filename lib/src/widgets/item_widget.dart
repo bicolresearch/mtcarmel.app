@@ -19,14 +19,18 @@ Widget itemWidget({@required BuildContext context,
               children: <Widget>[
                 Expanded(
                   child: Text("$label",
-                        style: AppConstants.OPTION_STYLE3,
+                        style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
                         textAlign: TextAlign.start,
                       ),
                 ),
                 SizedBox(width: 10.0,),
                 Expanded(
                   child: Text("$value",
-                        style: AppConstants.OPTION_STYLE2,
+                        style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                         textAlign: TextAlign.left,
                       ),
                 ),
@@ -41,12 +45,16 @@ Widget itemWidget({@required BuildContext context,
       return Column(
         children: <Widget>[
           Text("$label",
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.center,
               ),
           SizedBox(width: 10.0,),
           Text("$value",
-                style: AppConstants.OPTION_STYLE1,
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .caption,
                 textAlign: TextAlign.center,
               ),
           lineWidget(),

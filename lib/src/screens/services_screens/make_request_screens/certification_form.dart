@@ -24,7 +24,9 @@ class CertificationForm extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
           child: Text("Certification", 
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           textAlign: TextAlign.center,
           ),
         ),
@@ -39,7 +41,9 @@ class CertificationForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Name", style: AppConstants.OPTION_STYLE2),
+                    Text("Name", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -61,7 +65,9 @@ class CertificationForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Certificate", style: AppConstants.OPTION_STYLE2),
+                Text("Certificate", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -82,7 +88,9 @@ class CertificationForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Purpose", style: AppConstants.OPTION_STYLE2),
+                Text("Purpose", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -103,7 +111,9 @@ class CertificationForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Person", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Person", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -125,7 +135,9 @@ class CertificationForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(

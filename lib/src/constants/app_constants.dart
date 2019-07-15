@@ -2,8 +2,8 @@
 *	 Filename		 :	 app_constants.dart
 *	 Purpose		 :	 Constants used within the app.
 *  Created		 :   2019-06-17 19:23:44
-*  Updated     :   2019-07-12 16:45 by Detective conan
-*  Changes     :   Added constants for font family and app title
+*  Updated     :   2019-07-15 09:37 by Detective conan
+*  Changes     :   Removed constants for text fonts
 */
 
 import 'package:flutter/material.dart';
@@ -81,24 +81,6 @@ class AppConstants {
       "Provide christian services and a peaceful resting place for our late loved ones";
   static const String event_message =
       "Celebrate marriage or events in the delightful premises of the church";
-
-  //TextStyle
-
-  static const TextStyle OPTION_STYLE1 = TextStyle(
-      color: Colors.brown,
-      fontSize: 12.0,
-      fontWeight: FontWeight.normal,
-      fontFamily: "Helvetica");
-  static const TextStyle OPTION_STYLE2 = TextStyle(
-      color: Colors.brown,
-      fontSize: 16.0,
-      fontWeight: FontWeight.bold,
-      fontFamily: "Helvetica");
-  static const TextStyle OPTION_STYLE3 = TextStyle(
-      color: Colors.brown,
-      fontSize: 20.0,
-      fontWeight: FontWeight.bold,
-      fontFamily: "Helvetica");
 
   // services
   static const String JOIN_US = 'Join us';

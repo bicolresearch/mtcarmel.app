@@ -25,7 +25,9 @@ class NovemberMassInfo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: Text("November Masses for the Dead", 
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
             textAlign: TextAlign.center,
             ),
           ),
@@ -42,10 +44,14 @@ class NovemberMassInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                 Text("Mass for the Dead will be offered every 06:00 AM of November.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
-                Text("After submission, you may donate any amount as an offering for your requested mass in your mailbox.", style: AppConstants.OPTION_STYLE2,),
+                Text("After submission, you may donate any amount as an offering for your requested mass in your mailbox.", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
             ],
             ),
             ),

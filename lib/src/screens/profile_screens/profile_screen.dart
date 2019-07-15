@@ -2,9 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-12 14:30 by Detective conan
-*  Changes     :   Fixed the login behaviour during first login.
-*                  Changed the intended screen after successful login.
+*  Updated     :   2019-07-15 09:48 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -461,7 +460,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: <Widget>[
                 Text(
                   '${_userProfile.firstName} ${_userProfile.lastName}',
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   textAlign: TextAlign.left,
                 ),
                 Row(
@@ -487,21 +488,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           value: 1,
                           child: Text(
                             "Edit profile",
-                            style: AppConstants.OPTION_STYLE2,
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .subhead,
                           ),
                         ),
                         PopupMenuItem(
                           value: 2,
                           child: Text(
                             "Logout",
-                            style: AppConstants.OPTION_STYLE2,
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .subhead,
                           ),
                         ),
                         PopupMenuItem(
                           value: 3,
                           child: Text(
                             "Cancel",
-                            style: AppConstants.OPTION_STYLE2,
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .subhead,
                           ),
                         ),
                       ],
@@ -569,7 +576,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           itemText,
-          style: AppConstants.OPTION_STYLE2,
+          style: Theme.of(context)
+              .primaryTextTheme
+              .subhead,
           textAlign: TextAlign.center,
         ),
       ),

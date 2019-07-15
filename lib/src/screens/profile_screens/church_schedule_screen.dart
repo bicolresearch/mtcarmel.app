@@ -1,9 +1,9 @@
 /*
-*	Filename		:	church_schedule_screen.dart
-*	Purpose			:	Displays the different schedules of the church
-* Created			: 2019-06-14 09:42:18 by Detective Conan
-*	Updated			: 2019-07-02 13:47:22 by Detective Conan
-*	Changes			: Added CircularProgressIndicator while loading and failed message
+*	 Filename		 :	 church_schedule_screen.dart
+*	 Purpose		 :	 Displays the different schedules of the church
+*  Created		 :   2019-06-14 09:42:18 by Detective Conan
+*  Updated     :   2019-07-15 09:46 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
@@ -104,7 +104,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
           _isLoading
               ? Expanded(child: LoadingIndicator())
               : _isJsonFailed
-                  ? failedMessage()
+                  ? failedMessage(context)
                   : Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -114,7 +114,9 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
                             height: 40.0,
                             child: Text(
                               "Church Schedules",
-                              style: AppConstants.OPTION_STYLE3,
+                              style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                           ),

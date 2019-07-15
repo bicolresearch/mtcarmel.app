@@ -24,7 +24,9 @@ class PrayerRequestForm extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
           child: Text("Prayer Request", 
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           textAlign: TextAlign.center,
           ),
         ),
@@ -39,7 +41,9 @@ class PrayerRequestForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Write here ...", style: AppConstants.OPTION_STYLE2),
+                    Text("Write here ...", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(

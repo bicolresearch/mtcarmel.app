@@ -124,13 +124,17 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                         ),
                                         Text(
                                           "Transparency",
-                                          style: AppConstants.OPTION_STYLE3,
+                                          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
                                           textAlign: TextAlign.justify,
                                         ),
                                         Center(
                                           child: Text(
                                             "Total help received online for this year",
-                                            style: AppConstants.OPTION_STYLE1,
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .caption,
                                             textAlign: TextAlign.justify,
                                           ),
                                         ),
@@ -400,7 +404,9 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
         padding: const EdgeInsets.all(50.0),
         child: Text(
           "No results. Please check the network connection.",
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
         ),
       ),
     );

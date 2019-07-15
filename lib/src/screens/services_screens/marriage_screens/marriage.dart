@@ -47,7 +47,7 @@ class Marriage extends StatelessWidget {
                 if (result)
                   Navigator.pop(context, true);
               },
-              child: serviceSpecific("Marriage")),
+              child: serviceSpecific(context, "Marriage")),
             ],
             ),
             Spacer(),

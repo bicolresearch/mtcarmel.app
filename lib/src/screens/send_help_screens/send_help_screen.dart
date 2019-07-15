@@ -76,7 +76,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
             child: _isLoading
                 ? LoadingIndicator()
                 : _isJsonFailed
-                    ? failedMessage()
+                    ? failedMessage(context)
                     : Container(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

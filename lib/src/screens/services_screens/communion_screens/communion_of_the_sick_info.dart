@@ -25,7 +25,9 @@ class CommunionOfTheSickInfo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: Text("Communion of the Sick", 
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
             textAlign: TextAlign.center,
             ),
           ),
@@ -42,14 +44,20 @@ class CommunionOfTheSickInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                 Text("Preferred time of visit will only serve as guide and may not always be accurate.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Text("Communion of the Sick is free of charge", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),    
-                Text("Exclusive for parishioners of Our Lady of Mount Carmel", style: AppConstants.OPTION_STYLE2,),
+                Text("Exclusive for parishioners of Our Lady of Mount Carmel", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
             ],
             ),
             ),

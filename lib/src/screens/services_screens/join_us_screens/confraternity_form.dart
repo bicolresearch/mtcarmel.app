@@ -20,7 +20,9 @@ class ConfraternityForm extends StatelessWidget {
               print("Tapped item");
             },
             child: Text("Confraternity of Our Lady of Mount Carmel", 
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
             textAlign: TextAlign.center,
             ),
           ),
@@ -36,7 +38,9 @@ class ConfraternityForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Name", style: AppConstants.OPTION_STYLE2),
+                    Text("Name", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -58,7 +62,9 @@ class ConfraternityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Home Address", style: AppConstants.OPTION_STYLE2),
+                Text("Home Address", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -80,7 +86,9 @@ class ConfraternityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Birthday", style: AppConstants.OPTION_STYLE2),
+                Text("Birthday", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -102,7 +110,9 @@ class ConfraternityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -124,7 +134,9 @@ class ConfraternityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Home Address", style: AppConstants.OPTION_STYLE2),
+                Text("Home Address", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(

@@ -24,7 +24,9 @@ class FuneralChapelForm extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
           child: Text("Funeral Chapel", 
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           textAlign: TextAlign.center,
           ),
         ),
@@ -39,7 +41,9 @@ class FuneralChapelForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Name of Deceased", style: AppConstants.OPTION_STYLE2),
+                    Text("Name of Deceased", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -61,7 +65,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Age", style: AppConstants.OPTION_STYLE2),
+                Text("Age", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -82,7 +88,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Marital Status", style: AppConstants.OPTION_STYLE2),
+                Text("Marital Status", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -103,7 +111,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Address", style: AppConstants.OPTION_STYLE2),
+                Text("Address", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -125,7 +135,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Date of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -147,7 +159,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Date of Death", style: AppConstants.OPTION_STYLE2),
+                Text("Date of Death", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -169,7 +183,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Cause of Death", style: AppConstants.OPTION_STYLE2),
+                Text("Cause of Death", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -191,7 +207,9 @@ class FuneralChapelForm extends StatelessWidget {
              Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Date of Burial", style: AppConstants.OPTION_STYLE2),
+                Text("Date of Burial", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -213,7 +231,9 @@ class FuneralChapelForm extends StatelessWidget {
              Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Place of Burial", style: AppConstants.OPTION_STYLE2),
+                Text("Place of Burial", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -235,7 +255,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Person", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Person", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -257,7 +279,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Relationship with the deceased", style: AppConstants.OPTION_STYLE2),
+                Text("Relationship with the deceased", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -279,7 +303,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Mobile Number", style: AppConstants.OPTION_STYLE2),
+                Text("Mobile Number", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -301,7 +327,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Landline Number", style: AppConstants.OPTION_STYLE2),
+                Text("Landline Number", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -323,7 +351,9 @@ class FuneralChapelForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Email", style: AppConstants.OPTION_STYLE2),
+                Text("Email", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(

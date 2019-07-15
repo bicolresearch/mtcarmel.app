@@ -2,8 +2,8 @@
 *  Filename    :   services_header.dart
 *  Purpose     :
 *  Created     :   2019-07-12 16:49 by Detective Conan
-*  Updated     :   2019-07-12 16:49 by Detective conan
-*  Changes     :   Pass the context to the header and serviceTile
+*  Updated     :   2019-07-15 09:42 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ Widget servicesHeader(context) {
         width: double.infinity,
         child: Text(
           'The Services',
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context).primaryTextTheme.title,
           textAlign: TextAlign.center,
         ),
       ),
@@ -28,7 +28,7 @@ Widget servicesHeader(context) {
           AppConstants.NATIONAL_SHRINE_TEXT,
           style: Theme.of(context)
               .primaryTextTheme
-              .title
+              .caption
               .copyWith(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),

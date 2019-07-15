@@ -1,13 +1,12 @@
 /*
-*	Filename		:	adult_info.dart
-*	Purpose			:	adult info add form
-* Created			: 2019-06-13 19:28:41 by Scarlet Witch
-*	Updated			:	2019-06-13 19:28:41 by Scarlet Witch 
-*	Changes			:
+*	 Filename		 :   adult_info.dart
+*	 Purpose		 :	 adult info add form
+*  Created		 :   2019-06-13 19:28:41 by Scarlet Witch
+*  Updated     :   2019-07-15 09:49 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/adult_form.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
@@ -25,7 +24,9 @@ class AdultInfo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: Text("Adult Baptism", 
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
             textAlign: TextAlign.center,
             ),
           ),
@@ -42,175 +43,245 @@ class AdultInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                 Text("Schedule:", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),                
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Tuesday - Saturdays", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("09:00 AM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("09:00 AM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("10:00 AM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("10:00 AM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("11:00 AM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("11:00 AM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("03:00 PM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("03:00 PM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("04:00 PM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("04:00 PM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),                
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Sundays", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("09:00 AM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("09:00 AM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("10:00 AM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("10:00 AM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("11:00 AM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("11:00 AM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Text("Additional Requirements:", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),                
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Adult's Birth Certificate", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("4 Session Catechesis", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Parent Catechesis", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Certification of No Records (from 3 parishes from the Vicariate of Holy Family)", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Text("Fees:", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),                
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Venue", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("1,000 php", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("1,000 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Stipend for the Priest", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("1,000 php", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("1,000 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("For every Sponsor", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("100 php", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("100 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Panyal, Certificate, Candle for the Parents", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("150 php", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("150 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Candle for every Sponsor", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("10 php", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("10 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Text("Upon submission,you maycontact Catechetical Ministry office to schedule your catethesis.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),  
                 Text("Call 727-94-32 local 411", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 Text("Tuesdays to Saturdays", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,),
                 Text("9am-5pm", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,),  
                 SizedBox(height: 10.0),
                 Text("All sponsors must be catholic and 18 years old or above.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Text("Requirements and fees must be accomplished a week before the baptism.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Text("You may settle your bill using your debit card, credit card or cash.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
-                Text("Be punctual, only an hour is alloted for the whole baptism.", style: AppConstants.OPTION_STYLE2,),
+                Text("Be punctual, only an hour is alloted for the whole baptism.", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
             ],
             ),
             ),

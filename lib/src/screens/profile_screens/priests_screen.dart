@@ -2,8 +2,8 @@
 *	 Filename		 :	 priest_screen.dart
 *	 Purpose		 :	 Shows the Carmelites Priests
 *  Created		 :   2019-06-11 14:14:18 by Detective Conan
-*  Updated     :   2019-07-12 09:08 by Detective conan
-*  Changes     :   Resized the priest name.
+*  Updated     :   2019-07-15 09:48 by Detective conan 
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -94,7 +94,9 @@ class _PriestsScreenState extends State<PriestsScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               "Priests",
-                              style: AppConstants.OPTION_STYLE3,
+                              style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -167,7 +169,9 @@ class _PriestsScreenState extends State<PriestsScreen> {
                   (priest.position != null)
                       ? Text(
                           priest.position,
-                          style: AppConstants.OPTION_STYLE1,
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .caption,
                           textAlign: TextAlign.center,
                           softWrap: true,
                         )

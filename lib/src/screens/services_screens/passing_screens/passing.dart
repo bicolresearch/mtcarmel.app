@@ -54,7 +54,7 @@ class Passing extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-                  child: serviceSpecific("Funeral Service")),
+                  child: serviceSpecific(context, "Funeral Service")),
                   GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -67,7 +67,7 @@ class Passing extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-                  child: serviceSpecific("Funeral Chapels")),
+                  child: serviceSpecific(context, "Funeral Chapels")),
                   GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -80,7 +80,7 @@ class Passing extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-                  child: serviceSpecific("Crypt Lobby")),
+                  child: serviceSpecific(context, "Crypt Lobby")),
                   GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -93,7 +93,7 @@ class Passing extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-                  child: serviceSpecific("November Mass for the Dead")),
+                  child: serviceSpecific(context, "November Mass for the Dead")),
                 ],
                 ),
              ),

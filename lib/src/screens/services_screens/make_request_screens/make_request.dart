@@ -53,7 +53,7 @@ class MakeRequest1 extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-                  child: serviceSpecific("Prayer Request")),
+                  child: serviceSpecific(context, "Prayer Request")),
                 GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -66,7 +66,7 @@ class MakeRequest1 extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-                  child: serviceSpecific("Mass Request")),
+                  child: serviceSpecific(context, "Mass Request")),
                 GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -79,7 +79,7 @@ class MakeRequest1 extends StatelessWidget {
                     if (result)
                       Navigator.pop(context, true);
                   },
-                  child: serviceSpecific("Liturgical Service")),
+                  child: serviceSpecific(context, "Liturgical Service")),
                 GestureDetector(
                   onTap: ()async {
                 final result = await Navigator.push(
@@ -91,7 +91,7 @@ class MakeRequest1 extends StatelessWidget {
                     );
                     if (result)
                       Navigator.pop(context, true);
-                  },child: serviceSpecific("Certification")),
+                  },child: serviceSpecific(context, "Certification")),
                 ],
                 ),
             ),

@@ -48,7 +48,9 @@ class JoinUs extends StatelessWidget {
                   Navigator.pop(context, true);
               },
               child: Text("Confraternity of Our Lady of Mount Carmel",
-              style: AppConstants.OPTION_STYLE2,
+              style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
               textAlign: TextAlign.center,
               ),
             ),

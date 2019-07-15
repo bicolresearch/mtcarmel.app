@@ -1,13 +1,12 @@
 /*
-*	Filename		:	community_form.dart
-*	Purpose			:	community add form
-* Created			: 2019-06-13 19:19:41 by Scarlet Witch
-*	Updated			:	2019-06-13 19:19:41 by Scarlet Witch 
-*	Changes			:
+*	 Filename		 :	 community_form.dart
+*	 Purpose		 :	 community add form
+*  Created		 :   2019-06-13 19:19:41 by Scarlet Witch
+*  Updated     :   2019-07-15 09:50 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/thank_you.dart';
 
@@ -24,7 +23,9 @@ class CommunityForm extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
           child: Text("Community Baptism", 
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           textAlign: TextAlign.center,
           ),
         ),
@@ -39,7 +40,9 @@ class CommunityForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Name of Child", style: AppConstants.OPTION_STYLE2),
+                    Text("Name of Child", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -61,7 +64,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Child's Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Child's Date of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -83,7 +88,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Child's Place of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Child's Place of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -105,7 +112,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Child's Father", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Child's Father", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -127,7 +136,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Religion of Child's Father", style: AppConstants.OPTION_STYLE2),
+                Text("Religion of Child's Father", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -149,7 +160,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Father's Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Father's Date of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -171,7 +184,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Father's Place of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Father's Place of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -193,7 +208,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Child's Mother", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Child's Mother", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -215,7 +232,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Religion of Child's Mother", style: AppConstants.OPTION_STYLE2),
+                Text("Religion of Child's Mother", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -237,7 +256,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Mother's Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Mother's Date of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -259,7 +280,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Mother's Place of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Mother's Place of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -281,7 +304,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Present Address of Child", style: AppConstants.OPTION_STYLE2),
+                Text("Present Address of Child", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -303,7 +328,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Marriage of Parents", style: AppConstants.OPTION_STYLE2),
+                Text("Marriage of Parents", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -325,7 +352,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Place of Marriage", style: AppConstants.OPTION_STYLE2),
+                Text("Place of Marriage", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -347,7 +376,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Person", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Person", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -369,7 +400,9 @@ class CommunityForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(

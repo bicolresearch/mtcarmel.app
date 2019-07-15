@@ -1,9 +1,9 @@
 /*
-*	Filename		:	about_screen.dart
-*	Purpose			:	Show the details about the church.
-* Created			: 2019-06-13 12:37:11 by Detective Conan
-*	Updated			: 2019-07-02 12:20:13 by Detective Conan
-*	Changes			: Adjusted the contents, Added CircularProgressIndicator and FailedMessage
+*	 Filename		 :	 about_screen.dart
+*	 Purpose		 :	 Show the details about the church.
+*  Created		 :   2019-06-13 12:37:11 by Detective Conan
+*  Updated     :   2019-07-15 09:41 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
@@ -15,11 +15,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/about.dart';
-import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:mt_carmel_app/src/widgets/line.dart';
 
 ////
 class AboutScreen extends StatefulWidget {
@@ -88,7 +86,7 @@ class _AboutScreenState extends State<AboutScreen> {
             _isLoading
                 ? Expanded(child: LoadingIndicator())
                 : _isJsonFailed
-                    ? failedMessage()
+                    ? failedMessage(context)
                     : Expanded(
                         child: SingleChildScrollView(
                           child: Column(
@@ -144,7 +142,9 @@ class _AboutScreenState extends State<AboutScreen> {
         children: <Widget>[
           Text(
             "History",
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -174,7 +174,9 @@ class _AboutScreenState extends State<AboutScreen> {
               Expanded(
                 child: Text(
                   "${aboutItem.label()} :",
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -184,7 +186,9 @@ class _AboutScreenState extends State<AboutScreen> {
               Expanded(
                 child: Text(
                   "${aboutItem._value}",
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -204,7 +208,9 @@ class _AboutScreenState extends State<AboutScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             "About the Church",
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
             textAlign: TextAlign.center,
           ),
         ),

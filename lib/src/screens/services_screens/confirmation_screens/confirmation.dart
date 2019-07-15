@@ -47,7 +47,9 @@ class Confirmation extends StatelessWidget {
                   Navigator.pop(context, true);
               },
               child: Text("Confirmation", 
-              style: AppConstants.OPTION_STYLE2,
+              style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
               textAlign: TextAlign.center,
               ),
             ),

@@ -1,9 +1,9 @@
 /*
-*	Filename		:	communion_of_the_sick_form.dart
-*	Purpose			:	communion of the sick add form
-* Created			: 2019-06-13 16:17:05 by Scarlet Witch
-*	Updated			:	2019-06-13 16:17:05 by Scarlet Witch 
-*	Changes			:
+*	 Filename		 :	 communion_of_the_sick_form.dart
+*	 Purpose		 :	 communion of the sick add form
+*  Created		 :   2019-06-13 16:17:05 by Scarlet Witch
+*  Updated     :   2019-07-15 09:53 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
@@ -24,7 +24,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
           child: Text("Communion of the Sick", 
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           textAlign: TextAlign.center,
           ),
         ),
@@ -39,7 +41,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Name of Communicant", style: AppConstants.OPTION_STYLE2),
+                    Text("Name of Communicant", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -61,7 +65,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Communicant's Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Communicant's Date of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -83,7 +89,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Spouse of Communicant", style: AppConstants.OPTION_STYLE2),
+                Text("Spouse of Communicant", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -105,7 +113,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Spouse's Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Spouse's Date of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -127,7 +137,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Home Address of Communicant", style: AppConstants.OPTION_STYLE2),
+                Text("Home Address of Communicant", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -149,7 +161,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number of Communicant", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number of Communicant", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -171,7 +185,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Date of Church Marriage", style: AppConstants.OPTION_STYLE2),
+                Text("Date of Church Marriage", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -193,7 +209,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Date of Last Confession", style: AppConstants.OPTION_STYLE2),
+                Text("Date of Last Confession", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -215,7 +233,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Preferred Time of Visit", style: AppConstants.OPTION_STYLE2),
+                Text("Preferred Time of Visit", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -237,7 +257,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Person", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Person", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -259,7 +281,9 @@ class CommunionOfTheSickForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(

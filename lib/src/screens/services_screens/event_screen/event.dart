@@ -48,7 +48,9 @@ class Events extends StatelessWidget {
                   Navigator.pop(context, true);
               },
               child: Text("Father Mark Horan Hall - Venue", 
-              style: AppConstants.OPTION_STYLE2,
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .subhead,
               textAlign: TextAlign.center,
               ),
             ),

@@ -2,8 +2,8 @@
 *  Filename    :   main.dart
 *  Purpose     :   Entry point of app.
 *  Created     :   2019-07-12 16:44 by Detective Conan
-*  Updated     :   2019-07-12 16:44 by Detective Conan
-*  Changes     :
+*  Updated     :   2019-07-15 09:36 by Detective conan
+*  Changes     :   Defined the TextStyles for different size categories
 */
 
 import 'dart:async';
@@ -48,64 +48,47 @@ class MtCarmelApp extends StatelessWidget {
           display4: Theme.of(context)
               .textTheme
               .display4
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           display3: Theme.of(context)
               .textTheme
               .display3
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           display2: Theme.of(context)
               .textTheme
               .display2
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           display1: Theme.of(context)
               .textTheme
               .display1
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           headline: Theme.of(context)
               .textTheme
               .headline
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           title: Theme.of(context)
               .textTheme
               .title
-              .copyWith(color: Colors.brown),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           subhead: Theme.of(context)
               .textTheme
               .subhead
-              .copyWith(color: Colors.brown),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           body2: Theme.of(context)
               .textTheme
               .body2
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           body1: Theme.of(context)
               .textTheme
               .body1
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           caption: Theme.of(context)
               .textTheme
               .caption
-              .copyWith(color: Colors.brown),
+              .copyWith(color: Colors.brown, fontFamily: "Helvetica"),
           subtitle: Theme.of(context)
               .textTheme
               .subtitle
-              .copyWith(color: Theme.of(context).primaryColor),
-        ),
-        textTheme: TextTheme(
-          title: TextStyle(
-            color: Colors.brown,
-            fontSize: 16, //subhead
-            fontWeight: FontWeight.bold,
-          ),
-          headline: TextStyle(
-            color: Colors.brown,
-            fontSize: 20, // title
-            fontWeight: FontWeight.bold,
-          ),
-          subtitle: TextStyle(
-            color: Colors.brown,
-            fontSize: 12, //caption
-            fontWeight: FontWeight.normal,
-          ),
+              .copyWith(color: Colors.brown),
         ),
         appBarTheme: AppBarTheme(
           brightness: Brightness.light,

@@ -24,7 +24,9 @@ class MarriageForm extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
           child: Text("Marriage", 
-          style: AppConstants.OPTION_STYLE3,
+          style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
           textAlign: TextAlign.center,
           ),
         ),
@@ -40,7 +42,9 @@ class MarriageForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Are both of you civill married?", style: AppConstants.OPTION_STYLE2),
+                    Text("Are both of you civill married?", style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -62,7 +66,9 @@ class MarriageForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Or with any previous marriage?", style: AppConstants.OPTION_STYLE2),
+                    Text("Or with any previous marriage?", style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -84,7 +90,9 @@ class MarriageForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Is anyone of you an OFW?", style: AppConstants.OPTION_STYLE2),
+                    Text("Is anyone of you an OFW?", style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -106,7 +114,9 @@ class MarriageForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Or living abroad for 3 years?", style: AppConstants.OPTION_STYLE2),
+                    Text("Or living abroad for 3 years?", style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -128,7 +138,9 @@ class MarriageForm extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal:30.0, vertical: 10.0),
                   child: Column(children: <Widget>[
-                    Text("Is anyone of you a widower?", style: AppConstants.OPTION_STYLE2),
+                    Text("Is anyone of you a widower?", style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextField(
@@ -150,7 +162,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Groom", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -172,7 +186,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Nickname of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Nickname of Groom", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -194,7 +210,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Groom's Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Groom's Date of Birth", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -216,7 +234,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Groom's Place of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Groom's Place of Birth", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -238,7 +258,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Religion of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Religion of Groom", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -259,7 +281,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Occupation of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Occupation of Groom", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -281,7 +305,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Groom's Place of Work", style: AppConstants.OPTION_STYLE2),
+                Text("Groom's Place of Work", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -303,7 +329,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Nationality of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Nationality of Groom", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -324,7 +352,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number of Groom", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -346,7 +376,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Email Address of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Email Address of Groom", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -368,7 +400,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Home Address of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Home Address of Groom", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -390,7 +424,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Groom's Parish", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Groom's Parish", style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -412,7 +448,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Address of Groom's Parish", style: AppConstants.OPTION_STYLE2),
+                Text("Address of Groom's Parish", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -434,7 +472,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Provincial Address of Groom", style: AppConstants.OPTION_STYLE2),
+                Text("Provincial Address of Groom", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -456,7 +496,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Groom's Father", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Groom's Father", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -478,7 +520,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Nationality of Groom's Father", style: AppConstants.OPTION_STYLE2),
+                Text("Nationality of Groom's Father", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -499,7 +543,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Groom's Mother", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Groom's Mother", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -521,7 +567,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Nationality of Groom's Mother", style: AppConstants.OPTION_STYLE2),
+                Text("Nationality of Groom's Mother", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -542,7 +590,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -564,7 +614,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Nickname of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Nickname of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -586,7 +638,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Bride's Date of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Bride's Date of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -608,7 +662,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Bride's Place of Birth", style: AppConstants.OPTION_STYLE2),
+                Text("Bride's Place of Birth", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -630,7 +686,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Religion of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Religion of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -651,7 +709,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Occupation of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Occupation of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -673,7 +733,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Bride's Place of Work", style: AppConstants.OPTION_STYLE2),
+                Text("Bride's Place of Work", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -695,7 +757,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Nationality of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Nationality of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -716,7 +780,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -738,7 +804,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Email Address of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Email Address of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -760,7 +828,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Home Address of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Home Address of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -782,7 +852,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Bride's Parish", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Bride's Parish", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -804,7 +876,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Address of Bride's Parish", style: AppConstants.OPTION_STYLE2),
+                Text("Address of Bride's Parish", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -826,7 +900,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Provincial Address of Bride", style: AppConstants.OPTION_STYLE2),
+                Text("Provincial Address of Bride", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -848,7 +924,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Bride's Father", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Bride's Father", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -870,7 +948,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Nationality of Bride's Father", style: AppConstants.OPTION_STYLE2),
+                Text("Nationality of Bride's Father", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -891,7 +971,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Name of Bride's Mother", style: AppConstants.OPTION_STYLE2),
+                Text("Name of Bride's Mother", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -913,7 +995,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Nationality of Bride's Mother", style: AppConstants.OPTION_STYLE2),
+                Text("Nationality of Bride's Mother", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: DropdownButtonFormField(
@@ -934,7 +1018,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Person", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Person", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -956,7 +1042,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Contact Number", style: AppConstants.OPTION_STYLE2),
+                Text("Contact Number", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(
@@ -978,7 +1066,9 @@ class MarriageForm extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 30.0, right: 30),
               child: Column(children: <Widget>[
-                Text("Officiating Priest", style: AppConstants.OPTION_STYLE2),
+                Text("Officiating Priest", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: TextField(

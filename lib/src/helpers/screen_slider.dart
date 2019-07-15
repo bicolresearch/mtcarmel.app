@@ -1,3 +1,11 @@
+/*
+*  Filename    :   screen_slider.dart
+*  Purpose     :
+*  Created     :   2019-07-15 09:44 by Detective Conan
+*  Updated     :   2019-07-15 09:44 by Detective Conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';

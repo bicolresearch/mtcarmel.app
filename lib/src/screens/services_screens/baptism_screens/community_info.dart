@@ -1,13 +1,12 @@
 /*
-*	Filename		:	community_info.dart
-*	Purpose			:	community info add form
-* Created			: 2019-06-13 19:14:36 by Scarlet Witch
-*	Updated			:	2019-06-13 19:14:36 by Scarlet Witch 
-*	Changes			:
+*	 Filename		 :	 community_info.dart
+*	 Purpose		 :	 community info add form
+*  Created		 :   2019-06-13 19:14:36 by Scarlet Witch
+*  Updated     :   2019-07-15 09:51 by Detective conan
+*  Changes     :
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/community_form.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
@@ -25,7 +24,9 @@ class CommunityInfo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: Text("Community Baptism", 
-            style: AppConstants.OPTION_STYLE3,
+            style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
             textAlign: TextAlign.center,
             ),
           ),
@@ -42,88 +43,122 @@ class CommunityInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                 Text("Schedule:", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),  
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Sundays", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("02:00 PM", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("02:00 PM", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Text("Additional Requirements:", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),                
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Child's Birth Certificate", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Parent's Marriage Contract", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Permission Letter (if needed)", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Text("Fees:", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0), 
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("For every Sponsor", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("100 php", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("100 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text("Registration, Panyal, Certificate, Candle for the Parents, 2 Candles in glass for the Sponsors (candles for additional sponsors are not included)", 
-                  style: AppConstants.OPTION_STYLE2,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("400 php", style: AppConstants.OPTION_STYLE2,),
+                  child: Text("400 php", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
                 ),
                 SizedBox(height: 10.0),
                 Text("For non-parishioners, permission letter from your parish must be submitted in Mt. Carmel office.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Text("All sponsors must be catholic and 18 years old or above.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Text("Requirements and fees must be accomplished a week before the baptism.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
                 Text("You may settle your bill using your debit card, credit card or cash.", 
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.left,), 
                 SizedBox(height: 10.0),
-                Text("Be punctual, only an hour is alloted for the whole baptism.", style: AppConstants.OPTION_STYLE2,),
+                Text("Be punctual, only an hour is alloted for the whole baptism.", style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,),
             ],
             ),
             ),

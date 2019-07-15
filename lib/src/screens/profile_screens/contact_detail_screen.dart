@@ -2,8 +2,8 @@
 *	 Filename		 :	 contact_detail_scree.dart
 *	 Purpose		 :	 Displays the church contact details
 *  Created		 :   2019-06-13 15:07:14 by Detective Conan
-*  Updated     :   2019-07-11 15:37 by Detective conan
-*  Changes     :   Removed tags on contact details.
+*  Updated     :   2019-07-15 09:47 by Detective conan
+*  Changes     :   Replaced the textStyle constants with Inherited provider
 */
 
 import 'package:flutter/material.dart';
@@ -70,13 +70,15 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
             child: (_isLoading)
                 ? LoadingIndicator()
                 : _isJsonFailed
-                    ? failedMessage()
+                    ? failedMessage(context)
                     : Container(
                         child: Column(
                           children: <Widget>[
                             Text(
                               "Contact Details",
-                              style: AppConstants.OPTION_STYLE3,
+                              style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                             Divider(),

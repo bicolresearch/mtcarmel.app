@@ -291,7 +291,9 @@ class NoService extends StatelessWidget {
           Spacer(),
           Text(
             "No service for ${serviceItem.name}",
-            style: AppConstants.OPTION_STYLE2,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subhead,
           ),
           Spacer(),
           Container(

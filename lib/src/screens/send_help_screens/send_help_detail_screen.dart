@@ -146,13 +146,17 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
               ),
               Text(
                 widget.sendHelp.description,
-                style: AppConstants.OPTION_STYLE3,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .title.copyWith(fontWeight : FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               Divider(color: Colors.brown),
               Text(
                 AppConstants.sample_message + AppConstants.sample_message,
-                style: AppConstants.OPTION_STYLE2,
+                style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead,
                 textAlign: TextAlign.center,
               ),
             ],
