@@ -2,20 +2,22 @@
 *  Filename    :   gender_form_field.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 17:48 by Detective Conan
-*  Updated     :   2019-07-15 17:48 by Detective Conan 
-*  Changes     :
+*	 Updated			:   16/07/2019 2:18 PM PM by Detective Conan
+*	 Changes			:   Moved the other method to ServiceDropdownFormCommon class.
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_service_type.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_dropodown_form_common.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_common.dart';
 
-class GenderFormField extends ServiceFormCommon implements ServiceFormAbstract {
-  GenderFormField(this._churchFormField);
+class GenderFormField extends ServiceDropdownFormCommon
+    implements ServiceFormAbstract {
+  final _list = ["Male", "Female"];
 
-  final ChurchFormField _churchFormField;
+  GenderFormField({churchFormField}) : super(churchFormField: churchFormField);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class GenderFormField extends ServiceFormCommon implements ServiceFormAbstract {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          labelText(context, _churchFormField.labelText),
+          labelText(context, churchFormField.labelText),
           buildForm(context),
         ],
       ),
@@ -32,45 +34,12 @@ class GenderFormField extends ServiceFormCommon implements ServiceFormAbstract {
 
   @override
   Widget buildForm(BuildContext context) {
-    if (_churchFormField.selections == null ||
-        _churchFormField.selections.isEmpty) {
+    if (churchFormField.selections == null ||
+        churchFormField.selections.isEmpty) {
       print("no defined selections");
       return Container();
     }
-    return FormBuilderDropdown(
-      style: Theme.of(context).primaryTextTheme.caption,
-      attribute: _churchFormField.attribute,
-      hint: Text(
-        _churchFormField.hint,
-        style: Theme.of(context).primaryTextTheme.title,
-      ),
-      validators: _validators(),
-      items: ['Male', 'Female']
-          .map(
-            (gender) => DropdownMenuItem(
-              value: gender,
-              child: Text(
-                "$gender",
-                style: Theme.of(context).primaryTextTheme.title,
-              ),
-            ),
-          )
-          .toList(),
-    );
+    return super.dropDownForm(context, _list);
   }
 
-  List<String Function(dynamic)> _validators() {
-    List<String Function(dynamic)> validators = [];
-
-    if (_churchFormField.validators == null) return validators;
-
-    if (_churchFormField.validators.isRequired == "true")
-      validators.add(FormBuilderValidators.required());
-
-    if (_churchFormField.validators.errorText.isNotEmpty)
-      validators.add(FormBuilderValidators.required(
-          errorText: _churchFormField.validators.errorText));
-
-    return validators;
-  }
 }

@@ -14,9 +14,7 @@ import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service
 
 class ServicePlainTextField extends ServiceFormCommon
     implements ServiceFormAbstract {
-  ServicePlainTextField(this._churchFormField);
-
-  final ChurchFormField _churchFormField;
+  ServicePlainTextField({churchFormField}) : super(churchFormField: churchFormField);
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +27,9 @@ class ServicePlainTextField extends ServiceFormCommon
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          labelText(context, _churchFormField.labelText),
+          labelText(context, churchFormField.labelText),
           FormBuilderTextField(
-            attribute: _churchFormField.attribute,
+            attribute: churchFormField.attribute,
             decoration: InputDecoration(
                 helperStyle: Theme.of(context).primaryTextTheme.subtitle,),
             validators: _validators(),
@@ -47,33 +45,33 @@ class ServicePlainTextField extends ServiceFormCommon
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
 
-    if (_churchFormField.validators == null) return validators;
+    if (churchFormField.validators == null) return validators;
 
-    if (_churchFormField.validators.isRequired == "true")
+    if (churchFormField.validators.isRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (_churchFormField.validators.isNumeric != null &&
-        _churchFormField.validators.isNumeric.isNotEmpty)
+    if (churchFormField.validators.isNumeric != null &&
+        churchFormField.validators.isNumeric.isNotEmpty)
       validators.add(FormBuilderValidators.numeric());
-    if (_churchFormField.validators.minValue != null &&
-        _churchFormField.validators.minValue.isNotEmpty)
+    if (churchFormField.validators.minValue != null &&
+        churchFormField.validators.minValue.isNotEmpty)
       try {
         validators.add(FormBuilderValidators.min(
-            int.tryParse(_churchFormField.validators.minValue)));
+            int.tryParse(churchFormField.validators.minValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (_churchFormField.validators.maxValue != null &&
-        _churchFormField.validators.maxValue.isNotEmpty)
+    if (churchFormField.validators.maxValue != null &&
+        churchFormField.validators.maxValue.isNotEmpty)
       try {
         validators.add(FormBuilderValidators.max(
-            int.tryParse(_churchFormField.validators.maxValue)));
+            int.tryParse(churchFormField.validators.maxValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (_churchFormField.validators.errorText.isNotEmpty)
+    if (churchFormField.validators.errorText.isNotEmpty)
       validators.add(FormBuilderValidators.required(
-          errorText: _churchFormField.validators.errorText));
+          errorText: churchFormField.validators.errorText));
 
     return validators;
   }

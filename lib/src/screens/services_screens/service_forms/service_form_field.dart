@@ -3,8 +3,9 @@
 *  Purpose     :	 Responsible for the calling of which type of form field
 *                  to be used.
 *  Created     :   2019-07-15 17:02 by Detective Conan
-*  Updated     :   2019-07-15 17:02 by Detective Conan 
-*  Changes     :
+*	 Updated			:   16/07/2019 2:23 PM PM by Detective Conan
+*	 Changes			:   Changed the constructor. The ChurchFormField is now in
+*	                 serviceFormCommon class
 */
 
 import 'package:flutter/material.dart';
@@ -14,22 +15,21 @@ import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service
 import 'gender_form_field.dart';
 
 class ServiceFormField extends StatelessWidget {
-  ServiceFormField(this._churchFormField);
+  ServiceFormField({this.churchFormField});
 
-  final ChurchFormField _churchFormField;
+  final ChurchFormField churchFormField;
 
   @override
   Widget build(BuildContext context) {
-    if(_churchFormField == null)
-      return Container();
+    if (churchFormField == null) return Container();
     return _formField();
   }
 
   Widget _formField() {
-    if (_churchFormField.textFieldType == "plain_text")
-      return ServicePlainTextField(_churchFormField);
-    else if(_churchFormField.textFieldType == "gender_selection")
-      return GenderFormField(_churchFormField);
+    if (churchFormField.textFieldType == "plain_text")
+      return ServicePlainTextField(churchFormField: churchFormField);
+    else if (churchFormField.textFieldType == "gender_selection")
+      return GenderFormField(churchFormField: churchFormField);
 //    else if(_churchFormField.textFieldType == "nationality_selection")
 //    else if(_churchFormField.textFieldType == "religion_selection")
 //    else if(_churchFormField.textFieldType == "marital_selection")
