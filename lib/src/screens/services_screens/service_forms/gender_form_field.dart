@@ -10,15 +10,24 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_service_type.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_common.dart';
 
-class GenderFormField extends StatelessWidget implements ServiceFormAbstract {
+class GenderFormField extends ServiceFormCommon implements ServiceFormAbstract {
   GenderFormField(this._churchFormField);
 
   final ChurchFormField _churchFormField;
 
   @override
   Widget build(BuildContext context) {
-    return buildForm(context);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          labelText(context, _churchFormField.labelText),
+          buildForm(context),
+        ],
+      ),
+    );
   }
 
   @override
@@ -31,21 +40,37 @@ class GenderFormField extends StatelessWidget implements ServiceFormAbstract {
     return FormBuilderDropdown(
       style: Theme.of(context).primaryTextTheme.caption,
       attribute: _churchFormField.attribute,
-      decoration: InputDecoration(labelText: _churchFormField.labelText),
       hint: Text(
         _churchFormField.hint,
-        textAlign: TextAlign.center,
+        style: Theme.of(context).primaryTextTheme.title,
       ),
-      validators: [FormBuilderValidators.required()],
+      validators: _validators(),
       items: ['Male', 'Female']
-          .map((gender) => DropdownMenuItem(
+          .map(
+            (gender) => DropdownMenuItem(
               value: gender,
               child: Text(
                 "$gender",
-                style: Theme.of(context).primaryTextTheme.caption,
-                textAlign: TextAlign.center,
-              )))
+                style: Theme.of(context).primaryTextTheme.title,
+              ),
+            ),
+          )
           .toList(),
     );
+  }
+
+  List<String Function(dynamic)> _validators() {
+    List<String Function(dynamic)> validators = [];
+
+    if (_churchFormField.validators == null) return validators;
+
+    if (_churchFormField.validators.isRequired == "true")
+      validators.add(FormBuilderValidators.required());
+
+    if (_churchFormField.validators.errorText.isNotEmpty)
+      validators.add(FormBuilderValidators.required(
+          errorText: _churchFormField.validators.errorText));
+
+    return validators;
   }
 }
