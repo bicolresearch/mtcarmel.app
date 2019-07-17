@@ -10,6 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_multiline_text_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_plain_text_field.dart';
 
 import 'gender_form_field.dart';
@@ -30,6 +31,8 @@ class ServiceFormField extends StatelessWidget {
       return ServicePlainTextField(churchFormField: churchFormField);
     else if (churchFormField.textFieldType == "gender_selection")
       return GenderFormField(churchFormField: churchFormField);
+    else if (churchFormField.textFieldType == "multiline")
+      return ServiceMultilineTextField(churchFormField: churchFormField);
 //    else if(_churchFormField.textFieldType == "nationality_selection")
 //    else if(_churchFormField.textFieldType == "religion_selection")
 //    else if(_churchFormField.textFieldType == "marital_selection")

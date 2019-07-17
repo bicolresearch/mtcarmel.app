@@ -1,68 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:mt_carmel_app/src/widgets/line.dart';
 
 class ServiceInfoScreen extends StatelessWidget {
+  final ChurchServiceSubtype churchServiceSubtype;
+
+  const ServiceInfoScreen({Key key, this.churchServiceSubtype})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    //TODO temporary replace with actual data
-    final ChurchServiceSubtype _churchServiceSubType = ChurchServiceSubtype(
-        infoText: "<p>This is the infotext</p><p>sample message</p>",
-        subTypeName: "Test subTypeName",
-        formFields: [
-          ChurchFormField(
-            attribute: "plain_text",
-            textFieldType: "plain_text",
-            labelText: "First name",
-            validators: ChurchFormValidators(
-                isRequired: "true", errorText: "must not empty"),
-          ),
-          ChurchFormField(
-              attribute: "gender",
-              textFieldType: "gender_selection",
-              hint: "Select gender",
-              labelText: "Gender",
-              validators: ChurchFormValidators(errorText: "choose gender"),
-              selections: ["male", "female"]),
-        ]);
-
     return Material(
       child: Scaffold(
         body: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+          margin: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
           child: Column(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30.0),
                 child: Text(
-                  _churchServiceSubType.subTypeName,
+                  churchServiceSubtype.subTypeName,
                   style: Theme.of(context)
                       .primaryTextTheme
-                      .title
+                      .headline
                       .copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 40.0),
-                  child: Divider()),
+              lineWidget(),
               SizedBox(height: 30.0),
               Expanded(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20.0),
                   child: HtmlTextView(
                     data:
-                        "<div style='color: #5d4037'>${_churchServiceSubType.infoText}</div>",
+                        "<div style='color: #5d4037'>${churchServiceSubtype.infoText}</div>",
                     anchorColor: Color(0xFFFF0000),
                   ),
                 ),
               ),
               Container(
-                alignment: Alignment.bottomCenter,
                 child: Column(
                   children: <Widget>[
                     RaisedButton(
@@ -78,15 +58,11 @@ class ServiceInfoScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ServiceFormScreen(
-                                    serviceSubType:
-                                        _churchServiceSubType)));
+                                    serviceSubType: churchServiceSubtype)));
                         if (result) Navigator.pop(context, true);
                       },
                     ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 30.0),
-                      child: leftArrowBackButton(context: context),
-                    )
+                    leftArrowBackButton(context: context),
                   ],
                 ),
               ),

@@ -18,7 +18,7 @@ class FuneralServiceForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-      margin: EdgeInsets.fromLTRB(30.0, 50.0,30.0,50.0),
+      margin: EdgeInsets.fromLTRB(25.0, 30.0,30.0,30.0),
       child: Column(
         children: <Widget>[
         Container(

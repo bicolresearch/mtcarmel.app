@@ -18,16 +18,19 @@ Widget serviceTile(BuildContext context, ServiceItem serviceItem) {
     padding: const EdgeInsets.all(8.0),
     child: Row(
       children: <Widget>[
-        Container(
-          height: 60.0,
-          child: CachedNetworkImage(
-              key: Key(serviceItem.coverPhoto.replaceAll("/", "")),
-              imageUrl: AppConstants.API_BASE_URL + serviceItem.coverPhoto,
-              placeholder: (context, url) => LoadingIndicator(),
-              errorWidget: (context, url, error) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(MountCarmelIcons.services)),
-              fit: BoxFit.cover),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 60.0,
+            child: CachedNetworkImage(
+                key: Key(serviceItem.coverPhoto.replaceAll("/", "")),
+                imageUrl: AppConstants.API_BASE_URL + serviceItem.coverPhoto,
+                placeholder: (context, url) => LoadingIndicator(),
+                errorWidget: (context, url, error) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(MountCarmelIcons.services)),
+                fit: BoxFit.cover),
+          ),
         ),
         Expanded(
           child: Padding(

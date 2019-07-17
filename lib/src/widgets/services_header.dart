@@ -17,7 +17,10 @@ Widget servicesHeader(context) {
         width: double.infinity,
         child: Text(
           'The Services',
-          style: Theme.of(context).primaryTextTheme.title,
+          style: Theme.of(context)
+              .primaryTextTheme
+              .title
+              .copyWith(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
       ),

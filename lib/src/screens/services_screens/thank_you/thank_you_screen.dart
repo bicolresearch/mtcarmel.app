@@ -26,17 +26,25 @@ class ThankYouScreen extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Icon(MountCarmelIcons.thankyou, color: Colors.brown, size: 120.0,),
+                child: Icon(
+                  MountCarmelIcons.thankyou,
+                  color: Colors.brown,
+                  size: 120.0,
+                ),
               ),
               SizedBox(height: 20.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                child: Text("$thankYouText", style: Theme.of(context)
-                    .primaryTextTheme
-                    .subhead, textAlign: TextAlign.justify,),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 20.0),
+                child: Text(
+                  "$thankYouText",
+                  style: Theme.of(context).primaryTextTheme.subhead,
+                  textAlign: TextAlign.justify,
+                ),
               ),
               Spacer(),
-              backButton(context: context,
+              backButton(
+                  context: context,
                   isNavigateFurtherToTheRoot: true,
                   label: "Finish"),
             ],

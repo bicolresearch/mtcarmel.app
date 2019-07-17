@@ -13,6 +13,7 @@ import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/thank_you/thank_you_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:mt_carmel_app/src/widgets/line.dart';
 
 class ServiceFormScreen extends StatelessWidget {
   static final GlobalKey<FormBuilderState> _fbKey =
@@ -26,7 +27,7 @@ class ServiceFormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 50.0),
+        margin: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -41,10 +42,7 @@ class ServiceFormScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 30.0),
-              child: Divider(),
-            ),
+            lineWidget(),
             SizedBox(
               height: 10.0,
             ),
@@ -84,10 +82,7 @@ class ServiceFormScreen extends StatelessWidget {
                 if (result) Navigator.pop(context, true);
               },
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 30.0),
-              child: leftArrowBackButton(context: context),
-            )
+            leftArrowBackButton(context: context),
           ],
         ),
       ),
