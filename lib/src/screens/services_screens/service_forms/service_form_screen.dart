@@ -2,60 +2,91 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*	 Updated			:   17/07/2019 10:48 AM PM by Detective Conan
-*	 Changes			:   Added parameter in constructor. For formFields.
-*	                 Made static the GlobalKey. To fixed the disappearing of
-*	                 keyboard.
+*	 Updated			:   17/07/2019 12:09 PM PM by Detective Conan
+*	 Changes			:   Added navigation to thank you screen.
+*	                 Added back button and subtype name.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_field.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/thank_you/thank_you_screen.dart';
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class ServiceFormScreen extends StatelessWidget {
   static final GlobalKey<FormBuilderState> _fbKey =
       GlobalKey<FormBuilderState>();
 
-  ServiceFormScreen({this.formFields});
+  ServiceFormScreen({this.serviceSubType});
 
-  final List<ChurchFormField> formFields;
+  final ChurchServiceSubtype serviceSubType;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: ListView(
+    return Scaffold(
+      body: Container(
+        margin: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 50.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            FormBuilder(
-              key: _fbKey,
-              autovalidate: true,
-              child: Column(
-                children: <Widget>[
-                  for (var formField in formFields)
-                    ServiceFormField(churchFormField: formField)
-                ],
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+              child: Text(
+                serviceSubType.subTypeName,
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .headline
+                    .copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
             ),
-            Row(
-              children: <Widget>[
-                MaterialButton(
-                  child: Text("Submit"),
-                  onPressed: () {
-                    _fbKey.currentState.save();
-                    if (_fbKey.currentState.validate()) {
-                      print(_fbKey.currentState.value);
-                    }
-                  },
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 30.0),
+              child: Divider(),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    FormBuilder(
+                      key: _fbKey,
+                      autovalidate: true,
+                      child: Column(
+                        children: <Widget>[
+                          for (var formField in serviceSubType.formFields)
+                            ServiceFormField(churchFormField: formField),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                MaterialButton(
-                  child: Text("Reset"),
-                  onPressed: () {
-                    _fbKey.currentState.reset();
-                  },
-                ),
-              ],
+              ),
+            ),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              color: Colors.brown,
+              child: Text(
+                "Submit",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () async {
+                //TODO implement validations and updating database
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ThankYouScreen(
+                            thankYouText: serviceSubType.thankYouText)));
+                if (result) Navigator.pop(context, true);
+              },
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 30.0),
+              child: leftArrowBackButton(context: context),
             )
           ],
         ),

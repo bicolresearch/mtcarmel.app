@@ -10,7 +10,7 @@ class ServiceInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO temporary replace with actual data
-    final ChurchServiceSubtype _churchServiceSubtype = ChurchServiceSubtype(
+    final ChurchServiceSubtype _churchServiceSubType = ChurchServiceSubtype(
         infoText: "<p>This is the infotext</p><p>sample message</p>",
         subTypeName: "Test subTypeName",
         formFields: [
@@ -39,7 +39,7 @@ class ServiceInfoScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30.0),
                 child: Text(
-                  _churchServiceSubtype.subTypeName,
+                  _churchServiceSubType.subTypeName,
                   style: Theme.of(context)
                       .primaryTextTheme
                       .title
@@ -53,32 +53,13 @@ class ServiceInfoScreen extends StatelessWidget {
               SizedBox(height: 30.0),
               Expanded(
                 child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: HtmlTextView(
-                      data:
-                          "<div style='color: #5d4037'>${_churchServiceSubtype.infoText}</div>",
-                      anchorColor: Color(0xFFFF0000),
-                    )),
-//              SingleChildScrollView(
-//                child: Container(
-//                  //width: 200.0,
-//                  margin: EdgeInsets.symmetric(horizontal: 40.0),
-//                  child: Column(
-//                    crossAxisAlignment: CrossAxisAlignment.start,
-//                    children: <Widget>[
-//                      Text("Mass for the Dead will be offered every 06:00 AM of November.",
-//                        style: Theme.of(context)
-//                            .primaryTextTheme
-//                            .subhead,
-//                        textAlign: TextAlign.left,),
-//                      SizedBox(height: 10.0),
-//                      Text("After submission, you may donate any amount as an offering for your requested mass in your mailbox.", style: Theme.of(context)
-//                          .primaryTextTheme
-//                          .subhead,),
-//                    ],
-//                  ),
-//                ),
-//              ),
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: HtmlTextView(
+                    data:
+                        "<div style='color: #5d4037'>${_churchServiceSubType.infoText}</div>",
+                    anchorColor: Color(0xFFFF0000),
+                  ),
+                ),
               ),
               Container(
                 alignment: Alignment.bottomCenter,
@@ -97,8 +78,8 @@ class ServiceInfoScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ServiceFormScreen(
-                                    formFields:
-                                        _churchServiceSubtype.formFields)));
+                                    serviceSubType:
+                                        _churchServiceSubType)));
                         if (result) Navigator.pop(context, true);
                       },
                     ),
