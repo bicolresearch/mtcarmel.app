@@ -10,13 +10,20 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'church_service.g.dart';
 
+//"1",
+//"QC",
+//"Prayer Request",
+//"Be closer to God with the help of the church through prayers, holy masses and liturgy",
+//"https://api.mountcarmel.ph/public/assets/images/icons/makearequest1.png");
+
 @JsonSerializable()
 class ChurchService {
+  final ServiceReference serviceReference;
   final String typeName;
   final String description;
   final List<ChurchServiceSubtype> churchServiceSubtypes;
 
-  ChurchService({this.churchServiceSubtypes, this.typeName, this.description});
+  ChurchService({this.serviceReference, this.churchServiceSubtypes, this.typeName, this.description});
 
   factory ChurchService.fromJson(Map<String, dynamic> json) =>
       _$ChurchServiceFromJson(json);
@@ -91,4 +98,26 @@ class ChurchFormValidators {
       _$ChurchFormValidatorsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChurchFormValidatorsToJson(this);
+}
+
+@JsonSerializable()
+class ServiceReference{
+  ServiceReference(
+      this.id,
+      this.branchId,
+      this.name,
+      this.description,
+      this.coverPhoto,);
+
+  final String id;
+  @JsonKey(name: "branch_id")
+  final String branchId;
+  final String name;
+  final String description;
+  @JsonKey(name: "cover_photo")
+  final String coverPhoto;
+
+  factory ServiceReference.fromJson(Map<String, dynamic> json) => _$ServiceReferenceFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ServiceReferenceToJson(this);
 }

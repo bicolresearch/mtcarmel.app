@@ -8,6 +8,10 @@ part of 'church_service.dart';
 
 ChurchService _$ChurchServiceFromJson(Map<String, dynamic> json) {
   return ChurchService(
+      serviceReference: json['serviceRefernce'] == null
+          ? null
+          : ServiceReference.fromJson(
+              json['serviceRefernce'] as Map<String, dynamic>),
       churchServiceSubtypes: (json['churchServiceSubtypes'] as List)
           ?.map((e) => e == null
               ? null
@@ -19,6 +23,7 @@ ChurchService _$ChurchServiceFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ChurchServiceToJson(ChurchService instance) =>
     <String, dynamic>{
+      'serviceRefernce': instance.serviceReference,
       'typeName': instance.typeName,
       'description': instance.description,
       'churchServiceSubtypes': instance.churchServiceSubtypes
@@ -88,4 +93,22 @@ Map<String, dynamic> _$ChurchFormValidatorsToJson(
       'min_value': instance.minValue,
       'max_value': instance.maxValue,
       'error_text': instance.errorText
+    };
+
+ServiceReference _$ServiceReferenceFromJson(Map<String, dynamic> json) {
+  return ServiceReference(
+      json['id'] as String,
+      json['branch_id'] as String,
+      json['name'] as String,
+      json['description'] as String,
+      json['cover_photo'] as String);
+}
+
+Map<String, dynamic> _$ServiceReferenceToJson(ServiceReference instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'branch_id': instance.branchId,
+      'name': instance.name,
+      'description': instance.description,
+      'cover_photo': instance.coverPhoto
     };

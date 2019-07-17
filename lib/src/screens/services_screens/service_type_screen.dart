@@ -6,13 +6,14 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
+import 'package:mt_carmel_app/src/widgets/services_reference_tile.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
 class ServiceTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO temporary replace with actual data
-    final ServiceItem _serviceItem = ServiceItem(
+    final ServiceReference serviceReference = ServiceReference(
         "1",
         "QC",
         "Prayer Request",
@@ -63,6 +64,7 @@ class ServiceTypeScreen extends StatelessWidget {
     );
 
     final ChurchService churchService = ChurchService(
+      serviceReference: serviceReference,
       typeName: "Make request",
       description:
           "Be closer to God with the help of the church through prayers, holy masses and liturgy",
@@ -79,7 +81,7 @@ class ServiceTypeScreen extends StatelessWidget {
                 height: 10.0,
               ),
 //                ////////
-              serviceTile(context, _serviceItem),
+              serviceReferenceTile(context, churchService.serviceReference),
               SizedBox(
                 height: 10.0,
               ),
