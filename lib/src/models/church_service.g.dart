@@ -1,25 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'church_service_type.dart';
+part of 'church_service.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ChurchServiceType _$ChurchServiceTypeFromJson(Map<String, dynamic> json) {
-  return ChurchServiceType(
+ChurchService _$ChurchServiceFromJson(Map<String, dynamic> json) {
+  return ChurchService(
       churchServiceSubtypes: (json['churchServiceSubtypes'] as List)
           ?.map((e) => e == null
               ? null
               : ChurchServiceSubtype.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList(),
+      typeName: json['typeName'] as String,
+      description: json['description'] as String);
 }
 
-Map<String, dynamic> _$ChurchServiceTypeToJson(ChurchServiceType instance) =>
-    <String, dynamic>{'churchServiceSubtypes': instance.churchServiceSubtypes};
+Map<String, dynamic> _$ChurchServiceToJson(ChurchService instance) =>
+    <String, dynamic>{
+      'typeName': instance.typeName,
+      'description': instance.description,
+      'churchServiceSubtypes': instance.churchServiceSubtypes
+    };
 
 ChurchServiceSubtype _$ChurchServiceSubtypeFromJson(Map<String, dynamic> json) {
   return ChurchServiceSubtype(
+      subTypeName: json['subTypeName'] as String,
       infoText: json['infoText'] as String,
       formFields: (json['formFields'] as List)
           ?.map((e) => e == null
@@ -32,6 +39,7 @@ ChurchServiceSubtype _$ChurchServiceSubtypeFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ChurchServiceSubtypeToJson(
         ChurchServiceSubtype instance) =>
     <String, dynamic>{
+      'subTypeName': instance.subTypeName,
       'infoText': instance.infoText,
       'formFields': instance.formFields,
       'thankYouText': instance.thankYouText

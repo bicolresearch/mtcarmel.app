@@ -1,5 +1,5 @@
 /*
-*  Filename    :   church_service_type.dart
+*  Filename    :   church_service.dart
 *  Purpose     :	  Model for church service
 *  Created     :   2019-07-15 11:08 by Detective Conan
 *	 Updated			:   15/07/2019 10:09 PM PM by Detective Conan
@@ -8,24 +8,28 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'church_service_type.g.dart';
+part 'church_service.g.dart';
 
 @JsonSerializable()
-class ChurchServiceType {
+class ChurchService {
+  final String typeName;
+  final String description;
   final List<ChurchServiceSubtype> churchServiceSubtypes;
 
-  ChurchServiceType({this.churchServiceSubtypes});
+  ChurchService({this.churchServiceSubtypes, this.typeName, this.description});
 
-  factory ChurchServiceType.fromJson(Map<String, dynamic> json) =>
-      _$ChurchServiceTypeFromJson(json);
+  factory ChurchService.fromJson(Map<String, dynamic> json) =>
+      _$ChurchServiceFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ChurchServiceTypeToJson(this);
+  Map<String, dynamic> toJson() => _$ChurchServiceToJson(this);
 }
 
 @JsonSerializable()
 class ChurchServiceSubtype {
-  ChurchServiceSubtype({this.infoText, this.formFields, this.thankYouText});
+  ChurchServiceSubtype(
+      {this.subTypeName, this.infoText, this.formFields, this.thankYouText});
 
+  final String subTypeName;
   final String infoText;
   final List<ChurchFormField> formFields;
   final String thankYouText;

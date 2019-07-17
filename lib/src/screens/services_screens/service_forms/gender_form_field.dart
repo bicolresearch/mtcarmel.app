@@ -7,7 +7,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/models/church_service_type.dart';
+import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_dropodown_form_common.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';

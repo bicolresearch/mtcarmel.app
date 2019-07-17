@@ -7,14 +7,15 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/models/church_service_type.dart';
+import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_common.dart';
 
 class ServicePlainTextField extends ServiceFormCommon
     implements ServiceFormAbstract {
-  ServicePlainTextField({churchFormField}) : super(churchFormField: churchFormField);
+  ServicePlainTextField({churchFormField})
+      : super(churchFormField: churchFormField);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,8 @@ class ServicePlainTextField extends ServiceFormCommon
           FormBuilderTextField(
             attribute: churchFormField.attribute,
             decoration: InputDecoration(
-                helperStyle: Theme.of(context).primaryTextTheme.subtitle,),
+                helperStyle: Theme.of(context).primaryTextTheme.subtitle),
+            keyboardType: TextInputType.multiline,
             validators: _validators(),
             style: Theme.of(context).primaryTextTheme.title,
             textAlign: TextAlign.center,
