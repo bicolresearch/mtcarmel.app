@@ -1,6 +1,6 @@
 /*
 *  Filename    :   user_profile.dart
-*  Purpose     :	 Model for user profile
+*  Purpose     :	  Model for user profile
 *  Created     :   2019-07-11 16:04 by Detective Conan
 *  Updated     :   2019-07-11 16:04 by Detective Conan
 *  Changes     :

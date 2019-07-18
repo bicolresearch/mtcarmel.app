@@ -76,10 +76,12 @@ class ServiceFormScreen extends StatelessWidget {
               onPressed: () async {
                 //TODO implement validations and updating database
                 final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ThankYouScreen(
-                            thankYouText: serviceSubType.thankYouText)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ThankYouScreen(
+                        thankYouText: serviceSubType.thankYouText),
+                  ),
+                );
                 if (result) Navigator.pop(context, true);
               },
             ),

@@ -24,6 +24,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/location_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
+import 'package:mt_carmel_app/src/screens/sign_up_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
@@ -322,8 +323,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 10.0,
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 print("Sign-up pressed");
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignUpScreen(),
+                  ),
+                );
+                if (result) print("Signup successful");
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
