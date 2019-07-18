@@ -1,13 +1,14 @@
 /*
-*	 Filename		 :	services_screen.dart
-*	 Purpose		 :	Displays the list of the services of the church
-*  Created		 :  2019-06-11 15:52:50 by Detective Conan
-*  Updated     :   2019-07-12 16:50 by Detective conan
-*  Changes     :   Pass the context to the header and serviceTile
+*	 Filename		  :	  services_screen.dart
+*	 Purpose		  :	  Displays the list of the services of the church
+*  Created		  :   2019-06-11 15:52:50 by Detective Conan
+*	 Updated			:   18/07/2019 1:45 PM PM by Detective Conan
+*	 Changes			:   Added temporary join service navigation.
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
+import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens//services_screens/passing_screens/passing.dart';
@@ -18,6 +19,7 @@ import 'package:mt_carmel_app/src/screens/services_screens/event_screen/event.da
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/join_us.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/make_request.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_type_screen.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
@@ -185,7 +187,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget _navigateToService(ServiceItem serviceItem) {
     switch (serviceItem.name) {
       case ServicesScreen.JOIN_US:
-        return JoinUs(serviceItem: serviceItem);
+        //TODO for the current model
+      ChurchService churchService = JoinUs.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: churchService);
       case ServicesScreen.MAKE_REQUEST:
         return MakeRequest1(serviceItem: serviceItem);
       case ServicesScreen.BAPTISM:

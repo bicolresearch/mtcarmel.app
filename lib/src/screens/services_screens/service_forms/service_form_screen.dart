@@ -21,6 +21,7 @@ class ServiceFormScreen extends StatelessWidget {
 
   ServiceFormScreen({this.serviceSubType});
 
+  @required
   final ChurchServiceSubtype serviceSubType;
 
   @override

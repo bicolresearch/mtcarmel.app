@@ -6,6 +6,7 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 
 class ServiceInfoScreen extends StatelessWidget {
+  @required
   final ChurchServiceSubtype churchServiceSubtype;
 
   const ServiceInfoScreen({Key key, this.churchServiceSubtype})

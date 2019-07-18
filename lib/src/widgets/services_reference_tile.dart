@@ -10,7 +10,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
-import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
@@ -56,27 +55,4 @@ Widget serviceReferenceTile(BuildContext context, ServiceReference serviceRefere
   );
 }
 
-IconData _serviceIcon(String serviceName) {
-  switch (serviceName) {
-    case AppConstants.JOIN_US:
-      return MountCarmelIcons.joinus;
-    case AppConstants.MAKE_REQUEST:
-      return MountCarmelIcons.makearequest;
-    case AppConstants.BAPTISM:
-      return MountCarmelIcons.baptism;
-    case AppConstants.COMMUNION:
-      return MountCarmelIcons.communion;
-    case AppConstants.CONFIRMATION:
-      return MountCarmelIcons.confirmation;
-    case AppConstants.WEDDING:
-      return MountCarmelIcons.marriage;
-    case AppConstants.PASSING:
-      return MountCarmelIcons.passing;
-    case AppConstants.JOIN_US:
-      return MountCarmelIcons.joinus;
-    case AppConstants.EVENTS:
-      return MountCarmelIcons.events;
-    default:
-      return MountCarmelIcons.logo;
-  }
-}
+

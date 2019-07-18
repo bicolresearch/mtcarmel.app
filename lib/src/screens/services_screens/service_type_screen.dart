@@ -10,66 +10,15 @@ import 'package:mt_carmel_app/src/widgets/services_reference_tile.dart';
 import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
 class ServiceTypeScreen extends StatelessWidget {
+
+  @required
+  final ChurchService churchService;
+
+  const ServiceTypeScreen({Key key, this.churchService}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    //TODO temporary replace with actual data
-    final ServiceReference serviceReference = ServiceReference(
-        "1",
-        "QC",
-        "Prayer Request",
-        "Be closer to God with the help of the church through prayers, holy masses and liturgy",
-        "https://api.mountcarmel.ph/public/assets/images/icons/makearequest1.png");
-    final ChurchServiceSubtype _makeRequest = ChurchServiceSubtype(
-      infoText:
-          "<p>Be closer to God with the help of the church through prayers, holy masses and liturgy</p>",
-      subTypeName: "Make request",
-      formFields: [
-        ChurchFormField(
-          attribute: "plain_text",
-          textFieldType: "plain_text",
-          labelText: "First name",
-          validators: ChurchFormValidators(
-              isRequired: "true", errorText: "must not empty"),
-        ),
-        ChurchFormField(
-            attribute: "gender",
-            textFieldType: "gender_selection",
-            hint: "Select gender",
-            labelText: "Gender",
-            validators: ChurchFormValidators(errorText: "choose gender"),
-            selections: ["male", "female"]),
-      ],
-    );
 
-    final ChurchServiceSubtype _prayerRequest = ChurchServiceSubtype(
-      infoText:
-          "<p>Be closer to God with the help of the church through prayers, holy masses and liturgy</p>",
-      subTypeName: "Prayer request",
-      formFields: [
-        ChurchFormField(
-          attribute: "plain_text",
-          textFieldType: "multiline",
-          labelText: "Write here...",
-          validators: ChurchFormValidators(
-              isRequired: "true", errorText: "must not empty"),
-        ),
-        ChurchFormField(
-            attribute: "gender",
-            textFieldType: "gender_selection",
-            hint: "Select gender",
-            labelText: "Gender",
-            validators: ChurchFormValidators(errorText: "choose gender"),
-            selections: ["male", "female"]),
-      ],
-    );
-
-    final ChurchService churchService = ChurchService(
-      serviceReference: serviceReference,
-      typeName: "Make request",
-      description:
-          "Be closer to God with the help of the church through prayers, holy masses and liturgy",
-      churchServiceSubtypes: [_makeRequest, _prayerRequest],
-    );
     return Material(
       child: Scaffold(
         body: Padding(
@@ -80,7 +29,6 @@ class ServiceTypeScreen extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-//                ////////
               serviceReferenceTile(context, churchService.serviceReference),
               SizedBox(
                 height: 10.0,
