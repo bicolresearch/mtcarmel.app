@@ -55,26 +55,26 @@ class ServiceMultilineTextField extends ServiceFormCommon
     if (churchFormField.validators.isRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (churchFormField.validators.isNumeric != null &&
-        churchFormField.validators.isNumeric.isNotEmpty)
+    if (churchFormField.validators.isNumeric != null
+    )
       validators.add(FormBuilderValidators.numeric());
-    if (churchFormField.validators.minValue != null &&
-        churchFormField.validators.minValue.isNotEmpty)
+    if (churchFormField.validators.minValue != null
+    )
       try {
         validators.add(FormBuilderValidators.min(
             int.tryParse(churchFormField.validators.minValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (churchFormField.validators.maxValue != null &&
-        churchFormField.validators.maxValue.isNotEmpty)
+    if (churchFormField.validators.maxValue != null
+    )
       try {
         validators.add(FormBuilderValidators.max(
             int.tryParse(churchFormField.validators.maxValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (churchFormField.validators.errorText.isNotEmpty)
+    if (churchFormField.validators.errorText != null)
       validators.add(FormBuilderValidators.required(
           errorText: churchFormField.validators.errorText));
 
