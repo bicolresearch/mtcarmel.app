@@ -29,7 +29,7 @@ class UserProfile {
       this.country,
       this.mobile,
       this.landLine,
-      this.coverPhoto);
+      this.avatar);
 
   final String id;
   @JsonKey(name: "branch_id")
@@ -56,8 +56,8 @@ class UserProfile {
   final String mobile;
   @JsonKey(name: "landline")
   final String landLine;
-  @JsonKey(name: "cover_photo")
-  final String coverPhoto;
+  @JsonKey(name: "avatar")
+  final String avatar;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
       _$UserProfileFromJson(json);

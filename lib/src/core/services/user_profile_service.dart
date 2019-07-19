@@ -15,17 +15,11 @@ import 'package:mt_carmel_app/src/models/user_profile.dart';
 class UserProfileService {
   Future<UserProfile> getUserProfile(String id) async {
     UserProfile _userProfile;
-    await http.get(AppConstants.USER_PROFILE_JSON).then((result) {
+    await http.get(AppConstants.USER_PROFILE_JSON + id).then((result) {
       if (result.statusCode == 200) {
-        List<UserProfile> userProfileList = (json.decode(result.body) as List)
-            .map((data) => new UserProfile.fromJson(data))
-            .toList();
-        try {
-          _userProfile =
-              userProfileList.firstWhere((user) => user.id == id ?? "");
-        } catch (e) {
-          print(e);
-        }
+        final body = json.decode(result.body);
+        _userProfile =
+            UserProfile.fromJson(body);
       } else {
         print(result.statusCode);
       }

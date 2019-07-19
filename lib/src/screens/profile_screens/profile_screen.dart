@@ -432,13 +432,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _userHeader() {
-    final userPhotoSuffix = _userProfile?.coverPhoto ?? "";
+    final userPhotoSuffix = _userProfile?.avatar ?? "";
 
     var imageUrl;
     if (userPhotoSuffix == null || userPhotoSuffix == "")
       imageUrl = "";
     else
-      imageUrl = AppConstants.API_BASE_URL + _userProfile.coverPhoto;
+      imageUrl = AppConstants.API_BASE_URL + _userProfile.avatar;
 
     return Container(
       height: 100,
@@ -712,7 +712,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _currentProfileFilter = ProfileFilter.User;
         await locator<AuthenticationService>().getUserId().then((id) async {
           await locator<UserProfileService>().getUserProfile(id).then((user) {
-            print(_userProfile);
             _userProfile = user;
           });
           _isLoading = false;
@@ -734,7 +733,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return crypto.sha512(text);
   }
 
-  validate(String email, String password) {
+  validate(String email, String password) async {
     if (email.isEmpty ||
         password.isEmpty ||
         !email.contains("@") ||
@@ -745,10 +744,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //      });
       return;
     }
-    locator<LoginModel>()
+    await locator<LoginModel>()
         .login(email, _encrypted(password))
         .then((value) async {
-      print(value);
+      print("print(value); $value");
       _isLoggedIn = value;
       if (_isLoggedIn) {
         await locator<AuthenticationService>().getUserId().then((id) async {

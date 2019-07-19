@@ -15,10 +15,11 @@ import 'package:mt_carmel_app/src/models/user_authentication.dart';
 class UserAuthenticationApi {
   UserAuthentication _userAuthentication;
 
-  Future<bool> validateEmailPassword(String email, String password) {
-    var isValid = _isValid(email, password).then((value) {
+  Future<bool> validateEmailPassword(String email, String password) async {
+    var isValid;
+    await _isValid(email, password).then((value) {
+      isValid = value;
       if (_userAuthentication != null) {
-        print(_userAuthentication.id);
         return ((_userAuthentication.username + _userAuthentication.password) ==
             (email + password));
       } else {
@@ -27,14 +28,14 @@ class UserAuthenticationApi {
     }).catchError((e) {
       return false;
     });
-    return isValid;
+    return isValid != null;
   }
 
   Future<bool> _isValid(String email, String password) async {
     var valid;
     await http
         .get(AppConstants.API_BASE_URL +
-            "/auth/auth/" +
+            "auth/login/" +
             "username/" +
             email +
             "/password/" +
@@ -48,7 +49,7 @@ class UserAuthenticationApi {
         print(value.statusCode);
       }
     }).timeout(Duration(seconds: 5));
-    return valid != null;
+    return (valid != null && valid);
   }
 
   get userAuthentication => _userAuthentication;

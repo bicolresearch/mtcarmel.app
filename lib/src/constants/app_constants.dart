@@ -21,7 +21,7 @@ class AppConstants {
   static const String API_BASE_URL = "https://api.mountcarmel.ph/";
 
   static const String USER_PROFILE_JSON =
-      "https://api.mountcarmel.ph/user_profile";
+      "https://api.mountcarmel.ph/users/user/id/";
 
   static const String BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
   static const String KJV_TRANSLATION_PATH = 'tranlation=kjv';

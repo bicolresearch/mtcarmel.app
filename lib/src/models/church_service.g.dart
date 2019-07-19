@@ -8,10 +8,10 @@ part of 'church_service.dart';
 
 ChurchService _$ChurchServiceFromJson(Map<String, dynamic> json) {
   return ChurchService(
-      serviceReference: json['serviceRefernce'] == null
+      serviceReference: json['serviceReference'] == null
           ? null
           : ServiceReference.fromJson(
-              json['serviceRefernce'] as Map<String, dynamic>),
+              json['serviceReference'] as Map<String, dynamic>),
       churchServiceSubtypes: (json['churchServiceSubtypes'] as List)
           ?.map((e) => e == null
               ? null
@@ -23,7 +23,7 @@ ChurchService _$ChurchServiceFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ChurchServiceToJson(ChurchService instance) =>
     <String, dynamic>{
-      'serviceRefernce': instance.serviceReference,
+      'serviceReference': instance.serviceReference,
       'typeName': instance.typeName,
       'description': instance.description,
       'churchServiceSubtypes': instance.churchServiceSubtypes

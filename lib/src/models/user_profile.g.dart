@@ -24,7 +24,7 @@ UserProfile _$UserProfileFromJson(Map<String, dynamic> json) {
       json['country'] as String,
       json['mobile'] as String,
       json['landline'] as String,
-      json['cover_photo'] as String);
+      json['avatar'] as String);
 }
 
 Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
@@ -45,5 +45,5 @@ Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
       'country': instance.country,
       'mobile': instance.mobile,
       'landline': instance.landLine,
-      'cover_photo': instance.coverPhoto
+      'avatar': instance.avatar
     };
