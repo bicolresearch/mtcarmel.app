@@ -28,12 +28,12 @@ class ServiceFormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
+        margin: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+              padding: const EdgeInsets.symmetric(vertical: 30.0),
               child: Text(
                 serviceSubType.subTypeName,
                 style: Theme.of(context)

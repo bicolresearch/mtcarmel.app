@@ -6,19 +6,8 @@
 *  Changes     :   Static
 */
 
-import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/prayer_request_info.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/mass_request_info.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/liturgical_service_info.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/certification_info.dart';
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:mt_carmel_app/src/widgets/line.dart';
-import 'package:mt_carmel_app/src/widgets/service_specific.dart';
-import 'package:mt_carmel_app/src/widgets/services_header.dart';
-import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 
 class MakeRequest {
   const MakeRequest({this.serviceItem});
