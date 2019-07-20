@@ -34,12 +34,14 @@ class ServiceInfoScreen extends StatelessWidget {
               lineWidget(),
               SizedBox(height: 30.0),
               Expanded(
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: HtmlTextView(
-                    data:
-                        "<div style='color: #5d4037'>${churchServiceSubtype.infoText}</div>",
-                    anchorColor: Color(0xFFFF0000),
+                child: SingleChildScrollView(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: HtmlTextView(
+                      data:
+                          "<div style='color: #5d4037'>${churchServiceSubtype.infoText}</div>",
+                      anchorColor: Color(0xFFFF0000),
+                    ),
                   ),
                 ),
               ),

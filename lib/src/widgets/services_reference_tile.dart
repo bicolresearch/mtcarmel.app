@@ -13,7 +13,8 @@ import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
-Widget serviceReferenceTile(BuildContext context, ServiceReference serviceReference) {
+Widget serviceReferenceTile(
+    BuildContext context, ServiceReference serviceReference) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Row(
@@ -24,11 +25,11 @@ Widget serviceReferenceTile(BuildContext context, ServiceReference serviceRefere
             height: 60.0,
             child: CachedNetworkImage(
                 key: Key(serviceReference.coverPhoto.replaceAll("/", "")),
-                imageUrl: AppConstants.API_BASE_URL + serviceReference.coverPhoto,
+                imageUrl:
+                    AppConstants.API_BASE_URL + serviceReference.coverPhoto,
                 placeholder: (context, url) => LoadingIndicator(),
-                errorWidget: (context, url, error) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(MountCarmelIcons.services)),
+                errorWidget: (context, url, error) =>
+                    Icon(MountCarmelIcons.services),
                 fit: BoxFit.cover),
           ),
         ),
@@ -54,5 +55,3 @@ Widget serviceReferenceTile(BuildContext context, ServiceReference serviceRefere
     ),
   );
 }
-
-
