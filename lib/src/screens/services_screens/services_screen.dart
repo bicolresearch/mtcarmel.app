@@ -15,7 +15,7 @@ import 'package:mt_carmel_app/src/screens//services_screens/passing_screens/pass
 import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/baptism.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/communion.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/confirmation_screens/confirmation.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/event_screen/event.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/event_screen/church_event.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/join_us.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/make_request.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage.dart';
@@ -220,7 +220,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
         _churchService = Passing.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.EVENTS:
-        return Events(serviceItem: serviceItem);
+      //TODO for the current model
+        _churchService = ChurchEvent.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: _churchService);
     }
     return NoService(serviceItem: serviceItem);
   }
