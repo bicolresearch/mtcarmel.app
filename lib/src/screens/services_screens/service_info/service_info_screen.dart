@@ -1,3 +1,11 @@
+/*
+*  Filename    :   service_info_screen.dart
+*  Purpose     :   Displays the service info
+*  Created     :   2019-07-22 09:21 by Detective Conan
+*  Updated     :   2019-07-22 09:21 by Detective Conan
+*  Changes     :   
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
