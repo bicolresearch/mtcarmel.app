@@ -1,3 +1,11 @@
+/*
+*  Filename    :   service_dropdown_form_common.dart
+*  Purpose     :   
+*  Created     :   2019-07-22 15:05 by Detective Conan
+*  Updated     :   2019-07-22 15:05 by Detective Conan 
+*  Changes     :   
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
@@ -11,10 +19,12 @@ class ServiceDropdownFormCommon extends ServiceFormCommon {
     return FormBuilderDropdown(
       style: Theme.of(context).primaryTextTheme.caption,
       attribute: super.churchFormField.attribute,
-      hint: Text(
-        churchFormField.hint,
-        style: Theme.of(context).primaryTextTheme.title,
-      ),
+      hint: (churchFormField.hint == null)
+          ? Container()
+          : Text(
+              churchFormField.hint,
+              style: Theme.of(context).primaryTextTheme.subhead,
+            ),
       validators: _validators(),
       items: dropDownList
           .map(
@@ -22,7 +32,7 @@ class ServiceDropdownFormCommon extends ServiceFormCommon {
               value: item,
               child: Text(
                 "$item",
-                style: Theme.of(context).primaryTextTheme.title,
+                style: Theme.of(context).primaryTextTheme.subhead,
               ),
             ),
           )
@@ -38,7 +48,7 @@ class ServiceDropdownFormCommon extends ServiceFormCommon {
     if (super.churchFormField.validators.isRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (super.churchFormField.validators.errorText.isNotEmpty)
+    if (super.churchFormField.validators.errorText != null)
       validators.add(FormBuilderValidators.required(
           errorText: super.churchFormField.validators.errorText));
 

@@ -1,20 +1,20 @@
 /*
-*  Filename    :   gender_form_field.dart
-*  Purpose     :	 FormField for gender
-*  Created     :   2019-07-15 17:48 by Detective Conan
-*  Updated     :   2019-07-22 15:06 by Detective conan
-*  Changes     :   removed the guad for no selection defined.
+*  Filename    :   yes_no_form_field.dart
+*  Purpose     :	 Dropdown for yes or no field
+*  Created     :   2019-07-22 14:14 by Detective Conan
+*  Updated     :   2019-07-22 14:14 by Detective Conan 
+*  Changes     :
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_dropdown_form_common.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
 
-class GenderFormField extends ServiceDropdownFormCommon
+class YesNoFormField extends ServiceDropdownFormCommon
     implements ServiceFormAbstract {
-  final _list = ["Male", "Female"];
+  final _list = ["Yes", "No"];
 
-  GenderFormField({churchFormField}) : super(churchFormField: churchFormField);
+  YesNoFormField({churchFormField}) : super(churchFormField: churchFormField);
 
   @override
   Widget build(BuildContext context) {

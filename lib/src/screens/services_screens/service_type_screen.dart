@@ -1,13 +1,20 @@
+/*
+*  Filename    :   service_type_screen.dart
+*  Purpose     :   Displays the subtypes of service selected
+*  Created     :   2019-07-22 15:12 by Detective Conan
+*  Updated     :   2019-07-22 15:12 by Detective Conan
+*  Changes     :
+*/
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
-import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_info/service_info_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_reference_tile.dart';
-import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
+
 
 class ServiceTypeScreen extends StatelessWidget {
 
@@ -56,10 +63,7 @@ class ServiceTypeScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(bottom: 30.0),
-                child: leftArrowBackButton(context: context),
-              )
+              leftArrowBackButton(context: context),
             ],
           ),
         ),
