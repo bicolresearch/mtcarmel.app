@@ -2,8 +2,8 @@
 *  Filename    :   service_plain_text_field.dart
 *  Purpose     :	 Use for the plain text form field
 *  Created     :   2019-07-15 16:18 by Detective Conan
-*  Updated     :   2019-07-15 16:18 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-07-22 10:09 by Detective conan
+*  Changes     :   Fixed the validator for numeric.
 */
 
 import 'package:flutter/material.dart';
@@ -53,13 +53,11 @@ class ServicePlainTextField extends ServiceFormCommon
       validators.add(FormBuilderValidators.required());
 
     if (churchFormField.validators.isNumeric != null
-//        &&
-//        churchFormField.validators.isNumeric.isNotEmpty
+        &&
+        churchFormField.validators.isNumeric == "true"
     )
       validators.add(FormBuilderValidators.numeric());
     if (churchFormField.validators.minValue != null
-//        &&
-//        churchFormField.validators.minValue.isNotEmpty
     )
       try {
         validators.add(FormBuilderValidators.min(
@@ -68,8 +66,6 @@ class ServicePlainTextField extends ServiceFormCommon
         print("not an integer");
       }
     if (churchFormField.validators.maxValue != null
-//        &&
-//        churchFormField.validators.maxValue.isNotEmpty
     )
       try {
         validators.add(FormBuilderValidators.max(
@@ -78,8 +74,6 @@ class ServicePlainTextField extends ServiceFormCommon
         print("not an integer");
       }
     if (churchFormField.validators.errorText != null
-//        &&
-//        churchFormField.validators.errorText.isNotEmpty
     )
       validators.add(FormBuilderValidators.required(
           errorText: churchFormField.validators.errorText));

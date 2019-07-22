@@ -171,7 +171,7 @@ class Baptism {
 
     final ChurchFormField baptismFormField14 = ChurchFormField(
       attribute: "place_of_marriage",
-      labelText: "Place Marriage",
+      labelText: "Place of Marriage",
       validators: validatorsPlainRequired,
       textFieldType: "plain_text",
     );
