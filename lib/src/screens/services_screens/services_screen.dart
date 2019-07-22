@@ -199,7 +199,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
         ChurchService churchService = Baptism.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: churchService);
       case ServicesScreen.COMMUNION:
-        return Communion(serviceItem: serviceItem);
+      //TODO for the current model
+        ChurchService churchService = Communion.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: churchService);
       case ServicesScreen.CONFIRMATION:
         return Confirmation(serviceItem: serviceItem);
       case ServicesScreen.WEDDING:
