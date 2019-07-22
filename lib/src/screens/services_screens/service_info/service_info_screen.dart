@@ -22,63 +22,61 @@ class ServiceInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        body: Container(
-          margin: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30.0),
-                child: Text(
-                  churchServiceSubtype.subTypeName,
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .headline
-                      .copyWith(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+    return Scaffold(
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30.0),
+              child: Text(
+                churchServiceSubtype.subTypeName,
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .headline
+                    .copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
-              lineWidget(),
-              SizedBox(height: 30.0),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: HtmlTextView(
-                      data:
-                          "<div style='color: #5d4037'>${churchServiceSubtype.infoText}</div>",
-                      anchorColor: Color(0xFFFF0000),
-                    ),
+            ),
+            lineWidget(),
+            SizedBox(height: 30.0),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: HtmlTextView(
+                    data:
+                        "<div style='color: #5d4037'>${churchServiceSubtype.infoText}</div>",
+                    anchorColor: Color(0xFFFF0000),
                   ),
                 ),
               ),
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      color: Colors.brown,
-                      child: Text(
-                        "Accept",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () async {
-                        final result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ServiceFormScreen(
-                                    serviceSubType: churchServiceSubtype)));
-                        if (result) Navigator.pop(context, true);
-                      },
+            ),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Accept",
+                      style: TextStyle(color: Colors.white),
                     ),
-                    leftArrowBackButton(context: context),
-                  ],
-                ),
+                    onPressed: () async {
+                      final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ServiceFormScreen(
+                                  serviceSubType: churchServiceSubtype)));
+                      if (result) Navigator.pop(context, true);
+                    },
+                  ),
+                  leftArrowBackButton(context: context),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -2,16 +2,13 @@
 *  Filename    :   gender_form_field.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 17:48 by Detective Conan
-*	 Updated			:   16/07/2019 2:18 PM PM by Detective Conan
-*	 Changes			:   Moved the other method to ServiceDropdownFormCommon class.
+*  Updated     :   2019-07-22 12:17 by Detective conan
+*  Changes     :   Removed unused imports.
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_dropodown_form_common.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_common.dart';
 
 class GenderFormField extends ServiceDropdownFormCommon
     implements ServiceFormAbstract {

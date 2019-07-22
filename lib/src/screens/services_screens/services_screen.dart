@@ -53,6 +53,8 @@ class ServicesScreen extends StatefulWidget {
 class _ServicesScreenState extends State<ServicesScreen> {
   ScrollController _scrollController;
 
+  ChurchService _churchService;
+
   List<ServiceItem> _serviceItemList = [];
 
   bool _isLoading = true;
@@ -118,6 +120,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   void dispose() {
     print("disposing servicesScreen...");
     _scrollController.dispose();
+    _churchService = null;
     super.dispose();
   }
 
@@ -188,20 +191,20 @@ class _ServicesScreenState extends State<ServicesScreen> {
     switch (serviceItem.name) {
       case ServicesScreen.JOIN_US:
         //TODO for the current model
-      ChurchService churchService = JoinUs.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: churchService);
+        _churchService = JoinUs.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.MAKE_REQUEST:
-      //TODO for the current model
-        ChurchService churchService = MakeRequest.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: churchService);
+        //TODO for the current model
+        _churchService = MakeRequest.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.BAPTISM:
-      //TODO for the current model
-        ChurchService churchService = Baptism.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: churchService);
+        //TODO for the current model
+        _churchService = Baptism.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.COMMUNION:
-      //TODO for the current model
-        ChurchService churchService = Communion.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: churchService);
+        //TODO for the current model
+        _churchService = Communion.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.CONFIRMATION:
         return Confirmation(serviceItem: serviceItem);
       case ServicesScreen.WEDDING:
@@ -297,23 +300,22 @@ class NoService extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Column(
-        children: <Widget>[
-          Spacer(),
-          Text(
-            "No service for ${serviceItem.name}",
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subhead,
-          ),
-          Spacer(),
-          Container(
-            margin: EdgeInsets.only(bottom: 30.0),
-            child: leftArrowBackButton(context: context),
-          )
-        ],
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Spacer(),
+            Text(
+              "No service for ${serviceItem.name}",
+              style: Theme.of(context).primaryTextTheme.subhead,
+            ),
+            Spacer(),
+            Container(
+              margin: EdgeInsets.only(bottom: 30.0),
+              child: leftArrowBackButton(context: context),
+            )
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
