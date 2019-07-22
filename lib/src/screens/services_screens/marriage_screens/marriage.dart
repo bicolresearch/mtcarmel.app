@@ -1,20 +1,13 @@
 /*
 *  Filename    :   marriage.dart
-*  Purpose     :
+*  Purpose     :    Temporary
 *  Created     :   2019-07-12 16:52 by Detective Conan
 *  Updated     :   2019-07-12 16:52 by Detective Conan
-*  Changes     :   Pass the context to the header and serviceTile
+*  Changes     :   Temporary
 */
 
-import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage_info.dart';
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:mt_carmel_app/src/widgets/line.dart';
-import 'package:mt_carmel_app/src/widgets/service_specific.dart';
-import 'package:mt_carmel_app/src/widgets/services_header.dart';
-import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 ////
 class Marriage {
 

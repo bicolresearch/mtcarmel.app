@@ -4,12 +4,13 @@
 *                  to be used.
 *  Created     :   2019-07-15 17:02 by Detective Conan
 *	 Updated			:   16/07/2019 2:23 PM PM by Detective Conan
-*	 Changes			:   Changed the constructor. The ChurchFormField is now in
-*	                 serviceFormCommon class
+*  Updated     :   2019-07-22 15:37 by Detective conan
+*  Changes     :   Added civil status dropdown
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/civil_status_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_multiline_text_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_plain_text_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/yes_no_form_field.dart';
@@ -36,6 +37,8 @@ class ServiceFormField extends StatelessWidget {
       return ServiceMultilineTextField(churchFormField: churchFormField);
     else if (churchFormField.textFieldType == "yes_no")
       return YesNoFormField(churchFormField: churchFormField);
+    else if (churchFormField.textFieldType == "civil_status")
+      return CivilStatusFormField(churchFormField: churchFormField);
 //    else if(_churchFormField.textFieldType == "nationality_selection")
 //    else if(_churchFormField.textFieldType == "religion_selection")
 //    else if(_churchFormField.textFieldType == "marital_selection")

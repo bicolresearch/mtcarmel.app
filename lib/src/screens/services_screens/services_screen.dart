@@ -216,7 +216,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
         _churchService = Marriage.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.PASSING:
-        return Passing(serviceItem: serviceItem);
+      //TODO for the current model
+        _churchService = Passing.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.EVENTS:
         return Events(serviceItem: serviceItem);
     }
