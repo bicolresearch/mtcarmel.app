@@ -24,7 +24,9 @@ Widget serviceReferenceTile(
           child: Container(
             height: 60.0,
             child: CachedNetworkImage(
-                key: Key(serviceReference.coverPhoto.replaceAll("/", "")),
+                key: Key(serviceReference.coverPhoto
+                    .replaceAll("/", "")
+                    .replaceAll(".", "")),
                 imageUrl:
                     AppConstants.API_BASE_URL + serviceReference.coverPhoto,
                 placeholder: (context, url) => LoadingIndicator(),

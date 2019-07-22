@@ -10,12 +10,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'church_service.g.dart';
 
-//"1",
-//"QC",
-//"Prayer Request",
-//"Be closer to God with the help of the church through prayers, holy masses and liturgy",
-//"https://api.mountcarmel.ph/public/assets/images/icons/makearequest1.png");
-
 @JsonSerializable()
 class ChurchService {
   final ServiceReference serviceReference;

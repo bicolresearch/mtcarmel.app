@@ -246,7 +246,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   width: double.infinity,
                   height: 260,
                   child: CachedNetworkImage(
-                      key: Key(url.replaceAll("/", "")),
+                      key: Key(url.replaceAll("/", "").replaceAll(".", "")),
                       imageUrl: url,
                       placeholder: (context, url) => LoadingIndicator(),
                       errorWidget: (context, url, error) =>
@@ -259,8 +259,9 @@ class _FeedScreenState extends State<FeedScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: SingleChildScrollView(
                   child: HtmlTextView(
-                      data: "<div style='color: #5d4037; overflow-y: hidden'>${postData.content}</div>",
-                    ),
+                    data:
+                        "<div style='color: #5d4037; overflow-y: hidden'>${postData.content}</div>",
+                  ),
                 ),
               ),
             ],

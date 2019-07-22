@@ -175,12 +175,14 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   Widget _serviceItem(context, ServiceItem serviceItem) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => _navigateToService(serviceItem),
-            ));
+      onTap: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => _navigateToService(serviceItem),
+          ),
+        );
+        _churchService = null;
       },
       // TODO tobe refactor for dynamic forms and tabs
       child: serviceTile(context, serviceItem),
@@ -206,7 +208,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
         _churchService = Communion.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.CONFIRMATION:
-        return Confirmation(serviceItem: serviceItem);
+      //TODO for the current model
+        _churchService = Confirmation.getChurchService(serviceItem);
+        return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.WEDDING:
         return Marriage(serviceItem: serviceItem);
       case ServicesScreen.PASSING:

@@ -56,7 +56,9 @@ class FeedDetailScreen extends StatelessWidget {
                         height: 250,
                         child: CachedNetworkImage(
                             key: Key(AppConstants.API_BASE_URL +
-                                postData.coverPhoto.replaceAll("/", "")),
+                                postData.coverPhoto
+                                    .replaceAll("/", "")
+                                    .replaceAll("", "")),
                             imageUrl:
                                 AppConstants.API_BASE_URL + postData.coverPhoto,
                             placeholder: (context, url) => LoadingIndicator(),

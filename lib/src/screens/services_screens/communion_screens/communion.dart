@@ -10,9 +10,6 @@ import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 
 class Communion {
-  const Communion({this.serviceItem});
-
-  final ServiceItem serviceItem;
 
   static dynamic getChurchService(ServiceItem serviceItem) {
     final ServiceReference serviceReference = ServiceReference(
