@@ -1,22 +1,13 @@
 /*
 *	 Filename		 :	 baptism.dart
-*	 Purpose		 :
+*	 Purpose		 :    Temporary
 *  Created		 :   2019-06-13 19:36:12 by Scarlet Witch
 *  Updated     :   2019-07-15 09:42 by Detective conan
-*  Changes     :   Replaced the textStyle constants with Inherited provider
+*  Changes     :   Temporary
 */
 
-import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/individual_info.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/community_info.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/adult_info.dart';
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:mt_carmel_app/src/widgets/line.dart';
-import 'package:mt_carmel_app/src/widgets/service_specific.dart';
-import 'package:mt_carmel_app/src/widgets/services_header.dart';
-import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 ////
 class Baptism {
   const Baptism({this.serviceItem});
