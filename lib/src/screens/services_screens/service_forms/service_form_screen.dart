@@ -2,9 +2,8 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*	 Updated			:   17/07/2019 12:09 PM PM by Detective Conan
-*	 Changes			:   Added navigation to thank you screen.
-*	                 Added back button and subtype name.
+*  Updated     :   2019-07-22 08:54 by Detective conan
+*  Changes     :   Added padding for formFields
 */
 
 import 'package:flutter/material.dart';
@@ -51,14 +50,17 @@ class ServiceFormScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    FormBuilder(
-                      key: _fbKey,
-                      autovalidate: true,
-                      child: Column(
-                        children: <Widget>[
-                          for (var formField in serviceSubType.formFields)
-                            ServiceFormField(churchFormField: formField),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: FormBuilder(
+                        key: _fbKey,
+                        autovalidate: true,
+                        child: Column(
+                          children: <Widget>[
+                            for (var formField in serviceSubType.formFields)
+                              ServiceFormField(churchFormField: formField),
+                          ],
+                        ),
                       ),
                     ),
                   ],
