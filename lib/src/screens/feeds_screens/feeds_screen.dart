@@ -2,14 +2,13 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-07-22 09:44 by Detective conan
-*  Changes     :   Fixed the html tags of post description.
-*                  Show description as HtmlView and scrollable.
+*  Updated     :   2019-07-23 12:57 by Detective conan
+*  Changes     :   Put ellipsis on overflow of post description
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html_textview_render/html_text_view.dart';
+import 'package:html2md/html2md.dart' as html2md;
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/post_service.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
@@ -26,8 +25,6 @@ import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedScreen extends StatefulWidget {
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   FeedScreen(BuildContext context);
 
@@ -258,9 +255,11 @@ class _FeedScreenState extends State<FeedScreen> {
                 height: 50.0,
                 padding: const EdgeInsets.all(8.0),
                 child: SingleChildScrollView(
-                  child: HtmlTextView(
-                    data:
-                        "<div style='color: #5d4037; overflow-y: hidden'>${postData.content}</div>",
+                  child: Text(
+                    html2md.convert(postData.content),
+                    style: Theme.of(context).primaryTextTheme.subhead,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                 ),
               ),
