@@ -63,7 +63,7 @@ class Communion {
       attribute: "birthdate",
       labelText: "Date of Birth",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField firstCommunionFormField3 = ChurchFormField(
@@ -77,7 +77,7 @@ class Communion {
       attribute: "date_of_baptism",
       labelText: "Date of Baptism",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField firstCommunionFormField5 = ChurchFormField(
@@ -158,7 +158,7 @@ class Communion {
       attribute: "birthdate_of_communicant",
       labelText: "Communicant's Date of Birth",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField communionOfTheSickFormField3 = ChurchFormField(
@@ -172,7 +172,7 @@ class Communion {
       attribute: "spouse_birthdate",
       labelText: "Spuse Date of Birth",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField communionOfTheSickFormField5 = ChurchFormField(
@@ -186,21 +186,23 @@ class Communion {
       attribute: "church_marriage_date",
       labelText: "Date of Church Marriage",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField communionOfTheSickFormField7 = ChurchFormField(
       attribute: "last_confession",
       labelText: "Date of Last Confession",
-      validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+//      validators: validatorsPlainRequired,
+      textFieldType: "date",
+      value: "n/a"
     );
 
     final ChurchFormField communionOfTheSickFormField8 = ChurchFormField(
       attribute: "preferred_time_of_visit",
       labelText: "Preferred Time of Visit",
-      validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+//      validators: validatorsPlainRequired,
+      textFieldType: "time",
+      value: "n/a"
     );
 
     final ChurchFormField communionOfTheSickFormField9 = ChurchFormField(

@@ -56,13 +56,13 @@ class Passing {
         attribute: "birthdate",
         labelText: "Date of Birth",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField funeralServiceFormField4 = ChurchFormField(
         attribute: "death_date",
         labelText: "Date of Death",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField funeralServiceFormField5 = ChurchFormField(
         attribute: "cause_of_death",
@@ -86,7 +86,7 @@ class Passing {
         attribute: "date_of_service",
         labelText: "Date of Service",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField funeralServiceFormField9 = ChurchFormField(
         attribute: "time_of_service",
@@ -98,7 +98,7 @@ class Passing {
         attribute: "internment_date",
         labelText: "Date of Internment or Inurment",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField funeralServiceFormField11 = ChurchFormField(
         attribute: "internment_place",
@@ -227,13 +227,13 @@ class Passing {
         attribute: "birthdate",
         labelText: "Date of Birth",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField funeralChapelFormField6 = ChurchFormField(
         attribute: "death_date",
         labelText: "Date of Death",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField funeralChapelFormField7 = ChurchFormField(
         attribute: "cause_of_death",
@@ -245,7 +245,7 @@ class Passing {
         attribute: "burial_date",
         labelText: "Date of Burial",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField funeralChapelFormField9 = ChurchFormField(
         attribute: "burial_place",

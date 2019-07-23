@@ -162,7 +162,7 @@ class Marriage {
         attribute: "birthdate_of_groom",
         labelText: "Groom's Date of Birth",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField formField8 = ChurchFormField(
         attribute: "birthplace_of_groom",
@@ -253,7 +253,7 @@ class Marriage {
         attribute: "birthdate_of_bride",
         labelText: "Bride's Date of Birth",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
 
     final ChurchFormField formField23 = ChurchFormField(
         attribute: "birthplace_of_bride",

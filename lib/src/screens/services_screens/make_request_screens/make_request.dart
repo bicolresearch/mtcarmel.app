@@ -73,12 +73,12 @@ class MakeRequest {
         attribute: "date_to_offered",
         labelText: "Date to be offered",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
     final ChurchFormField massRequestFormField4 = ChurchFormField(
         attribute: "time_of_mass",
         labelText: "Time of Mass",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "time");
     final ChurchServiceSubtype massRequestServiceSubtype = ChurchServiceSubtype(
         subTypeName: "Mass Request",
         formFields: [
@@ -107,13 +107,13 @@ class MakeRequest {
         attribute: "date",
         labelText: "Date",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "date");
     // TODO change to time field
     final ChurchFormField liturgicalFormField2 = ChurchFormField(
         attribute: "time",
         labelText: "Time",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
+        textFieldType: "time");
     final ChurchFormField liturgicalFormField3 = ChurchFormField(
         attribute: "venue",
         labelText: "Venue Address",
@@ -161,13 +161,11 @@ class MakeRequest {
 
     You may view the status of your request in your mailbox.
     """;
-    // TODO change to date field
     final ChurchFormField certificateFormField1 = ChurchFormField(
         attribute: "name",
         labelText: "Name",
         validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
-    // TODO change to time field
+        textFieldType: "date");
     final ChurchFormField certificateFormField2 = ChurchFormField(
         attribute: "certificate",
         labelText: "certificate",

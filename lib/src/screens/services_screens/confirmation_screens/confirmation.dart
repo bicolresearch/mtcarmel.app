@@ -63,7 +63,7 @@ class Confirmation {
       attribute: "birthdate",
       labelText: "Date of Birth",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField confirmationFormField3 = ChurchFormField(
@@ -77,7 +77,7 @@ class Confirmation {
       attribute: "baptism_date",
       labelText: "Date of Baptism",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField confirmationFormField5 = ChurchFormField(

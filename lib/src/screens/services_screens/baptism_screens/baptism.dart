@@ -86,7 +86,7 @@ class Baptism {
       attribute: "child_birthday",
       labelText: "Child's Date of Birth",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField baptismFormField3 = ChurchFormField(
@@ -114,7 +114,7 @@ class Baptism {
       attribute: "birthdate_of_father",
       labelText: "Father's Date of Birth",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField baptismFormField7 = ChurchFormField(
@@ -142,7 +142,7 @@ class Baptism {
       attribute: "birthdate_of_mother",
       labelText: "Mother's Date of Birth",
       validators: validatorsPlainRequired,
-      textFieldType: "plain_text",
+      textFieldType: "date",
     );
 
     final ChurchFormField baptismFormField11 = ChurchFormField(

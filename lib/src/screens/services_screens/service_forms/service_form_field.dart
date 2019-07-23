@@ -11,8 +11,10 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/civil_status_form_field.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/date_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_multiline_text_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_plain_text_field.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/time_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/yes_no_form_field.dart';
 
 import 'gender_form_field.dart';
@@ -39,6 +41,10 @@ class ServiceFormField extends StatelessWidget {
       return YesNoFormField(churchFormField: churchFormField);
     else if (churchFormField.textFieldType == "civil_status")
       return CivilStatusFormField(churchFormField: churchFormField);
+    else if (churchFormField.textFieldType == "date")
+      return DateFormField(churchFormField: churchFormField);
+    else if (churchFormField.textFieldType == "time")
+      return TimeFormField(churchFormField: churchFormField);
 //    else if(_churchFormField.textFieldType == "nationality_selection")
 //    else if(_churchFormField.textFieldType == "religion_selection")
 //    else if(_churchFormField.textFieldType == "marital_selection")
