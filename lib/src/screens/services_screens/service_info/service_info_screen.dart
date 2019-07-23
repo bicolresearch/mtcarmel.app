@@ -2,8 +2,9 @@
 *  Filename    :   service_info_screen.dart
 *  Purpose     :   Displays the service info
 *  Created     :   2019-07-22 09:21 by Detective Conan
-*  Updated     :   2019-07-23 10:13 by Detective conan
-*  Changes     :   Added ScrollNotification and more arrow down and up.
+*  Updated     :   2019-07-23 14:39 by Detective conan
+*  Changes     :   Hides the accept button instead of disabling when end of
+*                  scroll was not reached
 */
 
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
   );
 
   Future _initializeArrows() async {
-    await Future.delayed(Duration(milliseconds: 800));
+    await Future.delayed(Duration(milliseconds: 500));
     _scrollListener();
   }
 
@@ -106,7 +107,6 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                     child: HtmlTextView(
                       data:
                           "<div style='color: #5d4037'>${widget.churchServiceSubtype.infoText}</div>",
-                      anchorColor: Color(0xFFFF0000),
                     ),
                   ),
                 ),
@@ -116,16 +116,16 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
             Container(
               child: Column(
                 children: <Widget>[
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Accept",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: _isScrolledToTheLast
-                        ? () async {
+                  _isScrolledToTheLast
+                      ? RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Accept",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () async {
                             final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -133,9 +133,9 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                                         serviceSubType:
                                             widget.churchServiceSubtype)));
                             if (result) Navigator.pop(context, true);
-                          }
-                        : null,
-                  ),
+                          },
+                        )
+                      : Container(),
                   leftArrowBackButton(context: context),
                 ],
               ),

@@ -57,7 +57,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
           _isJsonFailed = true;
         }
         _isLoading = false;
-      });
+      },);
     }
   }
 
@@ -115,7 +115,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                             ),
                           ],
                         ),
-                      )));
+                      ),),);
   }
 
   @override

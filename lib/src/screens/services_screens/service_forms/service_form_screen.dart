@@ -2,8 +2,9 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*  Updated     :   2019-07-23 10:23 by Detective conan
-*  Changes     :   Added scroll notification and more arrow down and up.
+*  Updated     :   2019-07-23 14:41 by Detective conan 
+*  Changes     :   Hides the submit button instead of disabling when end of
+*                  scroll was not reached 
 */
 
 import 'package:flutter/material.dart';
@@ -114,7 +115,8 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                           autovalidate: true,
                           child: Column(
                             children: <Widget>[
-                              for (var formField in widget.serviceSubType.formFields)
+                              for (var formField
+                                  in widget.serviceSubType.formFields)
                                 ServiceFormField(churchFormField: formField),
                             ],
                           ),
@@ -126,27 +128,27 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
               ),
             ),
             GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
-              color: Colors.brown,
-              child: Text(
-                "Submit",
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: _isScrolledToTheLast?() async {
-                //TODO implement validations and updating database
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ThankYouScreen(
-                        thankYouText: widget.serviceSubType.thankYouText),
-                  ),
-                );
-                if (result) Navigator.pop(context, true);
-              }
-              :null,
-            ),
+            _isScrolledToTheLast
+                ? RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () async {
+                      //TODO implement validations and updating database
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ThankYouScreen(
+                              thankYouText: widget.serviceSubType.thankYouText),
+                        ),
+                      );
+                      if (result) Navigator.pop(context, true);
+                    })
+                : Container(),
             leftArrowBackButton(context: context),
           ],
         ),
@@ -166,7 +168,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
     if (!_scrollController.hasClients) return;
     try {
       if (_scrollController.offset ==
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
         setState(() {
@@ -179,10 +181,10 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset >=
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
         setState(
-              () {
+          () {
             _arrowMoreDown = VisibilityHelper(
                 child: _arrowDown, visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
@@ -193,7 +195,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset <=
-          _scrollController.position.minScrollExtent &&
+              _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
         setState(() {
           _arrowMoreDown = VisibilityHelper(
@@ -204,7 +206,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset <
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
         setState(() {
@@ -232,5 +234,4 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
       _scrollController.animateTo(_scrollController.offset + 200,
           curve: Curves.linear, duration: Duration(milliseconds: 500));
   }
-
 }
