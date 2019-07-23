@@ -2,9 +2,9 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*  Updated     :   2019-07-23 14:41 by Detective conan 
-*  Changes     :   Hides the submit button instead of disabling when end of
-*                  scroll was not reached 
+*  Updated     :   2019-07-23 15:44 by Detective conan
+*  Changes     :   Moved the header inside the scroll view to avoid overflow
+*                  in small screen when text editing.
 */
 
 import 'package:flutter/material.dart';
@@ -79,18 +79,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 30.0),
-              child: Text(
-                widget.serviceSubType.subTypeName,
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .headline
-                    .copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            lineWidget(),
+
             GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
             Expanded(
               child: NotificationListener<ScrollNotification>(
@@ -108,6 +97,18 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                   controller: _scrollController,
                   child: Column(
                     children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 30.0),
+                        child: Text(
+                          widget.serviceSubType.subTypeName,
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline
+                              .copyWith(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      lineWidget(),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: FormBuilder(
