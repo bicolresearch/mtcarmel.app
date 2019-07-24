@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/models/data_priest.dart';
 import 'package:mt_carmel_app/src/models/priest.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'dart:async';
@@ -36,17 +37,16 @@ class _PriestsScreenState extends State<PriestsScreen> {
   @override
   void initState() {
     super.initState();
-    this.getJasonData();
+    this.getJsonData();
   }
 
-  Future<void> getJasonData() async {
+  Future<void> getJsonData() async {
     var response = await http.get(AppConstants.PRIESTS_JSON_URL);
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
-          _priestList = (json.decode(response.body) as List)
-              .map((data) => new Priest.fromJson(data))
-              .toList();
+          final body = json.decode(response.body);
+          _priestList = DataPriest.fromJson(body).data;
           _isLoading = false;
         } else {
           print(response.statusCode);
