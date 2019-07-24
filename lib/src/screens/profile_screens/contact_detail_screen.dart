@@ -11,6 +11,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/models/contact.dart';
+import 'package:mt_carmel_app/src/models/data_contact.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/item_widget.dart';
@@ -45,9 +46,8 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
-          _contactList = (json.decode(response.body) as List)
-              .map((data) => new Contact.fromJson(data))
-              .toList();
+          final body = json.decode(response.body);
+          _contactList = DataContact.fromJson(body).data;
         } else {
           print(response.statusCode);
           _isJsonFailed = true;
@@ -77,8 +77,9 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                             Text(
                               "Contact Details",
                               style: Theme.of(context)
-                      .primaryTextTheme
-                      .title.copyWith(fontWeight : FontWeight.bold),
+                                  .primaryTextTheme
+                                  .title
+                                  .copyWith(fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                             Divider(),
@@ -114,7 +115,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
           "${_contactList[0].address1 ?? ""}\n${_contactList[0].address2 ?? ""}"),
       _ContactItem("Email", _contactList[0].email ?? ""),
       _ContactItem("Social Media", _contactList[0].socialMedia ?? ""),
-      _ContactItem("Landline", _contactList[0].landline ?? ""),
+      _ContactItem("Landline", _contactList[0].landLine ?? ""),
       _ContactItem("Mobile", _contactList[0].mobile ?? ""),
     ];
 
@@ -146,7 +147,8 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
         .replaceAll("<p>", "")
         .replaceAll("</p> ", "\n")
         .replaceAll("</p>", "")
-        .replaceAll("/br", "\n");
+        .replaceAll("/br", "\n")
+        .replaceAll("<br/>", "");
   }
 }
 
