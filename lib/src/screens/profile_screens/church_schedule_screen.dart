@@ -11,6 +11,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/models/church_schedule.dart';
+import 'package:mt_carmel_app/src/models/data_schedule.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'dart:async';
@@ -30,6 +31,7 @@ class ChurchScheduleScreen extends StatefulWidget {
 }
 
 class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
+
   List<ChurchSchedule> _churchScheduleList = [];
 
   List<ChurchSchedule> _holyMassSchedule = [];
@@ -43,17 +45,16 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
   @override
   void initState() {
     super.initState();
-    this.getJasonData();
+    this.getJsonData();
   }
 
-  Future<void> getJasonData() async {
+  Future<void> getJsonData() async {
     var response = await http.get(AppConstants.CHURCH_SCHEDULE_JSON_URL);
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
-          _churchScheduleList = (json.decode(response.body) as List)
-              .map((data) => new ChurchSchedule.fromJson(data))
-              .toList();
+          final body = json.decode(response.body);
+          _churchScheduleList = DataSchedule.fromJson(body).data;
           _sortSchedules();
         } else {
           print(response.statusCode);
