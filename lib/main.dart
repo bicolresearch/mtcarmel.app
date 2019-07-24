@@ -13,8 +13,10 @@ import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/screens/bottom_tab_navigator.dart';
+import 'package:mt_carmel_app/src/screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_type_screen.dart';
 import 'package:mt_carmel_app/src/utils/development_production_enum.dart';
+import 'package:mt_carmel_app/src/utils/image_upload_form.dart';
 import 'src/screens/splash.dart';
 import 'src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
@@ -141,7 +143,7 @@ class _PageState extends State<Page> {
       case DevelopmentProductionEnum.PartialTest:
         print("started partial test");
         // add widget to be test partially
-        return ServiceTypeScreen();
+        return EditProfileScreen();
         break;
     }
     return SplashScreen();

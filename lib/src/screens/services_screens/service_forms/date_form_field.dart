@@ -1,9 +1,9 @@
 /*
 *  Filename    :   date_form_field.dart
-*  Purpose     :	
+*  Purpose     :	 Date form field
 *  Created     :   2019-07-23 16:11 by Detective Conan
-*  Updated     :   2019-07-23 16:11 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-07-24 09:50 by Detective conan
+*  Changes     :   Changed format of date
 */
 
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class DateFormField extends ServiceFormCommon
           FormBuilderDateTimePicker(
             attribute: "date",
             inputType: InputType.date,
-            format: DateFormat("yyyy-MM-dd"),
+            format: DateFormat("EEEE, MMMM d, yyyy"),
             validators: _validators(),
           ),
         ],

@@ -16,6 +16,7 @@ import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/user_profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_schedule_screen.dart';
@@ -468,9 +469,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: <Widget>[
                 Text(
                   '${_userProfile.firstName} ${_userProfile.lastName}',
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subhead,
+                  style: Theme.of(context).primaryTextTheme.subhead,
                   textAlign: TextAlign.left,
                 ),
                 Row(
@@ -496,46 +495,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           value: 1,
                           child: Text(
                             "Edit profile",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .subhead,
+                            style: Theme.of(context).primaryTextTheme.subhead,
                           ),
                         ),
                         PopupMenuItem(
                           value: 2,
                           child: Text(
                             "Logout",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .subhead,
+                            style: Theme.of(context).primaryTextTheme.subhead,
                           ),
                         ),
                         PopupMenuItem(
                           value: 3,
                           child: Text(
                             "Cancel",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .subhead,
+                            style: Theme.of(context).primaryTextTheme.subhead,
                           ),
                         ),
                       ],
                       initialValue: 1,
-                      onCanceled: () {
-                        print("You have canceled the menu.");
-                      },
                       onSelected: (value) {
                         switch (value) {
-                          case 2: // Logout
-                            if (this.mounted)
-                              setState(() {
-                                _currentProfileFilter = ProfileFilter.Login;
-                                locator<AuthenticationService>().logout();
-                                _updateProfileScreen();
-                              });
+                          case 1:
+                            {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfileScreen()),
+                              );
+                            }
                             break;
-                          case 2: //TODO implement code
+                          case 2: //log-out
+
+                            if (this.mounted)
+                              setState(
+                                () {
+                                  _currentProfileFilter = ProfileFilter.Login;
+                                  locator<AuthenticationService>().logout();
+                                  _updateProfileScreen();
+                                },
+                              );
+                            break;
                           default:
+                            break;
                         }
                       },
                       icon: Icon(
@@ -584,9 +586,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           itemText,
-          style: Theme.of(context)
-              .primaryTextTheme
-              .subhead,
+          style: Theme.of(context).primaryTextTheme.subhead,
           textAlign: TextAlign.center,
         ),
       ),
