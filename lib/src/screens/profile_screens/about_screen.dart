@@ -15,6 +15,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/about.dart';
+import 'package:mt_carmel_app/src/models/data_about.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
@@ -54,9 +55,8 @@ class _AboutScreenState extends State<AboutScreen> {
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
-          _aboutList = (json.decode(response.body) as List)
-              .map((data) => new About.fromJson(data))
-              .toList();
+          final body = json.decode(response.body);
+          _aboutList = DataAbout.fromJson(body).data;
           // get only the first in the list
           About about = _aboutList[0];
 

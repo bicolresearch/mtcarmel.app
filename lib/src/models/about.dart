@@ -13,9 +13,19 @@ import 'package:json_annotation/json_annotation.dart';
 part 'about.g.dart';
 
 @JsonSerializable()
-class About{
-  About(this.id, this.branchId, this.titular, this.diocese, this.dateOfEstablishment, this.feastDay, this.content);
-  
+class About {
+  About(
+      this.id,
+      this.branchId,
+      this.titular,
+      this.diocese,
+      this.dateOfEstablishment,
+      this.feastDay,
+      this.content,
+      this.postedOn,
+      this.updatedOn,
+      this.author);
+
   final String id;
   @JsonKey(name: "branch_id")
   final String branchId;
@@ -26,9 +36,13 @@ class About{
   @JsonKey(name: "feast_day")
   final String feastDay;
   final String content;
+  @JsonKey(name: "posted_on")
+  final String postedOn;
+  @JsonKey(name: "updated_on")
+  final String updatedOn;
+  final String author;
 
   factory About.fromJson(Map<String, dynamic> json) => _$AboutFromJson(json);
 
   Map<String, dynamic> toJson() => _$AboutToJson(this);
 }
-
