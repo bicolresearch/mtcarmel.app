@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/models/data_pastor.dart';
 import 'package:mt_carmel_app/src/models/pastor.dart';
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
@@ -42,9 +43,8 @@ class _PastorsScreenState extends State<PastorsScreen> {
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
-          _pastorList = (json.decode(response.body) as List)
-              .map((data) => new Pastor.fromJson(data))
-              .toList();
+          final body = json.decode(response.body);
+          _pastorList = DataPastor.fromJson(body).data;
         } else {
           print(response.statusCode);
           _isJsonFailed = true;

@@ -12,7 +12,10 @@ Pastor _$PastorFromJson(Map<String, dynamic> json) {
       json['branch_id'] as String,
       json['name'] as String,
       json['position'] as String,
-      json['rank'] as String);
+      json['rank'] as String,
+      json['posted_on'] as String,
+      json['updated_on'] as String,
+      json['cover_photo'] as String);
 }
 
 Map<String, dynamic> _$PastorToJson(Pastor instance) => <String, dynamic>{
@@ -20,5 +23,8 @@ Map<String, dynamic> _$PastorToJson(Pastor instance) => <String, dynamic>{
       'branch_id': instance.branchId,
       'name': instance.name,
       'position': instance.position,
-      'rank': instance.rank
+      'rank': instance.rank,
+      'posted_on': instance.postedOn,
+      'updated_on': instance.updatedOn,
+      'cover_photo': instance.coverPhoto
     };
