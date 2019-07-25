@@ -2,10 +2,9 @@
 *  Filename    :   bible_book_screen.dart
 *  Purpose     :
 *  Created     :   2019-07-15 09:45 by Detective Conan
-*  Updated     :   2019-07-15 09:45 by Detective Conan
-*  Changes     :   Replaced the textStyle constants with Inherited provider
+*  Updated     :   2019-07-25 10:23 by Detective conan
+*  Changes     :   Fixed the characters using utf8 decoder
 *  */
-
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
@@ -31,10 +30,7 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
 
   final BibleBook book;
   var _chapterSelect = "Chapter 1";
-  var _chapterContent = "";
   List<String> _chapters = [];
-
-  List<Verse> _verses = [];
 
   BibleReference _reference;
 
@@ -46,12 +42,14 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
   void initState() {
     _initChapters();
     super.initState();
-    this.getJasonData();
+    this.getJsonData();
   }
 
-  Future<BibleReference> getJasonData() async {
-    var response = await http
-        .get(AppConstants.BIBLE_JSON_BASE_URL + book.bookName + _chapterSelect+ "?translation=kjv");
+  Future<BibleReference> getJsonData() async {
+    var response = await http.get(AppConstants.BIBLE_JSON_BASE_URL +
+        book.bookName +
+        _chapterSelect +
+        "?translation=kjv");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
@@ -59,7 +57,6 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
             final body = json.decode(response.body);
 
             _reference = BibleReference.fromJson(body);
-
           } catch (e) {
             print(e.toString() + "...");
             print(response.body);
@@ -86,22 +83,22 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
                 child: Text("King James Version",
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .subhead),
+                    style: Theme.of(context).primaryTextTheme.subhead),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(this.book.bookName, style: Theme.of(context)
-                      .primaryTextTheme
-                      .title.copyWith(fontWeight : FontWeight.bold)),
+                  Text(this.book.bookName,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold)),
                   DropdownButton<String>(
                     value: _chapterSelect,
                     onChanged: (String newValue) {
                       setState(() {
                         _chapterSelect = newValue;
-                        getJasonData();
+                        getJsonData();
                       });
                     },
                     items:
@@ -110,9 +107,7 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
                         value: value,
                         child: Text(
                           value,
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .subhead,
+                          style: Theme.of(context).primaryTextTheme.subhead,
                         ),
                       );
                     }).toList(),
@@ -124,8 +119,8 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
                   padding: const EdgeInsets.all(20.0),
                   child: Center(
                     child: (_reference == null)
-                    ? LoadingIndicator()
-                :_chapterText(),
+                        ? LoadingIndicator()
+                        : _chapterText(),
                   ),
                 ),
               ),
@@ -143,17 +138,13 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
     }
   }
 
-
   Widget _chapterText() {
     return ListView.builder(
-        itemCount: (_reference==null)?0:_reference.verses.length,
+        itemCount: (_reference == null) ? 0 : _reference.verses.length,
         itemBuilder: (context, index) {
-          return Text("\t${index+1} ${_reference.verses[index].text}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .subhead);
+          return Text(
+              "\t${index + 1} ${utf8.decode(_reference.verses[index].text.codeUnits)}",
+              style: Theme.of(context).primaryTextTheme.subhead);
         });
   }
-
 }
-

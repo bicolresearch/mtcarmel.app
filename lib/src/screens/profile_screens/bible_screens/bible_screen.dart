@@ -2,8 +2,8 @@
 *	 Filename		 :	 bible_screen.dart
 *	 Purpose		 :	 displays the list of bible books
 *  Created		 :   2019-06-18 10:02:34 by Detective Conan
-*  Updated     :   2019-07-15 09:45 by Detective conan
-*  Changes     :   Replaced the textStyle constants with Inherited provider
+*  Updated     :   2019-07-25 10:33 by Detective conan
+*  Changes     :   Adjusted Spacing between books.
 */
 
 import 'package:flutter/material.dart';
@@ -50,8 +50,9 @@ class _BibleScreenState extends State<BibleScreen> {
                   child: Text(
                     "Holy Bible",
                     style: Theme.of(context)
-                      .primaryTextTheme
-                      .title.copyWith(fontWeight : FontWeight.bold),
+                        .primaryTextTheme
+                        .title
+                        .copyWith(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -105,8 +106,9 @@ class _BibleScreenState extends State<BibleScreen> {
               ? "Old Testaments"
               : "New Testament",
           style: Theme.of(context)
-                      .primaryTextTheme
-                      .title.copyWith(fontWeight : FontWeight.bold),
+              .primaryTextTheme
+              .title
+              .copyWith(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         Padding(
@@ -114,31 +116,31 @@ class _BibleScreenState extends State<BibleScreen> {
           child: Divider(),
         ),
         ListView.builder(
-            physics: ScrollPhysics(parent: ScrollPhysics()),
-            shrinkWrap: true,
-            itemCount: bibleBooks.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              BibleBookScreen(book: bibleBooks[index]),
-                        ));
-                  },
-                  child: Text(
-                    bibleBooks[index].bookName,
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .subhead,
-                    textAlign: TextAlign.center,
-                  ),
+          physics: ScrollPhysics(parent: ScrollPhysics()),
+          shrinkWrap: true,
+          itemCount: bibleBooks.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          BibleBookScreen(book: bibleBooks[index]),
+                    ),
+                  );
+                },
+                child: Text(
+                  bibleBooks[index].bookName,
+                  style: Theme.of(context).primaryTextTheme.title,
+                  textAlign: TextAlign.center,
                 ),
-              );
-            })
+              ),
+            );
+          },
+        )
       ],
     );
   }
