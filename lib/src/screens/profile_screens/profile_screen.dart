@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-15 09:48 by Detective conan
-*  Changes     :   Replaced the textStyle constants with Inherited provider
+*  Updated     :   2019-07-25 17:09 by Detective conan
+*  Changes     :   Added icons in profile setting.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -493,23 +493,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       itemBuilder: (context) => [
                         PopupMenuItem(
                           value: 1,
-                          child: Text(
+                          child: ListTile(title: Text(
                             "Edit profile",
                             style: Theme.of(context).primaryTextTheme.subhead,
-                          ),
+                          ), trailing: Icon(Icons.build),),
                         ),
                         PopupMenuItem(
                           value: 2,
-                          child: Text(
-                            "Logout",
-                            style: Theme.of(context).primaryTextTheme.subhead,
+                          child: ListTile(
+                            title: Text(
+                              "Logout",
+                              style: Theme.of(context).primaryTextTheme.subhead,
+                            ), trailing: Icon(Icons.exit_to_app),
                           ),
                         ),
                         PopupMenuItem(
                           value: 3,
-                          child: Text(
-                            "Cancel",
-                            style: Theme.of(context).primaryTextTheme.subhead,
+                          child: ListTile(
+                            title: Text(
+                              "Cancel",
+                              style: Theme.of(context).primaryTextTheme.subhead,
+                            ), trailing: Icon(Icons.cancel),
                           ),
                         ),
                       ],
