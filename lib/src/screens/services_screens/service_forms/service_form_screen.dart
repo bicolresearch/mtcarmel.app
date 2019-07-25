@@ -2,9 +2,9 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*  Updated     :   2019-07-23 15:44 by Detective conan
-*  Changes     :   Moved the header inside the scroll view to avoid overflow
-*                  in small screen when text editing.
+*  Updated     :   2019-07-25 10:53 by Detective conan
+*  Changes     :   Disabling when end of
+*                  scroll was not reached
 */
 
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ import 'package:mt_carmel_app/src/widgets/line.dart';
 
 class ServiceFormScreen extends StatefulWidget {
   static final GlobalKey<FormBuilderState> _fbKey =
-      GlobalKey<FormBuilderState>();
+  GlobalKey<FormBuilderState>();
 
   ServiceFormScreen({this.serviceSubType});
 
@@ -101,7 +101,8 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 30.0),
                         child: Text(
                           widget.serviceSubType.subTypeName,
-                          style: Theme.of(context)
+                          style: Theme
+                              .of(context)
                               .primaryTextTheme
                               .headline
                               .copyWith(fontWeight: FontWeight.bold),
@@ -117,7 +118,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                           child: Column(
                             children: <Widget>[
                               for (var formField
-                                  in widget.serviceSubType.formFields)
+                              in widget.serviceSubType.formFields)
                                 ServiceFormField(churchFormField: formField),
                             ],
                           ),
@@ -129,27 +130,28 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
               ),
             ),
             GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
-            _isScrolledToTheLast
-                ? RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      //TODO implement validations and updating database
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ThankYouScreen(
-                              thankYouText: widget.serviceSubType.thankYouText),
-                        ),
-                      );
-                      if (result) Navigator.pop(context, true);
-                    })
-                : Container(),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              color: Colors.brown,
+              child: Text(
+                "Submit",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: _isScrolledToTheLast
+                  ? () async {
+                //TODO implement validations and updating database
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ThankYouScreen(
+                            thankYouText: widget.serviceSubType.thankYouText),
+                  ),
+                );
+                if (result) Navigator.pop(context, true);
+              }
+                  : null,),
             leftArrowBackButton(context: context),
           ],
         ),
@@ -169,7 +171,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
     if (!_scrollController.hasClients) return;
     try {
       if (_scrollController.offset ==
-              _scrollController.position.maxScrollExtent &&
+          _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
         setState(() {
@@ -182,10 +184,10 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset >=
-              _scrollController.position.maxScrollExtent &&
+          _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
         setState(
-          () {
+              () {
             _arrowMoreDown = VisibilityHelper(
                 child: _arrowDown, visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
@@ -196,7 +198,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset <=
-              _scrollController.position.minScrollExtent &&
+          _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
         setState(() {
           _arrowMoreDown = VisibilityHelper(
@@ -207,7 +209,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset <
-              _scrollController.position.maxScrollExtent &&
+          _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
         setState(() {

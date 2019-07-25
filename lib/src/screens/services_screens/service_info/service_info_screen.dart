@@ -2,8 +2,8 @@
 *  Filename    :   service_info_screen.dart
 *  Purpose     :   Displays the service info
 *  Created     :   2019-07-22 09:21 by Detective Conan
-*  Updated     :   2019-07-23 14:39 by Detective conan
-*  Changes     :   Hides the accept button instead of disabling when end of
+*  Updated     :   2019-07-25 10:53 by Detective conan
+*  Changes     :   Disabling when end of
 *                  scroll was not reached
 */
 
@@ -116,16 +116,16 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
             Container(
               child: Column(
                 children: <Widget>[
-                  _isScrolledToTheLast
-                      ? RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)),
-                          color: Colors.brown,
-                          child: Text(
-                            "Accept",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () async {
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Accept",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: _isScrolledToTheLast
+                        ? () async {
                             final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -133,9 +133,9 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                                         serviceSubType:
                                             widget.churchServiceSubtype)));
                             if (result) Navigator.pop(context, true);
-                          },
-                        )
-                      : Container(),
+                          }
+                        : null,
+                  ),
                   leftArrowBackButton(context: context),
                 ],
               ),

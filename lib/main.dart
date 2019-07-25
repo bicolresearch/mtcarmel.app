@@ -50,7 +50,7 @@ class MtCarmelApp extends StatelessWidget {
           dividerColor: Colors.brown,
           primarySwatch: Colors.brown,
           primaryColor: Colors.brown,
-          disabledColor: Colors.brown[200],
+          disabledColor: Colors.brown[100],
           fontFamily: AppConstants.FONT_FAMILY,
           primaryTextTheme: TextTheme(
             display4: Theme.of(context)
