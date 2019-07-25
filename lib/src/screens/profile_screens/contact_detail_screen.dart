@@ -2,8 +2,8 @@
 *	 Filename		 :	 contact_detail_scree.dart
 *	 Purpose		 :	 Displays the church contact details
 *  Created		 :   2019-06-13 15:07:14 by Detective Conan
-*  Updated     :   2019-07-15 09:47 by Detective conan
-*  Changes     :   Replaced the textStyle constants with Inherited provider
+*  Updated     :   2019-07-25 08:23 by Detective conan
+*  Changes     :   Add converter from html to string.
 */
 
 import 'package:flutter/material.dart';
@@ -17,6 +17,7 @@ import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/item_widget.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:html2md/html2md.dart' as html2md;
 
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
@@ -112,7 +113,10 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
     final List<_ContactItem> contactItems = [
       _ContactItem("Church name", _contactList[0].name ?? ""),
       _ContactItem("Address",
-          "${_contactList[0].address1 ?? ""}\n${_contactList[0].address2 ?? ""}"),
+          '''${_contactList[0].address1 ?? ""} ${_contactList[0].address2 ?? ""} 
+              ${_contactList[0].city ?? ""} ${_contactList[0].province ?? ""}
+              ${_contactList[0].country ?? ""}
+              '''),
       _ContactItem("Email", _contactList[0].email ?? ""),
       _ContactItem("Social Media", _contactList[0].socialMedia ?? ""),
       _ContactItem("Landline", _contactList[0].landLine ?? ""),
@@ -137,18 +141,10 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
     if (contactItem.value == null || contactItem.value.isEmpty)
       return Container();
     return itemWidget(
-        context: context,
-        label: contactItem.label,
-        value: noTags(contactItem.value));
-  }
-
-  String noTags(String text) {
-    return text
-        .replaceAll("<p>", "")
-        .replaceAll("</p> ", "\n")
-        .replaceAll("</p>", "")
-        .replaceAll("/br", "\n")
-        .replaceAll("<br/>", "");
+      context: context,
+      label: contactItem.label,
+      value: html2md.convert(contactItem.value),
+    );
   }
 }
 
