@@ -15,7 +15,8 @@ Priest _$PriestFromJson(Map<String, dynamic> json) {
       json['rank'] as String,
       json['cover_photo'] as String,
       json['posted_on'] as String,
-      json['updated_on'] as String);
+      json['updated_on'] as String,
+      json['author'] as String);
 }
 
 Map<String, dynamic> _$PriestToJson(Priest instance) => <String, dynamic>{
@@ -26,5 +27,6 @@ Map<String, dynamic> _$PriestToJson(Priest instance) => <String, dynamic>{
       'rank': instance.rank,
       'posted_on': instance.postedOn,
       'updated_on': instance.updatedOn,
-      'cover_photo': instance.coverPhoto
+      'cover_photo': instance.coverPhoto,
+      'author': instance.author
     };

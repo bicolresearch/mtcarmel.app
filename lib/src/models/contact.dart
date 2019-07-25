@@ -1,3 +1,11 @@
+/*
+*  Filename    :   contact.dart
+*  Purpose     :   Model for contact such as mobile, email, etc of the church
+*  Created     :   2019-07-25 08:32 by Detective Conan
+*  Updated     :   2019-07-25 08:32 by Detective Conan
+*  Changes     :
+*/
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'contact.g.dart';
@@ -19,7 +27,8 @@ class Contact {
       this.landLine,
       this.description,
       this.postedOn,
-      this.updatedOn);
+      this.updatedOn,
+      this.author);
 
   final String id;
   @JsonKey(name: "branch_id")
@@ -41,6 +50,7 @@ class Contact {
   final String postedOn;
   @JsonKey(name: "updated_on")
   final String updatedOn;
+  final String author;
 
   factory Contact.fromJson(Map<String, dynamic> json) =>
       _$ContactFromJson(json);

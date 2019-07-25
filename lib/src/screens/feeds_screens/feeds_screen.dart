@@ -25,7 +25,6 @@ import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedScreen extends StatefulWidget {
-
   FeedScreen(BuildContext context);
 
   @override
@@ -107,7 +106,10 @@ class _FeedScreenState extends State<FeedScreen> {
           appBar: AppBar(
             title: Text(
               "The Basilica",
-              style: TextStyle(color: Colors.brown),
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .title
+                  .copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             backgroundColor: Colors.white,
@@ -127,10 +129,8 @@ class _FeedScreenState extends State<FeedScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Live",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0),
+                      style: Theme.of(context).primaryTextTheme.title.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.red),
                     ),
                   ),
                 ),
@@ -168,15 +168,16 @@ class _FeedScreenState extends State<FeedScreen> {
         key: _refreshIndicatorKey,
         onRefresh: _getFeedData,
         child: ListView.builder(
-            itemCount: _feed.data.length,
-            itemBuilder: (context, index) {
-              try {
-                return _feedContent(_feed.data[index]);
-              } catch (e) {
-                print(e.toString());
-              }
-              return Container();
-            }),
+          itemCount: _feed.data.length,
+          itemBuilder: (context, index) {
+            try {
+              return _feedContent(_feed.data[index]);
+            } catch (e) {
+              print(e.toString());
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
@@ -202,7 +203,9 @@ class _FeedScreenState extends State<FeedScreen> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(width: 0.20),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
         ),
         child: GestureDetector(
           onTap: () => {
@@ -223,17 +226,19 @@ class _FeedScreenState extends State<FeedScreen> {
                 decoration: BoxDecoration(
                   color: Colors.brown,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0)),
+                    topLeft: Radius.circular(10.0),
+                    topRight: Radius.circular(10.0),
+                  ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
                     postData.title,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .subhead
+                        .copyWith(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),

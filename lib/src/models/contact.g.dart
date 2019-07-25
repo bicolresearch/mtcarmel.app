@@ -22,7 +22,8 @@ Contact _$ContactFromJson(Map<String, dynamic> json) {
       json['landline'] as String,
       json['description'] as String,
       json['posted_on'] as String,
-      json['updated_on'] as String);
+      json['updated_on'] as String,
+      json['author'] as String);
 }
 
 Map<String, dynamic> _$ContactToJson(Contact instance) => <String, dynamic>{
@@ -40,5 +41,6 @@ Map<String, dynamic> _$ContactToJson(Contact instance) => <String, dynamic>{
       'social_media': instance.socialMedia,
       'description': instance.description,
       'posted_on': instance.postedOn,
-      'updated_on': instance.updatedOn
+      'updated_on': instance.updatedOn,
+      'author': instance.author
     };

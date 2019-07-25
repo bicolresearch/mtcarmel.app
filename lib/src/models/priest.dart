@@ -2,8 +2,8 @@
 *  Filename    :   priest.dart
 *  Purpose     :   Priest model
 *  Created     :   2019-07-24 15:38 by Detective Conan
-*  Updated     :   2019-07-24 15:38 by Detective Conan 
-*  Changes     :   
+*  Updated     :   2019-07-25 08:34 by Detective conan
+*  Changes     :   Added Author
 */
 
 import 'package:json_annotation/json_annotation.dart';
@@ -13,7 +13,7 @@ part 'priest.g.dart';
 @JsonSerializable()
 class Priest {
   Priest(this.id, this.branchId, this.name, this.position, this.rank,
-      this.coverPhoto, this.postedOn, this.updatedOn);
+      this.coverPhoto, this.postedOn, this.updatedOn, this.author);
 
   final String id;
   @JsonKey(name: "branch_id")
@@ -27,6 +27,7 @@ class Priest {
   final String updatedOn;
   @JsonKey(name: "cover_photo")
   final String coverPhoto;
+  final String author;
 
   factory Priest.fromJson(Map<String, dynamic> json) => _$PriestFromJson(json);
 
