@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/widgets/basic_message.dart';
 
-enum ErrorMessageEnum { NoInternetError, LoadingError }
+enum ErrorMessageEnum { NoInternetError, LoadingError, SomethingWrong }
 
 class ErrorMessage extends BasicMessage {
   static double iconSize = 56.0;
@@ -27,7 +27,7 @@ class ErrorMessage extends BasicMessage {
           color: iconColor,
         );
         break;
-      default: // Loading failed
+      case ErrorMessageEnum.LoadingError:
         text = """No results found.
         Check internet connection.""";
         icon = Icon(
@@ -35,6 +35,15 @@ class ErrorMessage extends BasicMessage {
           size: iconSize,
           color: iconColor,
         );
+        break;
+      default: //Something went wrong
+        text = """Something went wrong.""";
+        icon = Icon(
+          Icons.error,
+          size: iconSize,
+          color: iconColor,
+        );
+        break;
     }
     return BasicMessage.message(text: text, icon: icon);
   }

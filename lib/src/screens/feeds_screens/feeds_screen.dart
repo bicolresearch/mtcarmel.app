@@ -47,16 +47,22 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   void _loadFeeds() {
-    ConnectivityChecker.hasDataConnection().then((value) {
-      if (value && value != null) {
-        _dataLoadingStatus = DataLoadingStatus.LoadingData;
-        _getFeedData();
-        if (this.mounted) setState(() {});
-      } else {
-        _dataLoadingStatus = DataLoadingStatus.ConnectionFailed;
-        if (this.mounted) setState(() {});
-      }
-    });
+    ConnectivityChecker.hasDataConnection().then(
+      (value) {
+        if (value && value != null) {
+          _dataLoadingStatus = DataLoadingStatus.LoadingData;
+          _getFeedData();
+          if (this.mounted) setState(() {});
+        } else {
+          _dataLoadingStatus = DataLoadingStatus.ConnectionFailed;
+          if (this.mounted) setState(() {});
+        }
+      },
+    ).catchError(
+      (e) {
+        debugPrint("FeedScreen._loadFeeds: $e ");
+      },
+    );
   }
 
   @override
@@ -74,19 +80,23 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Future<void> _getFeedData() async {
     PostService postService = PostService();
-    await postService.getFeed().then((feed) {
-      if (feed == null)
+    await postService.getFeed().then(
+      (feed) {
+        if (feed == null)
+          _dataLoadingStatus = DataLoadingStatus.LoadingFailed;
+        else {
+          _feed = feed;
+          _dataLoadingStatus = DataLoadingStatus.SuccessfulDataLoading;
+          if (this.mounted) setState(() {});
+        }
+      },
+    ).catchError(
+      (e) {
+        debugPrint("FeedScreen._getFeeds: $e");
         _dataLoadingStatus = DataLoadingStatus.LoadingFailed;
-      else {
-        _feed = feed;
-        _dataLoadingStatus = DataLoadingStatus.SuccessfulDataLoading;
         if (this.mounted) setState(() {});
-      }
-    }).catchError((error) {
-      print(error);
-      _dataLoadingStatus = DataLoadingStatus.LoadingFailed;
-      if (this.mounted) setState(() {});
-    });
+      },
+    );
   }
 
   Widget _feedScaffold() {
@@ -173,7 +183,7 @@ class _FeedScreenState extends State<FeedScreen> {
             try {
               return _feedContent(_feed.data[index]);
             } catch (e) {
-              print(e.toString());
+              debugPrint(e.toString());
             }
             return Container();
           },
@@ -194,7 +204,7 @@ class _FeedScreenState extends State<FeedScreen> {
         placeholder: AppConstants.MT_CARMEL_LOGO_PATH,
       );
     } catch (e) {
-      print(e.toString() + "feeds");
+      debugPrint("FeedScreen._feedContent: $e");
       return Container();
     }
     return Container(
@@ -259,13 +269,11 @@ class _FeedScreenState extends State<FeedScreen> {
               Container(
                 height: 50.0,
                 padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Text(
-                    html2md.convert(postData.content),
-                    style: Theme.of(context).primaryTextTheme.subhead,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
+                child: Text(
+                  html2md.convert(postData.content),
+                  style: Theme.of(context).primaryTextTheme.subhead,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
               ),
             ],
