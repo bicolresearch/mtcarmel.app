@@ -48,74 +48,80 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
     _isLoading = true;
     var response = await http.get(AppConstants.SEND_HELP_JSON_URL);
     if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          _sendHelpList = (json.decode(response.body) as List)
-              .map((data) => new SendHelp.fromJson(data))
-              .toList();
-        } else {
-          _isJsonFailed = true;
-        }
-        _isLoading = false;
-      },);
+      setState(
+        () {
+          if (response.statusCode == 200) {
+            _sendHelpList = (json.decode(response.body) as List)
+                .map((data) => new SendHelp.fromJson(data))
+                .toList();
+          } else {
+            _isJsonFailed = true;
+          }
+          _isLoading = false;
+        },
+      );
     }
   }
 
   @override
   void initState() {
     print("initializing sendHelp screen...");
+    _checkLoginStatus().then((_) {
+      this.getJsonData();
+    }).catchError((e) {
+      debugPrint(e);
+    });
     super.initState();
-    _checkLoginStatus();
-    this.getJsonData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-            child: _isLoading
-                ? LoadingIndicator()
-                : _isJsonFailed
-                    ? failedMessage(context)
-                    : Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            // Primary Donation
-                            Container(
-                                height:
-                                    MediaQuery.of(context).size.height / 2 - 50,
-                                child: _donationItem(
-                                    context: context,
-                                    sendHelp: _sendHelpList[0],
-                                    isPrimary: true)),
+      body: SafeArea(
+        child: _isLoading
+            ? LoadingIndicator()
+            : _isJsonFailed
+                ? failedMessage(context)
+                : Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        // Primary Donation
+                        Container(
+                            height: MediaQuery.of(context).size.height / 2 - 50,
+                            child: _donationItem(
+                                context: context,
+                                sendHelp: _sendHelpList[0],
+                                isPrimary: true)),
 
-                            Expanded(
-                              child: Container(
-                                  child: GridView.count(
-                                physics: ScrollPhysics(parent: ScrollPhysics()),
-                                shrinkWrap: true,
-                                primary: true,
-                                crossAxisCount: 2,
-                                children:
-                                    // exclude the primary
-                                    List.generate(_sendHelpList.length - 1,
-                                        (index) {
-                                  try {
-                                    return _donationItem(
-                                        context: context,
-                                        sendHelp: _sendHelpList[index + 1]);
-                                  } catch (e) {
-                                    print(e.toString());
-                                    return Container();
-                                  }
-                                }),
-                              )),
-                            ),
-                          ],
+                        Expanded(
+                          child: Container(
+                              child: GridView.count(
+                            physics: ScrollPhysics(parent: ScrollPhysics()),
+                            shrinkWrap: true,
+                            primary: true,
+                            crossAxisCount: 2,
+                            children:
+                                // exclude the primary
+                                List.generate(_sendHelpList.length - 1,
+                                    (index) {
+                              try {
+                                return _donationItem(
+                                    context: context,
+                                    sendHelp: _sendHelpList[index + 1]);
+                              } catch (e) {
+                                print(e.toString());
+                                return Container();
+                              }
+                            }),
+                          )),
                         ),
-                      ),),);
+                      ],
+                    ),
+                  ),
+      ),
+    );
   }
 
   @override
@@ -232,8 +238,8 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
     );
   }
 
-  void _checkLoginStatus() {
-    locator<AuthenticationService>().isLoggedIn().then((value) {
+  Future _checkLoginStatus() async {
+    await locator<AuthenticationService>().isLoggedIn().then((value) {
       _isLoggedIn = value;
     }).catchError((error) {
       print(error);

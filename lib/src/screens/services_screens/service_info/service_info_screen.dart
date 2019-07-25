@@ -64,8 +64,8 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
   void initState() {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    super.initState();
     _initializeArrows();
+    super.initState();
   }
 
   @override

@@ -2,8 +2,9 @@
 *	 Filename		 :	 transparency_screen.dart
 *	 Purpose		 :	 Displays the recent donation transactions
 *  Created		 :   2019-06-05 09:10:50 Detective Conan
-*  Updated     :   2019-07-09 12:23 by Detective conan
-*  Changes     :   Adjusted the above content.
+*  Updated     :   2019-07-25 15:37 by Detective conan 
+*  Changes     :   Changed the abbreviation of month to "mo". Removed decimal of
+*                  amount.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -37,8 +38,6 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   bool _isJsonLoading = true;
   Donations _donations;
 
-  NumberFormat _formatCurrency;
-
   ScrollController _scrollController;
 
   static Icon _arrowUp = Icon(
@@ -59,7 +58,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
 
   @override
   void initState() {
-    print("initializing transparency screen...");
+    debugPrint("initializing transparency screen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
@@ -90,7 +89,6 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
         }
       });
     }
-    print("getDonations");
     return false;
   }
 
@@ -303,7 +301,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     try {
       // format to philippine peso and separates with commas
       final formatCurrency =
-          NumberFormat.currency(symbol: "\u20b1", decimalDigits: 2);
+          NumberFormat.currency(symbol: "\u20b1", decimalDigits: 0);
       return formatCurrency.format(amount);
     } catch (e) {
       print(e.toString());
@@ -316,11 +314,11 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     int dayPassed = DateTime.now().difference(date).inDays;
 
     if (hourPassed < 24)
-      return "$hourPassed h";
+      return "$hourPassed hr";
     else if (hourPassed >= 24 && dayPassed < 30)
       return "$dayPassed d";
     else {
-      return "${(dayPassed / 30).floor()} m";
+      return "${(dayPassed / 30).floor()} mo";
     }
   }
 

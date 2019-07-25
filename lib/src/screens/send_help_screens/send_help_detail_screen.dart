@@ -25,7 +25,7 @@ class SendHelpDetails extends StatefulWidget {
 
 class _SendHelpDetailsState extends State<SendHelpDetails>
     with TickerProviderStateMixin {
-  final _textControllerAmount = TextEditingController();
+  TextEditingController _textControllerAmount;
   bool _isTextEditing = false;
 
   @override
@@ -164,6 +164,12 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    _textControllerAmount = TextEditingController();
+    super.initState();
   }
 
   @override
