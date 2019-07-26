@@ -2,8 +2,8 @@
 *  Filename    :   bottom_tab_navigator.dart
 *  Purpose     :	 Responsible for navigation from different tabs.
 *  Created     :   2019-07-05 10:21 by Detective Conan
-*  Updated     :   2019-07-05 10:21 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-07-26 15:23 by Detective conan
+*  Changes     :   Added dialog when pressing the back button of android
 */
 
 import 'package:flutter/material.dart';
@@ -54,7 +54,8 @@ class _State extends State<BottomTabNavigator> {
   @override
   Widget build(BuildContext context) {
     const double iconBarTopPadding = 12.0;
-    return Scaffold(
+    return WillPopScope(
+      child: Scaffold(
         body: _body,
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _cIndex,
@@ -111,6 +112,42 @@ class _State extends State<BottomTabNavigator> {
           onTap: (index) {
             _updateTab(index);
           },
-        ));
+        ),
+      ),
+      onWillPop: () async {
+        bool exit = await _exitDialog();
+        return exit;
+      },
+    );
+  }
+
+  Future<bool> _exitDialog() {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: ListTile(
+          title: Text("Would you like to close the app?"),
+          leading: Icon(
+            Icons.help,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Yes'),
+            onPressed: () {
+              Navigator.pop(context,true);
+            },
+          ),
+          FlatButton(
+            child: Text('No'),
+            onPressed: () {
+              Navigator.pop(context,false);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
