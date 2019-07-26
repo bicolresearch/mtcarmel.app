@@ -31,6 +31,7 @@ class ServiceFormScreen extends StatefulWidget {
 
 class _ServiceFormScreenState extends State<ServiceFormScreen> {
   bool _isScrolledToTheLast = false;
+  MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
   ScrollController _scrollController;
 
@@ -174,50 +175,65 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.gone);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-          _isScrolledToTheLast = true;
-        });
-        return;
-      }
-      if (_scrollController.offset >=
-          _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange) {
         setState(
               () {
             _arrowMoreDown = VisibilityHelper(
                 child: _arrowDown, visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.visible);
+                child: _arrowUp, visibility: VisibilityFlag.gone);
             _isScrolledToTheLast = true;
           },
         );
         return;
       }
+      if (_scrollController.offset >=
+          _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpOnly;
+          setState(
+                () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.gone);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+              _isScrolledToTheLast = true;
+            },
+          );
+        }
+        return;
+      }
       if (_scrollController.offset <=
           _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreDownOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreDownOnly;
+          setState(
+                () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.gone);
+            },
+          );
+        }
         return;
       }
       if (_scrollController.offset <
           _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.visible);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpAndDown) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpAndDown;
+          setState(
+                () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+            },
+          );
+        }
         return;
       }
     } catch (e) {

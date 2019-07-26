@@ -2,8 +2,8 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*	 Updated			:   18/07/2019 1:45 PM PM by Detective Conan
-*	 Changes			:   Added temporary join service navigation.
+*  Updated     :   2019-07-26 10:59 by Detective conan
+*  Changes     :   Enhanced the scrolling.
 */
 
 import 'package:flutter/material.dart';
@@ -52,6 +52,7 @@ class ServicesScreen extends StatefulWidget {
 
 class _ServicesScreenState extends State<ServicesScreen> {
   ScrollController _scrollController;
+  MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
   ChurchService _churchService;
 
@@ -83,14 +84,16 @@ class _ServicesScreenState extends State<ServicesScreen> {
     print("initializing serviceScreen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    super.initState();
     getJsonData().then((_) {
       _initializeArrows();
+    }).catchError((e) {
+      debugPrint("ServiceScreen.initState: $e");
     });
+    super.initState();
   }
 
   Future _initializeArrows() async {
-    await Future.delayed(Duration(milliseconds: 800));
+    await Future.delayed(Duration(milliseconds: 300));
     _scrollListener();
   }
 
@@ -98,7 +101,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Future<void> getJsonData() async {
     _isJsonFailed = false;
     _isLoading = true;
-    var response = await http.get(AppConstants.SERVICES_JSON_URL);
+    var response = await http
+        .get(AppConstants.SERVICES_JSON_URL)
+        .timeout(Duration(milliseconds: 3000));
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
@@ -208,19 +213,19 @@ class _ServicesScreenState extends State<ServicesScreen> {
         _churchService = Communion.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.CONFIRMATION:
-      //TODO for the current model
+        //TODO for the current model
         _churchService = Confirmation.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.WEDDING:
-      //TODO for the current model
+        //TODO for the current model
         _churchService = Marriage.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.PASSING:
-      //TODO for the current model
+        //TODO for the current model
         _churchService = Passing.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.EVENTS:
-      //TODO for the current model
+        //TODO for the current model
         _churchService = ChurchEvent.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
     }
@@ -242,46 +247,63 @@ class _ServicesScreenState extends State<ServicesScreen> {
               _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.gone);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-        });
+        setState(
+          () {
+            _arrowMoreDown = VisibilityHelper(
+                child: _arrowDown, visibility: VisibilityFlag.gone);
+            _arrowMoreUp = VisibilityHelper(
+                child: _arrowUp, visibility: VisibilityFlag.gone);
+          },
+        );
         return;
       }
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.gone);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.visible);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpOnly;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.gone);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+            },
+          );
+        }
         return;
       }
       if (_scrollController.offset <=
               _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreDownOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreDownOnly;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.gone);
+            },
+          );
+        }
         return;
       }
       if (_scrollController.offset <
               _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.visible);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpAndDown) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpAndDown;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+            },
+          );
+        }
         return;
       }
     } catch (e) {
@@ -293,13 +315,13 @@ class _ServicesScreenState extends State<ServicesScreen> {
   _moveUp() {
     if (_scrollController.offset >= _scrollController.position.minScrollExtent)
       _scrollController.animateTo(_scrollController.offset - 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
+          curve: Curves.linear, duration: Duration(milliseconds: 400));
   }
 
   _moveDown() {
     if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
       _scrollController.animateTo(_scrollController.offset + 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
+          curve: Curves.linear, duration: Duration(milliseconds: 400));
   }
 }
 

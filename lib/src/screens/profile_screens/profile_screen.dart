@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-25 17:09 by Detective conan
-*  Changes     :   Added icons in profile setting.
+*  Updated     :   2019-07-26 11:00 by Detective conan
+*  Changes     :   Enhanced the scrolling.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -73,6 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoginFailed = false;
   bool _isTextEditing = false;
   bool _isLoading = true;
+  MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
   UserProfile _userProfile;
   ProfileFilter _currentProfileFilter = ProfileFilter.Login;
@@ -150,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future _initializeArrows() async {
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 300));
     _scrollListener();
   }
 
@@ -493,10 +494,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       itemBuilder: (context) => [
                         PopupMenuItem(
                           value: 1,
-                          child: ListTile(title: Text(
-                            "Edit profile",
-                            style: Theme.of(context).primaryTextTheme.subhead,
-                          ), trailing: Icon(Icons.build),),
+                          child: ListTile(
+                            title: Text(
+                              "Edit profile",
+                              style: Theme.of(context).primaryTextTheme.subhead,
+                            ),
+                            trailing: Icon(
+                              Icons.build,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ),
                         PopupMenuItem(
                           value: 2,
@@ -504,7 +511,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             title: Text(
                               "Logout",
                               style: Theme.of(context).primaryTextTheme.subhead,
-                            ), trailing: Icon(Icons.exit_to_app),
+                            ),
+                            trailing: Icon(
+                              Icons.exit_to_app,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
                         PopupMenuItem(
@@ -513,7 +524,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             title: Text(
                               "Cancel",
                               style: Theme.of(context).primaryTextTheme.subhead,
-                            ), trailing: Icon(Icons.cancel),
+                            ),
+                            trailing: Icon(
+                              Icons.cancel,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
                       ],
@@ -626,50 +641,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
-        if (this.mounted)
-          setState(() {
+        setState(
+          () {
             _arrowMoreDown = VisibilityHelper(
                 child: _arrowDown, visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
                 child: _arrowUp, visibility: VisibilityFlag.gone);
-          });
+          },
+        );
         return;
       }
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
-        if (this.mounted)
-          setState(() {
-            _arrowMoreDown = VisibilityHelper(
-                child: _arrowDown, visibility: VisibilityFlag.gone);
-            _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.visible);
-          });
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpOnly;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.gone);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+            },
+          );
+        }
         return;
       }
       if (_scrollController.offset <=
               _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
-        if (this.mounted)
-          setState(() {
-            _arrowMoreDown = VisibilityHelper(
-                child: _arrowDown, visibility: VisibilityFlag.visible);
-            _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.gone);
-          });
+        if (_currentMoreArrow != MoreArrowEnum.MoreDownOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreDownOnly;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.gone);
+            },
+          );
+        }
         return;
       }
       if (_scrollController.offset <
               _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
-        if (this.mounted)
-          setState(() {
-            _arrowMoreDown = VisibilityHelper(
-                child: _arrowDown, visibility: VisibilityFlag.visible);
-            _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.visible);
-          });
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpAndDown) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpAndDown;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+            },
+          );
+        }
         return;
       }
     } catch (e) {

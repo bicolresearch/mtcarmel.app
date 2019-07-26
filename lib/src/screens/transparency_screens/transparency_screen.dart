@@ -2,9 +2,8 @@
 *	 Filename		 :	 transparency_screen.dart
 *	 Purpose		 :	 Displays the recent donation transactions
 *  Created		 :   2019-06-05 09:10:50 Detective Conan
-*  Updated     :   2019-07-25 15:37 by Detective conan 
-*  Changes     :   Changed the abbreviation of month to "mo". Removed decimal of
-*                  amount.
+*  Updated     :   2019-07-26 10:58 by Detective conan
+*  Changes     :   enhanced the scrolling.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -39,6 +38,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   Donations _donations;
 
   ScrollController _scrollController;
+  MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
   static Icon _arrowUp = Icon(
     Icons.keyboard_arrow_up,
@@ -326,49 +326,66 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     if (!_scrollController.hasClients) return;
     try {
       if (_scrollController.offset ==
-              _scrollController.position.maxScrollExtent &&
+          _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.gone);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-        });
+        setState(
+              () {
+            _arrowMoreDown = VisibilityHelper(
+                child: _arrowDown, visibility: VisibilityFlag.gone);
+            _arrowMoreUp = VisibilityHelper(
+                child: _arrowUp, visibility: VisibilityFlag.gone);
+          },
+        );
         return;
       }
       if (_scrollController.offset >=
-              _scrollController.position.maxScrollExtent &&
+          _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.gone);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.visible);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpOnly;
+          setState(
+                () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.gone);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+            },
+          );
+        }
         return;
       }
       if (_scrollController.offset <=
-              _scrollController.position.minScrollExtent &&
+          _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreDownOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreDownOnly;
+          setState(
+                () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.gone);
+            },
+          );
+        }
         return;
       }
       if (_scrollController.offset <
-              _scrollController.position.maxScrollExtent &&
+          _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.visible);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpAndDown) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpAndDown;
+          setState(
+                () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+            },
+          );
+        }
         return;
       }
     } catch (e) {

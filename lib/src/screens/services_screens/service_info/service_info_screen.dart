@@ -2,9 +2,8 @@
 *  Filename    :   service_info_screen.dart
 *  Purpose     :   Displays the service info
 *  Created     :   2019-07-22 09:21 by Detective Conan
-*  Updated     :   2019-07-25 10:53 by Detective conan
-*  Changes     :   Disabling when end of
-*                  scroll was not reached
+*  Updated     :   2019-07-26 10:59 by Detective conan
+*  Changes     :   Enhanced the scrolling
 */
 
 import 'package:flutter/material.dart';
@@ -28,6 +27,7 @@ class ServiceInfoScreen extends StatefulWidget {
 
 class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
   bool _isScrolledToTheLast = false;
+  MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
   ScrollController _scrollController;
 
@@ -161,50 +161,65 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
               _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.gone);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-          _isScrolledToTheLast = true;
-        });
-        return;
-      }
-      if (_scrollController.offset >=
-              _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange) {
         setState(
           () {
             _arrowMoreDown = VisibilityHelper(
                 child: _arrowDown, visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.visible);
+                child: _arrowUp, visibility: VisibilityFlag.gone);
             _isScrolledToTheLast = true;
           },
         );
         return;
       }
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpOnly;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.gone);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+              _isScrolledToTheLast = true;
+            },
+          );
+        }
+        return;
+      }
       if (_scrollController.offset <=
               _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.gone);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreDownOnly) {
+          _currentMoreArrow = MoreArrowEnum.MoreDownOnly;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.gone);
+            },
+          );
+        }
         return;
       }
       if (_scrollController.offset <
               _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
-        setState(() {
-          _arrowMoreDown = VisibilityHelper(
-              child: _arrowDown, visibility: VisibilityFlag.visible);
-          _arrowMoreUp = VisibilityHelper(
-              child: _arrowUp, visibility: VisibilityFlag.visible);
-        });
+        if (_currentMoreArrow != MoreArrowEnum.MoreUpAndDown) {
+          _currentMoreArrow = MoreArrowEnum.MoreUpAndDown;
+          setState(
+            () {
+              _arrowMoreDown = VisibilityHelper(
+                  child: _arrowDown, visibility: VisibilityFlag.visible);
+              _arrowMoreUp = VisibilityHelper(
+                  child: _arrowUp, visibility: VisibilityFlag.visible);
+            },
+          );
+        }
         return;
       }
     } catch (e) {

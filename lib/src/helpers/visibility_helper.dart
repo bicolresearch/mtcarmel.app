@@ -7,6 +7,13 @@ enum VisibilityFlag {
   gone,
 }
 
+enum MoreArrowEnum{
+  MoreUpOnly,
+  MoreDownOnly,
+  MoreUpAndDown,
+  None
+}
+
 class VisibilityHelper extends StatelessWidget {
   final VisibilityFlag visibility;
   final Widget child;
