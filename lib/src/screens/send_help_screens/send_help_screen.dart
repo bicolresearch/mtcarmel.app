@@ -140,17 +140,17 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-//          Container(
-//            child: (sendHelp.coverPhoto == null)
-//                ? Container()
-//                : CachedNetworkImage(
-//                    key: Key(sendHelp.coverPhoto?.replaceAll("/", "")),
-//                    imageUrl:
-//                        AppConstants.API_BASE_URL + sendHelp.coverPhoto ?? "",
-//                    placeholder: (context, url) => LoadingIndicator(),
-//                    errorWidget: (context, url, error) => new Icon(Icons.error),
-//                    fit: BoxFit.cover),
-//          ),
+          Container(
+            child: (sendHelp.coverPhoto == null)
+                ? Container()
+                : CachedNetworkImage(
+                    key: Key(sendHelp.coverPhoto?.replaceAll("/", "")),
+                    imageUrl:
+                        AppConstants.API_BASE_URL + sendHelp.coverPhoto ?? "",
+                    placeholder: (context, url) => LoadingIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                    fit: BoxFit.cover),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
