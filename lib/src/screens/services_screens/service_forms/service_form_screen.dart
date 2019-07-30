@@ -35,21 +35,12 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
 
   ScrollController _scrollController;
 
-  static Icon _arrowUp = Icon(
-    Icons.keyboard_arrow_up,
-    color: Colors.brown,
-  );
-  static Icon _arrowDown = Icon(
-    Icons.keyboard_arrow_down,
-    color: Colors.brown,
-  );
-
   VisibilityHelper _arrowMoreUp = VisibilityHelper(
-    child: _arrowUp,
+    child: VisibilityHelper.arrowUp,
     visibility: VisibilityFlag.gone,
   );
   VisibilityHelper _arrowMoreDown = VisibilityHelper(
-    child: _arrowDown,
+    child: VisibilityHelper.arrowDown,
     visibility: VisibilityFlag.gone,
   );
 
@@ -76,7 +67,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+        margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -135,9 +126,9 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0)),
               color: Colors.brown,
-              child: Text(
+              child: const Text(
                 "Submit",
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               onPressed: _isScrolledToTheLast
                   ? () async {
@@ -178,9 +169,9 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         setState(
               () {
             _arrowMoreDown = VisibilityHelper(
-                child: _arrowDown, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
             _isScrolledToTheLast = true;
           },
         );
@@ -194,9 +185,9 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
               _isScrolledToTheLast = true;
             },
           );
@@ -211,9 +202,9 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
             },
           );
         }
@@ -228,9 +219,9 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
             },
           );
         }

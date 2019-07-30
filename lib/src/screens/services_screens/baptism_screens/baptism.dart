@@ -11,7 +11,9 @@ import 'package:mt_carmel_app/src/models/service_item.dart';
 ////
 class Baptism {
 
-  static dynamic getChurchService(ServiceItem serviceItem) {
+
+
+  dynamic getChurchService(ServiceItem serviceItem) {
     final ServiceReference serviceReference = ServiceReference(
         serviceItem.id,
         serviceItem.branchId,

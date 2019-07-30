@@ -31,21 +31,14 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
 
   ScrollController _scrollController;
 
-  static Icon _arrowUp = Icon(
-    Icons.keyboard_arrow_up,
-    color: Colors.brown,
-  );
-  static Icon _arrowDown = Icon(
-    Icons.keyboard_arrow_down,
-    color: Colors.brown,
-  );
+  GlobalKey _htmlKey = GlobalKey();
 
   VisibilityHelper _arrowMoreUp = VisibilityHelper(
-    child: _arrowUp,
+    child: VisibilityHelper.arrowUp,
     visibility: VisibilityFlag.gone,
   );
   VisibilityHelper _arrowMoreDown = VisibilityHelper(
-    child: _arrowDown,
+    child: VisibilityHelper.arrowDown,
     visibility: VisibilityFlag.gone,
   );
 
@@ -72,7 +65,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+        margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
         child: Column(
           children: <Widget>[
             Padding(
@@ -103,11 +96,12 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: HtmlTextView(
                       data:
                           "<div style='color: #5d4037'>${widget.churchServiceSubtype.infoText}</div>",
                     ),
+                    key: _htmlKey,
                   ),
                 ),
               ),
@@ -120,7 +114,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
                     color: Colors.brown,
-                    child: Text(
+                    child: const Text(
                       "Accept",
                       style: TextStyle(color: Colors.white),
                     ),
@@ -164,9 +158,11 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
         setState(
           () {
             _arrowMoreDown = VisibilityHelper(
-                child: _arrowDown, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowDown,
+                visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowUp,
+                visibility: VisibilityFlag.gone);
             _isScrolledToTheLast = true;
           },
         );
@@ -180,9 +176,11 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.gone);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.visible);
               _isScrolledToTheLast = true;
             },
           );
@@ -197,9 +195,11 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.gone);
             },
           );
         }
@@ -214,9 +214,11 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.visible);
             },
           );
         }

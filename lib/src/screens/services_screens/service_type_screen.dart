@@ -53,7 +53,7 @@ class ServiceTypeScreen extends StatelessWidget {
                                 builder: (context) => ServiceInfoScreen(
                                     churchServiceSubtype: churchService
                                         .churchServiceSubtypes[index])));
-                        if (result) Navigator.pop(context, true);
+                        if (result) Navigator.pop(context);
                       },
                       child: serviceSpecific(
                           context,

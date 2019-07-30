@@ -140,17 +140,17 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Container(
-            child: (sendHelp.coverPhoto == null)
-                ? Container()
-                : CachedNetworkImage(
-                    key: Key(sendHelp.coverPhoto?.replaceAll("/", "")),
-                    imageUrl:
-                        AppConstants.API_BASE_URL + sendHelp.coverPhoto ?? "",
-                    placeholder: (context, url) => LoadingIndicator(),
-                    errorWidget: (context, url, error) => new Icon(Icons.error),
-                    fit: BoxFit.cover),
-          ),
+//          Container(
+//            child: (sendHelp.coverPhoto == null)
+//                ? Container()
+//                : CachedNetworkImage(
+//                    key: Key(sendHelp.coverPhoto?.replaceAll("/", "")),
+//                    imageUrl:
+//                        AppConstants.API_BASE_URL + sendHelp.coverPhoto ?? "",
+//                    placeholder: (context, url) => LoadingIndicator(),
+//                    errorWidget: (context, url, error) => new Icon(Icons.error),
+//                    fit: BoxFit.cover),
+//          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -193,8 +193,8 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
               Container(
                 alignment: Alignment.topCenter,
                 padding: isPrimary
-                    ? EdgeInsets.only(left: 60.0, right: 60.0)
-                    : EdgeInsets.only(left: 8.0, right: 8.0),
+                    ? const EdgeInsets.only(left: 60.0, right: 60.0)
+                    : const EdgeInsets.only(left: 8.0, right: 8.0),
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: RaisedButton(
@@ -202,13 +202,11 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                       print("${sendHelp.name} selected"),
                       if (!_isLoggedIn)
                         {
-                          await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
-                              )).then((value) {
-                            _isLoggedIn = value;
-                          }),
+                        _isLoggedIn = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginScreen(),
+                                  )),
                         },
                       //after login form
                       if (_isLoggedIn)

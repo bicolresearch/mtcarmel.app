@@ -61,21 +61,12 @@ class _ServicesScreenState extends State<ServicesScreen> {
   bool _isLoading = true;
   bool _isJsonFailed = false;
 
-  static Icon _arrowUp = Icon(
-    Icons.keyboard_arrow_up,
-    color: Colors.brown,
-  );
-  static Icon _arrowDown = Icon(
-    Icons.keyboard_arrow_down,
-    color: Colors.brown,
-  );
-
   VisibilityHelper _arrowMoreUp = VisibilityHelper(
-    child: _arrowUp,
+    child: VisibilityHelper.arrowUp,
     visibility: VisibilityFlag.gone,
   );
   VisibilityHelper _arrowMoreDown = VisibilityHelper(
-    child: _arrowDown,
+    child: VisibilityHelper.arrowDown,
     visibility: VisibilityFlag.gone,
   );
 
@@ -145,7 +136,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   Expanded(
                     child: Container(
                       alignment: Alignment.bottomCenter,
-                      margin: EdgeInsets.symmetric(
+                      margin: const EdgeInsets.symmetric(
                         horizontal: 20.0,
                       ),
                       child: NotificationListener<ScrollNotification>(
@@ -178,7 +169,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     );
   }
 
-  Widget _serviceItem(context, ServiceItem serviceItem) {
+  Widget _serviceItem(context, final ServiceItem serviceItem) {
     return GestureDetector(
       onTap: () async {
         await Navigator.push(
@@ -194,39 +185,47 @@ class _ServicesScreenState extends State<ServicesScreen> {
     );
   }
 
-  Widget _navigateToService(ServiceItem serviceItem) {
+  Widget _navigateToService(final ServiceItem serviceItem) {
     switch (serviceItem.name) {
       case ServicesScreen.JOIN_US:
         //TODO for the current model
-        _churchService = JoinUs.getChurchService(serviceItem);
+        JoinUs joinUs = JoinUs();
+        _churchService = joinUs.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.MAKE_REQUEST:
         //TODO for the current model
-        _churchService = MakeRequest.getChurchService(serviceItem);
+      MakeRequest makeRequest = MakeRequest();
+        _churchService = makeRequest.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.BAPTISM:
         //TODO for the current model
-        _churchService = Baptism.getChurchService(serviceItem);
+        Baptism baptism = Baptism();
+        _churchService = baptism.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.COMMUNION:
         //TODO for the current model
-        _churchService = Communion.getChurchService(serviceItem);
+      Communion communion = Communion();
+        _churchService = communion.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.CONFIRMATION:
         //TODO for the current model
-        _churchService = Confirmation.getChurchService(serviceItem);
+      Confirmation confirmation = Confirmation();
+        _churchService = confirmation.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.WEDDING:
         //TODO for the current model
-        _churchService = Marriage.getChurchService(serviceItem);
+      Marriage marriage = Marriage();
+        _churchService = marriage.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.PASSING:
         //TODO for the current model
-        _churchService = Passing.getChurchService(serviceItem);
+      Passing passing = Passing();
+        _churchService = passing.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
       case ServicesScreen.EVENTS:
         //TODO for the current model
-        _churchService = ChurchEvent.getChurchService(serviceItem);
+      ChurchEvent churchEvent = ChurchEvent();
+        _churchService = churchEvent.getChurchService(serviceItem);
         return ServiceTypeScreen(churchService: _churchService);
     }
     return NoService(serviceItem: serviceItem);
@@ -250,9 +249,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
         setState(
           () {
             _arrowMoreDown = VisibilityHelper(
-                child: _arrowDown, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
           },
         );
         return;
@@ -265,9 +264,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
             },
           );
         }
@@ -281,9 +280,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
             },
           );
         }
@@ -298,9 +297,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
             },
           );
         }
@@ -342,7 +341,7 @@ class NoService extends StatelessWidget {
             ),
             Spacer(),
             Container(
-              margin: EdgeInsets.only(bottom: 30.0),
+              margin: const EdgeInsets.only(bottom: 30.0),
               child: leftArrowBackButton(context: context),
             )
           ],

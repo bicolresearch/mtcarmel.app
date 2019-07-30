@@ -11,6 +11,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
+import 'package:mt_carmel_app/src/utils/payment_screen.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import '../../constants/app_constants.dart';
 
@@ -104,13 +105,18 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              print("Send help pressed");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentScreen(),
+                ),
+              );
             },
           ),
           GestureDetector(
             onTap: () => Navigator.pop(context),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(12.0),
               child: Text(
                 "Back",
                 style:

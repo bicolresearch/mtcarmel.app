@@ -161,7 +161,7 @@ class _FeedScreenState extends State<FeedScreen> {
                     color: Colors.brown,
                   ),
                 ),
-                padding: EdgeInsets.only(right: 20.0),
+                padding: const EdgeInsets.only(right: 20.0),
               ),
             ],
           ),

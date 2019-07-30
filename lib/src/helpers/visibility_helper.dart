@@ -19,6 +19,15 @@ class VisibilityHelper extends StatelessWidget {
   final Widget child;
   final Widget removedChild;
 
+  static Icon arrowUp = Icon(
+    Icons.keyboard_arrow_up,
+    color: Colors.brown,
+  );
+  static Icon arrowDown = Icon(
+    Icons.keyboard_arrow_down,
+    color: Colors.brown,
+  );
+
   VisibilityHelper({
     @required this.child,
     @required this.visibility,
