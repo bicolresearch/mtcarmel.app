@@ -2,23 +2,23 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*  Updated     :   2019-07-25 10:53 by Detective conan
-*  Changes     :   Disabling when end of
-*                  scroll was not reached
+*  Updated     :   2019-07-31 17:51 by Detective conan
+*  Changes     :   Added submit method.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:http/http.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/thank_you/thank_you_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class ServiceFormScreen extends StatefulWidget {
-  static final GlobalKey<FormBuilderState> _fbKey =
-  GlobalKey<FormBuilderState>();
 
   ServiceFormScreen({this.serviceSubType});
 
@@ -30,6 +30,8 @@ class ServiceFormScreen extends StatefulWidget {
 }
 
 class _ServiceFormScreenState extends State<ServiceFormScreen> {
+  static final GlobalKey<FormBuilderState> _fbKey =
+  GlobalKey<FormBuilderState>();
   bool _isScrolledToTheLast = false;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
@@ -72,7 +74,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
 
-            GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
+            _arrowMoreUp,
             Expanded(
               child: NotificationListener<ScrollNotification>(
                 onNotification: (scrollNotification) {
@@ -105,7 +107,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: FormBuilder(
-                          key: ServiceFormScreen._fbKey,
+                          key: _fbKey,
                           autovalidate: true,
                           child: Column(
                             children: <Widget>[
@@ -121,7 +123,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                 ),
               ),
             ),
-            GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
+            _arrowMoreDown,
             RaisedButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0)),
@@ -133,15 +135,29 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
               onPressed: _isScrolledToTheLast
                   ? () async {
                 //TODO implement validations and updating database
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ThankYouScreen(
-                            thankYouText: widget.serviceSubType.thankYouText),
-                  ),
-                );
-                if (result) Navigator.pop(context, true);
+
+                await _submit().then((success) async {
+                  print("ServiceFormScreen._submit.then success=$success");
+                  if(!success)
+                    return;
+
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ThankYouScreen(
+                              thankYouText: widget.serviceSubType.thankYouText),
+                    ),
+                  );
+                  if (result) Navigator.pop(
+                      context
+                      ,
+                      true
+                  );
+                },).catchError((e) {
+                  //TODO show error notification
+                  print(e);
+                });
               }
                   : null,),
             leftArrowBackButton(context: context),
@@ -150,6 +166,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
       ),
     );
   }
+
 
   void _onStartScroll(ScrollMetrics metrics) {}
 
@@ -169,9 +186,11 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         setState(
               () {
             _arrowMoreDown = VisibilityHelper(
-                child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowDown,
+                visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowUp,
+                visibility: VisibilityFlag.gone);
             _isScrolledToTheLast = true;
           },
         );
@@ -185,9 +204,11 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.gone);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.visible);
               _isScrolledToTheLast = true;
             },
           );
@@ -202,9 +223,11 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.gone);
             },
           );
         }
@@ -219,9 +242,11 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.visible);
             },
           );
         }
@@ -233,15 +258,76 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
     }
   }
 
-  _moveUp() {
-    if (_scrollController.offset >= _scrollController.position.minScrollExtent)
-      _scrollController.animateTo(_scrollController.offset - 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
+  Future _submit() async {
+    _fbKey.currentState.save();
+    if (_fbKey.currentState.validate()) {
+      print(_fbKey.currentState.value);
+      final url = "https://api.mountcarmel.ph/confraternity/create";
+      Map<String, String> headers = {
+        "Content-type": "application/x-www-form-urlencoded"
+      };
+      var fieldsValue = _fbKey.currentState.value;
+
+//      final test = {"branch_id": "1", "name": "Adrian", "address_1": "Somewhere",
+//      "address_2": "Down the Road", "barangay": "012802004", "city": "012802",
+//      "province": "0128", "country": "1", "dt_birth": "2000-01-01 00:00:00",
+//      "landline": "12345678", "mobile": "123456789123", "email": "asd@gfs.ph",};
+
+      final userId = await locator<AuthenticationService>().getUserId().catchError((e){
+        print("ServiceFormScreen._submit() error: $e");
+        throw e;
+      });
+
+      if (userId == null || userId == "")
+        throw "Not login";
+
+
+      fieldsValue.putIfAbsent("user_id", () => userId);
+      debugPrint(fieldsValue.toString());
+      print(headers);
+      Map<String, String> casted = fieldsValue.cast();
+      Response response = await _create(
+        url,
+        headers,
+        casted,
+      ).catchError((e) =>
+      {print(e),
+        throw(e)});
+      print(response.body);
+      if (response == null)
+        return false;
+
+      if(response.statusCode == 201)
+        return true;
+      else
+        return false;
+
+    }
+    else
+      return false;
+
+//  _moveUp() {
+//    if (_scrollController.offset >= _scrollController.position.minScrollExtent)
+//      _scrollController.animateTo(_scrollController.offset - 200,
+//          curve: Curves.linear, duration: Duration(milliseconds: 500));
+//  }
+//
+//  _moveDown() {
+//    if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
+//      _scrollController.animateTo(_scrollController.offset + 200,
+//          curve: Curves.linear, duration: Duration(milliseconds: 500));
+//  }
   }
 
-  _moveDown() {
-    if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
-      _scrollController.animateTo(_scrollController.offset + 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
+  Future _create(url, headers, fieldsValue) async {
+    final result = await post(
+    url,
+    headers: headers,
+    body: fieldsValue,
+    ).timeout(
+    Duration(seconds: 3),
+    );
+
+    return result;
   }
 }

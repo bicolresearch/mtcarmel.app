@@ -2,17 +2,20 @@
 *  Filename    :   service_info_screen.dart
 *  Purpose     :   Displays the service info
 *  Created     :   2019-07-22 09:21 by Detective Conan
-*  Updated     :   2019-07-26 10:59 by Detective conan
-*  Changes     :   Enhanced the scrolling
+*  Updated     :   2019-07-31 17:50 by Detective conan
+*  Changes     :   route to login screen when accept and not logged in.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/church_service.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
+import 'package:mt_carmel_app/src/widgets/login_screen.dart';
 
 class ServiceInfoScreen extends StatefulWidget {
   @required
@@ -27,6 +30,7 @@ class ServiceInfoScreen extends StatefulWidget {
 
 class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
   bool _isScrolledToTheLast = false;
+  bool _isLoggedIn = false;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
   ScrollController _scrollController;
@@ -58,6 +62,9 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     _initializeArrows();
+    _checkLoginStatus().catchError((e) {
+      debugPrint(e);
+    });
     super.initState();
   }
 
@@ -80,7 +87,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
               ),
             ),
             lineWidget(),
-            GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
+            _arrowMoreUp,
             Expanded(
               child: NotificationListener<ScrollNotification>(
                 onNotification: (scrollNotification) {
@@ -106,7 +113,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                 ),
               ),
             ),
-            GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
+            _arrowMoreDown,
             Container(
               child: Column(
                 children: <Widget>[
@@ -120,15 +127,47 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                     ),
                     onPressed: _isScrolledToTheLast
                         ? () async {
-                            final result = await Navigator.push(
+                            if (!_isLoggedIn) {
+                              _isLoggedIn = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ServiceFormScreen(
-                                        serviceSubType:
-                                            widget.churchServiceSubtype)));
-                            if (result) Navigator.pop(context, true);
+                                  builder: (context) => LoginScreen(),
+                                ),
+                              );
+                            }
+
+                            if (_isLoggedIn) {
+                              final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ServiceFormScreen(
+                                          serviceSubType:
+                                              widget.churchServiceSubtype)));
+                              if (result) Navigator.pop(context, true);
+                            }
                           }
                         : null,
+
+//                    onPressed: () async => {
+//                      print("${sendHelp.name} selected"),
+//                      if (!_isLoggedIn)
+//                        {
+//                          _isLoggedIn = await Navigator.push(
+//                              context,
+//                              MaterialPageRoute(
+//                                builder: (context) => LoginScreen(),
+//                              )),
+//                        },
+//                      //after login form
+//                      if (_isLoggedIn)
+//                        {
+//                          Navigator.push(
+//                              context,
+//                              MaterialPageRoute(
+//                                builder: (context) => SendHelpDetails(sendHelp),
+//                              ))
+//                        }
+//                    },
                   ),
                   leftArrowBackButton(context: context),
                 ],
@@ -240,5 +279,14 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
     if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
       _scrollController.animateTo(_scrollController.offset + 200,
           curve: Curves.linear, duration: Duration(milliseconds: 500));
+  }
+
+  Future _checkLoginStatus() async {
+    await locator<AuthenticationService>().isLoggedIn().then((value) {
+      _isLoggedIn = value;
+    }).catchError((error) {
+      print(error);
+      _isLoggedIn = false;
+    });
   }
 }

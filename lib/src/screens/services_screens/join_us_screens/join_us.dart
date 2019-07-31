@@ -48,20 +48,55 @@ class JoinUs {
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
     final ChurchFormField churchFormField2 = ChurchFormField(
-        attribute: "home_address",
-        labelText: "Home Address",
-        validators: validatorsPlainRequired,
-        textFieldType: "plain_text");
-    final ChurchFormField churchFormField4 = ChurchFormField(
-        attribute: "birthday",
-        labelText: "Birthday",
+        attribute: "address_1",
+        labelText: "Address 1",
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
     final ChurchFormField churchFormField3 = ChurchFormField(
-        attribute: "contact_number",
-        labelText: "Contact Number",
+        attribute: "address_2",
+        labelText: "Address 2",
+        validators: validatorsPlainRequired,
+        textFieldType: "plain_text");
+    final ChurchFormField churchFormField4 = ChurchFormField(
+        attribute: "barangay",
+        labelText: "Barangay",
+        validators: validatorsPlainRequired,
+        textFieldType: "numeric");
+    final ChurchFormField churchFormField5 = ChurchFormField(
+        attribute: "city",
+        labelText: "City",
+        validators: validatorsPlainRequired,
+        textFieldType: "numeric");
+    final ChurchFormField churchFormField6 = ChurchFormField(
+        attribute: "province",
+        labelText: "Province",
+        validators: validatorsPlainRequired,
+        textFieldType: "numeric");
+    final ChurchFormField churchFormField7 = ChurchFormField(
+        attribute: "country",
+        labelText: "Country",
+        validators: validatorsPlainRequired,
+        textFieldType: "numeric");
+    final ChurchFormField churchFormField8 = ChurchFormField(
+        attribute: "dt_birth",
+        labelText: "Birthday",
+        validators: validatorsPlainRequired,
+        textFieldType: "plain_text");
+    final ChurchFormField churchFormField9 = ChurchFormField(
+        attribute: "landline",
+        labelText: "Landline",
         validators: validatorsNumericNotRequired,
         textFieldType: "plain_text");
+    final ChurchFormField churchFormField10 = ChurchFormField(
+        attribute: "mobile",
+        labelText: "Mobile",
+        validators: validatorsPlainRequired,
+        textFieldType: "plain_text");
+    final ChurchFormField churchFormField11 = ChurchFormField(
+        attribute: "email",
+        labelText: "Email",
+        validators: validatorsPlainRequired,
+        textFieldType: "email");
 
     final ChurchServiceSubtype churchServiceSubtype = ChurchServiceSubtype(
         subTypeName: "Confraternity of Our Lady of Mount Carmel",
@@ -69,7 +104,14 @@ class JoinUs {
           churchFormField1,
           churchFormField2,
           churchFormField3,
-          churchFormField4
+          churchFormField4,
+          churchFormField5,
+          churchFormField6,
+          churchFormField7,
+          churchFormField8,
+          churchFormField9,
+          churchFormField10,
+          churchFormField11,
         ],
         infoText: infoText,
         thankYouText: thankYouMessage);
