@@ -20,8 +20,6 @@ import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class TransparencyScreen extends StatefulWidget {
-  static const TextStyle optionStyle = TextStyle(
-      color: Colors.brown, fontSize: 13.0, fontWeight: FontWeight.bold);
 
   TransparencyScreen(BuildContext context);
 
@@ -31,7 +29,7 @@ class TransparencyScreen extends StatefulWidget {
 
 class _TransparencyScreenState extends State<TransparencyScreen> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
 
   bool _isJsonFailed = false;
   bool _isJsonLoading = true;
@@ -40,19 +38,12 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   ScrollController _scrollController;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
-  static Icon _arrowUp = Icon(
-    Icons.keyboard_arrow_up,
-  );
-  static Icon _arrowDown = Icon(
-    Icons.keyboard_arrow_down,
-  );
-
   VisibilityHelper _arrowMoreUp = VisibilityHelper(
-    child: _arrowUp,
+    child: VisibilityHelper.arrowUp,
     visibility: VisibilityFlag.gone,
   );
   VisibilityHelper _arrowMoreDown = VisibilityHelper(
-    child: _arrowDown,
+    child: VisibilityHelper.arrowDown,
     visibility: VisibilityFlag.gone,
   );
 
@@ -165,7 +156,6 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                             onPressed: () {
                                               print("Refresh button pressed.");
                                               setState(() {
-                                                //_isJsonLoading = true;
                                                 _refreshIndicatorKey
                                                     .currentState
                                                     .show();
@@ -186,7 +176,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                         ),
 
                         //TRANSACTION LIST
-                        GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
+                        _arrowMoreUp,
 
                         Expanded(
                           child: Container(
@@ -225,8 +215,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                            onTap: _moveDown, child: _arrowMoreDown),
+                        _arrowMoreDown,
                       ],
                     ),
                     height: MediaQuery.of(context).size.height,
@@ -244,7 +233,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
         child: Row(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+              margin: const EdgeInsets.all(5.0),
               width: 40.0,
               child: CircleAvatar(
                 backgroundImage: CachedNetworkImageProvider(url),
@@ -266,7 +255,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
             Container(
               width: 35.0,
               child: Text(
-                timePassTransaction(DateTime.parse("${donation.postedOn}Z")),
+                timePassTransaction(DateTime.parse("${donation.postedOn}")),
                 style: TextStyle(fontSize: 12.0),
               ),
             ),
@@ -294,6 +283,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   void dispose() {
     print("disposing transparency Screen...");
     _scrollController.dispose();
+    _refreshIndicatorKey.currentState.dispose();
     super.dispose();
   }
 
@@ -302,7 +292,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
       // format to philippine peso and separates with commas
       final formatCurrency =
           NumberFormat.currency(symbol: "\u20b1", decimalDigits: 0);
-      return formatCurrency.format(amount);
+      return "${formatCurrency.format(amount)}";
     } catch (e) {
       print(e.toString());
       return "\u20b1 $amount";
@@ -332,9 +322,9 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
         setState(
               () {
             _arrowMoreDown = VisibilityHelper(
-                child: _arrowDown, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
           },
         );
         return;
@@ -347,9 +337,9 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
             },
           );
         }
@@ -363,9 +353,9 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
             },
           );
         }
@@ -380,9 +370,9 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
           setState(
                 () {
               _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
             },
           );
         }
