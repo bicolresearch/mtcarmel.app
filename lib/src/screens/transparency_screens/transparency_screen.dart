@@ -95,8 +95,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                     margin: EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Column(
                       children: <Widget>[
-                        Expanded(
-                          child: Container(
+                          Container(
                             child: Column(
                               children: <Widget>[
                                 Flexible(
@@ -170,10 +169,9 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                 ),
                               ],
                             ),
-                            height: (MediaQuery.of(context).size.height) / 2,
+                            height: MediaQuery.of(context).size.height / 2,
                             width: double.infinity,
                           ),
-                        ),
 
                         //TRANSACTION LIST
                         _arrowMoreUp,
@@ -283,7 +281,6 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
   void dispose() {
     print("disposing transparency Screen...");
     _scrollController.dispose();
-    _refreshIndicatorKey.currentState.dispose();
     super.dispose();
   }
 
@@ -291,7 +288,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     try {
       // format to philippine peso and separates with commas
       final formatCurrency =
-          NumberFormat.currency(symbol: "\u20b1", decimalDigits: 0);
+          NumberFormat.currency(symbol: "Php", decimalDigits: 0);
       return "${formatCurrency.format(amount)}";
     } catch (e) {
       print(e.toString());
