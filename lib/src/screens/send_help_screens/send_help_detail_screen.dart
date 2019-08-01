@@ -2,9 +2,8 @@
 *  Filename    :   send_help_detail_screen.dart
 *  Purpose     :   Displays the details of a selected donation.
 *  Created     :   2019-07-10 15:30 by Detective Conan
-*  Updated     :   2019-08-01 11:52 by Detective conan
-*  Changes     :   Made _imagesController TabController attribute of the class.
-*                   Instead inside the slider method only.
+*  Updated     :   2019-08-01 12:22 by Detective conan
+*  Changes     :   Renamed _imagesController to _sliderController
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -29,7 +28,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   TextEditingController _textControllerAmount;
   bool _isTextEditing = false;
   List<Widget> _sliderItems = [];
-  TabController _imagesController;
+  TabController _sliderController;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
                   imageUrl:
                       AppConstants.API_BASE_URL + widget.sendHelp.coverPhoto,
                   placeholder: (context, url) => LoadingIndicator(),
-                  errorWidget: (context, url, error) => new Icon(Icons.error),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                   fit: BoxFit.cover),
             ),
             Column(
@@ -73,7 +72,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
 
   Widget _buttonsAndFields() {
     return Container(
-      margin: EdgeInsets.only(bottom: 20.0),
+      margin: const EdgeInsets.only(bottom: 20.0),
       child: Column(
         children: <Widget>[
           Padding(
@@ -110,14 +109,15 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
                   .subhead
                   .copyWith(color: Colors.white),
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentScreen(),
-                ),
-              );
-            },
+// TODO enable when PaymentScreen is ready.
+//            onPressed: () {
+//              Navigator.push(
+//                context,
+//                MaterialPageRoute(
+//                  builder: (context) => PaymentScreen(),
+//                ),
+//              );
+//            },
           ),
           GestureDetector(
             onTap: () => Navigator.pop(context),
@@ -185,8 +185,8 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   @override
   void dispose() {
     _textControllerAmount.dispose();
-    if(_imagesController!=null)
-      _imagesController.dispose();
+    if(_sliderController!=null)
+      _sliderController.dispose();
 
     super.dispose();
   }
@@ -210,7 +210,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   }
 
   Widget _slider() {
-    _imagesController = TabController(length: _sliderItems.length, vsync: this);
+    _sliderController = TabController(length: _sliderItems.length, vsync: this);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -221,13 +221,13 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
             child: Stack(
               children: <Widget>[
                 TabBarView(
-                  controller: _imagesController,
+                  controller: _sliderController,
                   children: _sliderItems,
                 ),
                 Container(
                   alignment: FractionalOffset(0.5, 0.95),
                   child: TabPageSelector(
-                    controller: _imagesController,
+                    controller: _sliderController,
                     selectedColor: Colors.grey,
                     color: Colors.white,
                   ),
