@@ -25,10 +25,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class SendHelpScreen extends StatefulWidget {
-  static const TextStyle optionStyle = TextStyle(
-      color: Colors.brown, fontSize: 13.0, fontWeight: FontWeight.bold);
-
-  SendHelpScreen(BuildContext context);
 
   @override
   _SendHelpScreenState createState() => _SendHelpScreenState();
@@ -82,7 +78,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
             ? LoadingIndicator()
             : _isJsonFailed
                 ? failedMessage(context)
-                : Container(
+                : SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

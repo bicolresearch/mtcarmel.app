@@ -28,19 +28,19 @@ class _State extends State<BottomTabNavigator> {
       _cIndex = index;
       switch (index) {
         case 0:
-          _body = FeedScreen(context);
+          _body = FeedScreen();
           break;
         case 1:
-          _body = SendHelpScreen(context);
+          _body = SendHelpScreen();
           break;
         case 2:
-          _body = ServicesScreen(context);
+          _body = ServicesScreen();
           break;
         case 3:
-          _body = TransparencyScreen(context);
+          _body = TransparencyScreen();
           break;
         default:
-          _body = ProfileScreen(context);
+          _body = ProfileScreen();
       }
     });
   }

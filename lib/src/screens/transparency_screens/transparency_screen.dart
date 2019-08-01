@@ -21,8 +21,6 @@ import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class TransparencyScreen extends StatefulWidget {
 
-  TransparencyScreen(BuildContext context);
-
   @override
   _TransparencyScreenState createState() => _TransparencyScreenState();
 }

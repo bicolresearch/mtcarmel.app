@@ -38,10 +38,6 @@ enum ProfileFilter {
 }
 
 class ProfileScreen extends StatefulWidget {
-  static const TextStyle optionStyle = TextStyle(
-      color: Colors.brown, fontSize: 13.0, fontWeight: FontWeight.bold);
-
-  ProfileScreen(BuildContext context);
 
   // TODO Get the list from the API
   static const String BIBLE = "Holy Bible";

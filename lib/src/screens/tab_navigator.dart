@@ -45,11 +45,11 @@ class _TabNavigatorState extends State<TabNavigator>
     return Scaffold(
       body: TabBarView(
         children: <Widget>[
-          FeedScreen(context),
-          SendHelpScreen(context),
-          ServicesScreen(context),
-          TransparencyScreen(context),
-          ProfileScreen(context),
+          FeedScreen(),
+          SendHelpScreen(),
+          ServicesScreen(),
+          TransparencyScreen(),
+          ProfileScreen(),
         ],
         controller: controller,
       ),

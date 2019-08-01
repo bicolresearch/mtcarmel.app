@@ -289,10 +289,12 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
       debugPrint(fieldsValue.toString());
       print(headers);
       Map<String, String> casted = fieldsValue.cast();
-      Response response = await _create(
+      Response response = await post(
         url,
-        headers,
-        casted,
+        headers: headers,
+        body: casted,
+      ).timeout(
+        Duration(seconds: 3),
       ).catchError((e) =>
       {print(e),
         throw(e)});
@@ -311,15 +313,4 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
 
   }
 
-  Future _create(url, headers, fieldsValue) async {
-    final result = await post(
-    url,
-    headers: headers,
-    body: fieldsValue,
-    ).timeout(
-    Duration(seconds: 3),
-    ).catchError((e) => { throw e});
-
-    return result;
-  }
 }

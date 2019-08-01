@@ -29,11 +29,6 @@ import 'dart:async';
 import 'dart:convert';
 
 class ServicesScreen extends StatefulWidget {
-  //TODO temporary text
-  static const String message =
-      "lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
-  static const String confra_message =
-      "Be an active part of the mission and service of the Carmelite Church";
 
   static const String JOIN_US = 'Join Us!';
   static const String MAKE_REQUEST = 'Make a Request';
@@ -44,7 +39,6 @@ class ServicesScreen extends StatefulWidget {
   static const String PASSING = 'Passing';
   static const String EVENTS = 'Events';
 
-  ServicesScreen(BuildContext context);
 
   @override
   _ServicesScreenState createState() => _ServicesScreenState();

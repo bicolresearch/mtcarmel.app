@@ -25,7 +25,6 @@ import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedScreen extends StatefulWidget {
-  FeedScreen(BuildContext context);
 
   @override
   _FeedScreenState createState() => _FeedScreenState();
