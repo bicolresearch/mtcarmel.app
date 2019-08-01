@@ -2,9 +2,8 @@
 *  Filename    :   send_help_detail_screen.dart
 *  Purpose     :   Displays the details of a selected donation.
 *  Created     :   2019-07-10 15:30 by Detective Conan
-*  Updated     :   2019-07-11 09:10 by Detective conan
-*  Changes     :   Fixed the overflowing of details box.
-*                  Hides the details box when textEditing.
+*  Updated     :   2019-08-01 11:48 by Detective conan
+*  Changes     :   Removed the argument list of widgets in _slider method.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -28,6 +27,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
     with TickerProviderStateMixin {
   TextEditingController _textControllerAmount;
   bool _isTextEditing = false;
+  List<Widget> _sliderItems = [];
 
   @override
   Widget build(BuildContext context) {
@@ -136,11 +136,8 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   }
 
   Widget _detailsBox(context) {
-    return _slider(
-      children: [
-        _firstItem(),
-      ],
-    );
+    _sliderItems.add(_firstItem());
+    return _slider();
   }
 
   Widget _firstItem() {
@@ -207,23 +204,20 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
     );
   }
 
-  Widget _slider({
-    @required List<Widget> children,
-  }) {
-    var imagesController = TabController(length: children.length, vsync: this);
+  Widget _slider() {
+    final imagesController = TabController(length: _sliderItems.length, vsync: this);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-//        height: 250.0,
         child: Center(
           child: DefaultTabController(
-            length: children.length,
+            length: _sliderItems.length,
             child: Stack(
               children: <Widget>[
                 TabBarView(
                   controller: imagesController,
-                  children: children,
+                  children: _sliderItems,
                 ),
                 Container(
                   alignment: FractionalOffset(0.5, 0.95),
