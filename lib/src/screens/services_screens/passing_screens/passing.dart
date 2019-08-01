@@ -6,13 +6,13 @@
 *  Changes     :   Temporary
 */
 
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 
 ////
 class Passing {
   dynamic getChurchService(ServiceItem serviceItem) {
-    final ServiceReference serviceReference = ServiceReference(
+    final ModuleReference serviceReference = ModuleReference(
         serviceItem.id,
         serviceItem.branchId,
         serviceItem.name,
@@ -118,8 +118,8 @@ class Passing {
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
 
-    final ChurchServiceSubtype funeralServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Funeral Service",
+    final ChurchSubModule funeralServiceSubtype = ChurchSubModule(
+        name: "Funeral Service",
         formFields: [
           funeralServiceFormField1,
           funeralServiceFormField2,
@@ -135,8 +135,8 @@ class Passing {
           funeralServiceFormField12,
           funeralServiceFormField13,
         ],
-        infoText: funeralServiceInfoText,
-        thankYouText: funeralServiceThankYouMessage);
+        acceptanceContent: funeralServiceInfoText,
+        thankYouContent: funeralServiceThankYouMessage);
 
 ////////////////////////////// Funeral Service
     final String funeralChapelServiceInfoText = """
@@ -283,9 +283,9 @@ class Passing {
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
 
-    final ChurchServiceSubtype funeralChapelServiceSubtype =
-        ChurchServiceSubtype(
-            subTypeName: "Funeral Chapel",
+    final ChurchSubModule funeralChapelServiceSubtype =
+        ChurchSubModule(
+            name: "Funeral Chapel",
             formFields: [
               funeralChapelFormField1,
               funeralChapelFormField2,
@@ -302,8 +302,8 @@ class Passing {
               funeralChapelFormField13,
               funeralChapelFormField14,
             ],
-            infoText: funeralChapelServiceInfoText,
-            thankYouText: funeralChapelServiceThankYouMessage);
+            acceptanceContent: funeralChapelServiceInfoText,
+            thankYouContent: funeralChapelServiceThankYouMessage);
 
     ////////////////////////////// Crypt Lobby
     final String cryptLobbyServiceInfoText = """
@@ -337,16 +337,16 @@ class Passing {
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
 
-    final ChurchServiceSubtype cryptLobbyServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Crypt Lobby",
+    final ChurchSubModule cryptLobbyServiceSubtype = ChurchSubModule(
+        name: "Crypt Lobby",
         formFields:
         [
           cryptLobbyFormField1,
           cryptLobbyFormField2,
           cryptLobbyFormField3,
         ],
-        infoText: cryptLobbyServiceInfoText,
-        thankYouText: cryptLobbyServiceThankYouMessage);
+        acceptanceContent: cryptLobbyServiceInfoText,
+        thankYouContent: cryptLobbyServiceThankYouMessage);
 
     ////////////////////////////// November Mass
     final String novemberMassServiceInfoText =
@@ -378,22 +378,22 @@ class Passing {
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
 
-    final ChurchServiceSubtype novemberMassServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "November Masses for the Dead",
+    final ChurchSubModule novemberMassServiceSubtype = ChurchSubModule(
+        name: "November Masses for the Dead",
         formFields:
         [
           novemberMassFormField1,
           novemberMassFormField2,
           novemberMassFormField3,
         ],
-        infoText: novemberMassServiceInfoText,
-        thankYouText: novemberMassServiceThankYouMessage);
+        acceptanceContent: novemberMassServiceInfoText,
+        thankYouContent: novemberMassServiceThankYouMessage);
 
     /////////////////////////////////////
 
-    return ChurchService(
-      serviceReference: serviceReference,
-      churchServiceSubtypes: [
+    return ChurchModule(
+      moduleReference: serviceReference,
+      churchSubModules: [
         funeralServiceSubtype,
         funeralChapelServiceSubtype,
         cryptLobbyServiceSubtype,

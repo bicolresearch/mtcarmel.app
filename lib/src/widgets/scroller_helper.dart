@@ -17,7 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';

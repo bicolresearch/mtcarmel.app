@@ -1,56 +1,55 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'church_service.dart';
+part of 'church_module.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ChurchService _$ChurchServiceFromJson(Map<String, dynamic> json) {
-  return ChurchService(
-    serviceReference: json['serviceReference'] == null
+ChurchModule _$ChurchModuleFromJson(Map<String, dynamic> json) {
+  return ChurchModule(
+    moduleReference: json['moduleReference'] == null
         ? null
-        : ServiceReference.fromJson(
-            json['serviceReference'] as Map<String, dynamic>),
-    churchServiceSubtypes: (json['churchServiceSubtypes'] as List)
+        : ModuleReference.fromJson(
+            json['moduleReference'] as Map<String, dynamic>),
+    churchSubModules: (json['churchSubModules'] as List)
         ?.map((e) => e == null
             ? null
-            : ChurchServiceSubtype.fromJson(e as Map<String, dynamic>))
+            : ChurchSubModule.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     typeName: json['typeName'] as String,
     description: json['description'] as String,
   );
 }
 
-Map<String, dynamic> _$ChurchServiceToJson(ChurchService instance) =>
+Map<String, dynamic> _$ChurchModuleToJson(ChurchModule instance) =>
     <String, dynamic>{
-      'serviceReference': instance.serviceReference,
+      'moduleReference': instance.moduleReference,
       'typeName': instance.typeName,
       'description': instance.description,
-      'churchServiceSubtypes': instance.churchServiceSubtypes,
+      'churchSubModules': instance.churchSubModules,
     };
 
-ChurchServiceSubtype _$ChurchServiceSubtypeFromJson(Map<String, dynamic> json) {
-  return ChurchServiceSubtype(
-    subTypeName: json['subTypeName'] as String,
-    infoText: json['infoText'] as String,
+ChurchSubModule _$ChurchSubModuleFromJson(Map<String, dynamic> json) {
+  return ChurchSubModule(
+    name: json['name'] as String,
+    acceptanceContent: json['acceptance_content'] as String,
     formFields: (json['formFields'] as List)
         ?.map((e) => e == null
             ? null
             : ChurchFormField.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    thankYouText: json['thankYouText'] as String,
+    thankYouContent: json['thank_you_content'] as String,
     url: json['url'] as String,
   );
 }
 
-Map<String, dynamic> _$ChurchServiceSubtypeToJson(
-        ChurchServiceSubtype instance) =>
+Map<String, dynamic> _$ChurchSubModuleToJson(ChurchSubModule instance) =>
     <String, dynamic>{
-      'subTypeName': instance.subTypeName,
-      'infoText': instance.infoText,
+      'name': instance.name,
+      'acceptance_content': instance.acceptanceContent,
       'formFields': instance.formFields,
-      'thankYouText': instance.thankYouText,
+      'thank_you_content': instance.thankYouContent,
       'url': instance.url,
     };
 
@@ -100,8 +99,8 @@ Map<String, dynamic> _$ChurchFormValidatorsToJson(
       'max_value': instance.maxValue,
     };
 
-ServiceReference _$ServiceReferenceFromJson(Map<String, dynamic> json) {
-  return ServiceReference(
+ModuleReference _$ModuleReferenceFromJson(Map<String, dynamic> json) {
+  return ModuleReference(
     json['id'] as String,
     json['branch_id'] as String,
     json['name'] as String,
@@ -110,11 +109,48 @@ ServiceReference _$ServiceReferenceFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ServiceReferenceToJson(ServiceReference instance) =>
+Map<String, dynamic> _$ModuleReferenceToJson(ModuleReference instance) =>
     <String, dynamic>{
       'id': instance.id,
       'branch_id': instance.branchId,
       'name': instance.name,
       'description': instance.description,
       'cover_photo': instance.coverPhoto,
+    };
+
+SubModuleAndFormFields _$SubModuleAndFormFieldsFromJson(
+    Map<String, dynamic> json) {
+  return SubModuleAndFormFields(
+    subModule: json['sub_module'] == null
+        ? null
+        : SubModule.fromJson(json['sub_module'] as Map<String, dynamic>),
+    formFields: (json['formFields'] as List)
+        ?.map((e) => e == null
+            ? null
+            : ChurchFormField.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$SubModuleAndFormFieldsToJson(
+        SubModuleAndFormFields instance) =>
+    <String, dynamic>{
+      'sub_module': instance.subModule,
+      'formFields': instance.formFields,
+    };
+
+SubModule _$SubModuleFromJson(Map<String, dynamic> json) {
+  return SubModule(
+    name: json['name'] as String,
+    acceptanceContent: json['acceptance_content'] as String,
+    thankYouContent: json['thank_you_content'] as String,
+    url: json['url'] as String,
+  );
+}
+
+Map<String, dynamic> _$SubModuleToJson(SubModule instance) => <String, dynamic>{
+      'name': instance.name,
+      'acceptance_content': instance.acceptanceContent,
+      'thank_you_content': instance.thankYouContent,
+      'url': instance.url,
     };

@@ -60,13 +60,13 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
 
   @override
   void initState() {
+    super.initState();
     print("initializing sendHelp screen...");
     _checkLoginStatus().then((_) {
       this.getJsonData();
     }).catchError((e) {
       debugPrint(e);
     });
-    super.initState();
   }
 
   @override

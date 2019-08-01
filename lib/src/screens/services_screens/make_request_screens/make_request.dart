@@ -6,13 +6,13 @@
 *  Changes     :   Static
 */
 
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 
 class MakeRequest {
 
   dynamic getChurchService(ServiceItem serviceItem) {
-    final ServiceReference serviceReference = ServiceReference(
+    final ModuleReference serviceReference = ModuleReference(
         serviceItem.id,
         serviceItem.branchId,
         serviceItem.name,
@@ -42,14 +42,14 @@ class MakeRequest {
       validators: validatorsPlainRequired,
       textFieldType: "multiline",
     );
-    final ChurchServiceSubtype prayerRequestServiceSubtype =
-        ChurchServiceSubtype(
-            subTypeName: "Prayer Request",
+    final ChurchSubModule prayerRequestServiceSubtype =
+        ChurchSubModule(
+            name: "Prayer Request",
             formFields: [
               prayerRequestFormField1,
             ],
-            infoText: prayerRequestInfoText,
-            thankYouText: prayerRequestThankYouMessage);
+            acceptanceContent: prayerRequestInfoText,
+            thankYouContent: prayerRequestThankYouMessage);
 
     ////////// Mass Request
     final String massRequestInfoText =
@@ -79,16 +79,16 @@ class MakeRequest {
         labelText: "Time of Mass",
         validators: validatorsPlainRequired,
         textFieldType: "time");
-    final ChurchServiceSubtype massRequestServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Mass Request",
+    final ChurchSubModule massRequestServiceSubtype = ChurchSubModule(
+        name: "Mass Request",
         formFields: [
           massRequestFormField1,
           massRequestFormField2,
           massRequestFormField3,
           massRequestFormField4,
         ],
-        infoText: massRequestInfoText,
-        thankYouText: massRequestThankYouMessage);
+        acceptanceContent: massRequestInfoText,
+        thankYouContent: massRequestThankYouMessage);
 
     //////// Liturgical Service
     final String liturgicalInfoText =
@@ -134,8 +134,8 @@ class MakeRequest {
         labelText: "Contact Number",
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
-    final ChurchServiceSubtype liturgicalServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Liturgical Service",
+    final ChurchSubModule liturgicalServiceSubtype = ChurchSubModule(
+        name: "Liturgical Service",
         formFields: [
           liturgicalFormField1,
           liturgicalFormField2,
@@ -144,8 +144,8 @@ class MakeRequest {
           liturgicalFormField5,
           liturgicalFormField6,
         ],
-        infoText: liturgicalInfoText,
-        thankYouText: liturgicalThankYouMessage);
+        acceptanceContent: liturgicalInfoText,
+        thankYouContent: liturgicalThankYouMessage);
 ////////////////////////////  Certification
     final String certificateInfoText =
         """<p>We furnish baptismal certificate and confirmation certificate for parishioners.</p>
@@ -186,8 +186,8 @@ class MakeRequest {
         labelText: "Contact Number",
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
-    final ChurchServiceSubtype certificateServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Certification",
+    final ChurchSubModule certificateServiceSubtype = ChurchSubModule(
+        name: "Certification",
         formFields: [
           certificateFormField1,
           certificateFormField2,
@@ -195,14 +195,14 @@ class MakeRequest {
           certificateFormField4,
           certificateFormField5,
         ],
-        infoText: certificateInfoText,
-        thankYouText: certificateThankYouMessage);
+        acceptanceContent: certificateInfoText,
+        thankYouContent: certificateThankYouMessage);
 
     /////////////////////////////////////
 
-    return ChurchService(
-      serviceReference: serviceReference,
-      churchServiceSubtypes: [
+    return ChurchModule(
+      moduleReference: serviceReference,
+      churchSubModules: [
         prayerRequestServiceSubtype,
         massRequestServiceSubtype,
         liturgicalServiceSubtype,

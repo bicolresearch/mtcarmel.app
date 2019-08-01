@@ -8,7 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens//services_screens/passing_screens/passing.dart';
@@ -48,7 +48,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   ScrollController _scrollController;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
-  ChurchService _churchService;
+  ChurchModule _churchService;
 
   List<ServiceItem> _serviceItemList = [];
 
@@ -66,6 +66,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   @override
   void initState() {
+    super.initState();
     print("initializing serviceScreen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
@@ -74,7 +75,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
     }).catchError((e) {
       debugPrint("ServiceScreen.initState: $e");
     });
-    super.initState();
   }
 
   Future _initializeArrows() async {

@@ -9,12 +9,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 Widget serviceReferenceTile(
-    BuildContext context, ServiceReference serviceReference) {
+    BuildContext context, ModuleReference serviceReference) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Row(

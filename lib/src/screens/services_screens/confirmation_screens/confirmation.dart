@@ -6,13 +6,13 @@
 *  Changes     :   Temporary
 */
 
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 
 class Confirmation {
 
   dynamic getChurchService(ServiceItem serviceItem) {
-    final ServiceReference serviceReference = ServiceReference(
+    final ModuleReference serviceReference = ModuleReference(
         serviceItem.id,
         serviceItem.branchId,
         serviceItem.name,
@@ -109,8 +109,8 @@ class Confirmation {
     );
 
 
-    final ChurchServiceSubtype confirmationServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "First Communion",
+    final ChurchSubModule confirmationServiceSubtype = ChurchSubModule(
+        name: "First Communion",
         formFields:
         [
           confirmationFormField1,
@@ -122,15 +122,15 @@ class Confirmation {
           confirmationFormField7,
           confirmationFormField8,
         ],
-        infoText: confirmationInfoText,
-        thankYouText: confirmationThankYouMessage);
+        acceptanceContent: confirmationInfoText,
+        thankYouContent: confirmationThankYouMessage);
 
 
     /////////////////////////////////////
 
-    return ChurchService(
-      serviceReference: serviceReference,
-      churchServiceSubtypes:
+    return ChurchModule(
+      moduleReference: serviceReference,
+      churchSubModules:
       [
         confirmationServiceSubtype
       ],

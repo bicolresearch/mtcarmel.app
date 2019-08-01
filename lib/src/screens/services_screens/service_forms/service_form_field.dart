@@ -9,7 +9,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/civil_status_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/date_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_multiline_text_field.dart';

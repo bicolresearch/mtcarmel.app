@@ -178,8 +178,9 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
 
   @override
   void initState() {
-    _textControllerAmount = TextEditingController();
     super.initState();
+    debugPrint("SendHelpDetailsScreen.initState");
+    _textControllerAmount = TextEditingController();
   }
 
   @override

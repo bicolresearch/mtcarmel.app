@@ -6,7 +6,7 @@
 *  Changes     :   Temporary
 */
 
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 ////
 class Baptism {
@@ -14,7 +14,7 @@ class Baptism {
 
 
   dynamic getChurchService(ServiceItem serviceItem) {
-    final ServiceReference serviceReference = ServiceReference(
+    final ModuleReference serviceReference = ModuleReference(
         serviceItem.id,
         serviceItem.branchId,
         serviceItem.name,
@@ -209,11 +209,11 @@ class Baptism {
       baptismFormField16,
     ];
 
-    final ChurchServiceSubtype individualBaptismServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Individual Baptism",
+    final ChurchSubModule individualBaptismServiceSubtype = ChurchSubModule(
+        name: "Individual Baptism",
         formFields: baptismFormFields,
-        infoText: individualBaptismInfoText,
-        thankYouText: individualBaptismThankYouMessage);
+        acceptanceContent: individualBaptismInfoText,
+        thankYouContent: individualBaptismThankYouMessage);
 
     ////////// Community Baptism
     final String communityBaptismInfoText =
@@ -246,11 +246,11 @@ class Baptism {
 
     You may view the status of your request in your mailbox.
     """;
-    final ChurchServiceSubtype communityBaptismServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Community Baptism",
+    final ChurchSubModule communityBaptismServiceSubtype = ChurchSubModule(
+        name: "Community Baptism",
         formFields: baptismFormFields,
-        infoText: communityBaptismInfoText,
-        thankYouText: communityBaptismThankYouMessage);
+        acceptanceContent: communityBaptismInfoText,
+        thankYouContent: communityBaptismThankYouMessage);
 
     //////// Adult Baptism
     final String adultBaptismInfoText =
@@ -301,17 +301,17 @@ class Baptism {
     You may view the status of your request in your mailbox.
     """;
 
-    final ChurchServiceSubtype adultBaptismServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Adult Baptism",
+    final ChurchSubModule adultBaptismServiceSubtype = ChurchSubModule(
+        name: "Adult Baptism",
         formFields: baptismFormFields,
-        infoText: adultBaptismInfoText,
-        thankYouText: adultBaptismThankYouMessage);
+        acceptanceContent: adultBaptismInfoText,
+        thankYouContent: adultBaptismThankYouMessage);
 
     /////////////////////////////////////
 
-    return ChurchService(
-      serviceReference: serviceReference,
-      churchServiceSubtypes:
+    return ChurchModule(
+      moduleReference: serviceReference,
+      churchSubModules:
       [
         individualBaptismServiceSubtype,
         communityBaptismServiceSubtype,

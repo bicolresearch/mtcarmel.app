@@ -6,13 +6,13 @@
 *  Changes     :   Tempoary
 */
 
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 
 class JoinUs {
 
   dynamic getChurchService(ServiceItem serviceItem) {
-    final ServiceReference serviceReference = ServiceReference(
+    final ModuleReference serviceReference = ModuleReference(
         serviceItem.id,
         serviceItem.branchId,
         serviceItem.name,
@@ -98,8 +98,8 @@ class JoinUs {
         validators: validatorsPlainRequired,
         textFieldType: "email");
 
-    final ChurchServiceSubtype churchServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Confraternity of Our Lady of Mount Carmel",
+    final ChurchSubModule churchServiceSubtype = ChurchSubModule(
+        name: "Confraternity of Our Lady of Mount Carmel",
         formFields: [
           churchFormField1,
           churchFormField2,
@@ -113,12 +113,12 @@ class JoinUs {
           churchFormField10,
           churchFormField11,
         ],
-        infoText: infoText,
-        thankYouText: thankYouMessage,
+        acceptanceContent: infoText,
+        thankYouContent: thankYouMessage,
     url: "https://api.mountcarmel.ph/confraternity/create");
 
-    return ChurchService(
-        serviceReference: serviceReference,
-        churchServiceSubtypes: [churchServiceSubtype]);
+    return ChurchModule(
+        moduleReference: serviceReference,
+        churchSubModules: [churchServiceSubtype]);
   }
 }

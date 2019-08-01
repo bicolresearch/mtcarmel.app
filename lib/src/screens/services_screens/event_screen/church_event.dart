@@ -6,13 +6,13 @@
 *	Changes			: add services messages/content
 */
 
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 
 class ChurchEvent {
 
   dynamic getChurchService(ServiceItem serviceItem) {
-    final ServiceReference serviceReference = ServiceReference(
+    final ModuleReference serviceReference = ModuleReference(
         serviceItem.id,
         serviceItem.branchId,
         serviceItem.name,
@@ -131,8 +131,8 @@ class ChurchEvent {
         validators: validatorsPlainRequired,
         textFieldType: "plain_text");
 
-    final ChurchServiceSubtype churchServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Father Mark Horan Hall - Venue",
+    final ChurchSubModule churchServiceSubtype = ChurchSubModule(
+        name: "Father Mark Horan Hall - Venue",
         formFields: [
           churchFormField1,
           churchFormField2,
@@ -140,10 +140,10 @@ class ChurchEvent {
           churchFormField4,
           churchFormField5,
         ],
-        infoText: infoText,
-        thankYouText: thankYouMessage);
-    return ChurchService(
-        serviceReference: serviceReference,
-        churchServiceSubtypes: [churchServiceSubtype]);
+        acceptanceContent: infoText,
+        thankYouContent: thankYouMessage);
+    return ChurchModule(
+        moduleReference: serviceReference,
+        churchSubModules: [churchServiceSubtype]);
   }
 }

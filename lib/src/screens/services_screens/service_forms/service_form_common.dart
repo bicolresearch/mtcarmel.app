@@ -8,7 +8,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 
 class ServiceFormCommon extends StatelessWidget {
   @required

@@ -11,7 +11,7 @@ import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
@@ -19,7 +19,7 @@ import 'package:mt_carmel_app/src/widgets/login_screen.dart';
 
 class ServiceInfoScreen extends StatefulWidget {
   @required
-  final ChurchServiceSubtype churchServiceSubtype;
+  final ChurchSubModule churchServiceSubtype;
 
   const ServiceInfoScreen({Key key, this.churchServiceSubtype})
       : super(key: key);
@@ -78,7 +78,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 30.0),
               child: Text(
-                widget.churchServiceSubtype.subTypeName,
+                widget.churchServiceSubtype.name,
                 style: Theme.of(context)
                     .primaryTextTheme
                     .headline
@@ -106,7 +106,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                     margin: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: HtmlTextView(
                       data:
-                          "<div style='color: #5d4037'>${widget.churchServiceSubtype.infoText}</div>",
+                          "<div style='color: #5d4037'>${widget.churchServiceSubtype.acceptanceContent}</div>",
                     ),
                     key: _htmlKey,
                   ),

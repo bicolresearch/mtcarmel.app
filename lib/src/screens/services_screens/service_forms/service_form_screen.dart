@@ -11,7 +11,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:http/http.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/thank_you/thank_you_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
@@ -23,7 +23,7 @@ class ServiceFormScreen extends StatefulWidget {
   ServiceFormScreen({this.serviceSubType});
 
   @required
-  final ChurchServiceSubtype serviceSubType;
+  final ChurchSubModule serviceSubType;
 
   @override
   _ServiceFormScreenState createState() => _ServiceFormScreenState();
@@ -94,7 +94,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 30.0),
                         child: Text(
-                          widget.serviceSubType.subTypeName,
+                          widget.serviceSubType.name,
                           style: Theme
                               .of(context)
                               .primaryTextTheme
@@ -146,7 +146,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                     MaterialPageRoute(
                       builder: (context) =>
                           ThankYouScreen(
-                              thankYouText: widget.serviceSubType.thankYouText),
+                              thankYouText: widget.serviceSubType.thankYouContent),
                     ),
                   );
                   if (result) Navigator.pop(

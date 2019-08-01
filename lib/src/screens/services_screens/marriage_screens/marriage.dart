@@ -6,13 +6,13 @@
 *  Changes     :   Temporary
 */
 
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 ////
 class Marriage {
 
   dynamic getChurchService(ServiceItem serviceItem) {
-    final ServiceReference serviceReference = ServiceReference(
+    final ModuleReference serviceReference = ModuleReference(
         serviceItem.id,
         serviceItem.branchId,
         serviceItem.name,
@@ -328,8 +328,8 @@ class Marriage {
         textFieldType: "plain_text");
 
 
-    final ChurchServiceSubtype churchServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Confraternity of Our Lady of Mount Carmel",
+    final ChurchSubModule churchServiceSubtype = ChurchSubModule(
+        name: "Confraternity of Our Lady of Mount Carmel",
         formFields:
         [
           formField1,
@@ -367,10 +367,10 @@ class Marriage {
           formField33,
           formField34,
         ],
-        infoText: infoText,
-        thankYouText: thankYouMessage);
-    return ChurchService(
-        serviceReference: serviceReference,
-        churchServiceSubtypes: [churchServiceSubtype]);
+        acceptanceContent: infoText,
+        thankYouContent: thankYouMessage);
+    return ChurchModule(
+        moduleReference: serviceReference,
+        churchSubModules: [churchServiceSubtype]);
   }
 }

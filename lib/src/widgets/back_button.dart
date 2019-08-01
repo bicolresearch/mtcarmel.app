@@ -9,14 +9,16 @@
 */
 import 'package:flutter/material.dart';
 
-Widget backButton({@required BuildContext context,String label = "Back", bool isNavigateFurtherToTheRoot = false}){
+Widget backButton(
+    {@required BuildContext context,
+    String label = "Back",
+    bool isNavigateFurtherToTheRoot = false}) {
   return RaisedButton(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20.0)
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
     color: Colors.brown,
-    child: Text(label, 
-    style: TextStyle(color: Colors.white),
+    child: Text(
+      label,
+      style: TextStyle(color: Colors.white),
     ),
     onPressed: () {
       Navigator.pop(context, isNavigateFurtherToTheRoot);

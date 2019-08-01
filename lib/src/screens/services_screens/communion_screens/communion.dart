@@ -6,13 +6,13 @@
 *  Changes     :   temporary
 */
 
-import 'package:mt_carmel_app/src/models/church_service.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 
 class Communion {
 
   dynamic getChurchService(ServiceItem serviceItem) {
-    final ServiceReference serviceReference = ServiceReference(
+    final ModuleReference serviceReference = ModuleReference(
         serviceItem.id,
         serviceItem.branchId,
         serviceItem.name,
@@ -116,8 +116,8 @@ class Communion {
     );
 
 
-    final ChurchServiceSubtype firstCommunionServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "First Communion",
+    final ChurchSubModule firstCommunionServiceSubtype = ChurchSubModule(
+        name: "First Communion",
         formFields:
         [
           firstCommunionFormField1,
@@ -130,8 +130,8 @@ class Communion {
           firstCommunionFormField8,
           firstCommunionFormField9,
         ],
-        infoText: firstCommunionInfoText,
-        thankYouText: firstCommunionThankYouMessage);
+        acceptanceContent: firstCommunionInfoText,
+        thankYouContent: firstCommunionThankYouMessage);
 
     ////////// Communion of the Sick
     final String communionOfTheSickInfoText =
@@ -219,8 +219,8 @@ class Communion {
       textFieldType: "plain_text",
     );
 
-    final ChurchServiceSubtype communionOfTheSickServiceSubtype = ChurchServiceSubtype(
-        subTypeName: "Communion of the sick",
+    final ChurchSubModule communionOfTheSickServiceSubtype = ChurchSubModule(
+        name: "Communion of the sick",
         formFields:
         [
           communionOfTheSickFormField1,
@@ -234,15 +234,15 @@ class Communion {
           communionOfTheSickFormField9,
           communionOfTheSickFormField10,
         ],
-        infoText: communionOfTheSickInfoText,
-        thankYouText: communionOfTheSickThankYouMessage);
+        acceptanceContent: communionOfTheSickInfoText,
+        thankYouContent: communionOfTheSickThankYouMessage);
 
 
     /////////////////////////////////////
 
-    return ChurchService(
-      serviceReference: serviceReference,
-      churchServiceSubtypes:
+    return ChurchModule(
+      moduleReference: serviceReference,
+      churchSubModules:
       [
         firstCommunionServiceSubtype,
         communionOfTheSickServiceSubtype
