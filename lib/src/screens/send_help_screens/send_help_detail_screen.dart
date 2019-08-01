@@ -2,8 +2,9 @@
 *  Filename    :   send_help_detail_screen.dart
 *  Purpose     :   Displays the details of a selected donation.
 *  Created     :   2019-07-10 15:30 by Detective Conan
-*  Updated     :   2019-08-01 11:48 by Detective conan
-*  Changes     :   Removed the argument list of widgets in _slider method.
+*  Updated     :   2019-08-01 11:52 by Detective conan
+*  Changes     :   Made _imagesController TabController attribute of the class.
+*                   Instead inside the slider method only.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -28,6 +29,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   TextEditingController _textControllerAmount;
   bool _isTextEditing = false;
   List<Widget> _sliderItems = [];
+  TabController _imagesController;
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +185,9 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   @override
   void dispose() {
     _textControllerAmount.dispose();
+    if(_imagesController!=null)
+      _imagesController.dispose();
+
     super.dispose();
   }
 
@@ -205,7 +210,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   }
 
   Widget _slider() {
-    final imagesController = TabController(length: _sliderItems.length, vsync: this);
+    _imagesController = TabController(length: _sliderItems.length, vsync: this);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -216,13 +221,13 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
             child: Stack(
               children: <Widget>[
                 TabBarView(
-                  controller: imagesController,
+                  controller: _imagesController,
                   children: _sliderItems,
                 ),
                 Container(
                   alignment: FractionalOffset(0.5, 0.95),
                   child: TabPageSelector(
-                    controller: imagesController,
+                    controller: _imagesController,
                     selectedColor: Colors.grey,
                     color: Colors.white,
                   ),
