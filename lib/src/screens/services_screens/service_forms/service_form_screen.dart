@@ -259,10 +259,13 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
   }
 
   Future _submit() async {
+    if(widget.serviceSubType.url == null || widget.serviceSubType.url.isEmpty)
+      throw "No assigned api url.";
+
     _fbKey.currentState.save();
     if (_fbKey.currentState.validate()) {
       print(_fbKey.currentState.value);
-      final url = "https://api.mountcarmel.ph/confraternity/create";
+      final url = widget.serviceSubType.url;
       Map<String, String> headers = {
         "Content-type": "application/x-www-form-urlencoded"
       };
@@ -306,17 +309,6 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
     else
       return false;
 
-//  _moveUp() {
-//    if (_scrollController.offset >= _scrollController.position.minScrollExtent)
-//      _scrollController.animateTo(_scrollController.offset - 200,
-//          curve: Curves.linear, duration: Duration(milliseconds: 500));
-//  }
-//
-//  _moveDown() {
-//    if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
-//      _scrollController.animateTo(_scrollController.offset + 200,
-//          curve: Curves.linear, duration: Duration(milliseconds: 500));
-//  }
   }
 
   Future _create(url, headers, fieldsValue) async {
@@ -326,7 +318,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
     body: fieldsValue,
     ).timeout(
     Duration(seconds: 3),
-    );
+    ).catchError((e) => { throw e});
 
     return result;
   }

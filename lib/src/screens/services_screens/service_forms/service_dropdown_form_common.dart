@@ -48,9 +48,9 @@ class ServiceDropdownFormCommon extends ServiceFormCommon {
     if (super.churchFormField.validators.isRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (super.churchFormField.validators.errorText != null)
+    if (super.churchFormField.errorText != null)
       validators.add(FormBuilderValidators.required(
-          errorText: super.churchFormField.validators.errorText));
+          errorText: super.churchFormField.errorText));
 
     return validators;
   }

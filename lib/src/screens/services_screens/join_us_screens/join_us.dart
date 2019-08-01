@@ -114,7 +114,9 @@ class JoinUs {
           churchFormField11,
         ],
         infoText: infoText,
-        thankYouText: thankYouMessage);
+        thankYouText: thankYouMessage,
+    url: "https://api.mountcarmel.ph/confraternity/create");
+
     return ChurchService(
         serviceReference: serviceReference,
         churchServiceSubtypes: [churchServiceSubtype]);

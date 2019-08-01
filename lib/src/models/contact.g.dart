@@ -8,22 +8,23 @@ part of 'contact.dart';
 
 Contact _$ContactFromJson(Map<String, dynamic> json) {
   return Contact(
-      json['id'] as String,
-      json['branch_id'] as String,
-      json['name'] as String,
-      json['address1'] as String,
-      json['address2'] as String,
-      json['city'] as String,
-      json['province'] as String,
-      json['country'] as String,
-      json['mobile'] as String,
-      json['email'] as String,
-      json['social_media'] as String,
-      json['landline'] as String,
-      json['description'] as String,
-      json['posted_on'] as String,
-      json['updated_on'] as String,
-      json['author'] as String);
+    json['id'] as String,
+    json['branch_id'] as String,
+    json['name'] as String,
+    json['address1'] as String,
+    json['address2'] as String,
+    json['city'] as String,
+    json['province'] as String,
+    json['country'] as String,
+    json['mobile'] as String,
+    json['email'] as String,
+    json['social_media'] as String,
+    json['landline'] as String,
+    json['description'] as String,
+    json['posted_on'] as String,
+    json['updated_on'] as String,
+    json['author'] as String,
+  );
 }
 
 Map<String, dynamic> _$ContactToJson(Contact instance) => <String, dynamic>{
@@ -42,5 +43,5 @@ Map<String, dynamic> _$ContactToJson(Contact instance) => <String, dynamic>{
       'description': instance.description,
       'posted_on': instance.postedOn,
       'updated_on': instance.updatedOn,
-      'author': instance.author
+      'author': instance.author,
     };

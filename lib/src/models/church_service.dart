@@ -2,8 +2,9 @@
 *  Filename    :   church_service.dart
 *  Purpose     :	  Model for church service
 *  Created     :   2019-07-15 11:08 by Detective Conan
-*	 Updated			:   15/07/2019 10:09 PM PM by Detective Conan
-*	 Changes			:   Changed the parameters in the constructor optional.
+*  Updated     :   2019-08-01 08:44 by Detective conan
+*  Changes     :   Moved the errorMessage to subtype, instead to the form.
+*                  added url for the api.
 */
 
 import 'package:json_annotation/json_annotation.dart';
@@ -17,7 +18,11 @@ class ChurchService {
   final String description;
   final List<ChurchServiceSubtype> churchServiceSubtypes;
 
-  ChurchService({this.serviceReference, this.churchServiceSubtypes, this.typeName, this.description});
+  ChurchService(
+      {this.serviceReference,
+      this.churchServiceSubtypes,
+      this.typeName,
+      this.description});
 
   factory ChurchService.fromJson(Map<String, dynamic> json) =>
       _$ChurchServiceFromJson(json);
@@ -28,12 +33,17 @@ class ChurchService {
 @JsonSerializable()
 class ChurchServiceSubtype {
   ChurchServiceSubtype(
-      {this.subTypeName, this.infoText, this.formFields, this.thankYouText});
+      {this.subTypeName,
+      this.infoText,
+      this.formFields,
+      this.thankYouText,
+      this.url});
 
   final String subTypeName;
   final String infoText;
   final List<ChurchFormField> formFields;
   final String thankYouText;
+  final String url;
 
   factory ChurchServiceSubtype.fromJson(Map<String, dynamic> json) =>
       _$ChurchServiceSubtypeFromJson(json);
@@ -43,14 +53,16 @@ class ChurchServiceSubtype {
 
 @JsonSerializable()
 class ChurchFormField {
-  ChurchFormField(
-      {this.attribute,
-      this.textFieldType,
-      this.value,
-      this.hint,
-      this.labelText,
-      this.validators,
-      this.selections});
+  ChurchFormField({
+    this.attribute,
+    this.textFieldType,
+    this.value,
+    this.hint,
+    this.labelText,
+    this.validators,
+    this.selections,
+    this.errorText,
+  });
 
   final String attribute;
   @JsonKey(name: "label_text")
@@ -61,6 +73,8 @@ class ChurchFormField {
   final String textFieldType;
   final ChurchFormValidators validators;
   final List<String> selections;
+  @JsonKey(name: "error_text")
+  final String errorText;
 
   factory ChurchFormField.fromJson(Map<String, dynamic> json) =>
       _$ChurchFormFieldFromJson(json);
@@ -71,11 +85,7 @@ class ChurchFormField {
 @JsonSerializable()
 class ChurchFormValidators {
   ChurchFormValidators(
-      {this.isNumeric,
-      this.isRequired,
-      this.maxValue,
-      this.minValue,
-      this.errorText});
+      {this.isNumeric, this.isRequired, this.maxValue, this.minValue});
 
   @JsonKey(name: "is_required")
   final String isRequired;
@@ -85,8 +95,6 @@ class ChurchFormValidators {
   final String minValue;
   @JsonKey(name: "max_value")
   final String maxValue;
-  @JsonKey(name: "error_text")
-  final String errorText;
 
   factory ChurchFormValidators.fromJson(Map<String, dynamic> json) =>
       _$ChurchFormValidatorsFromJson(json);
@@ -95,13 +103,14 @@ class ChurchFormValidators {
 }
 
 @JsonSerializable()
-class ServiceReference{
+class ServiceReference {
   ServiceReference(
-      this.id,
-      this.branchId,
-      this.name,
-      this.description,
-      this.coverPhoto,);
+    this.id,
+    this.branchId,
+    this.name,
+    this.description,
+    this.coverPhoto,
+  );
 
   final String id;
   @JsonKey(name: "branch_id")
@@ -111,7 +120,8 @@ class ServiceReference{
   @JsonKey(name: "cover_photo")
   final String coverPhoto;
 
-  factory ServiceReference.fromJson(Map<String, dynamic> json) => _$ServiceReferenceFromJson(json);
+  factory ServiceReference.fromJson(Map<String, dynamic> json) =>
+      _$ServiceReferenceFromJson(json);
 
   Map<String, dynamic> toJson() => _$ServiceReferenceToJson(this);
 }

@@ -8,16 +8,17 @@ part of 'church_schedule.dart';
 
 ChurchSchedule _$ChurchScheduleFromJson(Map<String, dynamic> json) {
   return ChurchSchedule(
-      json['id'] as String,
-      json['branch_id'] as String,
-      json['name'] as String,
-      json['day'] as String,
-      json['language'] as String,
-      json['time_from'] as String,
-      json['time_to'] as String,
-      json['posted_on'] as String,
-      json['updated_on'] as String,
-      json['author'] as String);
+    json['id'] as String,
+    json['branch_id'] as String,
+    json['name'] as String,
+    json['day'] as String,
+    json['language'] as String,
+    json['time_from'] as String,
+    json['time_to'] as String,
+    json['posted_on'] as String,
+    json['updated_on'] as String,
+    json['author'] as String,
+  );
 }
 
 Map<String, dynamic> _$ChurchScheduleToJson(ChurchSchedule instance) =>
@@ -31,5 +32,5 @@ Map<String, dynamic> _$ChurchScheduleToJson(ChurchSchedule instance) =>
       'time_to': instance.timeTo,
       'posted_on': instance.postedOn,
       'updated_on': instance.updatedOn,
-      'author': instance.author
+      'author': instance.author,
     };

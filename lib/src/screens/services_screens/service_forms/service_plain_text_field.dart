@@ -73,10 +73,10 @@ class ServicePlainTextField extends ServiceFormCommon
       } catch (e) {
         print("not an integer");
       }
-    if (churchFormField.validators.errorText != null
+    if (churchFormField.errorText != null
     )
       validators.add(FormBuilderValidators.required(
-          errorText: churchFormField.validators.errorText));
+          errorText: churchFormField.errorText));
 
     return validators;
   }

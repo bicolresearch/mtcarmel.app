@@ -7,8 +7,12 @@ part of 'user_authentication.dart';
 // **************************************************************************
 
 UserAuthentication _$UserAuthenticationFromJson(Map<String, dynamic> json) {
-  return UserAuthentication(json['id'] as String, json['role_id'] as String,
-      json['username'] as String, json['password'] as String);
+  return UserAuthentication(
+    json['id'] as String,
+    json['role_id'] as String,
+    json['username'] as String,
+    json['password'] as String,
+  );
 }
 
 Map<String, dynamic> _$UserAuthenticationToJson(UserAuthentication instance) =>
@@ -16,5 +20,5 @@ Map<String, dynamic> _$UserAuthenticationToJson(UserAuthentication instance) =>
       'id': instance.id,
       'role_id': instance.roleId,
       'username': instance.username,
-      'password': instance.password
+      'password': instance.password,
     };
