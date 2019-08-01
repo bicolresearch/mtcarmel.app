@@ -54,10 +54,11 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
                       )
                     : Expanded(
                         child: Center(
-                            child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: _detailsBox(context),
-                        )),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: _detailsBox(context),
+                          ),
+                        ),
                       ),
                 _buttonsAndFields(),
               ],
@@ -102,7 +103,10 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
             color: Colors.brown,
             child: Text(
               "Send help",
-              style: TextStyle(color: Colors.white),
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .subhead
+                  .copyWith(color: Colors.white),
             ),
             onPressed: () {
               Navigator.push(
@@ -119,8 +123,10 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
               padding: const EdgeInsets.all(12.0),
               child: Text(
                 "Back",
-                style:
-                    TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -153,16 +159,15 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
               Text(
                 widget.sendHelp.description,
                 style: Theme.of(context)
-                      .primaryTextTheme
-                      .title.copyWith(fontWeight : FontWeight.bold),
+                    .primaryTextTheme
+                    .title
+                    .copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               Divider(color: Colors.brown),
               Text(
                 AppConstants.sample_message + AppConstants.sample_message,
-                style: Theme.of(context)
-                      .primaryTextTheme
-                      .subhead,
+                style: Theme.of(context).primaryTextTheme.subhead,
                 textAlign: TextAlign.center,
               ),
             ],

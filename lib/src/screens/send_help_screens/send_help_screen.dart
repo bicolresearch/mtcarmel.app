@@ -25,7 +25,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class SendHelpScreen extends StatefulWidget {
-
   @override
   _SendHelpScreenState createState() => _SendHelpScreenState();
 }
@@ -78,7 +77,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
             ? LoadingIndicator()
             : _isJsonFailed
                 ? failedMessage(context)
-                : SingleChildScrollView(
+                : Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,25 +92,28 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
 
                         Expanded(
                           child: Container(
-                              child: GridView.count(
-                            physics: ScrollPhysics(parent: ScrollPhysics()),
-                            shrinkWrap: true,
-                            primary: true,
-                            crossAxisCount: 2,
-                            children:
-                                // exclude the primary
-                                List.generate(_sendHelpList.length - 1,
-                                    (index) {
-                              try {
-                                return _donationItem(
-                                    context: context,
-                                    sendHelp: _sendHelpList[index + 1]);
-                              } catch (e) {
-                                print(e.toString());
-                                return Container();
-                              }
-                            }),
-                          )),
+                            child: GridView.count(
+                              physics: ScrollPhysics(parent: ScrollPhysics()),
+                              shrinkWrap: true,
+                              primary: true,
+                              crossAxisCount: 2,
+                              children:
+                                  // exclude the primary
+                                  List.generate(
+                                _sendHelpList.length - 1,
+                                (index) {
+                                  try {
+                                    return _donationItem(
+                                        context: context,
+                                        sendHelp: _sendHelpList[index + 1]);
+                                  } catch (e) {
+                                    print(e.toString());
+                                    return Container();
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -157,8 +159,10 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
               //Name of donation
               Text(
                 sendHelp.name,
-                style: TextStyle(
-                    color: Colors.white, fontFamily: 'Helvetica', fontSize: 16),
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subhead
+                    .copyWith(color: Colors.white),
               ),
               // Description for other than shrine donation else location
               Padding(
@@ -166,21 +170,20 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                 child: isPrimary
                     ? Text(
                         AppConstants.LOCATION_NAME,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Helvetica',
-                          fontSize: 12,
-                        ),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .subtitle
+                            .copyWith(color: Colors.white),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       )
                     : Text(
                         sendHelp.description,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Helvetica',
-                            fontSize: 12),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .subtitle
+                            .copyWith(color: Colors.white),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -198,30 +201,31 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                       print("${sendHelp.name} selected"),
                       if (!_isLoggedIn)
                         {
-                        _isLoggedIn = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  )),
+                          _isLoggedIn = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              )),
                         },
                       //after login form
                       if (_isLoggedIn)
                         {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SendHelpDetails(sendHelp),
-                              ))
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SendHelpDetails(sendHelp),
+                            ),
+                          )
                         }
                     },
                     color: Colors.white,
                     child: Text(
                       "Help Now",
-                      style: TextStyle(
-                          fontFamily: 'Helvetica', color: Colors.brown),
+                      style: Theme.of(context).primaryTextTheme.subhead,
                     ),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                 ),
               ),
