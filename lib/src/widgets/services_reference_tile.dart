@@ -21,19 +21,21 @@ Widget serviceReferenceTile(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: 60.0,
-            child: CachedNetworkImage(
-                key: Key(serviceReference.coverPhoto
-                    .replaceAll("/", "")
-                    .replaceAll(".", "")),
-                imageUrl:
-                    AppConstants.API_BASE_URL + serviceReference.coverPhoto,
-                placeholder: (context, url) => LoadingIndicator(),
-                errorWidget: (context, url, error) =>
-                    Icon(MountCarmelIcons.services),
-                fit: BoxFit.cover),
-          ),
+          child: (serviceReference.coverPhoto == null)
+              ? Container()
+              : Container(
+                  height: 60.0,
+                  child: CachedNetworkImage(
+                      key: Key(serviceReference.coverPhoto
+                          .replaceAll("/", "")
+                          .replaceAll(".", "")),
+                      imageUrl: AppConstants.API_BASE_URL +
+                          serviceReference.coverPhoto,
+                      placeholder: (context, url) => LoadingIndicator(),
+                      errorWidget: (context, url, error) =>
+                          Icon(MountCarmelIcons.services),
+                      fit: BoxFit.cover),
+                ),
         ),
         Expanded(
           child: Padding(

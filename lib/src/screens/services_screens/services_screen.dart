@@ -19,6 +19,7 @@ import 'package:mt_carmel_app/src/screens/services_screens/event_screen/church_e
 import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/join_us.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/make_request.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/module_screen.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_type_screen.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
@@ -29,7 +30,6 @@ import 'dart:async';
 import 'dart:convert';
 
 class ServicesScreen extends StatefulWidget {
-
   static const String JOIN_US = 'Join Us!';
   static const String MAKE_REQUEST = 'Make a Request';
   static const String BAPTISM = 'Baptism';
@@ -38,7 +38,6 @@ class ServicesScreen extends StatefulWidget {
   static const String WEDDING = 'Marriage';
   static const String PASSING = 'Passing';
   static const String EVENTS = 'Events';
-
 
   @override
   _ServicesScreenState createState() => _ServicesScreenState();
@@ -183,44 +182,45 @@ class _ServicesScreenState extends State<ServicesScreen> {
     switch (serviceItem.name) {
       case ServicesScreen.JOIN_US:
         //TODO for the current model
-        JoinUs joinUs = JoinUs();
-        _churchService = joinUs.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: _churchService);
+        return ModuleScreen(
+          serviceItem: serviceItem,
+          moduleApi: "https://api.mountcarmel.ph/service_confraternity",
+        );
       case ServicesScreen.MAKE_REQUEST:
         //TODO for the current model
-      MakeRequest makeRequest = MakeRequest();
+        MakeRequest makeRequest = MakeRequest();
         _churchService = makeRequest.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: _churchService);
+        return ServiceTypeScreen(churchModule: _churchService);
       case ServicesScreen.BAPTISM:
         //TODO for the current model
         Baptism baptism = Baptism();
         _churchService = baptism.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: _churchService);
+        return ServiceTypeScreen(churchModule: _churchService);
       case ServicesScreen.COMMUNION:
         //TODO for the current model
-      Communion communion = Communion();
+        Communion communion = Communion();
         _churchService = communion.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: _churchService);
+        return ServiceTypeScreen(churchModule: _churchService);
       case ServicesScreen.CONFIRMATION:
         //TODO for the current model
-      Confirmation confirmation = Confirmation();
+        Confirmation confirmation = Confirmation();
         _churchService = confirmation.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: _churchService);
+        return ServiceTypeScreen(churchModule: _churchService);
       case ServicesScreen.WEDDING:
         //TODO for the current model
-      Marriage marriage = Marriage();
+        Marriage marriage = Marriage();
         _churchService = marriage.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: _churchService);
+        return ServiceTypeScreen(churchModule: _churchService);
       case ServicesScreen.PASSING:
         //TODO for the current model
-      Passing passing = Passing();
+        Passing passing = Passing();
         _churchService = passing.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: _churchService);
+        return ServiceTypeScreen(churchModule: _churchService);
       case ServicesScreen.EVENTS:
         //TODO for the current model
-      ChurchEvent churchEvent = ChurchEvent();
+        ChurchEvent churchEvent = ChurchEvent();
         _churchService = churchEvent.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchService: _churchService);
+        return ServiceTypeScreen(churchModule: _churchService);
     }
     return NoService(serviceItem: serviceItem);
   }
@@ -243,9 +243,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
         setState(
           () {
             _arrowMoreDown = VisibilityHelper(
-                child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowDown,
+                visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowUp,
+                visibility: VisibilityFlag.gone);
           },
         );
         return;
@@ -258,9 +260,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.gone);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.visible);
             },
           );
         }
@@ -274,9 +278,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.gone);
             },
           );
         }
@@ -291,9 +297,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
           setState(
             () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.visible);
             },
           );
         }

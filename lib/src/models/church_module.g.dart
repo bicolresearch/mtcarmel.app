@@ -34,7 +34,7 @@ ChurchSubModule _$ChurchSubModuleFromJson(Map<String, dynamic> json) {
   return ChurchSubModule(
     name: json['name'] as String,
     acceptanceContent: json['acceptance_content'] as String,
-    formFields: (json['formFields'] as List)
+    formFields: (json['form_fields'] as List)
         ?.map((e) => e == null
             ? null
             : ChurchFormField.fromJson(e as Map<String, dynamic>))
@@ -48,7 +48,7 @@ Map<String, dynamic> _$ChurchSubModuleToJson(ChurchSubModule instance) =>
     <String, dynamic>{
       'name': instance.name,
       'acceptance_content': instance.acceptanceContent,
-      'formFields': instance.formFields,
+      'form_fields': instance.formFields,
       'thank_you_content': instance.thankYouContent,
       'url': instance.url,
     };
@@ -64,7 +64,7 @@ ChurchFormField _$ChurchFormFieldFromJson(Map<String, dynamic> json) {
         ? null
         : ChurchFormValidators.fromJson(
             json['validators'] as Map<String, dynamic>),
-    selections: (json['selections'] as List)?.map((e) => e as String)?.toList(),
+    selections: json['selections'] as String,
     errorText: json['error_text'] as String,
   );
 }
@@ -124,7 +124,7 @@ SubModuleAndFormFields _$SubModuleAndFormFieldsFromJson(
     subModule: json['sub_module'] == null
         ? null
         : SubModule.fromJson(json['sub_module'] as Map<String, dynamic>),
-    formFields: (json['formFields'] as List)
+    formFields: (json['form_fields'] as List)
         ?.map((e) => e == null
             ? null
             : ChurchFormField.fromJson(e as Map<String, dynamic>))
@@ -136,7 +136,7 @@ Map<String, dynamic> _$SubModuleAndFormFieldsToJson(
         SubModuleAndFormFields instance) =>
     <String, dynamic>{
       'sub_module': instance.subModule,
-      'formFields': instance.formFields,
+      'form_fields': instance.formFields,
     };
 
 SubModule _$SubModuleFromJson(Map<String, dynamic> json) {

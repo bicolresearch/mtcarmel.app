@@ -16,13 +16,18 @@ import 'package:mt_carmel_app/src/widgets/services_header.dart';
 import 'package:mt_carmel_app/src/widgets/services_reference_tile.dart';
 
 
-class ServiceTypeScreen extends StatelessWidget {
+class ServiceTypeScreen extends StatefulWidget {
 
   @required
-  final ChurchModule churchService;
+  final ChurchModule churchModule;
 
-  const ServiceTypeScreen({Key key, this.churchService}) : super(key: key);
+  const ServiceTypeScreen({Key key, this.churchModule}) : super(key: key);
 
+  @override
+  _ServiceTypeScreenState createState() => _ServiceTypeScreenState();
+}
+
+class _ServiceTypeScreenState extends State<ServiceTypeScreen> {
   @override
   Widget build(BuildContext context) {
 
@@ -36,14 +41,14 @@ class ServiceTypeScreen extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-              serviceReferenceTile(context, churchService.moduleReference),
+              serviceReferenceTile(context, widget.churchModule?.moduleReference),
               SizedBox(
                 height: 10.0,
               ),
               lineWidget(),
               Expanded(
                 child: ListView.builder(
-                  itemCount: churchService.churchSubModules.length,
+                  itemCount: widget.churchModule.churchSubModules?.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () async {
@@ -51,13 +56,13 @@ class ServiceTypeScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ServiceInfoScreen(
-                                    churchServiceSubtype: churchService
+                                    churchServiceSubtype: widget.churchModule
                                         .churchSubModules[index])));
                         if (result) Navigator.pop(context);
                       },
                       child: serviceSpecific(
                           context,
-                          churchService
+                          widget.churchModule
                               .churchSubModules[index].name),
                     );
                   },

@@ -41,6 +41,7 @@ class ChurchSubModule {
   final String name;
   @JsonKey(name: "acceptance_content")
   final String acceptanceContent;
+  @JsonKey(name: "form_fields")
   final List<ChurchFormField> formFields;
   @JsonKey(name: "thank_you_content")
   final String thankYouContent;
@@ -73,7 +74,8 @@ class ChurchFormField {
   @JsonKey(name: "text_field_type")
   final String textFieldType;
   final ChurchFormValidators validators;
-  final List<String> selections;
+//  final List<String> selections;
+  final String selections;
   @JsonKey(name: "error_text")
   final String errorText;
 
@@ -136,6 +138,7 @@ class SubModuleAndFormFields {
 
   @JsonKey(name: "sub_module")
   final SubModule subModule;
+  @JsonKey(name: "form_fields")
   final List<ChurchFormField> formFields;
 
   factory SubModuleAndFormFields.fromJson(Map<String, dynamic> json) =>
