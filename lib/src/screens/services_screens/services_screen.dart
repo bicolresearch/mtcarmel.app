@@ -125,7 +125,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   GestureDetector(
                       onTap: _scrollListener, child: servicesHeader(context)),
 
-                  GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
+                  _arrowMoreUp,
                   Expanded(
                     child: Container(
                       alignment: Alignment.bottomCenter,
@@ -155,7 +155,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                       ),
                     ),
                   ),
-                  GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
+                  _arrowMoreDown,
                 ],
               ),
             ),
@@ -184,13 +184,17 @@ class _ServicesScreenState extends State<ServicesScreen> {
         //TODO for the current model
         return ModuleScreen(
           serviceItem: serviceItem,
-          moduleApi: "https://api.mountcarmel.ph/service_confraternity",
+          moduleApis: ["https://api.mountcarmel.ph/service_confraternity"],
         );
       case ServicesScreen.MAKE_REQUEST:
         //TODO for the current model
-        MakeRequest makeRequest = MakeRequest();
-        _churchService = makeRequest.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchModule: _churchService);
+        return ModuleScreen(
+          serviceItem: serviceItem,
+          moduleApis: [
+          "https://api.mountcarmel.ph/service_prayer_request",
+          "https://api.mountcarmel.ph/service_mass_request"
+          ],
+        );
       case ServicesScreen.BAPTISM:
         //TODO for the current model
         Baptism baptism = Baptism();
@@ -313,17 +317,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
     }
   }
 
-  _moveUp() {
-    if (_scrollController.offset >= _scrollController.position.minScrollExtent)
-      _scrollController.animateTo(_scrollController.offset - 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 400));
-  }
-
-  _moveDown() {
-    if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
-      _scrollController.animateTo(_scrollController.offset + 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 400));
-  }
 }
 
 class NoService extends StatelessWidget {

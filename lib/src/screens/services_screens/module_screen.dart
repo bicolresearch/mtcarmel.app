@@ -2,8 +2,8 @@
 *  Filename    :   module_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-01 16:31 by Detective Conan
-*  Updated     :   2019-08-01 16:31 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-08-02 10:26 by Detective conan 
+*  Changes     :   Implement sub modules gathering and displays
 */
 
 import 'package:flutter/material.dart';
@@ -20,15 +20,14 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-
 class ModuleScreen extends StatefulWidget {
-
   @required
-  final String moduleApi;
+  final List<String> moduleApis;
   @required
   final ServiceItem serviceItem;
 
-  const ModuleScreen({Key key, this.moduleApi, this.serviceItem}) : super(key: key);
+  const ModuleScreen({Key key, this.moduleApis, this.serviceItem})
+      : super(key: key);
 
   @override
   _ModuleScreenState createState() => _ModuleScreenState();
@@ -36,61 +35,66 @@ class ModuleScreen extends StatefulWidget {
 
 class _ModuleScreenState extends State<ModuleScreen> {
   bool _isLoading = true;
-  SubModuleAndFormFields _subModuleAndFormFields;
   ChurchModule _churchModule;
+  List<ChurchSubModule> _churchSubmodules = [];
+
   @override
   Widget build(BuildContext context) {
-
     return Material(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
-          child:
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.height - 100,
-                    child: _isLoading ? LoadingIndicator():Column(
-                      children: <Widget>[
-                        servicesHeader(context),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        serviceReferenceTile(context, _churchModule.moduleReference),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        lineWidget(),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: _churchModule.churchSubModules.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () async {
-                                  final result = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ServiceInfoScreen(
-                                              churchServiceSubtype: _churchModule
-                                                  .churchSubModules[index])));
-                                  if (result) Navigator.pop(context);
-                                },
-                                child: serviceSpecific(
-                                    context,
-                                    _churchModule
-                                        .churchSubModules[index].name),
-                              );
-                            },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height - 100,
+                child: _isLoading
+                    ? LoadingIndicator()
+                    : Column(
+                        children: <Widget>[
+                          servicesHeader(context),
+                          SizedBox(
+                            height: 10.0,
                           ),
-                        ),
+                          serviceReferenceTile(
+                              context, _churchModule.moduleReference),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          lineWidget(),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: _churchModule.churchSubModules.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    final result = await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ServiceInfoScreen(
+                                                    churchServiceSubtype:
+                                                        _churchModule
+                                                                .churchSubModules[
+                                                            index])));
+                                    if (result) Navigator.pop(context);
+                                  },
+                                  child: serviceSpecific(
+                                      context,
+                                      _churchModule
+                                          .churchSubModules[index].name),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+              leftArrowBackButton(context: context),
             ],
           ),
-                  ),
-                  leftArrowBackButton(context: context),
-                ],
-              ),
         ),
       ),
     );
@@ -104,22 +108,45 @@ class _ModuleScreenState extends State<ModuleScreen> {
   @override
   void initState() {
     super.initState();
-    _getSubModuleAndFormFields(widget.moduleApi).then((result){
-      _subModuleAndFormFields = result;
-      print("result before _getChurcModule $result");
-      _churchModule = _getChurchModule(widget.serviceItem);
-      print("after _getChurcModule $_churchModule");
+    _getChurchModule(widget.serviceItem).then((result) {
+      _churchModule = result;
       _isLoading = false;
-      setState(() {
-
-      });
+      setState(() {});
     }).catchError((e) {
       print("ModuleScreen._initState: $e");
-//      _isLoading = false;
+      _isLoading = false;
     });
   }
 
-  ChurchModule _getChurchModule(ServiceItem moduleItem) {
+  Future _getSubModules() async {
+    List<ChurchSubModule> churchSubmodules = [];
+    for (var api in widget.moduleApis) {
+      try {
+        SubModuleAndFormFields subModuleAndFormFields =
+            await _getSubModuleAndFormFields(api);
+        churchSubmodules.add(_getChurchSubModule(subModuleAndFormFields, api));
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    if (churchSubmodules.isEmpty)
+      throw "ModuleScreen._getSubModules: No SubModule retrieved";
+
+    return churchSubmodules;
+  }
+
+  ChurchSubModule _getChurchSubModule(
+      SubModuleAndFormFields subModuleAndFormFields, String urlApi) {
+    return ChurchSubModule(
+        name: subModuleAndFormFields.subModule.name,
+        formFields: subModuleAndFormFields.formFields,
+        acceptanceContent: subModuleAndFormFields.subModule.acceptanceContent,
+        thankYouContent: subModuleAndFormFields.subModule.thankYouContent,
+        url: "$urlApi/create");
+  }
+
+  Future<ChurchModule> _getChurchModule(ServiceItem moduleItem) async {
     final ModuleReference moduleReference = ModuleReference(
         moduleItem.id,
         moduleItem.branchId,
@@ -127,24 +154,10 @@ class _ModuleScreenState extends State<ModuleScreen> {
         moduleItem.description,
         moduleItem.coverPhoto);
 
-    final String acceptanceContent = _subModuleAndFormFields.subModule.acceptanceContent;
-
-
-    final ChurchSubModule churchServiceSubtype = ChurchSubModule(
-        name: _subModuleAndFormFields.subModule.name,
-        formFields: _subModuleAndFormFields.formFields,
-
-        acceptanceContent: acceptanceContent,
-        thankYouContent: _subModuleAndFormFields.subModule.thankYouContent,
-        url: "${widget.moduleApi}/create");
-        print(churchServiceSubtype.name);
-    print(churchServiceSubtype.formFields);
-    print(churchServiceSubtype.name);
-    print(churchServiceSubtype.name);
+    final churchSubModules = await _getSubModules();
 
     return ChurchModule(
-        moduleReference: moduleReference,
-        churchSubModules: [churchServiceSubtype]);
+        moduleReference: moduleReference, churchSubModules: churchSubModules);
   }
 
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
