@@ -8,19 +8,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/screens//services_screens/passing_screens/passing.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/baptism_screens/baptism.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/communion_screens/communion.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/confirmation_screens/confirmation.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/event_screen/church_event.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/join_us_screens/join_us.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/make_request_screens/make_request.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/marriage_screens/marriage.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/module_screen.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/service_type_screen.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
