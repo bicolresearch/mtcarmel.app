@@ -2,8 +2,8 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*  Updated     :   2019-07-26 10:59 by Detective conan
-*  Changes     :   Enhanced the scrolling.
+*  Updated     :   2019-08-02 10:40 by Detective conan
+*  Changes     :   Implemented services by using apis.
 */
 
 import 'package:flutter/material.dart';
@@ -46,8 +46,6 @@ class ServicesScreen extends StatefulWidget {
 class _ServicesScreenState extends State<ServicesScreen> {
   ScrollController _scrollController;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
-
-  ChurchModule _churchService;
 
   List<ServiceItem> _serviceItemList = [];
 
@@ -109,7 +107,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
   void dispose() {
     print("disposing servicesScreen...");
     _scrollController.dispose();
-    _churchService = null;
     super.dispose();
   }
 
@@ -171,7 +168,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
             builder: (context) => _navigateToService(serviceItem),
           ),
         );
-        _churchService = null;
       },
       // TODO tobe refactor for dynamic forms and tabs
       child: serviceTile(context, serviceItem),
@@ -192,39 +188,65 @@ class _ServicesScreenState extends State<ServicesScreen> {
           serviceItem: serviceItem,
           moduleApis: [
           "https://api.mountcarmel.ph/service_prayer_request",
-          "https://api.mountcarmel.ph/service_mass_request"
+          "https://api.mountcarmel.ph/service_mass_request",
+          "https://api.mountcarmel.ph/service_liturgical",
+          "https://api.mountcarmel.ph/service_certification",
           ],
         );
       case ServicesScreen.BAPTISM:
         //TODO for the current model
-        Baptism baptism = Baptism();
-        _churchService = baptism.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchModule: _churchService);
+        return ModuleScreen(
+          serviceItem: serviceItem,
+          moduleApis: [
+          "https://api.mountcarmel.ph/service_individual_baptism",
+          "https://api.mountcarmel.ph/service_community_baptism",
+          "https://api.mountcarmel.ph/service_adult_baptism",
+          ],
+        );
       case ServicesScreen.COMMUNION:
         //TODO for the current model
-        Communion communion = Communion();
-        _churchService = communion.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchModule: _churchService);
+        return ModuleScreen(
+          serviceItem: serviceItem,
+          moduleApis: [
+          "https://api.mountcarmel.ph/service_first_communion",
+          "https://api.mountcarmel.ph/service_communion_of_the_sick",
+          ],
+        );
       case ServicesScreen.CONFIRMATION:
         //TODO for the current model
-        Confirmation confirmation = Confirmation();
-        _churchService = confirmation.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchModule: _churchService);
+        return ModuleScreen(
+          serviceItem: serviceItem,
+          moduleApis: [
+            "https://api.mountcarmel.ph/service_confirmation",
+          ],
+        );
       case ServicesScreen.WEDDING:
         //TODO for the current model
-        Marriage marriage = Marriage();
-        _churchService = marriage.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchModule: _churchService);
+        return ModuleScreen(
+          serviceItem: serviceItem,
+          moduleApis: [
+            "https://api.mountcarmel.ph/service_marriage",
+          ],
+        );
       case ServicesScreen.PASSING:
         //TODO for the current model
-        Passing passing = Passing();
-        _churchService = passing.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchModule: _churchService);
+        return ModuleScreen(
+          serviceItem: serviceItem,
+          moduleApis: [
+            "https://api.mountcarmel.ph/service_funeral_service",
+            "https://api.mountcarmel.ph/service_funeral_chapel",
+            "https://api.mountcarmel.ph/service_crypt_lobby",
+          ],
+        );
       case ServicesScreen.EVENTS:
         //TODO for the current model
-        ChurchEvent churchEvent = ChurchEvent();
-        _churchService = churchEvent.getChurchService(serviceItem);
-        return ServiceTypeScreen(churchModule: _churchService);
+        return ModuleScreen(
+          serviceItem: serviceItem,
+          moduleApis: [
+            "https://api.mountcarmel.ph/service_november_mass",
+            "https://api.mountcarmel.ph/service_events_FMHH_venue",
+          ],
+        );
     }
     return NoService(serviceItem: serviceItem);
   }
