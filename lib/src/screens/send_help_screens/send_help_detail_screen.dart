@@ -2,8 +2,8 @@
 *  Filename    :   send_help_detail_screen.dart
 *  Purpose     :   Displays the details of a selected donation.
 *  Created     :   2019-07-10 15:30 by Detective Conan
-*  Updated     :   2019-08-01 12:22 by Detective conan
-*  Changes     :   Renamed _imagesController to _sliderController
+*  Updated     :   2019-08-02 13:34 by Detective conan
+*  Changes     :   Made the detail box rounded. Adjusted the position of the detail box.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -144,7 +144,13 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
 
   Widget _firstItem() {
     return Container(
-      color: Color.fromARGB(100, 255, 255, 255),
+      margin: EdgeInsets.only(top: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10.0),
+        ),
+        color: Colors.white24,
+      ),
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -186,8 +192,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   @override
   void dispose() {
     _textControllerAmount.dispose();
-    if(_sliderController!=null)
-      _sliderController.dispose();
+    if (_sliderController != null) _sliderController.dispose();
 
     super.dispose();
   }
