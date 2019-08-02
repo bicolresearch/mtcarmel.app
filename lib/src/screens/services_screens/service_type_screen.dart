@@ -13,7 +13,7 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
-import 'package:mt_carmel_app/src/widgets/services_reference_tile.dart';
+import 'package:mt_carmel_app/src/widgets/module_reference_tile.dart';
 
 
 class ServiceTypeScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _ServiceTypeScreenState extends State<ServiceTypeScreen> {
               SizedBox(
                 height: 10.0,
               ),
-              serviceReferenceTile(context, widget.churchModule?.moduleReference),
+              moduleReferenceTile(context, widget.churchModule?.moduleReference),
               SizedBox(
                 height: 10.0,
               ),

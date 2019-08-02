@@ -2,20 +2,19 @@
 *  Filename    :   module_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-01 16:31 by Detective Conan
-*  Updated     :   2019-08-02 10:26 by Detective conan 
-*  Changes     :   Implement sub modules gathering and displays
+*  Updated     :   2019-08-02 11:41 by Detective conan
+*  Changes     :   Refactored replaced service with module
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
-import 'package:mt_carmel_app/src/models/service_item.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_info/service_info_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/service_specific.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
-import 'package:mt_carmel_app/src/widgets/services_reference_tile.dart';
+import 'package:mt_carmel_app/src/widgets/module_reference_tile.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -24,9 +23,9 @@ class ModuleScreen extends StatefulWidget {
   @required
   final List<String> moduleApis;
   @required
-  final ServiceItem serviceItem;
+  final ModuleReference moduleReference;
 
-  const ModuleScreen({Key key, this.moduleApis, this.serviceItem})
+  const ModuleScreen({Key key, this.moduleApis, this.moduleReference})
       : super(key: key);
 
   @override
@@ -36,7 +35,6 @@ class ModuleScreen extends StatefulWidget {
 class _ModuleScreenState extends State<ModuleScreen> {
   bool _isLoading = true;
   ChurchModule _churchModule;
-  List<ChurchSubModule> _churchSubmodules = [];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +56,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
                           SizedBox(
                             height: 10.0,
                           ),
-                          serviceReferenceTile(
+                          moduleReferenceTile(
                               context, _churchModule.moduleReference),
                           SizedBox(
                             height: 10.0,
@@ -108,7 +106,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
   @override
   void initState() {
     super.initState();
-    _getChurchModule(widget.serviceItem).then((result) {
+    _getChurchModule().then((result) {
       _churchModule = result;
       _isLoading = false;
       setState(() {});
@@ -146,18 +144,12 @@ class _ModuleScreenState extends State<ModuleScreen> {
         url: "$urlApi/create");
   }
 
-  Future<ChurchModule> _getChurchModule(ServiceItem moduleItem) async {
-    final ModuleReference moduleReference = ModuleReference(
-        moduleItem.id,
-        moduleItem.branchId,
-        moduleItem.name,
-        moduleItem.description,
-        moduleItem.coverPhoto);
+  Future<ChurchModule> _getChurchModule() async {
 
     final churchSubModules = await _getSubModules();
 
     return ChurchModule(
-        moduleReference: moduleReference, churchSubModules: churchSubModules);
+        moduleReference: widget.moduleReference, churchSubModules: churchSubModules);
   }
 
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(

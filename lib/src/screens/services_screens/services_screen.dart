@@ -8,13 +8,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/service_item.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/module_screen.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:mt_carmel_app/src/widgets/module_reference_tile.dart';
 import 'package:mt_carmel_app/src/widgets/services_header.dart';
-import 'package:mt_carmel_app/src/widgets/services_tiles.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -37,7 +37,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   ScrollController _scrollController;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
-  List<ServiceItem> _serviceItemList = [];
+  List<ModuleReference> _moduleReferences = [];
 
   bool _isLoading = true;
   bool _isJsonFailed = false;
@@ -57,11 +57,15 @@ class _ServicesScreenState extends State<ServicesScreen> {
     print("initializing serviceScreen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    getJsonData().then((_) {
-      _initializeArrows();
-    }).catchError((e) {
-      debugPrint("ServiceScreen.initState: $e");
-    });
+    getJsonData().then(
+      (_) {
+        _initializeArrows();
+      },
+    ).catchError(
+      (e) {
+        debugPrint("ServiceScreen.initState: $e");
+      },
+    );
   }
 
   Future _initializeArrows() async {
@@ -75,21 +79,22 @@ class _ServicesScreenState extends State<ServicesScreen> {
     _isLoading = true;
     var response = await http
         .get(AppConstants.SERVICES_JSON_URL)
-        .timeout(Duration(milliseconds: 3000));
+        .timeout(Duration(seconds: 3));
     if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          _serviceItemList = (json.decode(response.body) as List)
-              .map((data) => new ServiceItem.fromJson(data))
-              .toList();
-          print(_serviceItemList.length);
-          _isLoading = false;
-        } else {
-          //throw Exception('Failed to load photos');
-          _isJsonFailed = true;
-          _isLoading = false;
-        }
-      });
+      setState(
+        () {
+          if (response.statusCode == 200) {
+            _moduleReferences = (json.decode(response.body) as List)
+                .map((data) => ModuleReference.fromJson(data))
+                .toList();
+            print(_moduleReferences.length);
+            _isLoading = false;
+          } else {
+            _isJsonFailed = true;
+            _isLoading = false;
+          }
+        },
+      );
     }
   }
 
@@ -134,10 +139,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         },
                         child: ListView.builder(
                             controller: _scrollController,
-                            itemCount: _serviceItemList.length,
+                            itemCount: _moduleReferences.length,
                             itemBuilder: (context, index) {
-                              return _serviceItem(
-                                  context, _serviceItemList[index]);
+                              return _moduleReferenceItem(
+                                  context, _moduleReferences[index]);
                             }),
                       ),
                     ),
@@ -149,79 +154,71 @@ class _ServicesScreenState extends State<ServicesScreen> {
     );
   }
 
-  Widget _serviceItem(context, final ServiceItem serviceItem) {
+  Widget _moduleReferenceItem(context, final ModuleReference moduleReference) {
     return GestureDetector(
       onTap: () async {
         await Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => _navigateToService(serviceItem),
+            builder: (context) => _navigateToService(moduleReference),
           ),
         );
       },
-      // TODO tobe refactor for dynamic forms and tabs
-      child: serviceTile(context, serviceItem),
+      child: moduleReferenceTile(context, moduleReference),
     );
   }
 
-  Widget _navigateToService(final ServiceItem serviceItem) {
-    switch (serviceItem.name) {
+  Widget _navigateToService(final ModuleReference moduleReference) {
+    switch (moduleReference.name) {
       case ServicesScreen.JOIN_US:
-        //TODO for the current model
         return ModuleScreen(
-          serviceItem: serviceItem,
+          moduleReference: moduleReference,
           moduleApis: ["https://api.mountcarmel.ph/service_confraternity"],
         );
       case ServicesScreen.MAKE_REQUEST:
-        //TODO for the current model
         return ModuleScreen(
-          serviceItem: serviceItem,
+          moduleReference: moduleReference,
           moduleApis: [
-          "https://api.mountcarmel.ph/service_prayer_request",
-          "https://api.mountcarmel.ph/service_mass_request",
-          "https://api.mountcarmel.ph/service_liturgical",
-          "https://api.mountcarmel.ph/service_certification",
+            "https://api.mountcarmel.ph/service_prayer_request",
+            "https://api.mountcarmel.ph/service_mass_request",
+            "https://api.mountcarmel.ph/service_liturgical",
+            "https://api.mountcarmel.ph/service_certification",
           ],
         );
       case ServicesScreen.BAPTISM:
-        //TODO for the current model
         return ModuleScreen(
-          serviceItem: serviceItem,
+          moduleReference: moduleReference,
           moduleApis: [
-          "https://api.mountcarmel.ph/service_individual_baptism",
-          "https://api.mountcarmel.ph/service_community_baptism",
-          "https://api.mountcarmel.ph/service_adult_baptism",
+            "https://api.mountcarmel.ph/service_individual_baptism",
+            "https://api.mountcarmel.ph/service_community_baptism",
+            "https://api.mountcarmel.ph/service_adult_baptism",
           ],
         );
       case ServicesScreen.COMMUNION:
-        //TODO for the current model
         return ModuleScreen(
-          serviceItem: serviceItem,
+          moduleReference: moduleReference,
           moduleApis: [
-          "https://api.mountcarmel.ph/service_first_communion",
-          "https://api.mountcarmel.ph/service_communion_of_the_sick",
+            "https://api.mountcarmel.ph/service_first_communion",
+            "https://api.mountcarmel.ph/service_communion_of_the_sick",
           ],
         );
       case ServicesScreen.CONFIRMATION:
-        //TODO for the current model
         return ModuleScreen(
-          serviceItem: serviceItem,
+          moduleReference: moduleReference,
           moduleApis: [
             "https://api.mountcarmel.ph/service_confirmation",
           ],
         );
       case ServicesScreen.WEDDING:
-        //TODO for the current model
         return ModuleScreen(
-          serviceItem: serviceItem,
+          moduleReference: moduleReference,
           moduleApis: [
             "https://api.mountcarmel.ph/service_marriage",
           ],
         );
       case ServicesScreen.PASSING:
-        //TODO for the current model
         return ModuleScreen(
-          serviceItem: serviceItem,
+          moduleReference: moduleReference,
           moduleApis: [
             "https://api.mountcarmel.ph/service_funeral_service",
             "https://api.mountcarmel.ph/service_funeral_chapel",
@@ -229,16 +226,15 @@ class _ServicesScreenState extends State<ServicesScreen> {
           ],
         );
       case ServicesScreen.EVENTS:
-        //TODO for the current model
         return ModuleScreen(
-          serviceItem: serviceItem,
+          moduleReference: moduleReference,
           moduleApis: [
             "https://api.mountcarmel.ph/service_november_mass",
             "https://api.mountcarmel.ph/service_events_FMHH_venue",
           ],
         );
     }
-    return NoService(serviceItem: serviceItem);
+    return NoService(moduleReference: moduleReference);
   }
 
   void _onStartScroll(ScrollMetrics metrics) {}
@@ -328,12 +324,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
       print("error in _scrolListener");
     }
   }
-
 }
 
 class NoService extends StatelessWidget {
-  const NoService({Key key, this.serviceItem}) : super(key: key);
-  final ServiceItem serviceItem;
+  const NoService({Key key, this.moduleReference}) : super(key: key);
+  final ModuleReference moduleReference;
 
   @override
   Widget build(BuildContext context) {
@@ -343,7 +338,7 @@ class NoService extends StatelessWidget {
           children: <Widget>[
             Spacer(),
             Text(
-              "No service for ${serviceItem.name}",
+              "No service for ${moduleReference.name}",
               style: Theme.of(context).primaryTextTheme.subhead,
             ),
             Spacer(),
