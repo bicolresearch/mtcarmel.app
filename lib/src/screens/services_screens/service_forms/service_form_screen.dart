@@ -74,7 +74,10 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
 
-            _arrowMoreUp,
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: _arrowMoreUp,
+            ),
             Expanded(
               child: NotificationListener<ScrollNotification>(
                 onNotification: (scrollNotification) {

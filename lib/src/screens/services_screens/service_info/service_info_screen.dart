@@ -147,27 +147,6 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                             }
                           }
                         : null,
-
-//                    onPressed: () async => {
-//                      print("${sendHelp.name} selected"),
-//                      if (!_isLoggedIn)
-//                        {
-//                          _isLoggedIn = await Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                builder: (context) => LoginScreen(),
-//                              )),
-//                        },
-//                      //after login form
-//                      if (_isLoggedIn)
-//                        {
-//                          Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                builder: (context) => SendHelpDetails(sendHelp),
-//                              ))
-//                        }
-//                    },
                   ),
                   leftArrowBackButton(context: context),
                 ],
@@ -267,18 +246,6 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
       print(e.toString());
       print("error in _scrolListener");
     }
-  }
-
-  _moveUp() {
-    if (_scrollController.offset >= _scrollController.position.minScrollExtent)
-      _scrollController.animateTo(_scrollController.offset - 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
-  }
-
-  _moveDown() {
-    if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
-      _scrollController.animateTo(_scrollController.offset + 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
   }
 
   Future _checkLoginStatus() async {

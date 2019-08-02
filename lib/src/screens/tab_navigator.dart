@@ -7,7 +7,6 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/screens/transparency_screens/transparency_screen.dart';
 import '../presentations/mount_carmel_icons.dart';
 import '..//screens/feeds_screens/feeds_screen.dart';
@@ -17,8 +16,6 @@ import '../screens/profile_screens/profile_screen.dart';
 
 class TabNavigator extends StatefulWidget {
   TabNavigator() : super();
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
   _TabNavigatorState createState() => _TabNavigatorState();
@@ -26,17 +23,17 @@ class TabNavigator extends StatefulWidget {
 
 class _TabNavigatorState extends State<TabNavigator>
     with SingleTickerProviderStateMixin {
-  TabController controller;
+  TabController _controller;
 
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 5, vsync: this);
+    _controller = TabController(length: 5, vsync: this);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -51,13 +48,13 @@ class _TabNavigatorState extends State<TabNavigator>
           TransparencyScreen(),
           ProfileScreen(),
         ],
-        controller: controller,
+        controller: _controller,
       ),
       bottomNavigationBar: Material(
         color: Colors.white,
         child: SafeArea(
           child: TabBar(
-            indicatorColor: Color.fromARGB(0, 0, 0, 0),
+            indicatorColor: Colors.transparent,
             unselectedLabelColor: Colors.brown[200],
             labelColor: Colors.brown,
             tabs: <Widget>[
@@ -77,8 +74,7 @@ class _TabNavigatorState extends State<TabNavigator>
                 icon: Icon(MountCarmelIcons.profile),
               ),
             ],
-            controller: controller,
-            //onTap: _onItemTapped,
+            controller: _controller,
           ),
         ),
       ),
