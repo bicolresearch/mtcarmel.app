@@ -11,13 +11,10 @@ import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_info/service_info_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
-import 'package:mt_carmel_app/src/widgets/service_specific.dart';
-import 'package:mt_carmel_app/src/widgets/services_header.dart';
+import 'package:mt_carmel_app/src/widgets/service_header.dart';
 import 'package:mt_carmel_app/src/widgets/module_reference_tile.dart';
 
-
 class ServiceTypeScreen extends StatefulWidget {
-
   @required
   final ChurchModule churchModule;
 
@@ -30,18 +27,19 @@ class ServiceTypeScreen extends StatefulWidget {
 class _ServiceTypeScreenState extends State<ServiceTypeScreen> {
   @override
   Widget build(BuildContext context) {
-
     return Material(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
           child: Column(
             children: <Widget>[
-              servicesHeader(context),
+              ServiceHeader(),
               SizedBox(
                 height: 10.0,
               ),
-              moduleReferenceTile(context, widget.churchModule?.moduleReference),
+              ModuleReferenceTile(
+                  context: context,
+                  moduleReference: widget.churchModule.moduleReference),
               SizedBox(
                 height: 10.0,
               ),
@@ -60,10 +58,22 @@ class _ServiceTypeScreenState extends State<ServiceTypeScreen> {
                                         .churchSubModules[index])));
                         if (result) Navigator.pop(context);
                       },
-                      child: serviceSpecific(
-                          context,
-                          widget.churchModule
-                              .churchSubModules[index].name),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 70.0),
+                            child: Text(
+                              widget.churchModule.churchSubModules[index].name,
+                              style: Theme.of(context).primaryTextTheme.subhead,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Container(
+                              margin: EdgeInsets.symmetric(horizontal: 50.0),
+                              child: lineWidget()),
+                        ],
+                      ),
                     );
                   },
                 ),

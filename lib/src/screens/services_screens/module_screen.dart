@@ -12,8 +12,7 @@ import 'package:mt_carmel_app/src/screens/services_screens/service_info/service_
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
-import 'package:mt_carmel_app/src/widgets/service_specific.dart';
-import 'package:mt_carmel_app/src/widgets/services_header.dart';
+import 'package:mt_carmel_app/src/widgets/service_header.dart';
 import 'package:mt_carmel_app/src/widgets/module_reference_tile.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -52,12 +51,13 @@ class _ModuleScreenState extends State<ModuleScreen> {
                     ? LoadingIndicator()
                     : Column(
                         children: <Widget>[
-                          servicesHeader(context),
+                          ServiceHeader(),
                           SizedBox(
                             height: 10.0,
                           ),
-                          moduleReferenceTile(
-                              context, _churchModule.moduleReference),
+                          ModuleReferenceTile(
+                              context: context,
+                              moduleReference: _churchModule.moduleReference),
                           SizedBox(
                             height: 10.0,
                           ),
@@ -79,10 +79,26 @@ class _ModuleScreenState extends State<ModuleScreen> {
                                                             index])));
                                     if (result) Navigator.pop(context);
                                   },
-                                  child: serviceSpecific(
-                                      context,
-                                      _churchModule
-                                          .churchSubModules[index].name),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 20.0, horizontal: 70.0),
+                                        child: Text(
+                                          _churchModule
+                                              .churchSubModules[index].name,
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .subhead,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 50.0),
+                                          child: lineWidget()),
+                                    ],
+                                  ),
                                 );
                               },
                             ),
@@ -145,11 +161,11 @@ class _ModuleScreenState extends State<ModuleScreen> {
   }
 
   Future<ChurchModule> _getChurchModule() async {
-
     final churchSubModules = await _getSubModules();
 
     return ChurchModule(
-        moduleReference: widget.moduleReference, churchSubModules: churchSubModules);
+        moduleReference: widget.moduleReference,
+        churchSubModules: churchSubModules);
   }
 
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(

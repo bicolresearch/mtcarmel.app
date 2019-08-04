@@ -2,8 +2,8 @@
 *  Filename    :   bible_book_screen.dart
 *  Purpose     :
 *  Created     :   2019-07-15 09:45 by Detective Conan
-*  Updated     :   2019-07-25 10:23 by Detective conan
-*  Changes     :   Fixed the characters using utf8 decoder
+*	 Updated			:   04/08/2019 9:23 PM PM by Detective Conan
+*	 Changes			:   Adapt to new api's text format
 *  */
 
 import 'package:flutter/material.dart';
@@ -143,7 +143,8 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
         itemCount: (_reference == null) ? 0 : _reference.verses.length,
         itemBuilder: (context, index) {
           return Text(
-              "\t${index + 1} ${utf8.decode(_reference.verses[index].text.codeUnits)}",
+//              "\t${index + 1} ${utf8.decode(_reference.verses[index].text.codeUnits)}",
+          "\t${index + 1} ${_reference.verses[index].text}",
               style: Theme.of(context).primaryTextTheme.subhead);
         });
   }

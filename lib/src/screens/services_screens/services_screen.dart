@@ -14,7 +14,7 @@ import 'package:mt_carmel_app/src/screens/services_screens/module_screen.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/module_reference_tile.dart';
-import 'package:mt_carmel_app/src/widgets/services_header.dart';
+import 'package:mt_carmel_app/src/widgets/service_header.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -115,7 +115,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 children: <Widget>[
                   //
                   GestureDetector(
-                      onTap: _scrollListener, child: servicesHeader(context)),
+                      onTap: _scrollListener, child: ServiceHeader()),
 
                   _arrowMoreUp,
                   Expanded(
@@ -164,7 +164,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
           ),
         );
       },
-      child: moduleReferenceTile(context, moduleReference),
+      child:
+      ModuleReferenceTile(
+          context: context,
+          moduleReference: moduleReference),
     );
   }
 
