@@ -38,7 +38,7 @@ class CivilStatusFormField extends ServiceDropdownFormCommon
 
   @override
   Widget buildForm(BuildContext context) {
-    return super.dropDownForm(context, _list);
+    return super.bottomSheetForm(context, _list);
   }
 
 }

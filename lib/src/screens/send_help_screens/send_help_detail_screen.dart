@@ -40,7 +40,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
             Container(
               height: MediaQuery.of(context).size.height,
               child: CachedNetworkImage(
-                  key: Key(widget.sendHelp.coverPhoto.replaceAll("/", "")),
+//                  key: Key(widget.sendHelp.coverPhoto.replaceAll("/", "")),
                   imageUrl:
                       AppConstants.API_BASE_URL + widget.sendHelp.coverPhoto,
                   placeholder: (context, url) => LoadingIndicator(),
@@ -193,7 +193,6 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
   void dispose() {
     _textControllerAmount.dispose();
     if (_sliderController != null) _sliderController.dispose();
-
     super.dispose();
   }
 

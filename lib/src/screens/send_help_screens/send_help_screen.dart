@@ -142,7 +142,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
             child: (sendHelp.coverPhoto == null)
                 ? Container()
                 : CachedNetworkImage(
-                    key: Key(sendHelp.coverPhoto?.replaceAll("/", "")),
+//                    key: Key(sendHelp.coverPhoto?.replaceAll("/", "")),
                     imageUrl:
                         AppConstants.API_BASE_URL + sendHelp.coverPhoto ?? "",
                     placeholder: (context, url) => LoadingIndicator(),

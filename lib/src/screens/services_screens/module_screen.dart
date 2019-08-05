@@ -18,7 +18,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-class ModuleScreen extends StatefulWidget {
+class ModuleScreen extends StatefulWidget{
   @required
   final List<String> moduleApis;
   @required

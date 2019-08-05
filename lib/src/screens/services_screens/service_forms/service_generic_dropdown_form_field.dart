@@ -32,6 +32,6 @@ class ServiceGenericDropdownFormField extends ServiceDropdownFormCommon
 
   @override
   Widget buildForm(BuildContext context) {
-    return super.dropDownForm(context, this.dropDownList);
+    return super.bottomSheetForm(context, this.dropDownList);
   }
 }

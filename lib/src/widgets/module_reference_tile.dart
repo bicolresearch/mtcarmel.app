@@ -32,9 +32,9 @@ class ModuleReferenceTile extends StatelessWidget {
                 : Container(
               height: 60.0,
               child: CachedNetworkImage(
-                  key: Key(moduleReference.coverPhoto
-                      .replaceAll("/", "")
-                      .replaceAll(".", "")),
+//                  key: Key(moduleReference.coverPhoto
+//                      .replaceAll("/", "")
+//                      .replaceAll(".", "")),
                   imageUrl: AppConstants.API_BASE_URL +
                       moduleReference.coverPhoto,
                   placeholder: (context, url) => LoadingIndicator(),

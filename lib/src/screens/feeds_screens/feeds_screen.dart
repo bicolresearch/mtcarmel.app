@@ -177,6 +177,7 @@ class _FeedScreenState extends State<FeedScreen> {
         key: _refreshIndicatorKey,
         onRefresh: _getFeedData,
         child: ListView.builder(
+          reverse: true,
           itemCount: _feed.data.length,
           itemBuilder: (context, index) {
             try {
