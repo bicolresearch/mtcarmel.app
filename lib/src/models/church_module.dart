@@ -64,6 +64,7 @@ class ChurchFormField {
     this.validators,
     this.selections,
     this.errorText,
+    this.maxLines
   });
 
   final String attribute;
@@ -78,6 +79,8 @@ class ChurchFormField {
   final String selections;
   @JsonKey(name: "error_text")
   final String errorText;
+  @JsonKey(name: "max_lines")
+  final String maxLines;
 
   factory ChurchFormField.fromJson(Map<String, dynamic> json) =>
       _$ChurchFormFieldFromJson(json);

@@ -12,16 +12,10 @@ import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service
 
 class CivilStatusFormField extends ServiceDropdownFormCommon
     implements ServiceFormAbstract {
-  final _list =
-  [
-    "Single",
-    "Married",
-    "Widowed",
-    "Separated",
-    "Divorced"
-  ];
+  final _list = ["Single", "Married", "Widowed", "Separated", "Divorced"];
 
-  CivilStatusFormField({churchFormField}) : super(churchFormField: churchFormField);
+  CivilStatusFormField({churchFormField})
+      : super(churchFormField: churchFormField);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +32,7 @@ class CivilStatusFormField extends ServiceDropdownFormCommon
 
   @override
   Widget buildForm(BuildContext context) {
-    return super.bottomSheetForm(context, _list);
+    return super.bottomSheetForm(
+        context, _list, churchFormField.hint, churchFormField.attribute);
   }
-
 }

@@ -38,6 +38,7 @@ class ServicePlainTextField extends ServiceFormCommon
             style: Theme.of(context).primaryTextTheme.title,
             textAlign: TextAlign.center,
             cursorColor: Colors.brown,
+            maxLines: churchFormField.maxLines??1,
           ),
         ],
       ),

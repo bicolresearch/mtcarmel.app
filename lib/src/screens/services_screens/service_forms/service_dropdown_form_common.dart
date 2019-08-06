@@ -16,11 +16,12 @@ class ServiceDropdownFormCommon extends ServiceFormCommon {
   ServiceDropdownFormCommon({ChurchFormField churchFormField})
       : super(churchFormField: churchFormField);
 
-  Widget bottomSheetForm(BuildContext context, List<String> dropDownList) {
+  Widget bottomSheetForm(BuildContext context, List<String> dropDownList,
+      String hint, String attribute) {
     return FormBuilderBottomSheet(
       style: Theme.of(context).primaryTextTheme.caption,
-      attribute: super.churchFormField.attribute,
-      hint: (churchFormField.hint == null)
+      attribute: attribute,
+      hint: (hint == null)
           ? Text(
               "",
               style: Theme.of(context).primaryTextTheme.subhead,
@@ -43,6 +44,7 @@ class ServiceDropdownFormCommon extends ServiceFormCommon {
 
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
+
     if (super.churchFormField.validators == null) return validators;
 
     if (super.churchFormField.validators.isRequired == "true")

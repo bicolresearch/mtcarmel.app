@@ -66,6 +66,7 @@ ChurchFormField _$ChurchFormFieldFromJson(Map<String, dynamic> json) {
             json['validators'] as Map<String, dynamic>),
     selections: json['selections'] as String,
     errorText: json['error_text'] as String,
+    maxLines: json['max_lines'] as String,
   );
 }
 
@@ -79,6 +80,7 @@ Map<String, dynamic> _$ChurchFormFieldToJson(ChurchFormField instance) =>
       'validators': instance.validators,
       'selections': instance.selections,
       'error_text': instance.errorText,
+      'max_lines': instance.maxLines,
     };
 
 ChurchFormValidators _$ChurchFormValidatorsFromJson(Map<String, dynamic> json) {
