@@ -43,7 +43,6 @@ class ServiceDropdownFormCommon extends ServiceFormCommon {
 
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
-    validators.add(FormBuilderValidators.required());
     if (super.churchFormField.validators == null) return validators;
 
     if (super.churchFormField.validators.isRequired == "true")
