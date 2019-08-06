@@ -109,80 +109,15 @@ class _FormBuilderBottomSheetState extends State<FormBuilderBottomSheet> {
             border: InputBorder.none,
           ),
           child: BottomSelection(
-            hint: widget.hint, selection: widget.items,
-            fieldKey: _fieldKey, formState: _formState,
-            attribute: widget.attribute
-          ),
+              hint: widget.hint,
+              selection: widget.items,
+              fieldKey: _fieldKey,
+              formState: _formState,
+              attribute: widget.attribute),
         );
       },
     );
   }
-
-
-//  Widget bottomSelection({Widget hint, List<Widget> selection}) {
-//    return GestureDetector(
-//      onTap: () {
-//        _showModalSheet(context);
-//      },
-//      child: ListTile(
-//        title:
-////        Text(_value,
-////          textAlign: TextAlign.center,
-////          style: Theme.of(context).primaryTextTheme.title,
-////        ),
-//        widget.hint,
-//        trailing: Icon(
-//          Icons.arrow_drop_down,
-//          size: 20.0,
-//        ),
-//        subtitle: Divider(),
-//      ),
-//    );
-//  }
-//
-//  void _showModalSheet(context) {
-//    showModalBottomSheet(
-//      context: context,
-//      backgroundColor: Colors.transparent,
-//      builder: (builder) {
-//        return Container(
-//          height: 200,
-//          decoration: BoxDecoration(
-//              borderRadius: BorderRadius.all(
-//                Radius.circular(20.0),
-//              ),
-//              color: Colors.white),
-//          child: ListView.builder(
-//            itemCount: this.widget.items.length,
-//            itemBuilder: (context, index) {
-//              return Padding(
-//                padding: const EdgeInsets.all(8.0),
-//                child: ListTile(
-//                  title: widget.items[index],
-////                  Text(
-////                    widget.items[index],
-////                    style: Theme.of(context).primaryTextTheme.title,
-////                    textAlign: TextAlign.center,
-////                  ),
-//                  onTap: () {
-//                    print("${widget.items[index].data} selected");
-//                    setState(() {
-//                      _formState.value[widget.attribute] = widget.items[index].data;
-//                      print(_formState.value[widget.attribute]);
-//                      _fieldKey.currentState.setValue(_formState.value[widget.attribute]);
-//                      Navigator.pop(context);
-//                    });
-//
-//                  },
-//                ),
-//              );
-//            },
-//          ),
-//          padding: EdgeInsets.all(30.0),
-//        );
-//      },
-//    );
-//  }
 }
 
 class BottomSelection extends StatefulWidget {
@@ -192,42 +127,44 @@ class BottomSelection extends StatefulWidget {
   final GlobalKey<FormFieldState> fieldKey;
   final String attribute;
 
-
-  BottomSelection({this.hint, this.selection, this.formState, this.fieldKey, this.attribute});
+  BottomSelection(
+      {this.hint,
+      this.selection,
+      this.formState,
+      this.fieldKey,
+      this.attribute});
 
   @override
   _BottomSelectionState createState() => _BottomSelectionState();
 }
 
 class _BottomSelectionState extends State<BottomSelection> {
-
   String _value = "Choose...";
 
   @override
   void initState() {
     super.initState();
-    if(widget.hint != null)
-      _value = widget.hint.data;
+    if (widget.hint != null) _value = widget.hint.data;
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          _showModalSheet(context);
-        },
-        child: ListTile(
-          title:
-          Text(_value,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).primaryTextTheme.title,
-                ),
-          trailing: Icon(
-            Icons.arrow_drop_down,
-            size: 20.0,
-          ),
-          subtitle: Divider(),
+      onTap: () {
+        _showModalSheet(context);
+      },
+      child: ListTile(
+        title: Text(
+          _value,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).primaryTextTheme.title,
         ),
+        trailing: Icon(
+          Icons.arrow_drop_down,
+          size: 20.0,
+        ),
+        subtitle: Divider(),
+      ),
     );
   }
 
@@ -260,9 +197,11 @@ class _BottomSelectionState extends State<BottomSelection> {
                       _value = widget.selection[index].data;
                       widget.formState.value[widget.attribute] = _value;
                       widget.fieldKey.currentState.setValue(_value);
+                      widget.fieldKey.currentState.setState(() {
+                        widget.formState.setState(() {});
+                      });
                       Navigator.pop(context);
                     });
-
                   },
                 ),
               );
