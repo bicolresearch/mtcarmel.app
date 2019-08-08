@@ -7,9 +7,15 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mt_carmel_app/src/models/barangay_by_city.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
+import 'package:mt_carmel_app/src/models/city_by_province.dart';
+import 'package:mt_carmel_app/src/models/province_by_country.dart';
+import 'package:mt_carmel_app/src/repositories/address_repository.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_dropdown_form_common.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
+import 'dart:convert';
 
 enum FieldsToShow {
   Country,
@@ -29,9 +35,11 @@ class CountryAndRelatedFormFields extends StatefulWidget {
   @required
   final FieldsToShow fieldsToShow;
 
-  const CountryAndRelatedFormFields(
-      {Key key, this.churchFormField, this.fieldsToShow})
-      : super(key: key);
+  const CountryAndRelatedFormFields({
+    Key key,
+    this.churchFormField,
+    this.fieldsToShow,
+  }) : super(key: key);
 
   @override
   _CountryAndRelatedFormFieldsState createState() =>
@@ -40,23 +48,149 @@ class CountryAndRelatedFormFields extends StatefulWidget {
 
 class _CountryAndRelatedFormFieldsState
     extends State<CountryAndRelatedFormFields> {
-  List<String> labels = [];
 
-  List<String> currentFields = [];
+  bool _readOnly = false;
+  final GlobalKey<FormFieldState> _fieldKey = GlobalKey<FormFieldState>();
+  FormBuilderState _formState;
+  dynamic _initialValue;
 
   @override
   void initState() {
+//    _initialValue = widget.initialValue ??
+//        (_formState.initialValue.containsKey(widget.attribute)
+//            ? _formState.initialValue[widget.attribute]
+//            : null);
+
+//    _getCountries();
+//    _labels = _getLabels();
+    _initializeFormState();
     super.initState();
-    labels = _labels();
-    currentFields = labels.sublist(0, 0);
+  }
+
+  _initializeFormState(){
+    _labels = ["Country","Province",];
+    _formState = FormBuilder.of(context);
+    for(var label in _labels) {
+      final attribute = label.toLowerCase();
+      _formState?.registerFieldKey(attribute, _fieldKey);
+    }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Container();
+  void dispose() {
+    for(var label in _labels) {
+      final attribute = label.toLowerCase();
+      _formState?.unregisterFieldKey(attribute);
+    }
+    super.dispose();
   }
 
-  _labels() {
+
+  List<String> _labels = [];
+  List<String> _countries = ["Choose...", "Philippines", "Switzerland", "Japan", "Rusia"];
+
+  List<BarangayByCity> _barangays = [];
+  List<CityByProvince> _cities = [];
+
+  List<String> _provincesRepo = ["Pangasinan", "Baguio", "Palawan"];
+  List<String> _provincesRepo2 = ["Boracay", "La Union", "Batanes"];
+  List<String> _provincesRepo3 = ["Leyte", "Iloilo", "Cagayan"];
+  List<String> _provinces = [];
+  String _labelText = "Choose...";
+  String _provinceValue;
+  String _hintText = "Select...";
+
+  final _repository = AddressRepository();
+  String _selectedProvince = "Choose...";
+//  String _selectedCountry = "Choose...";
+
+  String _selectedCountry;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+          children: <Widget>[
+
+          FormField(
+          enabled: !_readOnly,
+          initialValue: _initialValue,
+          validator: (val) {
+
+            return null;
+          },
+          onSaved: (val) {
+            _formState?.setAttributeValue("country", val);
+          },
+          builder: (FormFieldState<dynamic> field) {
+            return InputDecorator(
+              decoration: InputDecoration(
+                errorText: field.errorText,
+                border: InputBorder.none,
+              ),
+              child: DropdownButton(
+                isExpanded: true,
+                items: _countries
+                  .map((country) => DropdownMenuItem(
+                  value: country,
+                  child: Text("$country")
+              )).toList(),
+                value: _selectedCountry,
+                isDense: true,
+                onChanged: (value) {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  field.didChange(value);
+                  _onCountrySelected(value);
+                },
+              ),
+            );
+          },
+        ),
+
+            // Province
+            FormField(
+
+              enabled: !_readOnly,
+              initialValue: _initialValue,
+              validator: (val) {
+
+                return null;
+              },
+              onSaved: (val) {
+                _formState?.setAttributeValue("province", val);
+              },
+              builder: (FormFieldState<dynamic> field) {
+                return InputDecorator(
+                  decoration: InputDecoration(
+                    errorText: field.errorText,
+                    border: InputBorder.none,
+                  ),
+                  child: DropdownButton(
+                    isExpanded: true,
+                    items: _provinces
+                        .map((country) => DropdownMenuItem(
+                        value: country,
+                        child: Text("$country")
+                    )).toList(),
+                    value: _selectedProvince,
+                    isDense: true,
+                    onChanged: (value) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      field.didChange(value);
+                      _onProvinceSelected(value);
+                    },
+                  ),
+                );
+              },
+            )
+
+          ],
+        ),
+    );
+  }
+
+  _getLabels() {
     switch (widget.fieldsToShow) {
       case FieldsToShow.Country:
         return ["Country"];
@@ -80,7 +214,7 @@ class _CountryAndRelatedFormFieldsState
           "City",
         ];
       case FieldsToShow.CountryProvince:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
         break;
       case FieldsToShow.CountryCity:
         return [
@@ -97,34 +231,37 @@ class _CountryAndRelatedFormFieldsState
     }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+
+  _onCitySelected(String cityCode) {}
+
+  _onBarangaySelected(String barangayCode) {}
+
+  _onCountrySelected(String countryCode) {
+    setState(() {
+      _selectedProvince = "Choose...";
+      _provinces = ["Choose..."];
+      _selectedCountry = countryCode;
+      if(countryCode == "Philippines")
+        _provinces = List.from(_provinces)..addAll(_provincesRepo);
+      else if(countryCode == "Japan")
+        _provinces = List.from(_provinces)..addAll(_provincesRepo2);
+      else if(countryCode == "Switzerland")
+        _provinces = List.from(_provinces)..addAll(_provincesRepo3);
+    });
+
+  }
+
+  _onProvinceSelected(String provinceCode) {
+    setState(() {
+      //TODO
+//      _selectedCity = "Choose ..";
+//      _cities = ["Choose .."];
+      _selectedProvince = provinceCode;
+
+    });
+  }
+
+  void _getCountries() {
+    _countries = _repository.getCountries();
   }
 }
-//
-//class RelatedFormFields extends ServiceDropdownFormCommon
-//    implements ServiceFormAbstract {
-//  final _list = ["Yes", "No"];
-//
-//  RelatedFormFields({churchFormField}) : super(churchFormField: churchFormField);
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Padding(
-//      padding: const EdgeInsets.all(8.0),
-//      child: Column(
-//        children: <Widget>[
-//          labelText(context, churchFormField.labelText),
-//          buildForm(context),
-//        ],
-//      ),
-//    );
-//  }
-//
-//  @override
-//  Widget buildForm(BuildContext context) {
-//    return super.bottomSheetForm(context, _list);
-//  }
-//
-//}

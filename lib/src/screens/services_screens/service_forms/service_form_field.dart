@@ -11,6 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/civil_status_form_field.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/country_and_related_form_fields.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/date_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_multiline_text_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_numeric_form_field.dart';
@@ -46,6 +47,11 @@ class ServiceFormField extends StatelessWidget {
       return TimeFormField(churchFormField: churchFormField);
     else if (churchFormField.textFieldType == "numeric")
       return ServiceNumericFormField(churchFormField: churchFormField);
+    else if (churchFormField.textFieldType == "country_province_city_barangay")
+      return CountryAndRelatedFormFields(
+        churchFormField: churchFormField,
+        fieldsToShow: FieldsToShow.CountryProvinceCityBarangay,
+      );
     else if (churchFormField.textFieldType == "plain_text")
       return ServicePlainTextField(churchFormField: churchFormField);
     else // type will be plain if no match found
