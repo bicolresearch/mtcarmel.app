@@ -2,12 +2,11 @@
 *  Filename    :   service_plain_text_field.dart
 *  Purpose     :	 Use for the plain text form field
 *  Created     :   2019-07-15 16:18 by Detective Conan
-*  Updated     :   2019-07-22 10:09 by Detective conan
-*  Changes     :   Fixed the validator for numeric.
+*  Updated     :   2019-08-09 09:33 by Detective conan
+*  Changes     :   Fixed the maxLines handling
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_common.dart';
@@ -32,13 +31,14 @@ class ServicePlainTextField extends ServiceFormCommon
           FormBuilderTextField(
             attribute: churchFormField.attribute,
             decoration: InputDecoration(
-                helperStyle: Theme.of(context).primaryTextTheme.subtitle),
+              helperStyle: Theme.of(context).primaryTextTheme.subtitle,
+            ),
             keyboardType: TextInputType.multiline,
             validators: _validators(),
             style: Theme.of(context).primaryTextTheme.title,
             textAlign: TextAlign.center,
             cursorColor: Colors.brown,
-            maxLines: churchFormField.maxLines??1,
+            maxLines: int.tryParse(churchFormField.maxLines??"1"),
           ),
         ],
       ),
@@ -53,31 +53,26 @@ class ServicePlainTextField extends ServiceFormCommon
     if (churchFormField.validators.isRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (churchFormField.validators.isNumeric != null
-        &&
-        churchFormField.validators.isNumeric == "true"
-    )
+    if (churchFormField.validators.isNumeric != null &&
+        churchFormField.validators.isNumeric == "true")
       validators.add(FormBuilderValidators.numeric());
-    if (churchFormField.validators.minValue != null
-    )
+    if (churchFormField.validators.minValue != null)
       try {
         validators.add(FormBuilderValidators.min(
             int.tryParse(churchFormField.validators.minValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (churchFormField.validators.maxValue != null
-    )
+    if (churchFormField.validators.maxValue != null)
       try {
         validators.add(FormBuilderValidators.max(
             int.tryParse(churchFormField.validators.maxValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (churchFormField.errorText != null
-    )
-      validators.add(FormBuilderValidators.required(
-          errorText: churchFormField.errorText));
+    if (churchFormField.errorText != null)
+      validators.add(
+          FormBuilderValidators.required(errorText: churchFormField.errorText));
 
     return validators;
   }

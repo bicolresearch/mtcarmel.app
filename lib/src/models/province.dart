@@ -1,5 +1,5 @@
 /*
-*  Filename    :   province_by_country.dart
+*  Filename    :   province.dart
 *  Purpose     :	
 *  Created     :   2019-08-07 09:49 by Detective Conan
 *  Updated     :   2019-08-07 09:49 by Detective Conan 
@@ -8,18 +8,17 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'province_by_country.g.dart';
+part 'province.g.dart';
 
 @JsonSerializable()
-class ProvinceByCountry {
-  ProvinceByCountry(this.id, this.csgpCode, this.description, this.regionCode,
+class Province {
+  Province(this.id, this.psgcCode, this.name, this.regionCode,
       this.provinceCode, this.cityCode, this.countryCode);
 
   final String id;
-  @JsonKey(name: "csgp_code")
-  final String csgpCode;
-  @JsonKey(name: "description")
-  final String description;
+  @JsonKey(name: "psgc_code")
+  final String psgcCode;
+  final String name;
   @JsonKey(name: "region_code")
   final String regionCode;
   @JsonKey(name: "province_code")
@@ -29,8 +28,8 @@ class ProvinceByCountry {
   @JsonKey(name: "country_code")
   final String countryCode;
 
-  factory ProvinceByCountry.fromJson(Map<String, dynamic> json) =>
-      _$ProvinceByCountryFromJson(json);
+  factory Province.fromJson(Map<String, dynamic> json) =>
+      _$ProvinceFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ProvinceByCountryToJson(this);
+  Map<String, dynamic> toJson() => _$ProvinceToJson(this);
 }

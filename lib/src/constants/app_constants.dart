@@ -69,18 +69,8 @@ class AppConstants {
   static const String sample_message =
       "lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
 
-  static const String confraternity_message =
-      "Be an active part of the mission and service of the Carmelite Church";
-  static const String make_request_message =
-      "Be closer to God with the help of the church through prayers, holy masses and liturgy";
-  static const String baptism_message =
-      "Be part of the christian community and follow the word of the Lord";
-  static const String communion_message =
-      "Be part of the christian community and follow the word of the Lord";
-  static const String passing_message =
-      "Provide christian services and a peaceful resting place for our late loved ones";
-  static const String event_message =
-      "Celebrate marriage or events in the delightful premises of the church";
+
+
 
   // services
   static const String JOIN_US = 'Join us';

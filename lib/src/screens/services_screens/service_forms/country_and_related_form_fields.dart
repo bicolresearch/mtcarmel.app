@@ -8,11 +8,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:mt_carmel_app/src/models/barangay_by_city.dart';
+import 'package:mt_carmel_app/src/core/services/repositories/address_repository.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/models/barangay.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
-import 'package:mt_carmel_app/src/models/city_by_province.dart';
-import 'package:mt_carmel_app/src/models/province_by_country.dart';
-import 'package:mt_carmel_app/src/repositories/address_repository.dart';
+import 'package:mt_carmel_app/src/models/city.dart';
+import 'package:mt_carmel_app/src/models/country.dart';
+import 'package:mt_carmel_app/src/models/province.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_dropdown_form_common.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
 import 'dart:convert';
@@ -61,6 +63,8 @@ class CountryAndRelatedFormFields extends StatefulWidget {
 
 class _CountryAndRelatedFormFieldsState
     extends State<CountryAndRelatedFormFields> {
+  final _repository = locator<AddressRepository>();
+
   bool _readOnly = false;
   final GlobalKey<FormFieldState> _fieldKeyCountry =
       GlobalKey<FormFieldState>();
@@ -74,12 +78,7 @@ class _CountryAndRelatedFormFieldsState
   dynamic _initialValue;
 
   Map<String, GlobalKey<FormFieldState>> _labelAndKeyMap = {};
-  List<String> _countries = [
-    "Choose...",
-    "Philippines",
-    "Japan",
-    "Switzerland"
-  ];
+  List<Country> _countries;
 
   List<String> _provincesRepo = [
     "Boracay",
@@ -94,17 +93,17 @@ class _CountryAndRelatedFormFieldsState
 
   List<String> _provinces = [];
 
-  final _repository = AddressRepository();
   String _selectedProvince = "Choose...";
   String _selectedRegion = "Choose...";
-  String _selectedCity= "Choose...";
+  String _selectedCity = "Choose...";
   String _selectedBarangay = "Choose...";
 
   String _selectedCountry;
 
   @override
   void initState() {
-    _initializeFormState();
+    _initialize();
+
     super.initState();
   }
 
@@ -131,8 +130,6 @@ class _CountryAndRelatedFormFieldsState
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -140,282 +137,284 @@ class _CountryAndRelatedFormFieldsState
       child: Column(
         children: <Widget>[
           !_labelAndKeyMap.containsKey("Country")
-              ?Container()
-          :Text(
-        "Country",
-        style: Theme.of(context)
-            .primaryTextTheme
-            .subhead
-            .copyWith(fontWeight: FontWeight.bold),
-        textAlign: TextAlign.center,
-      ),
+              ? Container()
+              : Text(
+                  "Country",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead
+                      .copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
           !_labelAndKeyMap.containsKey("Country")
-              ?Container()
-              :FormField(
-            key: _fieldKeyCountry,
-            enabled: !_readOnly,
-            initialValue: _initialValue,
-            validator: (val) {
-              return null;
-            },
-            onSaved: (val) {
-              _formState?.setAttributeValue("country", val);
-            },
-            builder: (FormFieldState<dynamic> field) {
-              return InputDecorator(
-                  decoration: InputDecoration(
-                    errorText: field.errorText,
-                    border: InputBorder.none,
-                  ),
-                  child: ListTile(
-                    title: Padding(
-                      padding: const EdgeInsets.only(left: 40.0),
-                      child: Text(
-                        _selectedCountry??"Choose...",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).primaryTextTheme.subhead,
+              ? Container()
+              : FormField(
+                  key: _fieldKeyCountry,
+                  enabled: !_readOnly,
+                  initialValue: _initialValue,
+                  validator: (val) {
+                    return null;
+                  },
+                  onSaved: (val) {
+                    final Country country = val;
+                    _formState?.setAttributeValue(
+                        "country", country.countryCode);
+                  },
+                  builder: (FormFieldState<dynamic> field) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        errorText: field.errorText,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(0),
                       ),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_drop_down,
-                      size: 20.0,
-                    ),
-                    subtitle: Divider(),
-                    onTap: () {
-                      if(_countries.length <= 1)
-                        return;
+                      child: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                            _selectedCountry ?? "Choose...",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).primaryTextTheme.subhead,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          size: 20.0,
+                        ),
+                        subtitle: Divider(),
+                        onTap: () {
+                          if (_countries.length <= 1) return;
 
-                      _showModalBottomSheet(context, _countries, field,
-                          FieldSelect.CountryField);
-                    },
-                  ),
-                  );
-            },
-          ),
+                          _showModalBottomSheet(context, _countries, field,
+                              FieldSelect.CountryField);
+                        },
+                      ),
+                    );
+                  },
+                ),
 
           // Province
           !_labelAndKeyMap.containsKey("Province")
-              ?Container()
-              :Text(
-            "Province",
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subhead
-                .copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          !_labelAndKeyMap.containsKey("Province")
-              ?Container()
-              :FormField(
-            key: _fieldKeyProvince,
-            enabled: !_readOnly,
-            initialValue: _initialValue,
-            validator: (val) {
-              return null;
-            },
-            onSaved: (val) {
-              _formState?.setAttributeValue("province", val);
-            },
-            builder: (FormFieldState<dynamic> field) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  errorText: field.errorText,
-                  border: InputBorder.none,
+              ? Container()
+              : Text(
+                  "Province",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead
+                      .copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-                child: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 40.0),
-                    child: Text(
-                      _selectedProvince??"Choose...",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.subhead,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_drop_down,
-                    size: 20.0,
-                  ),
-                  subtitle: Divider(),
-                  onTap: () {
+          !_labelAndKeyMap.containsKey("Province")
+              ? Container()
+              : FormField(
+                  key: _fieldKeyProvince,
+                  enabled: !_readOnly,
+                  initialValue: _initialValue,
+                  validator: (val) {
+                    return null;
+                  },
+                  onSaved: (val) {
+                    _formState?.setAttributeValue("province", val);
+                  },
+                  builder: (FormFieldState<dynamic> field) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        errorText: field.errorText,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(0),
+                      ),
+                      child: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                            _selectedProvince ?? "Choose...",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).primaryTextTheme.subhead,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          size: 20.0,
+                        ),
+                        subtitle: Divider(),
+                        onTap: () {
+                          if (_selectedProvince == null ||
+                              _provinces.length <= 1) return;
 
-                    if(_selectedProvince == null || _provinces.length <= 1)
-                      return;
-
-                    _showModalBottomSheet(
-                        context, _provinces, field, FieldSelect.ProvinceField);
+                          _showModalBottomSheet(context, _provinces, field,
+                              FieldSelect.ProvinceField);
+                        },
+                      ),
+                    );
                   },
                 ),
-              );
-            },
-          ),
 
           // Region
           !_labelAndKeyMap.containsKey("Region")
-              ?Container()
-              :Text(
-            "Region",
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subhead
-                .copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          !_labelAndKeyMap.containsKey("Region")
-              ?Container()
-              :FormField(
-            key: _fieldKeyRegion,
-            enabled: !_readOnly,
-            initialValue: _initialValue,
-            validator: (val) {
-              return null;
-            },
-            onSaved: (val) {
-              _formState?.setAttributeValue("region", val);
-            },
-            builder: (FormFieldState<dynamic> field) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  errorText: field.errorText,
-                  border: InputBorder.none,
+              ? Container()
+              : Text(
+                  "Region",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead
+                      .copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-                child: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 40.0),
-                    child: Text(
-                      _selectedRegion??"Choose...",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.subhead,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_drop_down,
-                    size: 20.0,
-                  ),
-                  subtitle: Divider(),
-                  onTap: () {
+          !_labelAndKeyMap.containsKey("Region")
+              ? Container()
+              : FormField(
+                  key: _fieldKeyRegion,
+                  enabled: !_readOnly,
+                  initialValue: _initialValue,
+                  validator: (val) {
+                    return null;
+                  },
+                  onSaved: (val) {
+                    _formState?.setAttributeValue("region", val);
+                  },
+                  builder: (FormFieldState<dynamic> field) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        errorText: field.errorText,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(0),
+                      ),
+                      child: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                            _selectedRegion ?? "Choose...",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).primaryTextTheme.subhead,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          size: 20.0,
+                        ),
+                        subtitle: Divider(),
+                        onTap: () {
+                          if (_selectedRegion == null || _provinces.length <= 1)
+                            return;
 
-                    if(_selectedRegion == null || _provinces.length <= 1)
-                      return;
-
-                    _showModalBottomSheet(
-                        context, _regions, field, FieldSelect.RegionField);
+                          _showModalBottomSheet(context, _regions, field,
+                              FieldSelect.RegionField);
+                        },
+                      ),
+                    );
                   },
                 ),
-              );
-            },
-          ),
 
           // City
           !_labelAndKeyMap.containsKey("City")
-              ?Container()
-              :Text(
-            "City",
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subhead
-                .copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          !_labelAndKeyMap.containsKey("City")
-              ?Container()
-              :FormField(
-            key: _fieldKeyCity,
-            enabled: !_readOnly,
-            initialValue: _initialValue,
-            validator: (val) {
-              return null;
-            },
-            onSaved: (val) {
-              _formState?.setAttributeValue("city", val);
-            },
-            builder: (FormFieldState<dynamic> field) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  errorText: field.errorText,
-                  border: InputBorder.none,
+              ? Container()
+              : Text(
+                  "City",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead
+                      .copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-                child: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 40.0),
-                    child: Text(
-                      _selectedCity??"Choose...",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.subhead,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_drop_down,
-                    size: 20.0,
-                  ),
-                  subtitle: Divider(),
-                  onTap: () {
+          !_labelAndKeyMap.containsKey("City")
+              ? Container()
+              : FormField(
+                  key: _fieldKeyCity,
+                  enabled: !_readOnly,
+                  initialValue: _initialValue,
+                  validator: (val) {
+                    return null;
+                  },
+                  onSaved: (val) {
+                    _formState?.setAttributeValue("city", val);
+                  },
+                  builder: (FormFieldState<dynamic> field) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        errorText: field.errorText,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(0),
+                      ),
+                      child: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                            _selectedCity ?? "Choose...",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).primaryTextTheme.subhead,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          size: 20.0,
+                        ),
+                        subtitle: Divider(),
+                        onTap: () {
+                          if (_selectedCity == null || _cities.length <= 1)
+                            return;
 
-                    if(_selectedCity == null || _cities.length <= 1)
-                      return;
-
-                    _showModalBottomSheet(
-                        context, _cities, field, FieldSelect.CityField);
+                          _showModalBottomSheet(
+                              context, _cities, field, FieldSelect.CityField);
+                        },
+                      ),
+                    );
                   },
                 ),
-              );
-            },
-          ),
 
           // Barangay
           !_labelAndKeyMap.containsKey("Barangay")
-              ?Container()
-              :Text(
-            "Barangay",
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subhead
-                .copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          !_labelAndKeyMap.containsKey("Barangay")
-              ?Container()
-              :FormField(
-            key: _fieldKeyBarangay,
-            enabled: !_readOnly,
-            initialValue: _initialValue,
-            validator: (val) {
-              return null;
-            },
-            onSaved: (val) {
-              _formState?.setAttributeValue("barangay", val);
-            },
-            builder: (FormFieldState<dynamic> field) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  errorText: field.errorText,
-                  border: InputBorder.none,
+              ? Container()
+              : Text(
+                  "Barangay",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead
+                      .copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-                child: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 40.0),
-                    child: Text(
-                      _selectedBarangay??"Choose...",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.subhead,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_drop_down,
-                    size: 20.0,
-                  ),
-                  subtitle: Divider(),
-                  onTap: () {
+          !_labelAndKeyMap.containsKey("Barangay")
+              ? Container()
+              : FormField(
+                  key: _fieldKeyBarangay,
+                  enabled: !_readOnly,
+                  initialValue: _initialValue,
+                  validator: (val) {
+                    return null;
+                  },
+                  onSaved: (val) {
+                    _formState?.setAttributeValue("barangay", val);
+                  },
+                  builder: (FormFieldState<dynamic> field) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        errorText: field.errorText,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(0),
+                      ),
+                      child: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: Text(
+                            _selectedBarangay ?? "Choose...",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).primaryTextTheme.subhead,
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_drop_down,
+                          size: 20.0,
+                        ),
+                        subtitle: Divider(),
+                        onTap: () {
+                          if (_selectedBarangay == null ||
+                              _barangays.length <= 1) return;
 
-                    if(_selectedBarangay == null || _barangays.length <= 1)
-                      return;
-
-                    _showModalBottomSheet(
-                        context, _barangays, field, FieldSelect.BarangayField);
+                          _showModalBottomSheet(context, _barangays, field,
+                              FieldSelect.BarangayField);
+                        },
+                      ),
+                    );
                   },
                 ),
-              );
-            },
-          ),
         ],
       ),
     );
@@ -489,36 +488,82 @@ class _CountryAndRelatedFormFieldsState
     return fields;
   }
 
-  _onCitySelected(String cityCode) {}
-
-  _onBarangaySelected(String barangayCode) {}
-
-  _onCountrySelected(String countryCode) {
-    setState(() {
-      _selectedProvince = "Choose...";
-      _provinces = ["Choose..."];
-      _selectedCountry = countryCode;
-      _fieldKeyProvince.currentState.didChange(null);
-      if (countryCode == "Philippines")
-        _provinces = List.from(_provinces)..addAll(_provincesRepo);
-      else if (countryCode == "Japan")
-        _provinces = List.from(_provinces)..addAll(_provincesRepo2);
-      else if (countryCode == "Switzerland")
-        _provinces = List.from(_provinces)..addAll(_provincesRepo3);
-    });
+  _onRegionSelected(String regionCode) {
+    print("region selected");
   }
 
-  _onProvinceSelected(String provinceCode) {
-    setState(() {
-      //TODO
-//      _selectedCity = "Choose ..";
-//      _cities = ["Choose .."];
-      _selectedProvince = provinceCode;
-    });
+  _onCitySelected(String cityCode) {
+    print("city selected");
   }
 
-  void _getCountries() {
-    _countries = _repository.getCountries();
+  _onBarangaySelected(String barangayCode) {
+    print("barangay selected");
+  }
+
+  _onCountrySelected(Country country) {
+    setState(
+      () {
+        _selectedCountry = country.name;
+
+        // region
+        if(_fieldKeyRegion.currentState != null) {
+          _selectedRegion = "Choose...";
+          _regions = ["Choose..."];
+          _fieldKeyRegion.currentState?.didChange(null);
+        }
+        //province
+        if(_fieldKeyProvince.currentState != null) {
+          _selectedProvince = "Choose...";
+          _provinces = ["Choose..."];
+          _fieldKeyProvince.currentState?.didChange(null);
+        }
+        // city
+        if(_fieldKeyCity.currentState != null) {
+          _selectedCity = "Choose...";
+          _cities = ["Choose..."];
+          _fieldKeyCity.currentState?.didChange(null);
+        }
+        // barangay
+        if(_fieldKeyBarangay.currentState != null) {
+          _selectedBarangay = "Choose...";
+          _barangays = ["Choose..."];
+          _fieldKeyBarangay.currentState?.didChange(null);
+        }
+      },
+    );
+  }
+
+  _onProvinceSelected(Province provinceByCountry) {
+    setState(
+          () {
+        _selectedCountry = provinceByCountry.name;
+
+        // region
+        if(_fieldKeyRegion.currentState != null) {
+          _selectedRegion = "Choose...";
+          _regions = ["Choose..."];
+          _fieldKeyRegion.currentState?.didChange(null);
+        }
+        //province
+        if(_fieldKeyProvince.currentState != null) {
+          _selectedProvince = "Choose...";
+          _provinces = ["Choose..."];
+          _fieldKeyProvince.currentState?.didChange(null);
+        }
+        // city
+        if(_fieldKeyCity.currentState != null) {
+          _selectedCity = "Choose...";
+          _cities = ["Choose..."];
+          _fieldKeyCity.currentState?.didChange(null);
+        }
+        // barangay
+        if(_fieldKeyBarangay.currentState != null) {
+          _selectedBarangay = "Choose...";
+          _barangays = ["Choose..."];
+          _fieldKeyBarangay.currentState?.didChange(null);
+        }
+      },
+    );
   }
 
   void _showModalBottomSheet(
@@ -541,9 +586,10 @@ class _CountryAndRelatedFormFieldsState
           child: ListView.builder(
             itemCount: selection.length,
             itemBuilder: (context, index) {
+              final name = selection[index].name;
               return ListTile(
                 title: Text(
-                  selection[index],
+                  name,
                   style: Theme.of(context).primaryTextTheme.subtitle,
                   textAlign: TextAlign.center,
                 ),
@@ -558,13 +604,13 @@ class _CountryAndRelatedFormFieldsState
                       _onProvinceSelected(selection[index]);
                       break;
                     case FieldSelect.CityField:
-                      // TODO: Handle this case.
+                      _onCitySelected(selection[index]);
                       break;
                     case FieldSelect.BarangayField:
-                      // TODO: Handle this case.
+                      _onBarangaySelected(selection[index]);
                       break;
                     case FieldSelect.RegionField:
-                      // TODO: Handle this case.
+                      _onRegionSelected(selection[index]);
                       break;
                   }
                   Navigator.pop(
@@ -575,6 +621,19 @@ class _CountryAndRelatedFormFieldsState
             },
           ),
         );
+      },
+    );
+  }
+
+  void _initialize() {
+    _initializeCountryList();
+    _initializeFormState();
+  }
+
+  Future _initializeCountryList() async {
+    _countries = await _repository.getCountries().catchError(
+      (e) {
+        print(e);
       },
     );
   }

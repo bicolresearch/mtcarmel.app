@@ -1,16 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'barangay_by_city.dart';
+part of 'city.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-BarangayByCity _$BarangayByCityFromJson(Map<String, dynamic> json) {
-  return BarangayByCity(
+City _$CityFromJson(Map<String, dynamic> json) {
+  return City(
     json['id'] as String,
-    json['brgy_code'] as String,
-    json['description'] as String,
+    json['psgc_code'] as String,
+    json['name'] as String,
     json['region_code'] as String,
     json['province_code'] as String,
     json['city_code'] as String,
@@ -18,11 +18,10 @@ BarangayByCity _$BarangayByCityFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BarangayByCityToJson(BarangayByCity instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CityToJson(City instance) => <String, dynamic>{
       'id': instance.id,
-      'brgy_code': instance.brgyCode,
-      'description': instance.description,
+      'psgc_code': instance.psgcCode,
+      'name': instance.name,
       'region_code': instance.regionCode,
       'province_code': instance.provinceCode,
       'city_code': instance.cityCode,

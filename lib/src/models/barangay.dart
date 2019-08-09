@@ -1,5 +1,5 @@
 /*
-*  Filename    :   barangay_by_city.dart
+*  Filename    :   barangay.dart
 *  Purpose     :	
 *  Created     :   2019-08-07 09:00 by Detective Conan
 *  Updated     :   2019-08-07 09:00 by Detective Conan 
@@ -8,18 +8,17 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'barangay_by_city.g.dart';
+part 'barangay.g.dart';
 
 @JsonSerializable()
-class BarangayByCity {
-  BarangayByCity(this.id, this.brgyCode, this.description, this.regionCode,
+class Barangay {
+  Barangay(this.id, this.brgyCode, this.name, this.regionCode,
       this.provinceCode, this.cityCode, this.countryCode);
 
   final String id;
   @JsonKey(name: "brgy_code")
   final String brgyCode;
-  @JsonKey(name: "description")
-  final String description;
+  final String name;
   @JsonKey(name: "region_code")
   final String regionCode;
   @JsonKey(name: "province_code")
@@ -29,8 +28,8 @@ class BarangayByCity {
   @JsonKey(name: "country_code")
   final String countryCode;
 
-  factory BarangayByCity.fromJson(Map<String, dynamic> json) =>
-      _$BarangayByCityFromJson(json);
+  factory Barangay.fromJson(Map<String, dynamic> json) =>
+      _$BarangayFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BarangayByCityToJson(this);
+  Map<String, dynamic> toJson() => _$BarangayToJson(this);
 }
