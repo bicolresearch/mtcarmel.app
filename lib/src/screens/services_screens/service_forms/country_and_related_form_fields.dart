@@ -2,8 +2,8 @@
 *  Filename    :   country_and_related_form_fields.dart
 *  Purpose     :	
 *  Created     :   2019-08-06 14:34 by Detective Conan
-*  Updated     :   2019-08-06 14:34 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-08-09 16:07 by Detective conan
+*  Changes     :   Implemented countries, provinces, cities and barangays bottom sheet
 */
 
 import 'package:flutter/material.dart';
@@ -15,9 +15,6 @@ import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/city.dart';
 import 'package:mt_carmel_app/src/models/country.dart';
 import 'package:mt_carmel_app/src/models/province.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_dropdown_form_common.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_abstract.dart';
-import 'dart:convert';
 
 enum FieldsToShow {
   Country,
@@ -80,18 +77,13 @@ class _CountryAndRelatedFormFieldsState
   Map<String, GlobalKey<FormFieldState>> _labelAndKeyMap = {};
   List<Country> _countries;
 
-  List<String> _provincesRepo = [
-    "Boracay",
-    "Palawan",
-  ];
-  List<String> _provincesRepo2 = ["Zurich", "Basil"];
-  List<String> _provincesRepo3 = ["Okinawa", "Fuji"];
-  List<String> _regions = [];
+  //TODO add region
+  //List<Region> _regions = [];
 
-  List<String> _barangays = [];
-  List<String> _cities = [];
+  List<Barangay> _barangays = [];
+  List<City> _cities = [];
 
-  List<String> _provinces = [];
+  List<Province> _provinces = [];
 
   String _selectedProvince = "Choose...";
   String _selectedRegion = "Choose...";
@@ -114,7 +106,8 @@ class _CountryAndRelatedFormFieldsState
     _formState = FormBuilder.of(context);
 
     for (String key in keys) {
-      _formState?.registerFieldKey(key.toLowerCase(), _labelAndKeyMap[key]);
+      _formState?.registerFieldKey(
+          "${key.toLowerCase()}_code", _labelAndKeyMap[key]);
     }
   }
 
@@ -124,7 +117,7 @@ class _CountryAndRelatedFormFieldsState
 
     for (String key in keys) {
       _formState?.unregisterFieldKey(
-        key.toLowerCase(),
+        "${key.toLowerCase()}_code",
       );
     }
     super.dispose();
@@ -158,7 +151,7 @@ class _CountryAndRelatedFormFieldsState
                   onSaved: (val) {
                     final Country country = val;
                     _formState?.setAttributeValue(
-                        "country", country.countryCode);
+                        "country_code", country.countryCode);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -213,7 +206,10 @@ class _CountryAndRelatedFormFieldsState
                     return null;
                   },
                   onSaved: (val) {
-                    _formState?.setAttributeValue("province", val);
+                    if (val == null) return;
+                    final Province province = val;
+                    _formState?.setAttributeValue(
+                        "province_code", province.provinceCode);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -238,6 +234,7 @@ class _CountryAndRelatedFormFieldsState
                         subtitle: Divider(),
                         onTap: () {
                           if (_selectedProvince == null ||
+                              _provinces == null ||
                               _provinces.length <= 1) return;
 
                           _showModalBottomSheet(context, _provinces, field,
@@ -248,61 +245,62 @@ class _CountryAndRelatedFormFieldsState
                   },
                 ),
 
+          //TODO add Region
           // Region
-          !_labelAndKeyMap.containsKey("Region")
-              ? Container()
-              : Text(
-                  "Region",
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subhead
-                      .copyWith(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-          !_labelAndKeyMap.containsKey("Region")
-              ? Container()
-              : FormField(
-                  key: _fieldKeyRegion,
-                  enabled: !_readOnly,
-                  initialValue: _initialValue,
-                  validator: (val) {
-                    return null;
-                  },
-                  onSaved: (val) {
-                    _formState?.setAttributeValue("region", val);
-                  },
-                  builder: (FormFieldState<dynamic> field) {
-                    return InputDecorator(
-                      decoration: InputDecoration(
-                        errorText: field.errorText,
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(0),
-                      ),
-                      child: ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(left: 40.0),
-                          child: Text(
-                            _selectedRegion ?? "Choose...",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).primaryTextTheme.subhead,
-                          ),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_drop_down,
-                          size: 20.0,
-                        ),
-                        subtitle: Divider(),
-                        onTap: () {
-                          if (_selectedRegion == null || _provinces.length <= 1)
-                            return;
-
-                          _showModalBottomSheet(context, _regions, field,
-                              FieldSelect.RegionField);
-                        },
-                      ),
-                    );
-                  },
-                ),
+//          !_labelAndKeyMap.containsKey("Region")
+//              ? Container()
+//              : Text(
+//                  "Region",
+//                  style: Theme.of(context)
+//                      .primaryTextTheme
+//                      .subhead
+//                      .copyWith(fontWeight: FontWeight.bold),
+//                  textAlign: TextAlign.center,
+//                ),
+//          !_labelAndKeyMap.containsKey("Region")
+//              ? Container()
+//              : FormField(
+//                  key: _fieldKeyRegion,
+//                  enabled: !_readOnly,
+//                  initialValue: _initialValue,
+//                  validator: (val) {
+//                    return null;
+//                  },
+//                  onSaved: (val) {
+//                    _formState?.setAttributeValue("region", val);
+//                  },
+//                  builder: (FormFieldState<dynamic> field) {
+//                    return InputDecorator(
+//                      decoration: InputDecoration(
+//                        errorText: field.errorText,
+//                        border: InputBorder.none,
+//                        contentPadding: EdgeInsets.all(0),
+//                      ),
+//                      child: ListTile(
+//                        title: Padding(
+//                          padding: const EdgeInsets.only(left: 40.0),
+//                          child: Text(
+//                            _selectedRegion ?? "Choose...",
+//                            textAlign: TextAlign.center,
+//                            style: Theme.of(context).primaryTextTheme.subhead,
+//                          ),
+//                        ),
+//                        trailing: Icon(
+//                          Icons.arrow_drop_down,
+//                          size: 20.0,
+//                        ),
+//                        subtitle: Divider(),
+//                        onTap: () {
+//                          if (_selectedRegion == null || _provinces.length <= 1)
+//                            return;
+//
+//                          _showModalBottomSheet(context, _regions, field,
+//                              FieldSelect.RegionField);
+//                        },
+//                      ),
+//                    );
+//                  },
+//                ),
 
           // City
           !_labelAndKeyMap.containsKey("City")
@@ -325,7 +323,9 @@ class _CountryAndRelatedFormFieldsState
                     return null;
                   },
                   onSaved: (val) {
-                    _formState?.setAttributeValue("city", val);
+                    if (val == null) return;
+                    final City city = val;
+                    _formState?.setAttributeValue("city_code", city.cityCode);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -349,8 +349,9 @@ class _CountryAndRelatedFormFieldsState
                         ),
                         subtitle: Divider(),
                         onTap: () {
-                          if (_selectedCity == null || _cities.length <= 1)
-                            return;
+                          if (_selectedCity == null ||
+                              _cities == null ||
+                              _cities.length <= 1) return;
 
                           _showModalBottomSheet(
                               context, _cities, field, FieldSelect.CityField);
@@ -381,7 +382,11 @@ class _CountryAndRelatedFormFieldsState
                     return null;
                   },
                   onSaved: (val) {
-                    _formState?.setAttributeValue("barangay", val);
+                    if (val == null) return;
+
+                    final Barangay barangay = val;
+                    _formState?.setAttributeValue(
+                        "barangay", barangay.brgyCode);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -406,6 +411,7 @@ class _CountryAndRelatedFormFieldsState
                         subtitle: Divider(),
                         onTap: () {
                           if (_selectedBarangay == null ||
+                              _barangays == null ||
                               _barangays.length <= 1) return;
 
                           _showModalBottomSheet(context, _barangays, field,
@@ -428,7 +434,8 @@ class _CountryAndRelatedFormFieldsState
         fields["Country"] = _fieldKeyCountry;
         break;
       case FieldsToShow.Region:
-        fields["Region"] = _fieldKeyRegion;
+        // TODO add region
+        //fields["Region"] = _fieldKeyRegion;
         break;
       case FieldsToShow.Province:
         fields["Province"] = _fieldKeyProvince;
@@ -464,105 +471,150 @@ class _CountryAndRelatedFormFieldsState
         break;
       case FieldsToShow.CountryRegionProvinceCityBarangay:
         fields["Country"] = _fieldKeyCountry;
-        fields["Region"] = _fieldKeyRegion;
+        // TODO add region
+        //fields["Region"] = _fieldKeyRegion;
         fields["Province"] = _fieldKeyProvince;
         fields["City"] = _fieldKeyCity;
         fields["Barangay"] = _fieldKeyBarangay;
         break;
       case FieldsToShow.CountryRegionProvinceCity:
         fields["Country"] = _fieldKeyCountry;
-        fields["Region"] = _fieldKeyRegion;
+        // TODO add region
+        //fields["Region"] = _fieldKeyRegion;
         fields["Province"] = _fieldKeyProvince;
         fields["City"] = _fieldKeyCity;
         break;
       case FieldsToShow.CountryRegionProvince:
         fields["Country"] = _fieldKeyCountry;
-        fields["Region"] = _fieldKeyRegion;
+        // TODO add Region
+        //fields["Region"] = _fieldKeyRegion;
         fields["Province"] = _fieldKeyProvince;
         break;
       case FieldsToShow.CountryRegion:
         fields["Country"] = _fieldKeyCountry;
-        fields["Region"] = _fieldKeyRegion;
+        // TODO add region
+        //fields["Region"] = _fieldKeyRegion;
         break;
     }
     return fields;
   }
 
-  _onRegionSelected(String regionCode) {
-    print("region selected");
+  // TODO Add Region
+//  _onRegionSelected(Region region) {
+//    setState(
+//          () {
+//        _selectedCRegion = region.name;
+//
+//        //province
+//        if(_fieldKeyProvince.currentState != null) {
+//          _selectedProvince = "Choose...";
+//          _provinces = ["Choose..."];
+//          _fieldKeyProvince.currentState?.didChange(null);
+//        }
+//        // city
+//        if(_fieldKeyCity.currentState != null) {
+//          _selectedCity = "Choose...";
+//          _cities = ["Choose..."];
+//          _fieldKeyCity.currentState?.didChange(null);
+//        }
+//        // barangay
+//        if(_fieldKeyBarangay.currentState != null) {
+//          _selectedBarangay = "Choose...";
+//          _barangays = ["Choose..."];
+//          _fieldKeyBarangay.currentState?.didChange(null);
+//        }
+//      },
+//    );
+//  }
+
+  _onCitySelected(City city) async {
+    _selectedCity = city.name;
+
+    // barangay
+    if (_fieldKeyBarangay.currentState != null) {
+      _selectedBarangay = "Choose...";
+      _barangays =
+          await _repository.getBarangayByCityCode(city.cityCode).catchError(
+        (e) {
+          print(e);
+          _barangays = [];
+        },
+      );
+      _fieldKeyBarangay.currentState?.didChange(null);
+    }
+    setState(() {});
   }
 
-  _onCitySelected(String cityCode) {
-    print("city selected");
+  _onBarangaySelected(Barangay barangay) {
+    _selectedBarangay = barangay.name;
   }
 
-  _onBarangaySelected(String barangayCode) {
-    print("barangay selected");
-  }
+  _onCountrySelected(Country country) async {
+    _selectedCountry = country.name;
 
-  _onCountrySelected(Country country) {
+    //TODO add region
+    // region
+//        if(_fieldKeyRegion.currentState != null) {
+//          _selectedRegion = "Choose...";
+//          _regions = [];
+//          _fieldKeyRegion.currentState?.didChange(null);
+//        }
+    //province
+    if (_fieldKeyProvince.currentState != null) {
+      _selectedProvince = "Choose...";
+      _provinces = [];
+      _provinces = await _repository
+          .getProvinceByCountryCode(country.countryCode)
+          .catchError(
+        (e) {
+          print(e);
+          _provinces = [];
+        },
+      );
+      _fieldKeyProvince.currentState?.didChange(null);
+    }
+    // city
+    if (_fieldKeyCity.currentState != null) {
+      _selectedCity = "Choose...";
+      _cities = [];
+      _fieldKeyCity.currentState?.didChange(null);
+    }
+    // barangay
+    if (_fieldKeyBarangay.currentState != null) {
+      _selectedBarangay = "Choose...";
+      _barangays = [];
+      _fieldKeyBarangay.currentState?.didChange(null);
+    }
     setState(
-      () {
-        _selectedCountry = country.name;
-
-        // region
-        if(_fieldKeyRegion.currentState != null) {
-          _selectedRegion = "Choose...";
-          _regions = ["Choose..."];
-          _fieldKeyRegion.currentState?.didChange(null);
-        }
-        //province
-        if(_fieldKeyProvince.currentState != null) {
-          _selectedProvince = "Choose...";
-          _provinces = ["Choose..."];
-          _fieldKeyProvince.currentState?.didChange(null);
-        }
-        // city
-        if(_fieldKeyCity.currentState != null) {
-          _selectedCity = "Choose...";
-          _cities = ["Choose..."];
-          _fieldKeyCity.currentState?.didChange(null);
-        }
-        // barangay
-        if(_fieldKeyBarangay.currentState != null) {
-          _selectedBarangay = "Choose...";
-          _barangays = ["Choose..."];
-          _fieldKeyBarangay.currentState?.didChange(null);
-        }
-      },
+      () {},
     );
   }
 
-  _onProvinceSelected(Province provinceByCountry) {
-    setState(
-          () {
-        _selectedCountry = provinceByCountry.name;
+  _onProvinceSelected(Province province) async {
+    _selectedProvince = province.name;
 
-        // region
-        if(_fieldKeyRegion.currentState != null) {
-          _selectedRegion = "Choose...";
-          _regions = ["Choose..."];
-          _fieldKeyRegion.currentState?.didChange(null);
-        }
-        //province
-        if(_fieldKeyProvince.currentState != null) {
-          _selectedProvince = "Choose...";
-          _provinces = ["Choose..."];
-          _fieldKeyProvince.currentState?.didChange(null);
-        }
-        // city
-        if(_fieldKeyCity.currentState != null) {
-          _selectedCity = "Choose...";
-          _cities = ["Choose..."];
-          _fieldKeyCity.currentState?.didChange(null);
-        }
-        // barangay
-        if(_fieldKeyBarangay.currentState != null) {
-          _selectedBarangay = "Choose...";
-          _barangays = ["Choose..."];
-          _fieldKeyBarangay.currentState?.didChange(null);
-        }
-      },
+    // city
+    if (_fieldKeyCity.currentState != null) {
+      _selectedCity = "Choose...";
+      _cities = await _repository
+          .getCityByProvinceCode(province.provinceCode)
+          .catchError(
+        (e) {
+          print(e);
+          _cities = [];
+        },
+      );
+      _fieldKeyCity.currentState?.didChange(null);
+    }
+    // barangay
+    if (_fieldKeyBarangay.currentState != null) {
+      _selectedBarangay = "Choose...";
+      _barangays = [];
+      _fieldKeyBarangay.currentState?.didChange(null);
+    }
+
+    setState(
+      () {},
     );
   }
 
@@ -577,7 +629,7 @@ class _CountryAndRelatedFormFieldsState
       backgroundColor: Colors.transparent,
       builder: (builder) {
         return Container(
-          height: 200,
+          height: 350,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
                 Radius.circular(20.0),
@@ -610,7 +662,8 @@ class _CountryAndRelatedFormFieldsState
                       _onBarangaySelected(selection[index]);
                       break;
                     case FieldSelect.RegionField:
-                      _onRegionSelected(selection[index]);
+                      //TODO add region
+                      //_onRegionSelected(selection[index]);
                       break;
                   }
                   Navigator.pop(

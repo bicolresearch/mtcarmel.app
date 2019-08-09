@@ -13,7 +13,7 @@ part 'province.g.dart';
 @JsonSerializable()
 class Province {
   Province(this.id, this.psgcCode, this.name, this.regionCode,
-      this.provinceCode, this.cityCode, this.countryCode);
+      this.provinceCode, this.countryCode);
 
   final String id;
   @JsonKey(name: "psgc_code")
@@ -23,8 +23,6 @@ class Province {
   final String regionCode;
   @JsonKey(name: "province_code")
   final String provinceCode;
-  @JsonKey(name: "city_code")
-  final String cityCode;
   @JsonKey(name: "country_code")
   final String countryCode;
 

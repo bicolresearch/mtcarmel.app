@@ -13,7 +13,6 @@ Province _$ProvinceFromJson(Map<String, dynamic> json) {
     json['name'] as String,
     json['region_code'] as String,
     json['province_code'] as String,
-    json['city_code'] as String,
     json['country_code'] as String,
   );
 }
@@ -24,6 +23,5 @@ Map<String, dynamic> _$ProvinceToJson(Province instance) => <String, dynamic>{
       'name': instance.name,
       'region_code': instance.regionCode,
       'province_code': instance.provinceCode,
-      'city_code': instance.cityCode,
       'country_code': instance.countryCode,
     };
