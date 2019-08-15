@@ -2,8 +2,8 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*  Updated     :   2019-07-31 17:51 by Detective conan
-*  Changes     :   Added submit method.
+*  Updated     :   2019-08-15 12:38 by Detective conan
+*  Changes     :   Added branch_id in fields.
 */
 
 import 'package:flutter/material.dart';
@@ -19,11 +19,10 @@ import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class ServiceFormScreen extends StatefulWidget {
-
-  ServiceFormScreen({this.serviceSubType});
+  ServiceFormScreen({this.subModule});
 
   @required
-  final ChurchSubModule serviceSubType;
+  final ChurchSubModule subModule;
 
   @override
   _ServiceFormScreenState createState() => _ServiceFormScreenState();
@@ -31,7 +30,7 @@ class ServiceFormScreen extends StatefulWidget {
 
 class _ServiceFormScreenState extends State<ServiceFormScreen> {
   static final GlobalKey<FormBuilderState> _fbKey =
-  GlobalKey<FormBuilderState>();
+      GlobalKey<FormBuilderState>();
   bool _isScrolledToTheLast = false;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
@@ -73,7 +72,6 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: _arrowMoreUp,
@@ -97,9 +95,8 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 30.0),
                         child: Text(
-                          widget.serviceSubType.name,
-                          style: Theme
-                              .of(context)
+                          widget.subModule.name,
+                          style: Theme.of(context)
                               .primaryTextTheme
                               .headline
                               .copyWith(fontWeight: FontWeight.bold),
@@ -114,8 +111,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                           autovalidate: true,
                           child: Column(
                             children: <Widget>[
-                              for (var formField
-                              in widget.serviceSubType.formFields)
+                              for (var formField in widget.subModule.formFields)
                                 ServiceFormField(churchFormField: formField),
                             ],
                           ),
@@ -137,39 +133,37 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
               ),
               onPressed: _isScrolledToTheLast
                   ? () async {
-                //TODO implement validations and updating database
+                      //TODO implement validations and updating database
 
-                await _submit().then((success) async {
-                  print("ServiceFormScreen._submit.then success=$success");
-                  if(!success)
-                    return;
+                      await _submit().then(
+                        (success) async {
+                          print(
+                              "ServiceFormScreen._submit.then success=$success");
+                          if (!success) return;
 
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ThankYouScreen(
-                              thankYouText: widget.serviceSubType.thankYouContent),
-                    ),
-                  );
-                  if (result) Navigator.pop(
-                      context
-                      ,
-                      true
-                  );
-                },).catchError((e) {
-                  //TODO show error notification
-                  print(e);
-                });
-              }
-                  : null,),
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ThankYouScreen(
+                                  thankYouText:
+                                      widget.subModule.thankYouContent),
+                            ),
+                          );
+                          if (result) Navigator.pop(context, true);
+                        },
+                      ).catchError((e) {
+                        //TODO show error notification
+                        print(e);
+                      });
+                    }
+                  : null,
+            ),
             leftArrowBackButton(context: context),
           ],
         ),
       ),
     );
   }
-
 
   void _onStartScroll(ScrollMetrics metrics) {}
 
@@ -183,11 +177,11 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
     if (!_scrollController.hasClients) return;
     try {
       if (_scrollController.offset ==
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
         setState(
-              () {
+          () {
             _arrowMoreDown = VisibilityHelper(
                 child: VisibilityHelper.arrowDown,
                 visibility: VisibilityFlag.gone);
@@ -200,12 +194,12 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset >=
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
         if (_currentMoreArrow != MoreArrowEnum.MoreUpOnly) {
           _currentMoreArrow = MoreArrowEnum.MoreUpOnly;
           setState(
-                () {
+            () {
               _arrowMoreDown = VisibilityHelper(
                   child: VisibilityHelper.arrowDown,
                   visibility: VisibilityFlag.gone);
@@ -219,12 +213,12 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset <=
-          _scrollController.position.minScrollExtent &&
+              _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
         if (_currentMoreArrow != MoreArrowEnum.MoreDownOnly) {
           _currentMoreArrow = MoreArrowEnum.MoreDownOnly;
           setState(
-                () {
+            () {
               _arrowMoreDown = VisibilityHelper(
                   child: VisibilityHelper.arrowDown,
                   visibility: VisibilityFlag.visible);
@@ -237,13 +231,13 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         return;
       }
       if (_scrollController.offset <
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
         if (_currentMoreArrow != MoreArrowEnum.MoreUpAndDown) {
           _currentMoreArrow = MoreArrowEnum.MoreUpAndDown;
           setState(
-                () {
+            () {
               _arrowMoreDown = VisibilityHelper(
                   child: VisibilityHelper.arrowDown,
                   visibility: VisibilityFlag.visible);
@@ -262,33 +256,29 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
   }
 
   Future _submit() async {
-    if(widget.serviceSubType.url == null || widget.serviceSubType.url.isEmpty)
+    if (widget.subModule.url == null || widget.subModule.url.isEmpty)
       throw "No assigned api url.";
 
     _fbKey.currentState.save();
     if (_fbKey.currentState.validate()) {
       print(_fbKey.currentState.value);
-      final url = widget.serviceSubType.url;
+      final url = widget.subModule.url;
+      print(widget.subModule.url);
       Map<String, String> headers = {
         "Content-type": "application/x-www-form-urlencoded"
       };
       var fieldsValue = _fbKey.currentState.value;
 
-//      final test = {"branch_id": "1", "name": "Adrian", "address_1": "Somewhere",
-//      "address_2": "Down the Road", "barangay": "012802004", "city": "012802",
-//      "province": "0128", "country": "1", "dt_birth": "2000-01-01 00:00:00",
-//      "landline": "12345678", "mobile": "123456789123", "email": "asd@gfs.ph",};
-
-      final userId = await locator<AuthenticationService>().getUserId().catchError((e){
+      final userId =
+          await locator<AuthenticationService>().getUserId().catchError((e) {
         print("ServiceFormScreen._submit() error: $e");
         throw e;
       });
 
-      if (userId == null || userId == "")
-        throw "Not login";
-
+      if (userId == null || userId == "") throw "Not login";
 
       fieldsValue.putIfAbsent("user_id", () => userId);
+      fieldsValue.putIfAbsent("branch_id", () => "1");
       debugPrint(fieldsValue.toString());
       print(headers);
       Map<String, String> casted = fieldsValue.cast();
@@ -296,24 +286,19 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
         url,
         headers: headers,
         body: casted,
-      ).timeout(
-        Duration(seconds: 3),
-      ).catchError((e) =>
-      {print(e),
-        throw(e)});
+      )
+          .timeout(
+            Duration(seconds: 3),
+          )
+          .catchError((e) => {print(e), throw (e)});
       print(response.body);
-      if (response == null)
-        return false;
+      if (response == null) return false;
 
-      if(response.statusCode == 201)
+      if (response.statusCode == 201)
         return true;
       else
         return false;
-
-    }
-    else
+    } else
       return false;
-
   }
-
 }

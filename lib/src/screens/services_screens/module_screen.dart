@@ -2,8 +2,8 @@
 *  Filename    :   module_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-01 16:31 by Detective Conan
-*  Updated     :   2019-08-02 11:41 by Detective conan
-*  Changes     :   Refactored replaced service with module
+*  Updated     :   2019-08-15 12:39 by Detective conan
+*  Changes     :   Gets the create url from api.
 */
 
 import 'package:flutter/material.dart';
@@ -157,7 +157,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
         formFields: subModuleAndFormFields.formFields,
         acceptanceContent: subModuleAndFormFields.subModule.acceptanceContent,
         thankYouContent: subModuleAndFormFields.subModule.thankYouContent,
-        url: "$urlApi/create");
+        url: subModuleAndFormFields.subModule.url);
   }
 
   Future<ChurchModule> _getChurchModule() async {

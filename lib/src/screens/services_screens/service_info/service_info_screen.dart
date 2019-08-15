@@ -141,7 +141,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ServiceFormScreen(
-                                          serviceSubType:
+                                          subModule:
                                               widget.churchServiceSubtype)));
                               if (result) Navigator.pop(context, true);
                             }

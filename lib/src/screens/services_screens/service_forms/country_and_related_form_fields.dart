@@ -386,7 +386,7 @@ class _CountryAndRelatedFormFieldsState
 
                     final Barangay barangay = val;
                     _formState?.setAttributeValue(
-                        "barangay", barangay.brgyCode);
+                        "barangay_code", barangay.brgyCode);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
