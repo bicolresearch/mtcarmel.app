@@ -12,7 +12,6 @@ import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class DateFormField extends StatefulWidget {
-
   @required
   final ChurchFormField churchFormField;
 
@@ -23,9 +22,7 @@ class DateFormField extends StatefulWidget {
 }
 
 class _DateFormFieldState extends State<DateFormField> {
-
-  final GlobalKey<FormFieldState> _fKey =
-  GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _fKey = GlobalKey<FormFieldState>();
   FormBuilderState _formState;
   String _date = "";
 
@@ -44,14 +41,12 @@ class _DateFormFieldState extends State<DateFormField> {
         children: <Widget>[
           Text(
             widget.churchFormField.labelText,
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .primaryTextTheme
                 .subhead
                 .copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
-
           FormField(
             key: _fKey,
             // TODO
@@ -60,7 +55,7 @@ class _DateFormFieldState extends State<DateFormField> {
             },
             onSaved: (val) {
               _formState?.setAttributeValue(
-                  widget.churchFormField.attribute, val.toString());
+                  widget.churchFormField.attribute, val);
             },
             builder: (FormFieldState<dynamic> field) {
               return InputDecorator(
@@ -71,13 +66,10 @@ class _DateFormFieldState extends State<DateFormField> {
                 ),
                 child: ListTile(
                   title: Text(
-                      _date,
-                      textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
-                          .primaryTextTheme
-                          .subhead,
-                    ),
+                    _date,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).primaryTextTheme.subhead,
+                  ),
                   subtitle: Divider(),
                   onTap: () {
                     print("date");
@@ -85,16 +77,13 @@ class _DateFormFieldState extends State<DateFormField> {
                         showTitleActions: true,
                         minTime: DateTime(1900, 1, 1),
                         maxTime: DateTime(2050, 12, 12),
-                        onChanged: (date) {},
-                        onConfirm: (date) {
-                          _formState.value[widget.churchFormField.attribute] =
-                              date;
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          field.didChange(date);
-                          _date = "${dateToString(date)} ${date.day}, ${date.year}";
-                        },
-                        currentTime: DateTime.now(),
-                        locale: LocaleType.en);
+                        onChanged: (date) {}, onConfirm: (date) {
+                      _formState.value[widget.churchFormField.attribute] =
+                          "${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}";
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      field.didChange("${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}");
+                      _date = "${dateToString(date)} ${date.day}, ${date.year}";
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                 ),
               );
@@ -111,26 +100,36 @@ class _DateFormFieldState extends State<DateFormField> {
     super.dispose();
   }
 
-  String dateToString(DateTime date){
-
-    switch(date.month){
-      case 1: return "January";
-      case 2: return "February";
-      case 3: return "March";
-      case 4: return "April";
-      case 5: return "May";
-      case 6: return "June";
-      case 7: return "July";
-      case 8: return "August";
-      case 9: return "September";
-      case 10: return "October";
-      case 11: return "November";
-      case 14: return "December";
+  String dateToString(DateTime date) {
+    switch (date.month) {
+      case 1:
+        return "January";
+      case 2:
+        return "February";
+      case 3:
+        return "March";
+      case 4:
+        return "April";
+      case 5:
+        return "May";
+      case 6:
+        return "June";
+      case 7:
+        return "July";
+      case 8:
+        return "August";
+      case 9:
+        return "September";
+      case 10:
+        return "October";
+      case 11:
+        return "November";
+      case 14:
+        return "December";
       default:
         return "January";
     }
   }
-
 
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
@@ -140,14 +139,11 @@ class _DateFormFieldState extends State<DateFormField> {
     if (widget.churchFormField.validators.isRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (widget.churchFormField.validators.isNumeric != null
-        &&
-        widget.churchFormField.validators.isNumeric == "true"
-    )
+    if (widget.churchFormField.validators.isNumeric != null &&
+        widget.churchFormField.validators.isNumeric == "true")
       validators.add(FormBuilderValidators.numeric());
 
-    if (widget.churchFormField.errorText != null
-    )
+    if (widget.churchFormField.errorText != null)
       validators.add(FormBuilderValidators.required(
           errorText: widget.churchFormField.errorText));
 
