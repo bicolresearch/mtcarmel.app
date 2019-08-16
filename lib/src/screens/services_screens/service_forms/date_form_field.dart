@@ -2,8 +2,8 @@
 *  Filename    :   date_form_field.dart
 *  Purpose     :	 Date form field
 *  Created     :   2019-07-23 16:11 by Detective Conan
-*  Updated     :   2019-08-15 11:00 by Detective conan
-*  Changes     :   changed to bottom sheet modal picker.
+*  Updated     :   2019-08-16 08:49 by Detective conan
+*  Changes     :   Added validators
 */
 
 import 'package:flutter/material.dart';
@@ -49,8 +49,12 @@ class _DateFormFieldState extends State<DateFormField> {
           ),
           FormField(
             key: _fKey,
-            // TODO
             validator: (val) {
+              final validators = _validators();
+              for (int i = 0; i < validators.length; i++) {
+                if (validators[i](val) != null)
+                  return validators[i](val);
+              }
               return null;
             },
             onSaved: (val) {

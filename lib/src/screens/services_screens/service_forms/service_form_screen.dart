@@ -257,7 +257,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
 
   Future _submit() async {
     if (widget.subModule.url == null || widget.subModule.url.isEmpty)
-      throw "No assigned api url.";
+      throw Exception("No assigned api url.");
 
     _fbKey.currentState.save();
     if (_fbKey.currentState.validate()) {
@@ -272,10 +272,10 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
       final userId =
           await locator<AuthenticationService>().getUserId().catchError((e) {
         print("ServiceFormScreen._submit() error: $e");
-        throw e;
+        throw Exception("Retrieving user id error. $e");
       });
 
-      if (userId == null || userId == "") throw "Not login";
+      if (userId == null || userId == "") throw Exception("Not login");
 
       fieldsValue.putIfAbsent("user_id", () => userId);
       fieldsValue.putIfAbsent("branch_id", () => "1");
@@ -290,7 +290,10 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           .timeout(
             Duration(seconds: 3),
           )
-          .catchError((e) => {print(e), throw (e)});
+          .catchError((e) => {
+                print(e),
+                throw Exception("Error in submitting ${widget.subModule.name}")
+              });
       print(response.body);
       if (response == null) return false;
 

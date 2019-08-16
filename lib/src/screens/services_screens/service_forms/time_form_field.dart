@@ -2,8 +2,8 @@
 *  Filename    :   time_form_field.dart
 *  Purpose     :	
 *  Created     :   2019-07-23 16:40 by Detective Conan
-*  Updated     :   2019-07-23 16:40 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-08-16 08:49 by Detective conan
+*  Changes     :   Added validators
 */
 
 import 'package:flutter/material.dart';
@@ -53,8 +53,12 @@ class _TimeFormFieldState extends State<TimeFormField> {
           ),
           FormField(
             key: _fKey,
-            // TODO
             validator: (val) {
+              final validators = _validators();
+              for (int i = 0; i < validators.length; i++) {
+                if (validators[i](val) != null)
+                  return validators[i](val);
+              }
               return null;
             },
             onSaved: (val) {
