@@ -156,7 +156,7 @@ class _PageState extends State<Page> {
 
     if (developmentProductionEnum != DevelopmentProductionEnum.PartialTest)
       Future.delayed(
-        Duration(seconds: 3),
+        Duration(seconds: 2),
         () {
           Navigator.pushReplacement(
             context,
@@ -172,7 +172,6 @@ class _PageState extends State<Page> {
     SharedPreferencesHelper.getFirstUsageFlag().then((onValue) {
       setState(() {
         isFirstUsage = onValue;
-        print('$onValue');
       });
     });
   }

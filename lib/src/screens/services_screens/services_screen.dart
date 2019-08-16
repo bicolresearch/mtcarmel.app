@@ -2,22 +2,21 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*  Updated     :   2019-08-02 10:40 by Detective conan
-*  Changes     :   Implemented services by using apis.
+*  Updated     :   2019-08-16 15:32 by Detective conan
+*  Changes     :   Moved the retrieval of modules to ModuleListService class
 */
 
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/core/services/module_list_service.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/module_screen.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/module_reference_tile.dart';
 import 'package:mt_carmel_app/src/widgets/service_header.dart';
-import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:convert';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class ServicesScreen extends StatefulWidget {
   static const String JOIN_US = 'Join Us!';
@@ -52,18 +51,42 @@ class _ServicesScreenState extends State<ServicesScreen> {
   );
 
   @override
-  void initState() {
+  initState() {
     super.initState();
     print("initializing serviceScreen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    getJsonData().then(
+    _moduleReferences = locator<ModuleListService>().moduleReferences;
+    if (_moduleReferences.isEmpty) {
+      getModules();
+    } else {
+      if (this.mounted)
+        setState(() {
+          _isJsonFailed = false;
+          _isLoading = false;
+        });
+    }
+  }
+
+  Future getModules() async {
+    await locator<ModuleListService>().getJsonData().then(
       (_) {
         _initializeArrows();
+        if (this.mounted)
+          setState(() {
+            _moduleReferences = locator<ModuleListService>().moduleReferences;
+            _isJsonFailed = false;
+            _isLoading = false;
+          });
       },
     ).catchError(
       (e) {
         debugPrint("ServiceScreen.initState: $e");
+        if (this.mounted)
+          setState(() {
+          _isJsonFailed = true;
+          _isLoading = false;
+        });
       },
     );
   }
@@ -71,31 +94,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Future _initializeArrows() async {
     await Future.delayed(Duration(milliseconds: 300));
     _scrollListener();
-  }
-
-  //TODO move to dedicated business logic class.
-  Future<void> getJsonData() async {
-    _isJsonFailed = false;
-    _isLoading = true;
-    var response = await http
-        .get(AppConstants.SERVICES_JSON_URL)
-        .timeout(Duration(seconds: 3));
-    if (this.mounted) {
-      setState(
-        () {
-          if (response.statusCode == 200) {
-            _moduleReferences = (json.decode(response.body) as List)
-                .map((data) => ModuleReference.fromJson(data))
-                .toList();
-            print(_moduleReferences.length);
-            _isLoading = false;
-          } else {
-            _isJsonFailed = true;
-            _isLoading = false;
-          }
-        },
-      );
-    }
   }
 
   @override
@@ -164,10 +162,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
           ),
         );
       },
-      child:
-      ModuleReferenceTile(
-          context: context,
-          moduleReference: moduleReference),
+      child: ModuleReferenceTile(
+          context: context, moduleReference: moduleReference),
     );
   }
 
