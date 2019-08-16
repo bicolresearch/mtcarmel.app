@@ -55,17 +55,16 @@ class ChurchSubModule {
 
 @JsonSerializable()
 class ChurchFormField {
-  ChurchFormField({
-    this.attribute,
-    this.textFieldType,
-    this.value,
-    this.hint,
-    this.labelText,
-    this.validators,
-    this.selections,
-    this.errorText,
-    this.maxLines
-  });
+  ChurchFormField(
+      {this.attribute,
+      this.textFieldType,
+      this.value,
+      this.hint,
+      this.labelText,
+      this.validators,
+      this.selections,
+      this.errorText,
+      this.maxLines});
 
   final String attribute;
   @JsonKey(name: "label_text")
@@ -75,6 +74,7 @@ class ChurchFormField {
   @JsonKey(name: "text_field_type")
   final String textFieldType;
   final ChurchFormValidators validators;
+
 //  final List<String> selections;
   final String selections;
   @JsonKey(name: "error_text")
@@ -116,6 +116,7 @@ class ModuleReference {
     this.name,
     this.description,
     this.coverPhoto,
+    this.subModules,
   );
 
   final String id;
@@ -125,6 +126,8 @@ class ModuleReference {
   final String description;
   @JsonKey(name: "cover_photo")
   final String coverPhoto;
+  @JsonKey(name: "sub_modules")
+  final String subModules;
 
   factory ModuleReference.fromJson(Map<String, dynamic> json) =>
       _$ModuleReferenceFromJson(json);
@@ -136,8 +139,7 @@ class ModuleReference {
 //TODO current api the FormFields in line with subModule. FormFields should be inside subModule
 @JsonSerializable()
 class SubModuleAndFormFields {
-  SubModuleAndFormFields(
-      {this.subModule, this.formFields});
+  SubModuleAndFormFields({this.subModule, this.formFields});
 
   @JsonKey(name: "sub_module")
   final SubModule subModule;
@@ -153,10 +155,7 @@ class SubModuleAndFormFields {
 @JsonSerializable()
 class SubModule {
   SubModule(
-      {this.name,
-        this.acceptanceContent,
-        this.thankYouContent,
-        this.url});
+      {this.name, this.acceptanceContent, this.thankYouContent, this.url});
 
   final String name;
   @JsonKey(name: "acceptance_content")

@@ -2,8 +2,8 @@
 *  Filename    :   module_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-01 16:31 by Detective Conan
-*  Updated     :   2019-08-15 12:39 by Detective conan
-*  Changes     :   Gets the create url from api.
+*  Updated     :   2019-08-16 17:06 by Detective conan
+*  Changes     :   Removed the modulesApis argument. gets the url from moduleReference
 */
 
 import 'package:flutter/material.dart';
@@ -18,14 +18,11 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-class ModuleScreen extends StatefulWidget{
-  @required
-  final List<String> moduleApis;
+class ModuleScreen extends StatefulWidget {
   @required
   final ModuleReference moduleReference;
 
-  const ModuleScreen({Key key, this.moduleApis, this.moduleReference})
-      : super(key: key);
+  const ModuleScreen({Key key, this.moduleReference}) : super(key: key);
 
   @override
   _ModuleScreenState createState() => _ModuleScreenState();
@@ -69,14 +66,13 @@ class _ModuleScreenState extends State<ModuleScreen> {
                                 return GestureDetector(
                                   onTap: () async {
                                     final result = await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ServiceInfoScreen(
-                                                    churchServiceSubtype:
-                                                        _churchModule
-                                                                .churchSubModules[
-                                                            index])));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ServiceInfoScreen(
+                                            churchServiceSubtype: _churchModule
+                                                .churchSubModules[index]),
+                                      ),
+                                    );
                                     if (result) Navigator.pop(context);
                                   },
                                   child: Column(
@@ -122,30 +118,44 @@ class _ModuleScreenState extends State<ModuleScreen> {
   @override
   void initState() {
     super.initState();
-    _getChurchModule().then((result) {
-      _churchModule = result;
-      _isLoading = false;
-      setState(() {});
-    }).catchError((e) {
-      print("ModuleScreen._initState: $e");
-      _isLoading = false;
-    });
+    _getChurchModule().then(
+      (result) {
+        _churchModule = result;
+        _isLoading = false;
+        setState(() {});
+      },
+    ).catchError(
+      (e) {
+        print("ModuleScreen._initState: $e");
+        _isLoading = false;
+        if (e.toString().contains("No SubModule")) {
+          SnackBar(
+            content: Text("No sub-services for ${widget.moduleReference.name}"),
+          );
+          Navigator.pop(context, false);
+        }
+      },
+    );
   }
 
   Future _getSubModules() async {
+    final List<String> subModules =
+        widget.moduleReference.subModules.split(",");
+
     List<ChurchSubModule> churchSubmodules = [];
-    for (var api in widget.moduleApis) {
+
+    for (var api in subModules) {
       try {
         SubModuleAndFormFields subModuleAndFormFields =
             await _getSubModuleAndFormFields(api);
         churchSubmodules.add(_getChurchSubModule(subModuleAndFormFields, api));
       } catch (e) {
-        print(e);
+        print("ModuleScreen._getSubModules: $e");
       }
     }
 
     if (churchSubmodules.isEmpty)
-      throw "ModuleScreen._getSubModules: No SubModule retrieved";
+      throw Exception("ModuleScreen._getSubModules: No SubModule retrieved");
 
     return churchSubmodules;
   }
@@ -176,7 +186,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
       final body = json.decode(response.body);
       return SubModuleAndFormFields.fromJson(body);
     } else {
-      throw "Error in SubModlueAndFormFields data gathering.";
+      throw Exception("Error in SubModlueAndFormFields data gathering.");
     }
   }
 }

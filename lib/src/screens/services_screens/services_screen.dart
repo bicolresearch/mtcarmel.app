@@ -2,8 +2,8 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*  Updated     :   2019-08-16 15:32 by Detective conan
-*  Changes     :   Moved the retrieval of modules to ModuleListService class
+*  Updated     :   2019-08-16 17:08 by Detective conan
+*  Changes     :   Removed the switch for comparing the name of modules for navigation.
 */
 
 import 'package:flutter/material.dart';
@@ -19,14 +19,6 @@ import 'dart:async';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class ServicesScreen extends StatefulWidget {
-  static const String JOIN_US = 'Join Us!';
-  static const String MAKE_REQUEST = 'Make a Request';
-  static const String BAPTISM = 'Baptism';
-  static const String COMMUNION = 'Communion';
-  static const String CONFIRMATION = 'Confirmation';
-  static const String WEDDING = 'Marriage';
-  static const String PASSING = 'Passing';
-  static const String EVENTS = 'Events';
 
   @override
   _ServicesScreenState createState() => _ServicesScreenState();
@@ -158,7 +150,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
         await Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => _navigateToService(moduleReference),
+              builder: (context) => ModuleScreen(
+                moduleReference: moduleReference,
+              )
           ),
         );
       },
@@ -167,74 +161,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
     );
   }
 
-  Widget _navigateToService(final ModuleReference moduleReference) {
-    switch (moduleReference.name) {
-      case ServicesScreen.JOIN_US:
-        return ModuleScreen(
-          moduleReference: moduleReference,
-          moduleApis: ["https://api.mountcarmel.ph/service_confraternity"],
-        );
-      case ServicesScreen.MAKE_REQUEST:
-        return ModuleScreen(
-          moduleReference: moduleReference,
-          moduleApis: [
-            "https://api.mountcarmel.ph/service_prayer_request",
-            "https://api.mountcarmel.ph/service_mass_request",
-            "https://api.mountcarmel.ph/service_liturgical",
-            "https://api.mountcarmel.ph/service_certification",
-          ],
-        );
-      case ServicesScreen.BAPTISM:
-        return ModuleScreen(
-          moduleReference: moduleReference,
-          moduleApis: [
-            "https://api.mountcarmel.ph/service_individual_baptism",
-            "https://api.mountcarmel.ph/service_community_baptism",
-            "https://api.mountcarmel.ph/service_adult_baptism",
-          ],
-        );
-      case ServicesScreen.COMMUNION:
-        return ModuleScreen(
-          moduleReference: moduleReference,
-          moduleApis: [
-            "https://api.mountcarmel.ph/service_first_communion",
-            "https://api.mountcarmel.ph/service_communion_of_the_sick",
-          ],
-        );
-      case ServicesScreen.CONFIRMATION:
-        return ModuleScreen(
-          moduleReference: moduleReference,
-          moduleApis: [
-            "https://api.mountcarmel.ph/service_confirmation",
-          ],
-        );
-      case ServicesScreen.WEDDING:
-        return ModuleScreen(
-          moduleReference: moduleReference,
-          moduleApis: [
-            "https://api.mountcarmel.ph/service_marriage",
-          ],
-        );
-      case ServicesScreen.PASSING:
-        return ModuleScreen(
-          moduleReference: moduleReference,
-          moduleApis: [
-            "https://api.mountcarmel.ph/service_funeral_service",
-            "https://api.mountcarmel.ph/service_funeral_chapel",
-            "https://api.mountcarmel.ph/service_crypt_lobby",
-          ],
-        );
-      case ServicesScreen.EVENTS:
-        return ModuleScreen(
-          moduleReference: moduleReference,
-          moduleApis: [
-            "https://api.mountcarmel.ph/service_november_mass",
-            "https://api.mountcarmel.ph/service_events_FMHH_venue",
-          ],
-        );
-    }
-    return NoService(moduleReference: moduleReference);
-  }
 
   void _onStartScroll(ScrollMetrics metrics) {}
 

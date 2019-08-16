@@ -108,6 +108,7 @@ ModuleReference _$ModuleReferenceFromJson(Map<String, dynamic> json) {
     json['name'] as String,
     json['description'] as String,
     json['cover_photo'] as String,
+    json['sub_modules'] as String,
   );
 }
 
@@ -118,6 +119,7 @@ Map<String, dynamic> _$ModuleReferenceToJson(ModuleReference instance) =>
       'name': instance.name,
       'description': instance.description,
       'cover_photo': instance.coverPhoto,
+      'sub_modules': instance.subModules,
     };
 
 SubModuleAndFormFields _$SubModuleAndFormFieldsFromJson(
