@@ -2,8 +2,8 @@
 *  Filename    :   module_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-01 16:31 by Detective Conan
-*  Updated     :   2019-08-16 17:06 by Detective conan
-*  Changes     :   Removed the modulesApis argument. gets the url from moduleReference
+*  Updated     :   2019-08-16 17:35 by Detective conan
+*  Changes     :   Added snackbar when no sub-services for selected module
 */
 
 import 'package:flutter/material.dart';
@@ -129,10 +129,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
         print("ModuleScreen._initState: $e");
         _isLoading = false;
         if (e.toString().contains("No SubModule")) {
-          SnackBar(
-            content: Text("No sub-services for ${widget.moduleReference.name}"),
-          );
-          Navigator.pop(context, false);
+          Navigator.pop(context, "No sub-services for ${widget.moduleReference.name}");
         }
       },
     );

@@ -19,7 +19,6 @@ import 'dart:async';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class ServicesScreen extends StatefulWidget {
-
   @override
   _ServicesScreenState createState() => _ServicesScreenState();
 }
@@ -27,6 +26,8 @@ class ServicesScreen extends StatefulWidget {
 class _ServicesScreenState extends State<ServicesScreen> {
   ScrollController _scrollController;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<ModuleReference> _moduleReferences = [];
 
@@ -76,9 +77,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
         debugPrint("ServiceScreen.initState: $e");
         if (this.mounted)
           setState(() {
-          _isJsonFailed = true;
-          _isLoading = false;
-        });
+            _isJsonFailed = true;
+            _isLoading = false;
+          });
       },
     );
   }
@@ -101,6 +102,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
       child: _isLoading
           ? LoadingIndicator()
           : Scaffold(
+              key: _scaffoldKey,
               body: Column(
                 children: <Widget>[
                   //
@@ -147,20 +149,30 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget _moduleReferenceItem(context, final ModuleReference moduleReference) {
     return GestureDetector(
       onTap: () async {
-        await Navigator.push(
+        final result = await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ModuleScreen(
-                moduleReference: moduleReference,
-              )
-          ),
+                    moduleReference: moduleReference,
+                  )),
         );
+        if (result.runtimeType == String) {
+          final String val = result;
+          if (val.contains("No sub-services")) {
+            _scaffoldKey.currentState.showSnackBar(SnackBar(
+              content: Text(
+                '$val',
+                textAlign: TextAlign.center,
+              ),
+              duration: Duration(seconds: 3),
+            ));
+          }
+        }
       },
       child: ModuleReferenceTile(
           context: context, moduleReference: moduleReference),
     );
   }
-
 
   void _onStartScroll(ScrollMetrics metrics) {}
 
