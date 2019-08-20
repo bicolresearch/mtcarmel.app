@@ -6,23 +6,24 @@
 *  Changes     :
 */
 
+import 'package:mt_carmel_app/src/models/data_mass_request.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class MassRequestService {
   //TODO implement request per priest and admin account
-  Future<MassRequest> getPrayerRequests() async {
-    MassRequest _prayerRequest;
+  Future<List<MassRequest>> getMassRequests() async {
+    List<MassRequest> _massRequests;
     await http.get("https://api.mountcarmel.ph/mass_request").then((result) {
       if (result.statusCode == 200) {
         final body = json.decode(result.body);
-        _prayerRequest =
-            MassRequest.fromJson(body);
+        _massRequests =
+            DataMassRequest.fromJson(body).data;
       } else {
         print(result.statusCode);
       }
     }).timeout(Duration(seconds: 5));
-    return _prayerRequest;
+    return _massRequests;
   }
 }

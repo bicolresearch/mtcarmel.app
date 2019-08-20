@@ -22,6 +22,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_sc
 import 'package:mt_carmel_app/src/screens/profile_screens/church_schedule_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_screen.dart';
@@ -627,6 +628,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return LocationScreen();
       case ProfileScreen.PRAYER_REQUESTS:
         return PrayerRequestScreen();
+      case ProfileScreen.MASS_REQUESTS:
+        return MassRequestScreen();
       default:
         // show the default if not yet implemented
         return DefaultScreen();
