@@ -10,9 +10,11 @@ import 'package:get_it/get_it.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/module_list_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/repositories/address_repository.dart';
 import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
-import 'package:mt_carmel_app/src/core/services/user_profile_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
 
 GetIt locator = GetIt();
 
@@ -24,4 +26,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => UserProfileService());
   locator.registerLazySingleton(() => AddressRepository());
   locator.registerLazySingleton(() => ModuleListService());
+  locator.registerLazySingleton(() => MassRequestService());
+  locator.registerLazySingleton(() => PrayerRequestService());
 }

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/core/services/user_profile_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
 import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/user_profile.dart';
@@ -24,6 +24,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screen.
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screen.dart';
 import 'package:mt_carmel_app/src/screens/sign_up_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
@@ -624,6 +625,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return BibleScreen(context);
       case ProfileScreen.LOCATION_MAP:
         return LocationScreen();
+      case ProfileScreen.PRAYER_REQUESTS:
+        return PrayerRequestScreen();
       default:
         // show the default if not yet implemented
         return DefaultScreen();

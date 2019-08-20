@@ -11,7 +11,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/core/services/user_profile_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
 import 'package:mt_carmel_app/src/utils/image_upload_form.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
