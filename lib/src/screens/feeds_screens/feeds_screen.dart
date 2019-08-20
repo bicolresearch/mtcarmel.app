@@ -10,9 +10,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:html2md/html2md.dart' as html2md;
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/core/services/post_service.dart';
+import 'package:mt_carmel_app/src/core/services/news_feed_service.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
-import 'package:mt_carmel_app/src/helpers/data_loading_status.dart';
+import 'package:mt_carmel_app/src/core/view_models/data_loading_status.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -78,7 +78,7 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Future<void> _getFeedData() async {
-    PostService postService = PostService();
+    NewsFeedService postService = NewsFeedService();
     await postService.getFeed().then(
       (feed) {
         if (feed == null)
@@ -172,7 +172,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Widget _feeds() {
     return Container(
-      padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+      padding: EdgeInsets.all(10),
       child: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _getFeedData,
@@ -273,7 +273,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   html2md.convert(postData.content),
                   style: Theme.of(context).primaryTextTheme.subhead,
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+                  maxLines: 1,
                 ),
               ),
             ],

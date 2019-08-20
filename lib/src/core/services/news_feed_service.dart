@@ -1,5 +1,5 @@
 /*
-*  Filename    :   post_service.dart
+*  Filename    :   news_feed_service.dart
 *  Purpose     :	 Service for news feeds
 *  Created     :   2019-07-12 11:12 by Detective Conan
 *  Updated     :   2019-07-12 11:12 by Detective Conan 
@@ -12,7 +12,7 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/feed.dart';
 
-class PostService {
+class NewsFeedService {
   Future<Feed> getFeed() async {
     Feed _feed;
     await http

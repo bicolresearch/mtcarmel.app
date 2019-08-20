@@ -31,7 +31,7 @@ enum TimeDurationEnum {
 class AuthenticationService {
   int _authenticationTimeout;
 
-  AuthenticationService({TimeDurationEnum timeout = TimeDurationEnum.OneDay}) {
+  AuthenticationService({TimeDurationEnum timeout = TimeDurationEnum.OneWeek}) {
     _authenticationTimeout = _timeoutValue(timeout);
   }
 
