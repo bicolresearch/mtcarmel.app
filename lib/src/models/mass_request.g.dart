@@ -9,7 +9,10 @@ part of 'mass_request.dart';
 MassRequest _$MassRequestFromJson(Map<String, dynamic> json) {
   return MassRequest(
     json['id'] as String,
-    json['prayer'] as String,
+    json['name'] as String,
+    json['purpose_mass'] as String,
+    json['dt_offered'] as String,
+    json['time_offered'] as String,
     json['status'] as String,
     json['posted_on'] as String,
     json['updated_on'] as String,
@@ -20,7 +23,10 @@ MassRequest _$MassRequestFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$MassRequestToJson(MassRequest instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'prayer': instance.prayer,
+      'name': instance.name,
+      'purpose_mass': instance.purposeMass,
+      'dt_offered': instance.dtOffered,
+      'time_offered': instance.timeOffered,
       'status': instance.status,
       'posted_on': instance.postedOn,
       'updated_on': instance.updatedOn,

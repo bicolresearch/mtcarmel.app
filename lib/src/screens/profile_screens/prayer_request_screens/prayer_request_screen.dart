@@ -67,13 +67,15 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
 
   @override
   void initState() {
-    locator<PrayerRequestService>().getPrayerRequests().then(((value) {
-      if (this.mounted)
-        setState(() {
-          debugPrint(value.toString());
-          _prayerRequests = value;
-        });
-    }));
+    locator<PrayerRequestService>().getPrayerRequests().then(
+      ((value) {
+        if (this.mounted)
+          setState(() {
+            debugPrint(value.toString());
+            _prayerRequests = value;
+          });
+      }),
+    );
     super.initState();
   }
 

@@ -28,8 +28,7 @@ class _ServiceTypeScreenState extends State<ServiceTypeScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Scaffold(
-        body: Padding(
+      child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
           child: Column(
             children: <Widget>[
@@ -82,7 +81,6 @@ class _ServiceTypeScreenState extends State<ServiceTypeScreen> {
             ],
           ),
         ),
-      ),
     );
   }
 }

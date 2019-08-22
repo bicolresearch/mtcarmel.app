@@ -12,13 +12,27 @@ part 'mass_request.g.dart';
 
 @JsonSerializable()
 class MassRequest {
-  MassRequest(this.id, this.prayer, this.status, this.postedOn, this.updatedOn,
+  MassRequest(
+      this.id,
+      this.name,
+      this.purposeMass,
+      this.dtOffered,
+      this.timeOffered,
+      this.status,
+      this.postedOn,
+      this.updatedOn,
       this.author);
 
   @JsonKey(name: "id")
   final String id;
-  @JsonKey(name: "prayer")
-  final String prayer;
+  @JsonKey(name: "name")
+  final String name;
+  @JsonKey(name: "purpose_mass")
+  final String purposeMass;
+  @JsonKey(name: "dt_offered")
+  final String dtOffered;
+  @JsonKey(name: "time_offered")
+  final String timeOffered;
   @JsonKey(name: "status")
   final String status;
   @JsonKey(name: "posted_on")

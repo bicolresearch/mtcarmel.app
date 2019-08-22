@@ -6,8 +6,6 @@
 *  Changes     :   Removed constants for text fonts
 */
 
-import 'package:flutter/material.dart';
-
 class AppConstants {
   static const String APP_TITLE = "Mount Carmel";
   static const String FONT_FAMILY = 'Helvetica';

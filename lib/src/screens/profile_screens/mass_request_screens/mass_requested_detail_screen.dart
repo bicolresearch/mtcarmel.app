@@ -7,10 +7,13 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/selection_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
-class MassRequestedDetailScreen extends StatelessWidget {
+class MassRequestedDetailScreen extends StatefulWidget {
   @required
   final MassRequest massRequest;
 
@@ -19,8 +22,20 @@ class MassRequestedDetailScreen extends StatelessWidget {
         super(key: key);
 
   @override
+  _MassRequestedDetailScreenState createState() =>
+      _MassRequestedDetailScreenState();
+}
+
+class _MassRequestedDetailScreenState extends State<MassRequestedDetailScreen> {
+  static const String _MASS_REQUEST_SELECTION_API =
+      "${AppConstants.API_BASE_URL}purpose_mass/";
+
+  String _purposeMassValue = "";
+
+  @override
   Widget build(BuildContext context) {
-    DateTime datePosted = DateTime.parse("${massRequest.postedOn??"01-01-2019"}");
+    DateTime datePosted =
+        DateTime.parse("${widget.massRequest.postedOn ?? "01-01-2019"}");
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -28,7 +43,7 @@ class MassRequestedDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: 20.0,
+              height: 30.0,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -52,7 +67,7 @@ class MassRequestedDetailScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                          "Requested by: ${massRequest.author}",
+                          "Requested by: ${widget.massRequest.author}",
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle
@@ -71,8 +86,19 @@ class MassRequestedDetailScreen extends StatelessWidget {
                           textAlign: TextAlign.start,
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          "Purpose Mass: $_purposeMassValue",
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .subtitle
+                              .copyWith(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
                       Text(
-                        massRequest.prayer??"",
+                        widget.massRequest.name ?? "",
                         style: Theme.of(context).primaryTextTheme.title,
                       ),
                     ],
@@ -81,10 +107,49 @@ class MassRequestedDetailScreen extends StatelessWidget {
               ),
             ),
             leftArrowBackButton(context: context),
+            SizedBox(height: 20.0,)
           ],
         ),
       ),
     );
     ;
+  }
+
+  @override
+  void initState() {
+    _getPurposeMassEquivalent(widget.massRequest.purposeMass);
+    super.initState();
+  }
+
+  _getPurposeMassEquivalent(purposeMassId) async {
+    var selection;
+    try {
+      selection = await locator<SelectionService>()
+          .getSelection(_MASS_REQUEST_SELECTION_API);
+    } catch (e) {
+      debugPrint(e);
+    }
+
+    if (selection == null) return null;
+
+    if (this.mounted) {
+      String purposeMassValue = "";
+      for (var item in selection) {
+        if (item.id == purposeMassId) {
+          purposeMassValue = item.name;
+          break;
+        }
+      }
+      if (purposeMassValue != _purposeMassValue) {
+        setState(() {
+          _purposeMassValue = purposeMassValue;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

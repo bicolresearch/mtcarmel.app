@@ -6,16 +6,16 @@
 *  Changes     :
 */
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
-import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
-import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_requested_detail_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_requested_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
+import 'package:provider/provider.dart';
 
 class MassRequestScreen extends StatefulWidget {
   @override
@@ -25,16 +25,18 @@ class MassRequestScreen extends StatefulWidget {
 class _MassRequestScreenState extends State<MassRequestScreen> {
   List<MassRequest> _massRequests = [];
 
+  bool _isLoading = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
           SizedBox(
-            height: 20.0,
+            height: 30.0,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               "Mass Request",
               style: Theme.of(context)
@@ -50,14 +52,16 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
                   ? LoadingIndicator()
                   : ListView.builder(
                       itemBuilder: (context, index) {
-                        return _massRequestItem(
-                            context, _massRequests[index]);
+                        return _massRequestItem(context, _massRequests[index]);
                       },
                       itemCount: _massRequests.length,
                     ),
             ),
           ),
           leftArrowBackButton(context: context),
+          SizedBox(
+            height: 20.0,
+          ),
         ],
       ),
     );
@@ -70,13 +74,15 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
 
   @override
   void initState() {
-    locator<MassRequestService>().getMassRequests().then(((value) {
-      if (this.mounted)
-        setState(() {
-          debugPrint(value.toString());
-          _massRequests = value;
-        });
-    }));
+    locator<MassRequestService>().getMassRequests().then(
+      ((value) {
+        if (this.mounted)
+          setState(() {
+            debugPrint(value.toString());
+            _massRequests = value;
+          });
+      }),
+    );
     super.initState();
   }
 
@@ -93,7 +99,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(
-            massRequest.prayer??"",
+            massRequest.name ?? "",
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).primaryTextTheme.title,
             maxLines: 1,

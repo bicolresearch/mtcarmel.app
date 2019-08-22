@@ -34,8 +34,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
+    return Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
           child: Column(
@@ -106,7 +105,6 @@ class _ModuleScreenState extends State<ModuleScreen> {
             ],
           ),
         ),
-      ),
     );
   }
 
