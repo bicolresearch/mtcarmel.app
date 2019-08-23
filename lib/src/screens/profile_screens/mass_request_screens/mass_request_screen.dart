@@ -8,6 +8,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
+import 'package:mt_carmel_app/src/core/services/crud_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/selection_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
@@ -43,7 +45,8 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               "Mass Request",
-              style: Theme.of(context)
+              style: Theme
+                  .of(context)
                   .primaryTextTheme
                   .headline
                   .copyWith(fontWeight: FontWeight.bold),
@@ -55,74 +58,83 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
               child: _massRequests.isEmpty
                   ? LoadingIndicator()
                   : ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                          key: Key(_massRequests[index].id),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      MassRequestedDetailScreen(
-                                          massRequest: _massRequests[index],
-                                          massPurpose: _purposeMassValue(_massRequests[index].purposeMass ?? "")),
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    key: Key(_massRequests[index].id),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                MassRequestedDetailScreen(
+                                  massRequest: _massRequests[index],
+                                  massPurpose: _purposeMassValue(
+                                      _massRequests[index].purposeMass ?? ""),
                                 ),
-                              );
-                            },
-                            child:
-                                _massRequestItem(context, _massRequests[index]),
                           ),
-                          background: slideHorizontalBackground(DismissDirection.startToEnd),
-                          secondaryBackground: slideHorizontalBackground(DismissDirection.endToStart),
-                          confirmDismiss: (direction) async {
-                            if (direction == DismissDirection.startToEnd || direction == DismissDirection.endToStart) {
-                              final bool res = await showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content: Text(
-                                          "Are you sure you want to delete this ${_purposeMassValue(_massRequests[index].purposeMass ?? "")} request?"),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0)),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          child: Text(
-                                            "Cancel",
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        FlatButton(
-                                          child: Text(
-                                            "Delete",
-                                            style: TextStyle(color: Colors.red),
-                                          ),
-                                          onPressed: () {
-                                            // TODO: Delete the item from DB etc..
-                                            setState(() {
-                                              _massRequests.removeAt(index);
-                                            });
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  });
-                              return res;
-                            } else {
-                              // TODO: Navigate to edit page;
-                            }
-                            return false;
-                          },
                         );
                       },
-                      itemCount: _massRequests.length,
+                      child:
+                      _massRequestItem(context, _massRequests[index]),
                     ),
+                    background: slideHorizontalBackground(
+                        DismissDirection.startToEnd),
+                    secondaryBackground: slideHorizontalBackground(
+                        DismissDirection.endToStart),
+                    confirmDismiss: (direction) async {
+                      if (direction == DismissDirection.startToEnd ||
+                          direction == DismissDirection.endToStart) {
+                        final bool res = await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Text(
+                                    "Are you sure you want to delete this ${_purposeMassValue(
+                                        _massRequests[index].purposeMass ??
+                                            "")} request?"),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(20.0)),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text(
+                                      "Cancel",
+                                      style:
+                                      TextStyle(color: Colors.black),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text(
+                                      "Delete",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                    onPressed: () async {
+                                      final result = await _updateRequest(
+                                          _massRequests[index]);
+                                      if (result)
+                                        setState(() {
+                                          _massRequests.removeAt(index);
+                                        });
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                        return res;
+                      } else {
+                        // TODO: Navigate to edit page;
+                      }
+                      return false;
+                    },
+                  );
+                },
+                itemCount: _massRequests.length,
+              ),
             ),
           ),
           leftArrowBackButton(context: context),
@@ -209,10 +221,10 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
     locator<MassRequestService>().getMassRequests().then(
       ((value) {
         if (this.mounted)
-        setState(() {
-          debugPrint(value.toString());
-          _massRequests = value;
-        });
+          setState(() {
+            debugPrint(value.toString());
+            _massRequests = value;
+          });
       }),
     );
   }
@@ -240,32 +252,93 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
   Widget _massRequestItem(BuildContext context, MassRequest massRequest) {
     return Card(
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8.0),
+//        margin: EdgeInsets.symmetric(vertical: 8.0),
         width: double.infinity,
-        child: Column(
-          children: <Widget>[
-            Text(
-              massRequest.author,
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .title
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              _purposeMassValue(massRequest.purposeMass ?? ""),
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).primaryTextTheme.title,
-              maxLines: 1,
-            ),
-            Text(
-              massRequest.name ?? "",
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).primaryTextTheme.title,
-              maxLines: 1,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Status request: ${massRequest.status}",
+                style: Theme
+                    .of(context)
+                    .primaryTextTheme
+                    .subtitle
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Requested by: ${massRequest.author}",
+                style: Theme
+                    .of(context)
+                    .primaryTextTheme
+                    .subtitle
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                _purposeMassValue(massRequest.purposeMass ?? ""),
+                overflow: TextOverflow.ellipsis,
+                style: Theme
+                    .of(context)
+                    .primaryTextTheme
+                    .title,
+                maxLines: 1,
+              ),
+              Text(
+                massRequest.name ?? "",
+                overflow: TextOverflow.ellipsis,
+                style: Theme
+                    .of(context)
+                    .primaryTextTheme
+                    .title,
+                maxLines: 1,
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  _updateRequest(MassRequest massRequest) async {
+    final userId =
+    await locator<AuthenticationService>().getUserId().catchError((e) {
+//      throw Exception("Retrieving user id error. $e");
+      debugPrint("Retrieving user id error. $e");
+    });
+
+    if (userId == null || userId == "") {
+      debugPrint("Retrieving user id error.");
+      return false;
+    }
+
+    var success = false;
+    Map<String, String> fieldsValue = {
+      "id": "${massRequest.id}",
+      "name": "${massRequest.name}",
+      "purpose_mass": "${massRequest.purposeMass}",
+      "dt_offered": "${massRequest.dtOffered}",
+      "time_offered": massRequest.timeOffered,
+      "status": "3",
+    };
+    fieldsValue.putIfAbsent("user_id", () => userId);
+    Map<String, String> casted = fieldsValue.cast();
+    final url =
+        "https://api.mountcarmel.ph/mass_request/update/id/${massRequest.id}";
+    final headers = {"Content-type": "application/x-www-form-urlencoded"};
+    debugPrint("$casted");
+    debugPrint(url);
+    locator<CrudService>().put(url, body: casted, headers: headers).then(
+      ((value) {
+        debugPrint("$value");
+        success = value;
+      }),
+    ).catchError(
+          (e) {
+        debugPrint("$e");
+        success = false;
+      },
+    );
+    return success;
   }
 }

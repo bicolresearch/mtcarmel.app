@@ -32,7 +32,11 @@ class ServiceNumericFormField extends ServiceFormCommon
           FormBuilderTextField(
             attribute: churchFormField.attribute,
             decoration: InputDecoration(
-                helperStyle: Theme.of(context).primaryTextTheme.subtitle),
+                helperStyle: Theme.of(context).primaryTextTheme.subtitle,
+                hintText: (churchFormField.hint == null ||
+                        churchFormField.hint.isEmpty)
+                    ? ""
+                    : churchFormField.hint),
             validators: _validators(),
             style: Theme.of(context).primaryTextTheme.title,
             textAlign: TextAlign.center,
@@ -53,26 +57,23 @@ class ServiceNumericFormField extends ServiceFormCommon
     if (churchFormField.validators.isRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (churchFormField.validators.minValue != null
-    )
+    if (churchFormField.validators.minValue != null)
       try {
         validators.add(FormBuilderValidators.min(
             int.tryParse(churchFormField.validators.minValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (churchFormField.validators.maxValue != null
-    )
+    if (churchFormField.validators.maxValue != null)
       try {
         validators.add(FormBuilderValidators.max(
             int.tryParse(churchFormField.validators.maxValue)));
       } catch (e) {
         print("not an integer");
       }
-    if (churchFormField.errorText != null
-    )
-      validators.add(FormBuilderValidators.required(
-          errorText: churchFormField.errorText));
+    if (churchFormField.errorText != null)
+      validators.add(
+          FormBuilderValidators.required(errorText: churchFormField.errorText));
 
     return validators;
   }

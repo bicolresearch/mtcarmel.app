@@ -34,7 +34,8 @@ class ServiceMultilineTextField extends ServiceFormCommon
               contentPadding: EdgeInsets.symmetric(vertical: 8.0),
               border: OutlineInputBorder(),
               alignLabelWithHint: false,
-              hintText: "Write here..."
+              hintText: (churchFormField.hint==null || churchFormField.hint.isEmpty)?"Write here...":
+              churchFormField.hint
             ),
             validators: _validators(),
             style: Theme.of(context).primaryTextTheme.title,

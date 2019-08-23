@@ -31,14 +31,17 @@ class ServicePlainTextField extends ServiceFormCommon
           FormBuilderTextField(
             attribute: churchFormField.attribute,
             decoration: InputDecoration(
-              helperStyle: Theme.of(context).primaryTextTheme.subtitle,
-            ),
+                helperStyle: Theme.of(context).primaryTextTheme.subtitle,
+                hintText: (churchFormField.hint == null ||
+                        churchFormField.hint.isEmpty)
+                    ? ""
+                    : churchFormField.hint),
             keyboardType: TextInputType.multiline,
             validators: _validators(),
             style: Theme.of(context).primaryTextTheme.title,
             textAlign: TextAlign.center,
             cursorColor: Colors.brown,
-            maxLines: int.tryParse(churchFormField.maxLines??"1"),
+            maxLines: int.tryParse(churchFormField.maxLines ?? "1"),
           ),
         ],
       ),

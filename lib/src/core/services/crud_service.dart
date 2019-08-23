@@ -48,9 +48,10 @@ class CrudService {
     )
         .catchError((e) => {throw e});
     print(response.body);
+    print(response.statusCode);
     if (response == null) return false;
 
-    if (response.statusCode == 201)
+    if (response.statusCode == 200)
       return true;
     else
       throw Exception("Error patching data");
@@ -70,9 +71,10 @@ class CrudService {
     )
         .catchError((e) => {throw e});
     print(response.body);
+    print(response.statusCode);
     if (response == null) return false;
 
-    if (response.statusCode == 201)
+    if (response.statusCode == 200)
       return true;
     else
       throw Exception("Error putting data");
