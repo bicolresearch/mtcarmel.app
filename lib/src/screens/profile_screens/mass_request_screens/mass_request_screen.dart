@@ -166,7 +166,8 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
   Widget slideHorizontalBackground(DismissDirection direction) {
     return Container(
       color: Colors.red,
-      child: Align(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
           mainAxisAlignment: (direction == DismissDirection.endToStart)
               ? MainAxisAlignment.end
