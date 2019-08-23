@@ -2,40 +2,29 @@
 *  Filename    :   prayer_requested_detail_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-20 18:35 by Detective Conan
-*  Updated     :   2019-08-20 18:35 by Detective Conan 
-*  Changes     :
+*  Updated     :   2019-08-23 10:29 by Detective conan
+*  Changes     :   converted to statelessWidget. Added massPurpose argument to
+*                  the constructor.
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/core/services/selection_service.dart';
-import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
-class MassRequestedDetailScreen extends StatefulWidget {
+class MassRequestedDetailScreen extends StatelessWidget {
   @required
   final MassRequest massRequest;
+  @required
+  final String massPurpose;
 
-  const MassRequestedDetailScreen({Key key, this.massRequest})
+  const MassRequestedDetailScreen({Key key, this.massRequest, this.massPurpose})
       : assert(massRequest != null),
         super(key: key);
 
   @override
-  _MassRequestedDetailScreenState createState() =>
-      _MassRequestedDetailScreenState();
-}
-
-class _MassRequestedDetailScreenState extends State<MassRequestedDetailScreen> {
-  static const String _MASS_REQUEST_SELECTION_API =
-      "${AppConstants.API_BASE_URL}purpose_mass/";
-
-  String _purposeMassValue = "";
-
-  @override
   Widget build(BuildContext context) {
     DateTime datePosted =
-        DateTime.parse("${widget.massRequest.postedOn ?? "01-01-2019"}");
+        DateTime.parse("${massRequest.postedOn ?? "01-01-2019"}");
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -67,7 +56,7 @@ class _MassRequestedDetailScreenState extends State<MassRequestedDetailScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                          "Requested by: ${widget.massRequest.author}",
+                          "Requested by: ${massRequest.author}",
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle
@@ -89,7 +78,7 @@ class _MassRequestedDetailScreenState extends State<MassRequestedDetailScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                          "Purpose Mass: $_purposeMassValue",
+                          "Purpose Mass: $massPurpose",
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle
@@ -98,7 +87,7 @@ class _MassRequestedDetailScreenState extends State<MassRequestedDetailScreen> {
                         ),
                       ),
                       Text(
-                        widget.massRequest.name ?? "",
+                        massRequest.name ?? "",
                         style: Theme.of(context).primaryTextTheme.title,
                       ),
                     ],
@@ -112,44 +101,5 @@ class _MassRequestedDetailScreenState extends State<MassRequestedDetailScreen> {
         ),
       ),
     );
-    ;
-  }
-
-  @override
-  void initState() {
-    _getPurposeMassEquivalent(widget.massRequest.purposeMass);
-    super.initState();
-  }
-
-  _getPurposeMassEquivalent(purposeMassId) async {
-    var selection;
-    try {
-      selection = await locator<SelectionService>()
-          .getSelection(_MASS_REQUEST_SELECTION_API);
-    } catch (e) {
-      debugPrint(e);
-    }
-
-    if (selection == null) return null;
-
-    if (this.mounted) {
-      String purposeMassValue = "";
-      for (var item in selection) {
-        if (item.id == purposeMassId) {
-          purposeMassValue = item.name;
-          break;
-        }
-      }
-      if (purposeMassValue != _purposeMassValue) {
-        setState(() {
-          _purposeMassValue = purposeMassValue;
-        });
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }
