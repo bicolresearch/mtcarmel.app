@@ -3,7 +3,7 @@
 *  Purpose     :	 Service for authenticating user
 *  Created     :   2019-07-08 14:23 by Detective Conan
 *  Updated     :   2019-08-27 11:02 by Detective conan
-*  Changes     :   Added saving RoleId when login. 
+*  Changes     :   Added saving RoleId when login.
 */
 
 import 'dart:async';
@@ -84,6 +84,10 @@ class AuthenticationService {
 
   Future<String> getUserId() async {
     return await SharedPreferencesHelper.getUserId();
+  }
+
+  Future<String> getRoleId() async{
+    return await SharedPreferencesHelper.getAuthenticationRoleId();
   }
 
   int _timeoutValue(TimeDurationEnum timeout) {

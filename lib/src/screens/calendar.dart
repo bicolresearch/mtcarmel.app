@@ -8,6 +8,7 @@
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mt_carmel_app/src/helpers/date_time_helper.dart';
 import '../presentations/mount_carmel_icons.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../constants/app_constants.dart';
@@ -151,7 +152,7 @@ class _CalendarPageState extends State<CalendarPage>
               //_buildTableCalendar(),
               _buildTableCalendarWithBuilders(),
               const SizedBox(height: 8.0),
-              _buildSeheduledEventLabel(),
+              _buildScheduledEventLabel(),
               Expanded(child: _buildEventList()),
               GestureDetector(
                   onTap: () => Navigator.pop(context),
@@ -205,9 +206,9 @@ class _CalendarPageState extends State<CalendarPage>
     return Container(
       padding: EdgeInsets.all(8.0),
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.brown, width: 2.0),
-        ),
+//        decoration: BoxDecoration(
+//          border: Border.all(color: Colors.brown, width: 2.0),
+//        ),
         child: TableCalendar(
           locale: 'en_US',
           events: _visibleEvents,
@@ -230,7 +231,8 @@ class _CalendarPageState extends State<CalendarPage>
           ),
           headerStyle: HeaderStyle(
             centerHeaderTitle: true,
-            formatButtonVisible: false,
+            formatButtonVisible: false, leftChevronIcon: Icon(Icons.chevron_left, color: Colors.brown,),
+            rightChevronIcon: Icon(Icons.chevron_right, color: Colors.brown,),
           ),
           builders: CalendarBuilders(
             selectedDayBuilder: (context, date, _) {
@@ -245,6 +247,8 @@ class _CalendarPageState extends State<CalendarPage>
                   decoration: BoxDecoration(
                     //color: Colors.brown,
                     border: Border.all(color: Colors.brown),
+                    shape: BoxShape.circle,
+
                   ),
                   child: Text(
                     '${date.day}',
@@ -263,6 +267,7 @@ class _CalendarPageState extends State<CalendarPage>
                 decoration: BoxDecoration(
                   //color: Colors.brown,
                   border: Border.all(color: Colors.blueAccent),
+                  shape: BoxShape.circle,
                 ),
                 child: Text(
                   '${date.day}',
@@ -270,31 +275,31 @@ class _CalendarPageState extends State<CalendarPage>
                 ),
               );
             },
-            markersBuilder: (context, date, events, holidays) {
-              final children = <Widget>[];
-
-              if (events.isNotEmpty) {
-                children.add(
-                  Positioned(
-                    right: 1,
-                    bottom: 1,
-                    child: _buildEventsMarker(date, events),
-                  ),
-                );
-              }
-
-              if (holidays.isNotEmpty) {
-                children.add(
-                  Positioned(
-                    right: -2,
-                    top: -2,
-                    child: _buildHolidaysMarker(),
-                  ),
-                );
-              }
-
-              return children;
-            },
+//            markersBuilder: (context, date, events, holidays) {
+//              final children = <Widget>[];
+//
+//              if (events.isNotEmpty) {
+//                children.add(
+//                  Positioned(
+//                    right: 1,
+//                    bottom: 1,
+//                    child: _buildEventsMarker(date, events),
+//                  ),
+//                );
+//              }
+//
+//              if (holidays.isNotEmpty) {
+//                children.add(
+//                  Positioned(
+//                    right: -2,
+//                    top: -2,
+//                    child: _buildHolidaysMarker(),
+//                  ),
+//                );
+//              }
+//
+//              return children;
+//            },
           ),
           onDaySelected: (date, events) {
             _onDaySelected(date, events);
@@ -365,19 +370,20 @@ class _CalendarPageState extends State<CalendarPage>
     );
   }
 
-  Widget _buildSeheduledEventLabel() {
+  Widget _buildScheduledEventLabel() {
+    final dateTimeHelper = DateTimeHelper();
     return Container(
       decoration: BoxDecoration(
-        color: Colors.brown[300],
-        border: Border.all(width: 0.8),
-        borderRadius: BorderRadius.circular(4.0),
+        color: Colors.brown,
+        borderRadius: BorderRadius.circular(12.0),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
       child: ListTile(
         leading: Icon(MountCarmelIcons.events, color: Colors.white),
         title: Text(
-          '${_selectedDay} scheduled events',
-          textAlign: TextAlign.center,
+          '${dateTimeHelper.monthString(_selectedDay)} ${dateTimeHelper.dayString(_selectedDay)}, ${_selectedDay.year} Scheduled Events',
+          textAlign: TextAlign.start,
+          style: Theme.of(context).primaryTextTheme.subtitle.copyWith(color: Colors.white),
         ),
       ),
     );

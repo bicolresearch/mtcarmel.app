@@ -57,40 +57,40 @@ class DateTimeHelper {
   String monthString(DateTime dateTime) {
     String month = dateTime.month.toString();
     switch (dateTime.month) {
-      case 0:
+      case 1:
         return "January";
         break;
-      case 1:
+      case 2:
         return "February";
         break;
-      case 2:
+      case 3:
         return "March";
         break;
-      case 3:
+      case 4:
         return "April";
         break;
-      case 4:
+      case 5:
         return "May";
         break;
-      case 5:
+      case 6:
         return "Jun";
         break;
-      case 6:
+      case 7:
         return "July";
         break;
-      case 7:
+      case 8:
         return "August";
         break;
-      case 8:
+      case 9:
         return "September";
         break;
-      case 9:
+      case 10:
         return "October";
         break;
-      case 10:
+      case 11:
         return "November";
         break;
-      case 11:
+      case 12:
         return "December";
         break;
     }
