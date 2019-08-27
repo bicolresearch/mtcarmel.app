@@ -16,6 +16,7 @@ class SharedPreferencesHelper {
   static const String _USERNAME_SHARED_PREFS_KEY = "usernamePrefsKey";
   static const String _PASSWORD_SHARED_PREFS_KEY = "passwordPrefsKey";
   static const String _AUTHENTICATION_TIME_KEY = "authenticationTimeKey";
+  static const String _AUTHENTICATION_ROLE_ID_KEY = "authenticationRoleIdKey";
 
   // first usage
   static Future<bool> getFirstUsageFlag() async {
@@ -80,5 +81,19 @@ class SharedPreferencesHelper {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return prefs.setString(_AUTHENTICATION_TIME_KEY, time);
+  }
+
+
+  // Authentication roleId
+  static Future<String> getAuthenticationRoleId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString(_AUTHENTICATION_ROLE_ID_KEY) ?? "";
+  }
+
+  static Future<void> setRoleId(String roleId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.setString(_AUTHENTICATION_ROLE_ID_KEY, roleId);
   }
 }

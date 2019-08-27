@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-07-26 11:00 by Detective conan
-*  Changes     :   Enhanced the scrolling.
+*  Updated     :   2019-08-27 10:58 by Detective conan
+*  Changes     :   Changed the dropdown selection of settings to bottomModalSheet
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -40,7 +40,6 @@ enum ProfileFilter {
 }
 
 class ProfileScreen extends StatefulWidget {
-
   // TODO Get the list from the API
   static const String BIBLE = "Holy Bible";
   static const String REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
@@ -488,80 +487,102 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(20.0)),
                       ),
                     ),
-                    PopupMenuButton<int>(
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 1,
-                          child: ListTile(
-                            title: Text(
-                              "Edit profile",
-                              style: Theme.of(context).primaryTextTheme.subhead,
-                            ),
-                            trailing: Icon(
-                              Icons.build,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: 2,
-                          child: ListTile(
-                            title: Text(
-                              "Logout",
-                              style: Theme.of(context).primaryTextTheme.subhead,
-                            ),
-                            trailing: Icon(
-                              Icons.exit_to_app,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: 3,
-                          child: ListTile(
-                            title: Text(
-                              "Cancel",
-                              style: Theme.of(context).primaryTextTheme.subhead,
-                            ),
-                            trailing: Icon(
-                              Icons.cancel,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                      initialValue: 1,
-                      onSelected: (value) {
-                        switch (value) {
-                          case 1:
-                            {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditProfileScreen()),
-                              );
-                            }
-                            break;
-                          case 2: //log-out
-
-                            if (this.mounted)
-                              setState(
-                                () {
-                                  _currentProfileFilter = ProfileFilter.Login;
-                                  locator<AuthenticationService>().logout();
-                                  _updateProfileScreen();
-                                },
-                              );
-                            break;
-                          default:
-                            break;
-                        }
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          backgroundColor: Colors.transparent,
+                          builder: (builder) {
+                            return Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                  color: Colors.white),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditProfileScreen()),
+                                        );
+//                                        Navigator.pop(context);
+                                      },
+                                      child: ListTile(
+                                        title: Text(
+                                          "Edit profile",
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .subhead,
+                                        ),
+                                        leading: Icon(
+                                          Icons.build,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (this.mounted)
+                                          setState(
+                                            () {
+                                              _currentProfileFilter =
+                                                  ProfileFilter.Login;
+                                              locator<AuthenticationService>()
+                                                  .logout();
+                                              _updateProfileScreen();
+                                            },
+                                          );
+                                        Navigator.pop(context);
+                                      },
+                                      child: ListTile(
+                                          title: Text(
+                                            "Logout",
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .subhead,
+                                          ),
+                                          leading: Icon(
+                                            Icons.exit_to_app,
+                                            color: Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: ListTile(
+                                        title: Text(
+                                          "Cancel",
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .subhead,
+                                        ),
+                                        leading: Icon(
+                                          Icons.cancel,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       },
-                      icon: Icon(
+                      child: Icon(
                         MountCarmelIcons.settings,
                         color: Colors.brown,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

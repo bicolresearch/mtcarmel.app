@@ -2,8 +2,8 @@
 *  Filename    :   authentication_service.dart
 *  Purpose     :	 Service for authenticating user
 *  Created     :   2019-07-08 14:23 by Detective Conan
-*  Updated     :   2019-07-11 13:27 by Detective conan
-*  Changes     :   Added check for login timeout and login status
+*  Updated     :   2019-08-27 11:02 by Detective conan
+*  Changes     :   Added saving RoleId when login. 
 */
 
 import 'dart:async';
@@ -42,6 +42,7 @@ class AuthenticationService {
 
     if (success) {
       await SharedPreferencesHelper.setUserId(_api.userAuthentication.id);
+      await SharedPreferencesHelper.setRoleId(_api.userAuthentication.roleId);
       await SharedPreferencesHelper.setAuthenticationTime(
           DateTime.now().toIso8601String());
       await SharedPreferencesHelper.setUsername(email);
@@ -52,6 +53,7 @@ class AuthenticationService {
 
   void logout() async {
     await SharedPreferencesHelper.setUserId("");
+    await SharedPreferencesHelper.setRoleId("");
     await SharedPreferencesHelper.setAuthenticationTime("");
     await SharedPreferencesHelper.setUsername("");
     await SharedPreferencesHelper.setPassword("");
