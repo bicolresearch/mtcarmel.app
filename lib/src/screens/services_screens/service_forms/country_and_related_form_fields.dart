@@ -2,8 +2,8 @@
 *  Filename    :   country_and_related_form_fields.dart
 *  Purpose     :	
 *  Created     :   2019-08-06 14:34 by Detective Conan
-*  Updated     :   2019-08-09 16:07 by Detective conan
-*  Changes     :   Implemented countries, provinces, cities and barangays bottom sheet
+*  Updated     :   2019-08-28 15:19 by Detective conan 
+*  Changes     :   Added validation for country, province, and city.
 */
 
 import 'package:flutter/material.dart';
@@ -145,9 +145,7 @@ class _CountryAndRelatedFormFieldsState
                   key: _fieldKeyCountry,
                   enabled: !_readOnly,
                   initialValue: _initialValue,
-                  validator: (val) {
-                    return null;
-                  },
+                  validator: (val) => FormBuilderValidators.required()(val),
                   onSaved: (val) {
                     final Country country = val;
                     _formState?.setAttributeValue(
@@ -202,9 +200,7 @@ class _CountryAndRelatedFormFieldsState
                   key: _fieldKeyProvince,
                   enabled: !_readOnly,
                   initialValue: _initialValue,
-                  validator: (val) {
-                    return null;
-                  },
+                  validator: (val) => FormBuilderValidators.required()(val),
                   onSaved: (val) {
                     if (val == null) return;
                     final Province province = val;
@@ -319,9 +315,7 @@ class _CountryAndRelatedFormFieldsState
                   key: _fieldKeyCity,
                   enabled: !_readOnly,
                   initialValue: _initialValue,
-                  validator: (val) {
-                    return null;
-                  },
+                  validator: (val) => FormBuilderValidators.required()(val),
                   onSaved: (val) {
                     if (val == null) return;
                     final City city = val;
@@ -689,5 +683,24 @@ class _CountryAndRelatedFormFieldsState
         print(e);
       },
     );
+  }
+
+  List<String Function(dynamic)> _validators() {
+    List<String Function(dynamic)> validators = [];
+
+    if (widget.churchFormField.validators == null) return validators;
+
+    if (widget.churchFormField.validators.isRequired == "true")
+      validators.add(FormBuilderValidators.required());
+
+    if (widget.churchFormField.validators.isNumeric != null &&
+        widget.churchFormField.validators.isNumeric == "true")
+      validators.add(FormBuilderValidators.numeric());
+
+    if (widget.churchFormField.errorText != null)
+      validators.add(FormBuilderValidators.required(
+          errorText: widget.churchFormField.errorText));
+
+    return validators;
   }
 }
