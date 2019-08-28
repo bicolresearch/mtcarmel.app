@@ -2,8 +2,8 @@
 *  Filename    :   bible_book_screen.dart
 *  Purpose     :
 *  Created     :   2019-07-15 09:45 by Detective Conan
-*	 Updated			:   04/08/2019 9:23 PM PM by Detective Conan
-*	 Changes			:   Adapt to new api's text format
+*  Updated     :   2019-08-28 10:38 by Detective conan
+*  Changes     :   Adjsuted the back button
 *  */
 
 import 'package:flutter/material.dart';
@@ -80,6 +80,7 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              SizedBox(height: 20.0),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
                 child: Text("King James Version",
@@ -125,6 +126,7 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
                 ),
               ),
               leftArrowBackButton(context: context),
+              SizedBox(height: 20.0),
             ],
           ),
         ),
