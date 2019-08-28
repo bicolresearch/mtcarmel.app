@@ -2,8 +2,8 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-07-23 12:57 by Detective conan
-*  Changes     :   Put ellipsis on overflow of post description
+*  Updated     :   2019-08-28 10:42 by Detective conan
+*  Changes     :   Moved the refreshing indicator on top of the screen.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -177,11 +177,10 @@ class _FeedScreenState extends State<FeedScreen> {
         key: _refreshIndicatorKey,
         onRefresh: _getFeedData,
         child: ListView.builder(
-          reverse: true,
           itemCount: _feed.data.length,
           itemBuilder: (context, index) {
             try {
-              return _feedContent(_feed.data[index]);
+              return _feedContent(_feed.data[_feed.data.length - (index+1)]);
             } catch (e) {
               debugPrint(e.toString());
             }
