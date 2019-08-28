@@ -2,8 +2,8 @@
 *	 Filename		 :	 feed_detail_screen.dart
 *	 Purpose		 :	 Displays the particular post
 *  Created		 :   2019-06-04 16:52:31 by Detective Conan
-*  Updated     :   2019-07-12 07:50 by Detective conan
-*  Changes     :   Modified according to new api fields
+*  Updated     :   2019-08-28 14:55 by Detective conan
+*  Changes     :   Changed api reference
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -56,11 +56,9 @@ class FeedDetailScreen extends StatelessWidget {
                         height: 250,
                         child: CachedNetworkImage(
                             key: Key(AppConstants.API_BASE_URL +
-                                postData.coverPhoto
-                                    .replaceAll("/", "")
-                                    .replaceAll("", "")),
+                                postData.mediaId),
                             imageUrl:
-                                AppConstants.API_BASE_URL + postData.coverPhoto,
+                                AppConstants.API_BASE_URL + postData.mediaPath,
                             placeholder: (context, url) => LoadingIndicator(),
                             errorWidget: (context, url, error) =>
                                 new Icon(Icons.error),

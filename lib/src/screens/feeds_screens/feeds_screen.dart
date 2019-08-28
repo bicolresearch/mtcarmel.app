@@ -2,8 +2,8 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-08-28 10:42 by Detective conan
-*  Changes     :   Moved the refreshing indicator on top of the screen.
+*  Updated     :   2019-08-28 14:54 by Detective conan
+*  Changes     :   Changed api reference.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -195,7 +195,7 @@ class _FeedScreenState extends State<FeedScreen> {
     if (_dataLoadingStatus == DataLoadingStatus.ConnectionFailed ||
         postData == null) return Container();
 
-    String url = AppConstants.API_BASE_URL + postData.coverPhoto;
+    String url = AppConstants.API_BASE_URL + postData.mediaPath;
     try {
       FadeInImage.assetNetwork(
         fadeInCurve: Curves.bounceIn,
@@ -257,7 +257,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   width: double.infinity,
                   height: 260,
                   child: CachedNetworkImage(
-                      key: Key(url.replaceAll("/", "").replaceAll(".", "")),
+                      key: Key(postData.mediaId),
                       imageUrl: url,
                       placeholder: (context, url) => LoadingIndicator(),
                       errorWidget: (context, url, error) =>

@@ -18,30 +18,38 @@ class Feed {
 
 @JsonSerializable()
 class PostData {
-  PostData(this.id, this.branchId, this.title, this.content, this.coverPhoto,
-      this.postedOn, this.author, this.updatedOn);
+  PostData(
+      this.id,
+      this.branchId,
+      this.mediaId,
+      this.title,
+      this.content,
+      this.dtCreated,
+      this.dtUpdated,
+      this.mediaPath,
+      this.createdBy,
+      this.updatedBy);
 
-  final String id;
-  final String title;
-  final String content;
-
-  @JsonKey(name: 'posted_on')
-  final String postedOn;
-
-  @JsonKey(name: 'branch_id')
+  final id;
+  @JsonKey(name: "branch_id")
   final String branchId;
-
-  @JsonKey(name: 'updated_on')
-  final String updatedOn;
-
-  @JsonKey(name: 'cover_photo')
-  final String coverPhoto;
-
-  final String author;
+  @JsonKey(name: "media_id")
+  final String mediaId;
+  final title;
+  final content;
+  @JsonKey(name: "dt_created")
+  final String dtCreated;
+  @JsonKey(name: "dt_updated")
+  final String dtUpdated;
+  @JsonKey(name: "media_path")
+  final String mediaPath;
+  @JsonKey(name: "created_by")
+  final String createdBy;
+  @JsonKey(name: "updated_by")
+  final String updatedBy;
 
   factory PostData.fromJson(Map<String, dynamic> json) =>
       _$PostDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$PostDataToJson(this);
 }
-

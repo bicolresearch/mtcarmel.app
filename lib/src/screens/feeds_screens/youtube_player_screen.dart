@@ -2,11 +2,12 @@
 *  Filename    :   youtube_player_screen.dart
 *  Purpose     :
 *  Created     :   2019-07-25 09:16 by Detective Conan
-*  Updated     :   2019-07-25 09:31 by Detective conan
-*  Changes     :   Added back button and removed appBar.
+*  Updated     :   2019-08-28 14:54 by Detective conan
+*  Changes     :   Returns the screen to portrait only upon exiting.
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -46,6 +47,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     super.dispose();
   }
 
@@ -70,6 +72,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
                       playedColor: Colors.red,
                       handleColor: Colors.redAccent,
                     ),
+                    isLive: true,
                     onPlayerInitialized: (controller) {
                       _controller = controller;
                       _controller.addListener(listener);
@@ -156,7 +159,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
             ),
           ),
           Container(
-            child: leftArrowBackButton(context: context),
+            child: _controller.value.isFullScreen?null:leftArrowBackButton(context: context),
             alignment: Alignment.bottomCenter,
             margin: EdgeInsets.only(bottom: 10.0),
           ),
