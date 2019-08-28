@@ -2,13 +2,14 @@
 *	Filename		:	<filename.extension>
 *	Purpose			:	
 * Created			: 2019-06-04 16:46:46 by Detective Conan
-*	Updated			:	2019-06-04 16:46:46 by Detective Conan 
-*	Changes			:
+*  Updated     :   2019-08-28 17:53 by Detective conan
+*  Changes     :   Removed borders. Added temporary regular schedules
 */
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mt_carmel_app/src/helpers/date_time_helper.dart';
+import 'package:mt_carmel_app/src/models/church_schedule.dart';
 import '../presentations/mount_carmel_icons.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../constants/app_constants.dart';
@@ -46,55 +47,56 @@ class _CalendarPageState extends State<CalendarPage>
     _selectedDay = DateTime.now();
     _events = {
       _selectedDay.subtract(Duration(days: 30)): [
-        'Event A0',
-        'Event B0',
-        'Event C0'
+        Event(DateTime.now(), "", ""),
+//        'Event A0',
+//        'Event B0',
+//        'Event C0'
       ],
-      _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
+      _selectedDay.subtract(Duration(days: 27)): [/*'Event A1'*/],
       _selectedDay.subtract(Duration(days: 20)): [
-        'Event A2',
-        'Event B2',
-        'Event C2',
-        'Event D2'
+//        'Event A2',
+//        'Event B2',
+//        'Event C2',
+//        'Event D2'
       ],
-      _selectedDay.subtract(Duration(days: 16)): ['Event A3', 'Event B3'],
+      _selectedDay.subtract(Duration(days: 16)): [/*'Event A3', 'Event B3'*/],
       _selectedDay.subtract(Duration(days: 10)): [
-        'Event A4',
-        'Event B4',
-        'Event C4'
+//        'Event A4',
+//        'Event B4',
+//        'Event C4'
       ],
       _selectedDay.subtract(Duration(days: 4)): [
-        'Event A5',
-        'Event B5',
-        'Event C5'
+//        'Event A5',
+//        'Event B5',
+//        'Event C5'
       ],
-      _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
+      _selectedDay.subtract(Duration(days: 2)): [/*'Event A6', 'Event B6'*/],
+      _selectedDay: [/*'Event A7', 'Event B7', 'Event C7', 'Event D7'*/],
       _selectedDay.add(Duration(days: 1)): [
-        'Event A8',
-        'Event B8',
-        'Event C8',
-        'Event D8'
+//        'Event A8',
+//        'Event B8',
+//        'Event C8',
+//        'Event D8'
       ],
       _selectedDay.add(Duration(days: 3)):
-          Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
+          Set.from([/*'Event A9', 'Event A9', 'Event B9'*/]).toList(),
       _selectedDay.add(Duration(days: 7)): [
-        'Event A10',
-        'Event B10',
-        'Event C10'
+//        'Event A10',
+//        'Event B10',
+//        'Event C10'
       ],
       _selectedDay.add(Duration(days: 11)): ['Event A11', 'Event B11'],
       _selectedDay.add(Duration(days: 17)): [
-        'Event A12',
-        'Event B12',
-        'Event C12',
-        'Event D12'
+//        'Event A12',
+//        'Event B12',
+//        'Event C12',
+//        'Event D12'
       ],
-      _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
+      _selectedDay.add(Duration(days: 22)): [/*'Event A13', 'Event B13'*/],
       _selectedDay.add(Duration(days: 26)): [
-        'Event A14',
-        'Event B14',
-        'Event C14'
+//        'Event A14',
+//        'Event B14',
+//        'Event C14'
       ],
     };
 
@@ -204,7 +206,7 @@ class _CalendarPageState extends State<CalendarPage>
   // More advanced TableCalendar configuration (using Builders & Styles)
   Widget _buildTableCalendarWithBuilders() {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(2.0),
       child: Container(
 //        decoration: BoxDecoration(
 //          border: Border.all(color: Colors.brown, width: 2.0),
@@ -239,7 +241,7 @@ class _CalendarPageState extends State<CalendarPage>
               return FadeTransition(
                 opacity: Tween(begin: 0.0, end: 1.0).animate(_controller),
                 child: Container(
-                  margin: const EdgeInsets.all(4.0),
+                  margin: const EdgeInsets.all(2.0),
                   padding: const EdgeInsets.only(top: 5.0, left: 6.0),
                   //color: Colors.brown[500],
                   width: 100,
@@ -355,8 +357,10 @@ class _CalendarPageState extends State<CalendarPage>
       children: _selectedEvents
           .map((event) => Container(
                 decoration: BoxDecoration(
-                  border: Border.all(width: 0.8),
                   borderRadius: BorderRadius.circular(12.0),
+                    boxShadow: [
+                      BoxShadow(blurRadius: 0.50, color: Colors.white)
+                    ]
                 ),
                 margin:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -389,3 +393,34 @@ class _CalendarPageState extends State<CalendarPage>
     );
   }
 }
+
+
+class Event{
+  final DateTime dateTime;
+  final String eventName;
+  final String venue;
+
+  Event(this.dateTime, this.eventName, this.venue);
+}
+
+// TODO temporary
+final _regularSchedules = [
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","19:00:00","20:30:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","18:15:00","19:15:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","17:00:00","18:00:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","15:45:00","16:45:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","12:15:00","13:15:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","11:00:00","12:00:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","09:45:00","10:45:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","08:30:00","09:30:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","07:15:00","08:15:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Holy Mass", "Sunday","en","06:00:00","07:00:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+
+  ChurchSchedule("1", "1", "Confession", "Sunday","en","14:00:00","16:00:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Confession", "Saturday","en","17:00:00","17:00:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Confession", "Saturday","en","06:30:00","07:00:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Confession", "Weekday","en","14:15:00","16:00:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+  ChurchSchedule("1", "1", "Confession", "Weekday","en","14:15:00","16:00:00","2019-08-28 17:38:48.402","2019-08-28 17:38:48.402",null),
+
+
+];
