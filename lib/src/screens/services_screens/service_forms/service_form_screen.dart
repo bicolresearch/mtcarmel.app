@@ -2,8 +2,8 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*  Updated     :   2019-08-15 12:38 by Detective conan
-*  Changes     :   Added branch_id in fields.
+*  Updated     :   2019-08-29 11:16 by Detective conan
+*  Changes     :   Set auto-validation to false
 */
 
 import 'package:flutter/material.dart';
@@ -111,7 +111,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: FormBuilder(
                           key: _fbKey,
-                          autovalidate: true,
+                          autovalidate: false,
                           child: Column(
                             children: <Widget>[
                               for (var formField in widget.subModule.formFields)
