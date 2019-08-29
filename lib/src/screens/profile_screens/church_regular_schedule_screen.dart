@@ -2,8 +2,8 @@
 *	 Filename		 :	 church_regular_schedule_screen.dart
 *	 Purpose		 :	 Displays the different schedules of the church
 *  Created		 :   2019-06-14 09:42:18 by Detective Conan
-*  Updated     :   2019-08-29 10:50 by Detective conan
-*  Changes     :   Renamed class
+*  Updated     :   2019-08-29 12:02 by Detective conan
+*  Changes     :   Sorted the schedules. Changed the font colors.
 */
 
 import 'package:flutter/material.dart';
@@ -21,17 +21,16 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 
 class ChurchRegularScheduleScreen extends StatefulWidget {
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   ChurchRegularScheduleScreen();
 
   @override
-  _ChurchRegularScheduleScreenState createState() => _ChurchRegularScheduleScreenState();
+  _ChurchRegularScheduleScreenState createState() =>
+      _ChurchRegularScheduleScreenState();
 }
 
-class _ChurchRegularScheduleScreenState extends State<ChurchRegularScheduleScreen> {
-
+class _ChurchRegularScheduleScreenState
+    extends State<ChurchRegularScheduleScreen> {
   List<ChurchRegularSchedule> _churchScheduleList = [];
 
   List<ChurchRegularSchedule> _holyMassSchedule = [];
@@ -71,7 +70,7 @@ class _ChurchRegularScheduleScreenState extends State<ChurchRegularScheduleScree
         case "Holy Mass": // holy mass
           _holyMassSchedule.add(schedule);
           break;
-        case "Confession": //confesions
+        case "Confession": //confessions
           _confessionSchedule.add(schedule);
           break;
         case "Blessings": // Blessings
@@ -84,14 +83,16 @@ class _ChurchRegularScheduleScreenState extends State<ChurchRegularScheduleScree
           break;
       }
     }
+    _holyMassSchedule.sort((a, b) => DateTime.parse("2000-01-01 ${a.timeFrom}")
+        .compareTo(DateTime.parse("2000-01-01 ${b.timeFrom}")));
+    _confessionSchedule.sort((a, b) =>
+        DateTime.parse("2000-01-01 ${a.timeFrom}")
+            .compareTo(DateTime.parse("2000-01-01 ${b.timeFrom}")));
+    _blessingSchedule.sort((a, b) => DateTime.parse("2000-01-01 ${a.timeFrom}")
+        .compareTo(DateTime.parse("2000-01-01 ${b.timeFrom}")));
+    _liveMassSchedule.sort((a, b) => DateTime.parse("2000-01-01 ${a.timeFrom}")
+        .compareTo(DateTime.parse("2000-01-01 ${b.timeFrom}")));
   }
-
-//  Container(
-//  padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 0.0),
-//  child: Column(
-//  mainAxisAlignment: MainAxisAlignment.center,
-//  crossAxisAlignment: CrossAxisAlignment.center,
-//  children: <Widget>[
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +117,9 @@ class _ChurchRegularScheduleScreenState extends State<ChurchRegularScheduleScree
                             child: Text(
                               "Church Schedules",
                               style: Theme.of(context)
-                      .primaryTextTheme
-                      .title.copyWith(fontWeight : FontWeight.bold),
+                                  .primaryTextTheme
+                                  .title
+                                  .copyWith(fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -191,16 +193,15 @@ class _ChurchRegularScheduleScreenState extends State<ChurchRegularScheduleScree
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+          margin: EdgeInsets.symmetric(horizontal: 4.0, ),
           child: Column(
             children: <Widget>[
               Text(
                 "${schedules[0].name}",
-                style: TextStyle(
-                    color: Colors.brown,
-                    fontSize: 20.0,
-                    fontFamily: "Helvetica",
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .title
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
               lineWidget()
             ],
@@ -228,17 +229,16 @@ class _ChurchRegularScheduleScreenState extends State<ChurchRegularScheduleScree
 
   Widget _dayScheduleTable(context, List<ChurchRegularSchedule> schedules) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             "${schedules[0].day}",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontFamily: "Helvetica",
-                fontWeight: FontWeight.bold),
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subhead
+                .copyWith(fontWeight: FontWeight.bold),
           ),
           Container(
             child: ListView.builder(
@@ -250,12 +250,7 @@ class _ChurchRegularScheduleScreenState extends State<ChurchRegularScheduleScree
                   margin: EdgeInsets.symmetric(horizontal: 40.0),
                   child: Text(
                     "${schedules[index].timeFrom} - ${schedules[index].timeTo}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: "Helvetica",
-                      fontWeight: FontWeight.normal,
-                    ),
+                    style: Theme.of(context).primaryTextTheme.subhead,
                     textAlign: TextAlign.center,
                   ),
                 );
