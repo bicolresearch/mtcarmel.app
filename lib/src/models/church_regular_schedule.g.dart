@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'church_schedule.dart';
+part of 'church_regular_schedule.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ChurchSchedule _$ChurchScheduleFromJson(Map<String, dynamic> json) {
-  return ChurchSchedule(
+ChurchRegularSchedule _$ChurchScheduleFromJson(Map<String, dynamic> json) {
+  return ChurchRegularSchedule(
     json['id'] as String,
     json['branch_id'] as String,
     json['name'] as String,
@@ -21,7 +21,7 @@ ChurchSchedule _$ChurchScheduleFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ChurchScheduleToJson(ChurchSchedule instance) =>
+Map<String, dynamic> _$ChurchScheduleToJson(ChurchRegularSchedule instance) =>
     <String, dynamic>{
       'id': instance.id,
       'branch_id': instance.branchId,

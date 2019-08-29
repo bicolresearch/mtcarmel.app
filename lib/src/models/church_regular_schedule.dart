@@ -1,18 +1,18 @@
 /*
-*	 Filename		 :   church_schedule.dart
+*	 Filename		 :   church_regular_schedule.dart
 *	 Purpose		 :	 Model for the church schedules
 *  Created		 :   2019-06-14 09:26:49 by Detective Conan
-*  Updated     :   2019-07-24 15:17 by Detective conan
-*  Changes     :   Modified for the new api
+*  Updated     :   2019-08-29 10:48 by Detective conan
+*  Changes     :   Renamed
 */
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'church_schedule.g.dart';
+part 'church_regular_schedule.g.dart';
 
 @JsonSerializable()
-class ChurchSchedule {
-  ChurchSchedule(
+class ChurchRegularSchedule {
+  ChurchRegularSchedule(
     this.id,
     this.branchId,
     this.name,
@@ -41,7 +41,7 @@ class ChurchSchedule {
   final String updatedOn;
   final String author;
 
-  factory ChurchSchedule.fromJson(Map<String, dynamic> json) =>
+  factory ChurchRegularSchedule.fromJson(Map<String, dynamic> json) =>
       _$ChurchScheduleFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChurchScheduleToJson(this);

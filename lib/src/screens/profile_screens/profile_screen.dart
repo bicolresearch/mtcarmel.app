@@ -19,7 +19,7 @@ import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/church_schedule_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_screen.dart';
@@ -642,7 +642,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       case ProfileScreen.CONTACT_DETAILS:
         return ContactDetailScreen();
       case ProfileScreen.REGULAR_MASS_SCHEDULE:
-        return ChurchScheduleScreen();
+        return ChurchRegularScheduleScreen();
       case ProfileScreen.BIBLE:
         return BibleScreen(context);
       case ProfileScreen.LOCATION_MAP:

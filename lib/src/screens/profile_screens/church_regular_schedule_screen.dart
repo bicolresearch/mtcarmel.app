@@ -1,17 +1,17 @@
 /*
-*	 Filename		 :	 church_schedule_screen.dart
+*	 Filename		 :	 church_regular_schedule_screen.dart
 *	 Purpose		 :	 Displays the different schedules of the church
 *  Created		 :   2019-06-14 09:42:18 by Detective Conan
-*  Updated     :   2019-07-15 09:46 by Detective conan
-*  Changes     :   Replaced the textStyle constants with Inherited provider
+*  Updated     :   2019-08-29 10:50 by Detective conan
+*  Changes     :   Renamed class
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/models/church_schedule.dart';
-import 'package:mt_carmel_app/src/models/data_schedule.dart';
+import 'package:mt_carmel_app/src/models/church_regular_schedule.dart';
+import 'package:mt_carmel_app/src/models/data_regular_schedule.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'dart:async';
@@ -20,24 +20,24 @@ import 'dart:convert';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 
-class ChurchScheduleScreen extends StatefulWidget {
+class ChurchRegularScheduleScreen extends StatefulWidget {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  ChurchScheduleScreen();
+  ChurchRegularScheduleScreen();
 
   @override
-  _ChurchScheduleScreenState createState() => _ChurchScheduleScreenState();
+  _ChurchRegularScheduleScreenState createState() => _ChurchRegularScheduleScreenState();
 }
 
-class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
+class _ChurchRegularScheduleScreenState extends State<ChurchRegularScheduleScreen> {
 
-  List<ChurchSchedule> _churchScheduleList = [];
+  List<ChurchRegularSchedule> _churchScheduleList = [];
 
-  List<ChurchSchedule> _holyMassSchedule = [];
-  List<ChurchSchedule> _confessionSchedule = [];
-  List<ChurchSchedule> _blessingSchedule = [];
-  List<ChurchSchedule> _liveMassSchedule = [];
+  List<ChurchRegularSchedule> _holyMassSchedule = [];
+  List<ChurchRegularSchedule> _confessionSchedule = [];
+  List<ChurchRegularSchedule> _blessingSchedule = [];
+  List<ChurchRegularSchedule> _liveMassSchedule = [];
 
   var _isLoading = true;
   var _isJsonFailed = false;
@@ -54,7 +54,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
       setState(() {
         if (response.statusCode == 200) {
           final body = json.decode(response.body);
-          _churchScheduleList = DataSchedule.fromJson(body).data;
+          _churchScheduleList = DataRegularSchedule.fromJson(body).data;
           _sortSchedules();
         } else {
           print(response.statusCode);
@@ -66,7 +66,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
   }
 
   _sortSchedules() {
-    for (ChurchSchedule schedule in _churchScheduleList) {
+    for (ChurchRegularSchedule schedule in _churchScheduleList) {
       switch (schedule.name) {
         case "Holy Mass": // holy mass
           _holyMassSchedule.add(schedule);
@@ -163,13 +163,13 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
     ));
   }
 
-  Widget _scheduleTypeTable(context, List<ChurchSchedule> schedules) {
-    List<ChurchSchedule> sundaySchedules = [];
-    List<ChurchSchedule> saturdaySchedules = [];
-    List<ChurchSchedule> weekdaySchedules = [];
-    List<ChurchSchedule> everydaySchedules = [];
+  Widget _scheduleTypeTable(context, List<ChurchRegularSchedule> schedules) {
+    List<ChurchRegularSchedule> sundaySchedules = [];
+    List<ChurchRegularSchedule> saturdaySchedules = [];
+    List<ChurchRegularSchedule> weekdaySchedules = [];
+    List<ChurchRegularSchedule> everydaySchedules = [];
 
-    for (ChurchSchedule schedule in schedules) {
+    for (ChurchRegularSchedule schedule in schedules) {
       switch (schedule.day) {
         case "Sunday":
           sundaySchedules.add(schedule);
@@ -226,7 +226,7 @@ class _ChurchScheduleScreenState extends State<ChurchScheduleScreen> {
     );
   }
 
-  Widget _dayScheduleTable(context, List<ChurchSchedule> schedules) {
+  Widget _dayScheduleTable(context, List<ChurchRegularSchedule> schedules) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
