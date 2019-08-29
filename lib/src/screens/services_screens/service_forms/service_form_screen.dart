@@ -29,6 +29,8 @@ class ServiceFormScreen extends StatefulWidget {
 }
 
 class _ServiceFormScreenState extends State<ServiceFormScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   static final GlobalKey<FormBuilderState> _fbKey =
       GlobalKey<FormBuilderState>();
   bool _isScrolledToTheLast = false;
@@ -67,6 +69,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
         child: Column(
@@ -139,7 +142,16 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                         (success) async {
                           print(
                               "ServiceFormScreen._submit.then success=$success");
-                          if (!success) return;
+                          if (!success) {
+                            _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text(
+                                'Did not saved. Please input necessary fields.',
+                                textAlign: TextAlign.center,
+                              ),
+                              duration: Duration(seconds: 3),
+                            ),);
+                            return;
+                          }
 
                           final result = await Navigator.push(
                             context,

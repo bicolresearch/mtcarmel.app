@@ -56,13 +56,13 @@ class _TimeFormFieldState extends State<TimeFormField> {
             validator: (val) {
               final validators = _validators();
               for (int i = 0; i < validators.length; i++) {
-                if (validators[i](val) != null)
-                  return validators[i](val);
+                if (validators[i](val) != null) return validators[i](val);
               }
               return null;
             },
             onSaved: (val) {
-              _formState?.setAttributeValue(widget.churchFormField.attribute, val);
+              _formState?.setAttributeValue(
+                  widget.churchFormField.attribute, val);
             },
             builder: (FormFieldState<dynamic> field) {
               return InputDecorator(
@@ -81,8 +81,10 @@ class _TimeFormFieldState extends State<TimeFormField> {
                   onTap: () {
                     DatePicker.showTimePicker(context, showTitleActions: true,
                         onConfirm: (time) {
-                          _time = "${time.hour}:${time.minute}:${time.second.toString().padLeft(2, "0")}";
-                      _formState.value[widget.churchFormField.attribute] = _time;
+                      _time =
+                          "${time.hour}:${time.minute}:${time.second.toString().padLeft(2, "0")}";
+                      _formState.value[widget.churchFormField.attribute] =
+                          _time;
                       FocusScope.of(context).requestFocus(FocusNode());
                       field.didChange(_time);
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
@@ -136,18 +138,33 @@ class _TimeFormFieldState extends State<TimeFormField> {
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
 
-    if (widget.churchFormField.validators == null) return validators;
-
-    if (widget.churchFormField.validators.isRequired == "true")
+    if (widget.churchFormField.validatorIsRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (widget.churchFormField.validators.isNumeric != null &&
-        widget.churchFormField.validators.isNumeric == "true")
+    if (widget.churchFormField.validatorIsNumeric == "true") {
       validators.add(FormBuilderValidators.numeric());
-
+      if (widget.churchFormField.validatorMinValue != null)
+        try {
+          validators.add(FormBuilderValidators.min(
+              int.tryParse(widget.churchFormField.validatorMinValue)));
+        } catch (e) {
+          print("not an integer");
+        }
+      if (widget.churchFormField.validatorMaxValue != null)
+        try {
+          validators.add(FormBuilderValidators.max(
+              int.tryParse(widget.churchFormField.validatorMaxValue)));
+        } catch (e) {
+          print("not an integer");
+        }
+    }
     if (widget.churchFormField.errorText != null)
       validators.add(FormBuilderValidators.required(
           errorText: widget.churchFormField.errorText));
+
+    if (widget.churchFormField.validatorPattern != null)
+      validators.add(FormBuilderValidators.pattern(
+          widget.churchFormField.validatorPattern));
 
     return validators;
   }

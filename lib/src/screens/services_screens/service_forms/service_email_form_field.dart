@@ -47,9 +47,7 @@ class ServiceEmailFormField extends ServiceFormCommon
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
 
-    if (churchFormField.validators == null) return validators;
-
-    if (churchFormField.validators.isRequired == "true")
+    if (churchFormField.validatorIsRequired == "true")
       validators.add(FormBuilderValidators.required());
 
     return validators;

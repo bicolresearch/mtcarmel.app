@@ -50,30 +50,33 @@ class ServiceNumericFormField extends ServiceFormCommon
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
 
-    validators.add(FormBuilderValidators.numeric());
-
-    if (churchFormField.validators == null) return validators;
-
-    if (churchFormField.validators.isRequired == "true")
+    if (churchFormField.validatorIsRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (churchFormField.validators.minValue != null)
-      try {
-        validators.add(FormBuilderValidators.min(
-            int.tryParse(churchFormField.validators.minValue)));
-      } catch (e) {
-        print("not an integer");
-      }
-    if (churchFormField.validators.maxValue != null)
-      try {
-        validators.add(FormBuilderValidators.max(
-            int.tryParse(churchFormField.validators.maxValue)));
-      } catch (e) {
-        print("not an integer");
-      }
+    if (churchFormField.validatorIsNumeric == "true") {
+      validators.add(FormBuilderValidators.numeric());
+      if (churchFormField.validatorMinValue != null)
+        try {
+          validators.add(FormBuilderValidators.min(
+              int.tryParse(churchFormField.validatorMinValue)));
+        } catch (e) {
+          print("not an integer");
+        }
+      if (churchFormField.validatorMaxValue != null)
+        try {
+          validators.add(FormBuilderValidators.max(
+              int.tryParse(churchFormField.validatorMaxValue)));
+        } catch (e) {
+          print("not an integer");
+        }
+    }
     if (churchFormField.errorText != null)
       validators.add(
           FormBuilderValidators.required(errorText: churchFormField.errorText));
+
+    if (churchFormField.validatorPattern != null)
+      validators
+          .add(FormBuilderValidators.pattern(churchFormField.validatorPattern));
 
     return validators;
   }

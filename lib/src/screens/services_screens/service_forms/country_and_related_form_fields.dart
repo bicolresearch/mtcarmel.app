@@ -2,8 +2,8 @@
 *  Filename    :   country_and_related_form_fields.dart
 *  Purpose     :	
 *  Created     :   2019-08-06 14:34 by Detective Conan
-*  Updated     :   2019-08-28 15:19 by Detective conan 
-*  Changes     :   Added validation for country, province, and city.
+*  Updated     :   2019-08-29 10:26 by Detective conan
+*  Changes     :   Handled null object.
 */
 
 import 'package:flutter/material.dart';
@@ -149,7 +149,7 @@ class _CountryAndRelatedFormFieldsState
                   onSaved: (val) {
                     final Country country = val;
                     _formState?.setAttributeValue(
-                        "country_code", country.countryCode);
+                        "country_code", country?.countryCode??null);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -205,7 +205,7 @@ class _CountryAndRelatedFormFieldsState
                     if (val == null) return;
                     final Province province = val;
                     _formState?.setAttributeValue(
-                        "province_code", province.provinceCode);
+                        "province_code", province?.provinceCode??null);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -319,7 +319,7 @@ class _CountryAndRelatedFormFieldsState
                   onSaved: (val) {
                     if (val == null) return;
                     final City city = val;
-                    _formState?.setAttributeValue("city_code", city.cityCode);
+                    _formState?.setAttributeValue("city_code", city?.cityCode??null);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -380,7 +380,7 @@ class _CountryAndRelatedFormFieldsState
 
                     final Barangay barangay = val;
                     _formState?.setAttributeValue(
-                        "barangay_code", barangay.brgyCode);
+                        "barangay_code", barangay?.brgyCode??null);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -528,7 +528,7 @@ class _CountryAndRelatedFormFieldsState
     if (_fieldKeyBarangay.currentState != null) {
       _selectedBarangay = "Choose...";
       _barangays =
-          await _repository.getBarangayByCityCode(city.cityCode).catchError(
+          await _repository.getBarangayByCityCode(city?.cityCode).catchError(
         (e) {
           print(e);
           _barangays = [];
@@ -558,7 +558,7 @@ class _CountryAndRelatedFormFieldsState
       _selectedProvince = "Choose...";
       _provinces = [];
       _provinces = await _repository
-          .getProvinceByCountryCode(country.countryCode)
+          .getProvinceByCountryCode(country?.countryCode??null)
           .catchError(
         (e) {
           print(e);
@@ -591,7 +591,7 @@ class _CountryAndRelatedFormFieldsState
     if (_fieldKeyCity.currentState != null) {
       _selectedCity = "Choose...";
       _cities = await _repository
-          .getCityByProvinceCode(province.provinceCode)
+          .getCityByProvinceCode(province?.provinceCode??null)
           .catchError(
         (e) {
           print(e);
@@ -688,13 +688,11 @@ class _CountryAndRelatedFormFieldsState
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
 
-    if (widget.churchFormField.validators == null) return validators;
-
-    if (widget.churchFormField.validators.isRequired == "true")
+    if (widget.churchFormField.validatorIsRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (widget.churchFormField.validators.isNumeric != null &&
-        widget.churchFormField.validators.isNumeric == "true")
+    if (widget.churchFormField.validatorIsNumeric != null &&
+        widget.churchFormField.validatorIsNumeric == "true")
       validators.add(FormBuilderValidators.numeric());
 
     if (widget.churchFormField.errorText != null)

@@ -41,7 +41,8 @@ class _DateFormFieldState extends State<DateFormField> {
         children: <Widget>[
           Text(
             widget.churchFormField.labelText,
-            style: Theme.of(context)
+            style: Theme
+                .of(context)
                 .primaryTextTheme
                 .subhead
                 .copyWith(fontWeight: FontWeight.bold),
@@ -72,22 +73,38 @@ class _DateFormFieldState extends State<DateFormField> {
                   title: Text(
                     _date,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).primaryTextTheme.subhead,
+                    style: Theme
+                        .of(context)
+                        .primaryTextTheme
+                        .subhead,
                   ),
                   subtitle: Divider(),
                   onTap: () {
                     print("date");
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
-                        minTime: DateTime(1900, 1, 1),
-                        maxTime: DateTime(2050, 12, 12),
-                        onChanged: (date) {}, onConfirm: (date) {
-                      _formState.value[widget.churchFormField.attribute] =
-                          "${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}";
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      field.didChange("${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}");
-                      _date = "${dateToString(date)} ${date.day}, ${date.year}";
-                    }, currentTime: DateTime.now(), locale: LocaleType.en);
+                        minTime: widget.churchFormField.validatorMinDate == null
+                            ? DateTime(1900, 1, 1)
+                            : DateTime.parse(
+                            widget.churchFormField.validatorMinDate),
+                        maxTime: widget.churchFormField.validatorMaxDate == null
+                            ? DateTime.now().add(Duration(days: 365))
+                            : DateTime.parse(
+                            widget.churchFormField.validatorMaxDate),
+                        onChanged: (date) {},
+                        onConfirm: (date) {
+                          _formState.value[widget.churchFormField.attribute] =
+                          "${date.year}-${date.month.toString().padLeft(
+                              2, "0")}-${date.day.toString().padLeft(2, "0")}";
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          field.didChange("${date.year}-${date.month.toString()
+                              .padLeft(2, "0")}-${date.day.toString().padLeft(
+                              2, "0")}");
+                          _date = "${dateToString(date)} ${date.day}, ${date
+                              .year}";
+                        },
+                        currentTime: DateTime.now(),
+                        locale: LocaleType.en);
                   },
                 ),
               );
@@ -138,13 +155,10 @@ class _DateFormFieldState extends State<DateFormField> {
   List<String Function(dynamic)> _validators() {
     List<String Function(dynamic)> validators = [];
 
-    if (widget.churchFormField.validators == null) return validators;
-
-    if (widget.churchFormField.validators.isRequired == "true")
+    if (widget.churchFormField.validatorIsRequired == "true")
       validators.add(FormBuilderValidators.required());
 
-    if (widget.churchFormField.validators.isNumeric != null &&
-        widget.churchFormField.validators.isNumeric == "true")
+    if (widget.churchFormField.validatorIsNumeric == "true")
       validators.add(FormBuilderValidators.numeric());
 
     if (widget.churchFormField.errorText != null)

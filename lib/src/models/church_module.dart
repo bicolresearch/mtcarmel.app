@@ -56,15 +56,21 @@ class ChurchSubModule {
 @JsonSerializable()
 class ChurchFormField {
   ChurchFormField(
-      {this.attribute,
-      this.textFieldType,
-      this.value,
-      this.hint,
+      this.attribute,
       this.labelText,
-      this.validators,
+      this.hint,
+      this.value,
+      this.textFieldType,
+      this.validatorIsRequired,
+      this.validatorIsNumeric,
+      this.validatorMinValue,
+      this.validatorMaxValue,
+      this.validatorPattern,
+      this.validatorMinDate,
+      this.validatorMaxDate,
       this.selections,
       this.errorText,
-      this.maxLines});
+      this.maxLines);
 
   final String attribute;
   @JsonKey(name: "label_text")
@@ -73,7 +79,20 @@ class ChurchFormField {
   final String value;
   @JsonKey(name: "text_field_type")
   final String textFieldType;
-  final ChurchFormValidators validators;
+  @JsonKey(name: "validator_is_required")
+  final String validatorIsRequired;
+  @JsonKey(name: "validator_is_numeric")
+  final String validatorIsNumeric;
+  @JsonKey(name: "validator_min_value")
+  final String validatorMinValue;
+  @JsonKey(name: "validator_max_value")
+  final String validatorMaxValue;
+  @JsonKey(name: "validator_pattern")
+  final String validatorPattern;
+  @JsonKey(name: "validator_min_date")
+  final String validatorMinDate;
+  @JsonKey(name: "validatorMaxDate")
+  final String validatorMaxDate;
 
 //  final List<String> selections;
   final String selections;
@@ -86,26 +105,6 @@ class ChurchFormField {
       _$ChurchFormFieldFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChurchFormFieldToJson(this);
-}
-
-@JsonSerializable()
-class ChurchFormValidators {
-  ChurchFormValidators(
-      {this.isNumeric, this.isRequired, this.maxValue, this.minValue});
-
-  @JsonKey(name: "is_required")
-  final String isRequired;
-  @JsonKey(name: "is_numeric")
-  final String isNumeric;
-  @JsonKey(name: "min_value")
-  final String minValue;
-  @JsonKey(name: "max_value")
-  final String maxValue;
-
-  factory ChurchFormValidators.fromJson(Map<String, dynamic> json) =>
-      _$ChurchFormValidatorsFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ChurchFormValidatorsToJson(this);
 }
 
 @JsonSerializable()

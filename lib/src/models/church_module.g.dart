@@ -55,18 +55,21 @@ Map<String, dynamic> _$ChurchSubModuleToJson(ChurchSubModule instance) =>
 
 ChurchFormField _$ChurchFormFieldFromJson(Map<String, dynamic> json) {
   return ChurchFormField(
-    attribute: json['attribute'] as String,
-    textFieldType: json['text_field_type'] as String,
-    value: json['value'] as String,
-    hint: json['hint'] as String,
-    labelText: json['label_text'] as String,
-    validators: json['validators'] == null
-        ? null
-        : ChurchFormValidators.fromJson(
-            json['validators'] as Map<String, dynamic>),
-    selections: json['selections'] as String,
-    errorText: json['error_text'] as String,
-    maxLines: json['max_lines'] as String,
+    json['attribute'] as String,
+    json['label_text'] as String,
+    json['hint'] as String,
+    json['value'] as String,
+    json['text_field_type'] as String,
+    json['validator_is_required'] as String,
+    json['validator_is_numeric'] as String,
+    json['validator_min_value'] as String,
+    json['validator_max_value'] as String,
+    json['validator_pattern'] as String,
+    json['validator_min_date'] as String,
+    json['validatorMaxDate'] as String,
+    json['selections'] as String,
+    json['error_text'] as String,
+    json['max_lines'] as String,
   );
 }
 
@@ -77,28 +80,16 @@ Map<String, dynamic> _$ChurchFormFieldToJson(ChurchFormField instance) =>
       'hint': instance.hint,
       'value': instance.value,
       'text_field_type': instance.textFieldType,
-      'validators': instance.validators,
+      'validator_is_required': instance.validatorIsRequired,
+      'validator_is_numeric': instance.validatorIsNumeric,
+      'validator_min_value': instance.validatorMinValue,
+      'validator_max_value': instance.validatorMaxValue,
+      'validator_pattern': instance.validatorPattern,
+      'validator_min_date': instance.validatorMinDate,
+      'validatorMaxDate': instance.validatorMaxDate,
       'selections': instance.selections,
       'error_text': instance.errorText,
       'max_lines': instance.maxLines,
-    };
-
-ChurchFormValidators _$ChurchFormValidatorsFromJson(Map<String, dynamic> json) {
-  return ChurchFormValidators(
-    isNumeric: json['is_numeric'] as String,
-    isRequired: json['is_required'] as String,
-    maxValue: json['max_value'] as String,
-    minValue: json['min_value'] as String,
-  );
-}
-
-Map<String, dynamic> _$ChurchFormValidatorsToJson(
-        ChurchFormValidators instance) =>
-    <String, dynamic>{
-      'is_required': instance.isRequired,
-      'is_numeric': instance.isNumeric,
-      'min_value': instance.minValue,
-      'max_value': instance.maxValue,
     };
 
 ModuleReference _$ModuleReferenceFromJson(Map<String, dynamic> json) {
