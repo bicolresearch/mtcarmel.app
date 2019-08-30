@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/models/church_regular_schedule.dart';
-import 'package:mt_carmel_app/src/models/data_regular_schedule.dart';
+import 'package:mt_carmel_app/src/models/schedule.dart';
+import 'package:mt_carmel_app/src/models/data_schedule.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'dart:async';
@@ -31,12 +31,12 @@ class ChurchRegularScheduleScreen extends StatefulWidget {
 
 class _ChurchRegularScheduleScreenState
     extends State<ChurchRegularScheduleScreen> {
-  List<ChurchRegularSchedule> _churchScheduleList = [];
+  List<Schedule> _churchScheduleList = [];
 
-  List<ChurchRegularSchedule> _holyMassSchedule = [];
-  List<ChurchRegularSchedule> _confessionSchedule = [];
-  List<ChurchRegularSchedule> _blessingSchedule = [];
-  List<ChurchRegularSchedule> _liveMassSchedule = [];
+  List<Schedule> _holyMassSchedule = [];
+  List<Schedule> _confessionSchedule = [];
+  List<Schedule> _blessingSchedule = [];
+  List<Schedule> _liveMassSchedule = [];
 
   var _isLoading = true;
   var _isJsonFailed = false;
@@ -53,7 +53,7 @@ class _ChurchRegularScheduleScreenState
       setState(() {
         if (response.statusCode == 200) {
           final body = json.decode(response.body);
-          _churchScheduleList = DataRegularSchedule.fromJson(body).data;
+          _churchScheduleList = DataSchedule.fromJson(body).data;
           _sortSchedules();
         } else {
           print(response.statusCode);
@@ -65,7 +65,7 @@ class _ChurchRegularScheduleScreenState
   }
 
   _sortSchedules() {
-    for (ChurchRegularSchedule schedule in _churchScheduleList) {
+    for (Schedule schedule in _churchScheduleList) {
       switch (schedule.name) {
         case "Holy Mass": // holy mass
           _holyMassSchedule.add(schedule);
@@ -165,13 +165,13 @@ class _ChurchRegularScheduleScreenState
     ));
   }
 
-  Widget _scheduleTypeTable(context, List<ChurchRegularSchedule> schedules) {
-    List<ChurchRegularSchedule> sundaySchedules = [];
-    List<ChurchRegularSchedule> saturdaySchedules = [];
-    List<ChurchRegularSchedule> weekdaySchedules = [];
-    List<ChurchRegularSchedule> everydaySchedules = [];
+  Widget _scheduleTypeTable(context, List<Schedule> schedules) {
+    List<Schedule> sundaySchedules = [];
+    List<Schedule> saturdaySchedules = [];
+    List<Schedule> weekdaySchedules = [];
+    List<Schedule> everydaySchedules = [];
 
-    for (ChurchRegularSchedule schedule in schedules) {
+    for (Schedule schedule in schedules) {
       switch (schedule.day) {
         case "Sunday":
           sundaySchedules.add(schedule);
@@ -227,7 +227,7 @@ class _ChurchRegularScheduleScreenState
     );
   }
 
-  Widget _dayScheduleTable(context, List<ChurchRegularSchedule> schedules) {
+  Widget _dayScheduleTable(context, List<Schedule> schedules) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Column(

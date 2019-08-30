@@ -2,17 +2,16 @@
 *	Filename		:	<filename.extension>
 *	Purpose			:	
 * Created			: 2019-06-04 16:46:46 by Detective Conan
-*  Updated     :   2019-08-29 16:34 by Detective conan 
-*  Changes     :   Added methods for plotting of schedules in the callendar.
+*  Updated     :   2019-08-30 14:09 by Detective conan
+*  Changes     :   Added methods for adding of events.
 */
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mt_carmel_app/src/helpers/date_time_helper.dart';
-import 'package:mt_carmel_app/src/models/church_regular_schedule.dart';
+import 'package:mt_carmel_app/src/models/schedule.dart';
 import '../presentations/mount_carmel_icons.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../constants/app_constants.dart';
 
 // Example holidays
 final Map<DateTime, List> _holidays = {
@@ -36,39 +35,51 @@ class _CalendarPageState extends State<CalendarPage>
     with TickerProviderStateMixin {
   // TODO temporary
   final _regularSchedules = [
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "19:00:00",
-        "20:30:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "18:15:00",
-        "19:15:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "17:00:00",
-        "18:00:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "15:45:00",
-        "16:45:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "12:15:00",
-        "13:15:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "11:00:00",
-        "12:00:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "09:45:00",
-        "10:45:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "08:30:00",
-        "09:30:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "07:15:00",
-        "08:15:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Holy Mass", "Sunday", "en", "06:00:00",
-        "07:00:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Confession", "Sunday", "en", "14:00:00",
-        "16:00:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Confession", "Saturday", "en", "17:00:00",
-        "17:00:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Confession", "Saturday", "en", "06:30:00",
-        "07:00:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Confession", "Weekday", "en", "14:15:00",
-        "16:00:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    ChurchRegularSchedule("1", "1", "Confession", "Weekday", "en", "14:15:00",
-        "16:00:00", "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "19:00:00", "20:30:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "18:15:00", "19:15:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "17:00:00", "18:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "15:45:00", "16:45:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "12:15:00", "13:15:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "11:00:00", "12:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "09:45:00", "10:45:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "08:30:00", "09:30:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "07:15:00", "08:15:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Holy Mass", "Sunday", "en", "06:00:00", "07:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Confession", "Sunday", "en", "14:00:00", "16:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Confession", "Saturday", "en", "17:00:00", "17:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Confession", "Saturday", "en", "06:30:00", "07:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Confession", "Weekday", "en", "10:15:00", "13:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Confession", "Weekday", "en", "14:15:00", "16:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
+    Schedule("1", "1", "Prayer", "Everyday", "en", "18:15:00", "19:00:00",
+        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
   ];
 
   Map<String, List> _recurrentSchedules = {};
+
+  final Map<int, String> _days = {
+    1:"Monday",
+    2:"Tuesday",
+    3:"Wednesday",
+    4:"Thursday",
+    5:"Friday",
+    6:"Saturday",
+    7:"Sunday",
+  };
 
   DateTime _selectedDay;
   Map<DateTime, List> _events;
@@ -83,74 +94,10 @@ class _CalendarPageState extends State<CalendarPage>
     super.initState();
     _getRecurrentSchedules();
     _selectedDay = DateTime.now();
-    _events = {
-//      _selectedDay.subtract(Duration(days: 30)): [
-//        Event(DateTime.now(), "", ""),
-////        'Event A0',
-////        'Event B0',
-////        'Event C0'
-//      ],
-//      _selectedDay.subtract(Duration(days: 27)): [
-//        /*'Event A1'*/
-//      ],
-//      _selectedDay.subtract(Duration(days: 20)): [
-////        'Event A2',
-////        'Event B2',
-////        'Event C2',
-////        'Event D2'
-//      ],
-//      _selectedDay.subtract(Duration(days: 16)): [
-//        /*'Event A3', 'Event B3'*/
-//      ],
-//      _selectedDay.subtract(Duration(days: 10)): [
-////        'Event A4',
-////        'Event B4',
-////        'Event C4'
-//      ],
-//      _selectedDay.subtract(Duration(days: 4)): [
-////        'Event A5',
-////        'Event B5',
-////        'Event C5'
-//      ],
-//      _selectedDay.subtract(Duration(days: 2)): [
-//        /*'Event A6', 'Event B6'*/
-//      ],
-//      _selectedDay: [
-//        /*'Event A7', 'Event B7', 'Event C7', 'Event D7'*/
-//      ],
-//      _selectedDay.add(Duration(days: 1)): [
-////        'Event A8',
-////        'Event B8',
-////        'Event C8',
-////        'Event D8'
-//      ],
-//      _selectedDay.add(Duration(days: 3)): Set.from([
-//        /*'Event A9', 'Event A9', 'Event B9'*/
-//      ]).toList(),
-//      _selectedDay.add(Duration(days: 7)): [
-////        'Event A10',
-////        'Event B10',
-////        'Event C10'
-//      ],
-//      _selectedDay.add(Duration(days: 11)): ['Event A11', 'Event B11'],
-//      _selectedDay.add(Duration(days: 17)): [
-////        'Event A12',
-////        'Event B12',
-////        'Event C12',
-////        'Event D12'
-//      ],
-//      _selectedDay.add(Duration(days: 22)): [
-//        /*'Event A13', 'Event B13'*/
-//      ],
-//      _selectedDay.add(Duration(days: 26)): [
-////        'Event A14',
-////        'Event B14',
-////        'Event C14'
-//      ],
-    };
-    _events.addAll(_getVisibleRecurrentEvents(
+
+    _events = _getVisibleRecurrentEvents(
         _selectedDay.subtract(Duration(days: _selectedDay.day - 1)),
-        _selectedDay.add(Duration(days: 31 - _selectedDay.day))));
+        _selectedDay.add(Duration(days: 31 - _selectedDay.day)));
 
     _selectedEvents = _events[_selectedDay] ?? [];
     _visibleEvents = _events;
@@ -195,12 +142,19 @@ class _CalendarPageState extends State<CalendarPage>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        //padding: EdgeInsets.only(top: 30.0),
-        child: Scaffold(
-          body: Column(
+    return Container(
+//      padding: EdgeInsets.only(top: 30.0),0
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: 30.0),
+          child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               // Switch out 2 lines below to play with TableCalendar's settings
@@ -413,8 +367,10 @@ class _CalendarPageState extends State<CalendarPage>
 
   Widget _buildEventList() {
     return ListView(
-      children: _selectedEvents
-          .map((event) => Container(
+      children: _selectedEvents.map((event) {
+        print(event.runtimeType);
+        return (event.runtimeType == Schedule)
+            ? Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0),
                     boxShadow: [
@@ -424,11 +380,13 @@ class _CalendarPageState extends State<CalendarPage>
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
                   leading: Icon(MountCarmelIcons.events, color: Colors.brown),
-                  title: Text(event.toString()),
+                  title: Text(event.name),
+                  subtitle: Text("${event.timeFrom} - ${event.timeTo}"),
                   onTap: () => print('$event tapped!'),
                 ),
-              ))
-          .toList(),
+              )
+            : Container();
+      }).toList(),
     );
   }
 
@@ -456,11 +414,33 @@ class _CalendarPageState extends State<CalendarPage>
 
   void _getRecurrentSchedules() {
     for (var schedule in _regularSchedules) {
-      if (_recurrentSchedules.containsKey(schedule.day)) {
-        _recurrentSchedules[schedule.day].add(schedule);
-      } else {
-        _recurrentSchedules.putIfAbsent(schedule.day, () => [schedule]);
+      if (_days.values.contains(schedule.day))
+        _addSchedule(schedule, _recurrentSchedules, schedule.day);
+      else {
+        if (schedule.day == "Everyday") {
+          for (var day in _days.values)
+            _addSchedule(schedule, _recurrentSchedules, day);
+        }
+        if (schedule.day == "Weekday") {
+          for (var day in _days.values) {
+            if (day == "Sunday" || day == "Saturday") continue;
+
+            _addSchedule(schedule, _recurrentSchedules, day);
+          }
+        }
       }
+    }
+  }
+
+  _addSchedule(
+      Schedule schedule, Map<String, List> recurrentSchedules, String day) {
+    // check if the string is name of the day return if not.
+    if (!_days.values.contains(day)) return;
+
+    if (recurrentSchedules.containsKey(day)) {
+      recurrentSchedules[day].add(schedule);
+    } else {
+      recurrentSchedules.putIfAbsent(day, () => [schedule]);
     }
   }
 
@@ -472,109 +452,27 @@ class _CalendarPageState extends State<CalendarPage>
     for (int i = 0; i <= visibleDayCount; i++) {
       final iterationDate = date.add(Duration(days: i));
 
-      // Sundays
-      if (iterationDate.weekday == 7 &&
-          _recurrentSchedules.containsKey("Sunday")) {
-        if (recurrentEvents.containsKey(iterationDate))
-          recurrentEvents[iterationDate].add(_recurrentSchedules["Sunday"]);
-        else
-          recurrentEvents.putIfAbsent(
-              iterationDate, () => _recurrentSchedules["Sunday"]);
-      }
-      // Saturdays
-      if (iterationDate.weekday == 6 &&
-          _recurrentSchedules.containsKey("Saturday")) {
-        if (recurrentEvents.containsKey(iterationDate))
-          recurrentEvents[iterationDate].add(_recurrentSchedules["Saturday"]);
-        else
-          recurrentEvents.putIfAbsent(
-              iterationDate, () => _recurrentSchedules["Saturday"]);
+      if (_recurrentSchedules.containsKey(_days[iterationDate.weekday])) {
+        _addEvent(iterationDate, recurrentEvents,
+            _recurrentSchedules[_days[iterationDate.weekday]]);
       }
 
-//      // Mondays
-//      if (iterationDate.weekday == 1 &&
-//          _recurrentSchedules.containsKey("Monday")) {
-//        if (_regularSchedules.contains("Monday")) if (recurrentEvents
-//            .containsKey(iterationDate))
-//          recurrentEvents[iterationDate].add(_recurrentSchedules["Monday"]);
-//        else
-//          recurrentEvents.putIfAbsent(
-//              iterationDate, () => _recurrentSchedules["Monday"]);
-//      }
-//      // Tuesdays
-//      if (iterationDate.weekday == 2 &&
-//          _recurrentSchedules.containsKey("Tuesday")) {
-//        if (_regularSchedules.contains("Tuesday")) if (recurrentEvents
-//            .containsKey(iterationDate))
-//          recurrentEvents[iterationDate].add(_recurrentSchedules["Tuesday"]);
-//        else
-//          recurrentEvents.putIfAbsent(
-//              iterationDate, () => _recurrentSchedules["Tuesday"]);
-//      }
-//      // Wednesdays
-//      if (iterationDate.weekday == 3 &&
-//          _recurrentSchedules.containsKey("Wednesday")) {
-//        if (_regularSchedules.contains("Wednesday")) if (recurrentEvents
-//            .containsKey(iterationDate))
-//          recurrentEvents[iterationDate].add(_recurrentSchedules["Wednesday"]);
-//        else
-//          recurrentEvents.putIfAbsent(
-//              iterationDate, () => _recurrentSchedules["Wednesday"]);
-//      }
-//      // Thursdays
-//      if (iterationDate.weekday == 4 &&
-//          _recurrentSchedules.containsKey("Thursday")) {
-//        if (_regularSchedules.contains("Thursday")) if (recurrentEvents
-//            .containsKey(iterationDate))
-//          recurrentEvents[iterationDate].add(_recurrentSchedules["Thursday"]);
-//        else
-//          recurrentEvents.putIfAbsent(
-//              iterationDate, () => _recurrentSchedules["Thursday"]);
-//      }
-//      // Fridays
-//      if (iterationDate.weekday == 5 &&
-//          _recurrentSchedules.containsKey("Friday")) {
-//        if (_regularSchedules.contains("Friday")) if (recurrentEvents
-//            .containsKey(iterationDate))
-//          recurrentEvents[iterationDate].add(_recurrentSchedules["Friday"]);
-//        else
-//          recurrentEvents.putIfAbsent(
-//              iterationDate, () => _recurrentSchedules["Friday"]);
-//      }
-//      // Weekdays (Mon - Fri)
-//      if (_recurrentSchedules.containsKey("Weekday")) {
-//        if (iterationDate.weekday > 0 && iterationDate.weekday < 6) {
-//          if (_regularSchedules.contains("Weekday")) {
-//            if (recurrentEvents.containsKey(iterationDate))
-//              recurrentEvents[iterationDate]
-//                  .add(_recurrentSchedules["Weekday"]);
-//          } else
-//            recurrentEvents.putIfAbsent(
-//                iterationDate, () => _recurrentSchedules["Weekday"]);
-//        }
-//      }
-//
-      // Weekday
-      if (_recurrentSchedules.containsKey("Weekday")) {
-        if (recurrentEvents.containsKey(iterationDate))
-          recurrentEvents[iterationDate].add(_recurrentSchedules["Weekday"]);
-        else
-          recurrentEvents.putIfAbsent(iterationDate.subtract(Duration(days: 0)),
-                  () => _recurrentSchedules["Weekday"]);
-      }
-
-      // Everyday
-      if (_recurrentSchedules.containsKey("Everyday")) {
-        if (recurrentEvents.containsKey(iterationDate))
-          recurrentEvents[iterationDate].add(_recurrentSchedules["Everyday"]);
-        else
-          recurrentEvents.putIfAbsent(iterationDate.subtract(Duration(days: 0)),
-              () => _recurrentSchedules["Everyday"]);
-      }
     }
     print("${recurrentEvents.length}");
     return recurrentEvents;
   }
+
+  void _addEvent(DateTime iterationDate, Map<DateTime, List> events, List schedule) {
+
+      if (events.containsKey(iterationDate))
+        events[iterationDate]
+            .addAll(schedule);
+      else
+        events.putIfAbsent(
+            iterationDate, () => schedule);
+  }
+
+
 }
 
 class Event {
