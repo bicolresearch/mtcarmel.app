@@ -2,25 +2,24 @@
 *	Filename		:	<filename.extension>
 *	Purpose			:	
 * Created			: 2019-06-04 16:46:46 by Detective Conan
-*  Updated     :   2019-08-30 14:09 by Detective conan
-*  Changes     :   Added methods for adding of events.
+*  Updated     :   2019-08-30 16:18 by Detective conan
+*  Changes     :   Fetching regular church schedule from the server.
 */
+
+
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mt_carmel_app/src/core/services/regular_church_schedule_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/date_time_helper.dart';
 import 'package:mt_carmel_app/src/models/schedule.dart';
+import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import '../presentations/mount_carmel_icons.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-// Example holidays
-final Map<DateTime, List> _holidays = {
-//  DateTime(2019, 1, 1): ['New Year\'s Day'],
-//  DateTime(2019, 1, 6): ['Epiphany'],
-//  DateTime(2019, 2, 14): ['Valentine\'s Day'],
-//  DateTime(2019, 4, 21): ['Easter Sunday'],
-//  DateTime(2019, 4, 22): ['Easter Monday'],
-};
+final Map<DateTime, List> _holidays = {};
 
 class CalendarPage extends StatefulWidget {
   CalendarPage({Key key, this.title}) : super(key: key);
@@ -34,73 +33,34 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage>
     with TickerProviderStateMixin {
   // TODO temporary
-  final _regularSchedules = [
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "19:00:00", "20:30:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "18:15:00", "19:15:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "17:00:00", "18:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "15:45:00", "16:45:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "12:15:00", "13:15:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "11:00:00", "12:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "09:45:00", "10:45:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "08:30:00", "09:30:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "07:15:00", "08:15:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Holy Mass", "Sunday", "en", "06:00:00", "07:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Confession", "Sunday", "en", "14:00:00", "16:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Confession", "Saturday", "en", "17:00:00", "17:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Confession", "Saturday", "en", "06:30:00", "07:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Confession", "Weekday", "en", "10:15:00", "13:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Confession", "Weekday", "en", "14:15:00", "16:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-    Schedule("1", "1", "Prayer", "Everyday", "en", "18:15:00", "19:00:00",
-        "2019-08-28 17:38:48.402", "2019-08-28 17:38:48.402", null),
-  ];
+  var _regularSchedules = [];
 
   Map<String, List> _recurrentSchedules = {};
 
   final Map<int, String> _days = {
-    1:"Monday",
-    2:"Tuesday",
-    3:"Wednesday",
-    4:"Thursday",
-    5:"Friday",
-    6:"Saturday",
-    7:"Sunday",
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
+    7: "Sunday",
   };
 
   DateTime _selectedDay;
-  Map<DateTime, List> _events;
-  Map<DateTime, List> _visibleEvents;
-  Map<DateTime, List> _visibleHolidays;
+  Map<DateTime, List> _events = {};
+  Map<DateTime, List> _visibleEvents = {};
+  Map<DateTime, List> _visibleHolidays = {};
 
-  List _selectedEvents;
+  List _selectedEvents = [];
   AnimationController _controller;
+
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _getRecurrentSchedules();
     _selectedDay = DateTime.now();
-
-    _events = _getVisibleRecurrentEvents(
-        _selectedDay.subtract(Duration(days: _selectedDay.day - 1)),
-        _selectedDay.add(Duration(days: 31 - _selectedDay.day)));
-
-    _selectedEvents = _events[_selectedDay] ?? [];
-    _visibleEvents = _events;
     _visibleHolidays = _holidays;
 
     _controller = AnimationController(
@@ -109,6 +69,46 @@ class _CalendarPageState extends State<CalendarPage>
     );
 
     _controller.forward();
+
+    _regularSchedules =
+        locator<RegularChurchScheduleService>().regularChurchSchedules;
+    _initializeEvents();
+  }
+
+  _initializeEvents() async {
+    if (_regularSchedules.isEmpty) {
+      _regularSchedules = await locator<RegularChurchScheduleService>()
+          .getJsonData()
+          .catchError((e) {
+        debugPrint(e);
+        return;
+      });
+      if (this.mounted) {
+        setState(() {
+          _getRecurrentSchedules();
+          _events = _getVisibleRecurrentEvents(
+              _selectedDay.subtract(Duration(days: _selectedDay.day - 1)),
+              _selectedDay.add(Duration(days: 31 - _selectedDay.day)));
+
+          _selectedEvents = _events[_selectedDay] ?? [];
+          _visibleEvents = _events;
+          _isLoading = false;
+        });
+      }
+    } else {
+      if (this.mounted) {
+        setState(() {
+          _getRecurrentSchedules();
+          _events = _getVisibleRecurrentEvents(
+              _selectedDay.subtract(Duration(days: _selectedDay.day - 1)),
+              _selectedDay.add(Duration(days: 31 - _selectedDay.day)));
+
+          _selectedEvents = _events[_selectedDay] ?? [];
+          _visibleEvents = _events;
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   void _onDaySelected(DateTime day, List events) {
@@ -152,26 +152,33 @@ class _CalendarPageState extends State<CalendarPage>
     return Container(
 //      padding: EdgeInsets.only(top: 30.0),0
       child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 30.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              // Switch out 2 lines below to play with TableCalendar's settings
-              //-----------------------
-              //_buildTableCalendar(),
-              _buildTableCalendarWithBuilders(),
-              const SizedBox(height: 8.0),
-              _buildScheduledEventLabel(),
-              Expanded(child: _buildEventList()),
-              GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Container(
-                      padding: EdgeInsets.only(bottom: 20.0),
-                      child: Text('Back',
-                          style: Theme.of(context).primaryTextTheme.title))),
-            ],
-          ),
+        body: Column(
+          children: <Widget>[
+            _isLoading
+                ? LoadingIndicator()
+                : Container(
+                    padding: EdgeInsets.symmetric(vertical: 30.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        // Switch out 2 lines below to play with TableCalendar's settings
+                        //-----------------------
+                        //_buildTableCalendar(),
+                        _buildTableCalendarWithBuilders(),
+                        const SizedBox(height: 8.0),
+                        _buildScheduledEventLabel(),
+                      ],
+                    ),
+                  ),
+            Expanded(child: _buildEventList()),
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                padding: EdgeInsets.only(bottom: 20.0),
+                child: leftArrowBackButton(context: context),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -456,23 +463,18 @@ class _CalendarPageState extends State<CalendarPage>
         _addEvent(iterationDate, recurrentEvents,
             _recurrentSchedules[_days[iterationDate.weekday]]);
       }
-
     }
     print("${recurrentEvents.length}");
     return recurrentEvents;
   }
 
-  void _addEvent(DateTime iterationDate, Map<DateTime, List> events, List schedule) {
-
-      if (events.containsKey(iterationDate))
-        events[iterationDate]
-            .addAll(schedule);
-      else
-        events.putIfAbsent(
-            iterationDate, () => schedule);
+  void _addEvent(
+      DateTime iterationDate, Map<DateTime, List> events, List schedule) {
+    if (events.containsKey(iterationDate))
+      events[iterationDate].addAll(schedule);
+    else
+      events.putIfAbsent(iterationDate, () => schedule);
   }
-
-
 }
 
 class Event {
