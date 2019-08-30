@@ -2,8 +2,8 @@
 *	 Filename		 :	 transparency_screen.dart
 *	 Purpose		 :	 Displays the recent donation transactions
 *  Created		 :   2019-06-05 09:10:50 Detective Conan
-*  Updated     :   2019-07-26 10:58 by Detective conan
-*  Changes     :   enhanced the scrolling.
+*  Updated     :   2019-08-30 16:54 by Detective conan
+*  Changes     :   Modified coverPhot with mediPath
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -222,7 +222,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
 
   Widget _transactionContent(Donation donation) {
     if (_isJsonFailed) return Container();
-    String url = AppConstants.API_BASE_URL + donation.profilePhoto;
+    String url = AppConstants.API_BASE_URL + donation.mediaPath;
     if (Image.network(url) != null) {
       return Container(
         alignment: Alignment.center,
@@ -251,7 +251,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
             Container(
               width: 35.0,
               child: Text(
-                timePassTransaction(DateTime.parse("${donation.postedOn}")),
+                timePassTransaction(DateTime.parse("${donation.dtCreated}")),
                 style: TextStyle(fontSize: 12.0),
               ),
             ),

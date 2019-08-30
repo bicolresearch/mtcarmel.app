@@ -6,7 +6,7 @@ part of 'schedule.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Schedule _$ChurchScheduleFromJson(Map<String, dynamic> json) {
+Schedule _$ScheduleFromJson(Map<String, dynamic> json) {
   return Schedule(
     json['id'] as String,
     json['branch_id'] as String,
@@ -21,8 +21,7 @@ Schedule _$ChurchScheduleFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ChurchScheduleToJson(Schedule instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ScheduleToJson(Schedule instance) => <String, dynamic>{
       'id': instance.id,
       'branch_id': instance.branchId,
       'name': instance.name,

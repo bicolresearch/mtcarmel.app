@@ -12,9 +12,8 @@ DataSchedule _$DataScheduleFromJson(Map<String, dynamic> json) {
     json['recordsTotal'] as int,
     json['recordsFiltered'] as int,
     (json['data'] as List)
-        ?.map((e) => e == null
-            ? null
-            : Schedule.fromJson(e as Map<String, dynamic>))
+        ?.map((e) =>
+            e == null ? null : Schedule.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }

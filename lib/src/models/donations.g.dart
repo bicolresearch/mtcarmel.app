@@ -37,24 +37,30 @@ Map<String, dynamic> _$TotalDonationsToJson(TotalDonations instance) =>
 
 Donation _$DonationFromJson(Map<String, dynamic> json) {
   return Donation(
-    json['id'] as String,
+    json['id'],
     json['branch_id'] as String,
+    json['amount'],
+    json['donation_type'] as String,
     json['first_name'] as String,
     json['last_name'] as String,
-    json['amount'] as String,
-    json['posted_on'] as String,
-    json['donation_type'] as String,
-    json['profile_photo'] as String,
+    json['media_path'] as String,
+    json['dt_created'] as String,
+    json['dt_updated'] as String,
+    json['created_by'] as String,
+    json['updated_by'] as String,
   );
 }
 
 Map<String, dynamic> _$DonationToJson(Donation instance) => <String, dynamic>{
       'id': instance.id,
       'branch_id': instance.branchId,
+      'amount': instance.amount,
+      'donation_type': instance.donationType,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
-      'amount': instance.amount,
-      'posted_on': instance.postedOn,
-      'donation_type': instance.donationType,
-      'profile_photo': instance.profilePhoto,
+      'media_path': instance.mediaPath,
+      'dt_created': instance.dtCreated,
+      'dt_updated': instance.dtUpdated,
+      'created_by': instance.createdBy,
+      'updated_by': instance.updatedBy,
     };

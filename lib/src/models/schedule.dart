@@ -2,8 +2,8 @@
 *	 Filename		 :   schedule.dart
 *	 Purpose		 :	 Model for the church schedules
 *  Created		 :   2019-06-14 09:26:49 by Detective Conan
-*  Updated     :   2019-08-29 10:48 by Detective conan
-*  Changes     :   Renamed
+*  Updated     :   2019-08-30 16:52 by Detective conan
+*  Changes     :   Modified parameters.
 */
 
 import 'package:json_annotation/json_annotation.dart';
@@ -42,8 +42,8 @@ class Schedule{
   final String author;
 
   factory Schedule.fromJson(Map<String, dynamic> json) =>
-      _$ChurchScheduleFromJson(json);
+      _$ScheduleFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ChurchScheduleToJson(this);
+  Map<String, dynamic> toJson() => _$ScheduleToJson(this);
 }
 
