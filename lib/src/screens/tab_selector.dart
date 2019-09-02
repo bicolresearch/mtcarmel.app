@@ -1,10 +1,10 @@
 /*
-*  Filename    :   bottom_tab_navigator.dart
+*  Filename    :   tab_selector.dart
 *  Purpose     :	 Responsible for navigation from different tabs.
 *  Created     :   2019-07-05 10:21 by Detective Conan
-*  Updated     :   2019-07-26 15:23 by Detective conan
-*  Changes     :   Added dialog when pressing the back button of android
-*/
+*	 Updated			:   02/09/2019 9:29 AM PM by Detective Conan
+*	 Changes			:   Renamed class.
+*	 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -14,12 +14,12 @@ import 'package:mt_carmel_app/src/screens/send_help_screens/send_help_screen.dar
 import 'package:mt_carmel_app/src/screens/services_screens/services_screen.dart';
 import 'package:mt_carmel_app/src/screens/transparency_screens/transparency_screen.dart';
 
-class BottomTabNavigator extends StatefulWidget {
+class TabSelector extends StatefulWidget {
   @override
   _State createState() => _State();
 }
 
-class _State extends State<BottomTabNavigator> {
+class _State extends State<TabSelector> {
   int _cIndex = 0;
   Widget _body = Container();
 
@@ -53,7 +53,6 @@ class _State extends State<BottomTabNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    const double iconBarTopPadding = 12.0;
     return WillPopScope(
       child: Scaffold(
         body: _body,
@@ -64,47 +63,32 @@ class _State extends State<BottomTabNavigator> {
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: iconBarTopPadding),
-                child: Icon(
+              icon: Icon(
                   MountCarmelIcons.home,
-                ),
               ),
               title: new Text(''),
             ),
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: iconBarTopPadding),
-                child: Icon(
+              icon: Icon(
                   MountCarmelIcons.sendhelp,
-                ),
               ),
               title: new Text(''),
             ),
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: iconBarTopPadding),
-                child: Icon(
+              icon: Icon(
                   MountCarmelIcons.services,
-                ),
               ),
               title: new Text(''),
             ),
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: iconBarTopPadding),
-                child: Icon(
+              icon: Icon(
                   MountCarmelIcons.transparency,
-                ),
               ),
               title: new Text(''),
             ),
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: iconBarTopPadding),
-                child: Icon(
+              icon: Icon(
                   MountCarmelIcons.profile,
-                ),
               ),
               title: new Text(''),
             )

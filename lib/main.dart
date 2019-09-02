@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/screens/bottom_tab_navigator.dart';
+import 'package:mt_carmel_app/src/screens/tab_selector.dart';
 import 'package:mt_carmel_app/src/screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/utils/development_production_enum.dart';
 import 'package:mt_carmel_app/src/widgets/app_theme_data.dart';
@@ -118,6 +118,6 @@ class _PageState extends State<Page> {
     if (isFirstUsage) {
       return IntroScreen();
     }
-    return BottomTabNavigator();
+    return TabSelector();
   }
 }

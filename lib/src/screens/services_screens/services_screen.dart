@@ -2,8 +2,8 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*  Updated     :   2019-08-16 17:08 by Detective conan
-*  Changes     :   Removed the switch for comparing the name of modules for navigation.
+*	 Updated			:   02/09/2019 9:31 AM PM by Detective Conan
+*	 Changes			:   Removed unnecessary class. 
 */
 
 import 'package:flutter/material.dart';
@@ -105,10 +105,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               key: _scaffoldKey,
               body: Column(
                 children: <Widget>[
-                  //
-                  GestureDetector(
-                      onTap: _scrollListener, child: ServiceHeader()),
-
+                  ServiceHeader(),
                   _arrowMoreUp,
                   Expanded(
                     child: Container(
@@ -260,32 +257,5 @@ class _ServicesScreenState extends State<ServicesScreen> {
       print(e.toString());
       print("error in _scrolListener");
     }
-  }
-}
-
-class NoService extends StatelessWidget {
-  const NoService({Key key, this.moduleReference}) : super(key: key);
-  final ModuleReference moduleReference;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Spacer(),
-            Text(
-              "No service for ${moduleReference.name}",
-              style: Theme.of(context).primaryTextTheme.subhead,
-            ),
-            Spacer(),
-            Container(
-              margin: const EdgeInsets.only(bottom: 30.0),
-              child: leftArrowBackButton(context: context),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }

@@ -2,8 +2,8 @@
 *  Filename    :   module_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-01 16:31 by Detective Conan
-*  Updated     :   2019-08-16 17:35 by Detective conan
-*  Changes     :   Added snackbar when no sub-services for selected module
+*	 Updated			:   02/09/2019 9:30 AM PM by Detective Conan
+*	 Changes			:   Margins set to const.
 */
 
 import 'package:flutter/material.dart';
@@ -77,7 +77,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
                                   child: Column(
                                     children: <Widget>[
                                       Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 20.0, horizontal: 70.0),
                                         child: Text(
                                           _churchModule
@@ -89,7 +89,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
                                         ),
                                       ),
                                       Container(
-                                          margin: EdgeInsets.symmetric(
+                                          margin: const EdgeInsets.symmetric(
                                               horizontal: 50.0),
                                           child: lineWidget()),
                                     ],

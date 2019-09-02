@@ -17,7 +17,7 @@ class ModuleReferenceTile extends StatelessWidget {
 
   final ModuleReference moduleReference;
 
-  ModuleReferenceTile({BuildContext context, this.moduleReference});
+  const ModuleReferenceTile({BuildContext context, this.moduleReference});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,6 @@ class ModuleReferenceTile extends StatelessWidget {
                 : Container(
               height: 60.0,
               child: CachedNetworkImage(
-//                  key: Key(moduleReference.coverPhoto
-//                      .replaceAll("/", "")
-//                      .replaceAll(".", "")),
                   imageUrl: AppConstants.API_BASE_URL +
                       moduleReference.coverPhoto,
                   placeholder: (context, url) => LoadingIndicator(),
