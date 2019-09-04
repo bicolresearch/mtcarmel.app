@@ -3,16 +3,23 @@
 *  Purpose     :   Entry point of app.
 *  Created     :   2019-07-12 16:44 by Detective Conan
 *  Updated     :   2019-08-20 11:27 by Detective conan
-*  Changes     :   Moved the themeData to appThemeData file.
-*                  Replaced the hardcoded fontFamily string with constant.
+*	 Updated			:   04/09/2019 1:33 PM PM by Detective Conan
+*	 Changes			:   Implemented Bloc from loading branch and displaying tabs.
 */
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
+import 'package:mt_carmel_app/src/blocs/concrete_bloc_delegate.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/repositories/branches_repo.dart';
+import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:mt_carmel_app/src/screens/tab_selector.dart';
 import 'package:mt_carmel_app/src/screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/utils/development_production_enum.dart';
@@ -118,6 +125,12 @@ class _PageState extends State<Page> {
     if (isFirstUsage) {
       return IntroScreen();
     }
-    return TabSelector();
+    BlocSupervisor.delegate = ConcreteBlocDelegate();
+    final branchesRepo = BranchesRepo();
+    return BlocProvider(
+      builder: (builder) =>
+          BranchBloc(branchesRepo: branchesRepo)..dispatch(GetBranch("1")),
+      child: HomeScreen(),
+    );
   }
 }

@@ -23,12 +23,12 @@ packages:
     source: hosted
     version: "2.2.0"
   bloc:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.4"
+    version: "0.15.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -208,7 +208,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.19.1"
+    version: "0.21.0"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -283,7 +283,7 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.20+1"
+    version: "0.5.21"
   graphs:
     dependency: transitive
     description:

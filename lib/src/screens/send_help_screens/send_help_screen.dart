@@ -2,8 +2,8 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*  Updated     :   2019-07-11 14:43 by Detective conan
-*  Changes     :   Get the login status from shared preferences.
+*	 Updated			:   04/09/2019 1:32 PM PM by Detective Conan
+*	 Changes			:   Added error handling on fetching data
 */
 
 import 'package:flutter/material.dart';
@@ -41,16 +41,21 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
   Future<void> getJsonData() async {
     _isJsonFailed = false;
     _isLoading = true;
-    var response = await http.get(AppConstants.SEND_HELP_JSON_URL);
+    var response =
+        await http.get(AppConstants.SEND_HELP_JSON_URL).catchError((e) {
+      throw Exception(e);
+    });
     if (this.mounted) {
       setState(
         () {
           if (response.statusCode == 200) {
+            print(response.body);
             _sendHelpList = (json.decode(response.body) as List)
                 .map((data) => new SendHelp.fromJson(data))
                 .toList();
           } else {
             _isJsonFailed = true;
+            throw Exception("Failed on sendHelp fetching data");
           }
           _isLoading = false;
         },
