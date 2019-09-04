@@ -2,136 +2,89 @@
 *  Filename    :   tab_selector.dart
 *  Purpose     :	 Responsible for navigation from different tabs.
 *  Created     :   2019-07-05 10:21 by Detective Conan
-*	 Updated			:   02/09/2019 9:29 AM PM by Detective Conan
-*	 Changes			:   Renamed class.
+*	 Updated			:   04/09/2019 3:40 PM PM by Detective Conan
+*	 Changes			:   Implemented bloc on bottom navigation.
 *	 */
 
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/screens/feeds_screens/feeds_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/profile_screen.dart';
-import 'package:mt_carmel_app/src/screens/send_help_screens/send_help_screen.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/services_screen.dart';
-import 'package:mt_carmel_app/src/screens/transparency_screens/transparency_screen.dart';
+import 'package:mt_carmel_app/src/utils/app_keys.dart';
 
-class TabSelector extends StatefulWidget {
-  @override
-  _State createState() => _State();
-}
+class TabSelector extends StatelessWidget {
+  final AppTab activeTab;
+  final Function(AppTab) onTabSelected;
 
-class _State extends State<TabSelector> {
-  int _cIndex = 0;
-  Widget _body = Container();
-
-  void _updateTab(index) {
-    setState(() {
-      _cIndex = index;
-      switch (index) {
-        case 0:
-          _body = FeedScreen();
-          break;
-        case 1:
-          _body = SendHelpScreen();
-          break;
-        case 2:
-          _body = ServicesScreen();
-          break;
-        case 3:
-          _body = TransparencyScreen();
-          break;
-        default:
-          _body = ProfileScreen();
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    _updateTab(_cIndex);
-    super.initState();
-  }
+  TabSelector({
+    Key key,
+    @required this.activeTab,
+    @required this.onTabSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      child: Scaffold(
-        body: _body,
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _cIndex,
-          selectedItemColor: Colors.brown[600],
-          unselectedItemColor: Colors.brown[200],
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                  MountCarmelIcons.home,
-              ),
-              title: new Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                  MountCarmelIcons.sendhelp,
-              ),
-              title: new Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                  MountCarmelIcons.services,
-              ),
-              title: new Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                  MountCarmelIcons.transparency,
-              ),
-              title: new Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                  MountCarmelIcons.profile,
-              ),
-              title: new Text(''),
-            )
-          ],
-          onTap: (index) {
-            _updateTab(index);
-          },
-        ),
-      ),
-      onWillPop: () async {
-        bool exit = await _exitDialog();
-        return exit;
-      },
+    print(AppTab.values);
+    return BottomNavigationBar(
+      key: AppKeys.tabs,
+      currentIndex: AppTab.values.indexOf(activeTab),
+      selectedItemColor: Colors.brown[600],
+      unselectedItemColor: Colors.brown[200],
+      type: BottomNavigationBarType.fixed,
+      onTap: (index) => onTabSelected(AppTab.values[index]),
+      items: AppTab.values.map((tab) => _bottomNavigationBarItem(tab)).toList(),
     );
   }
 
-  Future<bool> _exitDialog() {
-    return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        content: ListTile(
-          title: Text("Would you like to close the app?"),
-          leading: Icon(
-            Icons.help,
-            color: Theme.of(context).primaryColor,
+  BottomNavigationBarItem _bottomNavigationBarItem(AppTab tab) {
+    switch (tab) {
+      case AppTab.NewsFeed:
+        return BottomNavigationBarItem(
+          icon: Icon(
+            MountCarmelIcons.home,
+            key: AppKeys.newsFeedTab,
           ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Yes'),
-            onPressed: () {
-              Navigator.pop(context,true);
-            },
+          title: Text(""),
+        );
+      case AppTab.SendHelp:
+        return BottomNavigationBarItem(
+          icon: Icon(
+            MountCarmelIcons.sendhelp,
+            key: AppKeys.sendHelpTab,
           ),
-          FlatButton(
-            child: Text('No'),
-            onPressed: () {
-              Navigator.pop(context,false);
-            },
+          title: Text(""),
+        );
+      case AppTab.Services:
+        return BottomNavigationBarItem(
+          icon: Icon(
+            MountCarmelIcons.services,
+            key: AppKeys.servicesTab,
           ),
-        ],
-      ),
-    );
+          title: Text(""),
+        );
+      case AppTab.Transparency:
+        return BottomNavigationBarItem(
+          icon: Icon(
+            MountCarmelIcons.transparency,
+            key: AppKeys.transparencyTab,
+          ),
+          title: Text(""),
+        );
+      case AppTab.Profile:
+        return BottomNavigationBarItem(
+          icon: Icon(
+            MountCarmelIcons.profile,
+            key: AppKeys.profileTab,
+          ),
+          title: Text(""),
+        );
+      default:
+        return BottomNavigationBarItem(
+          icon: Icon(
+            MountCarmelIcons.home,
+            key: AppKeys.newsFeedTab,
+          ),
+          title: Text(""),
+        );
+    }
   }
 }

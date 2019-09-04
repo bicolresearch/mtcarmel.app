@@ -2,8 +2,8 @@
 *   Filename    :   home_screen.dart
 *   Purpose     :
 *   Created     :   02/09/2019 10:57 AM by Detective Conan
-*   Updated     :   02/09/2019 10:57 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   04/09/2019 3:41 PM PM by Detective Conan
+*	 Changes			:   Added blocProvider for tabBloc
 */
 
 import 'package:flutter/material.dart';
@@ -11,12 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
-import 'package:mt_carmel_app/src/screens/feeds_screens/feeds_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/profile_screen.dart';
-import 'package:mt_carmel_app/src/screens/send_help_screens/send_help_screen.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/services_screen.dart';
-import 'package:mt_carmel_app/src/screens/tab_selector.dart';
-import 'package:mt_carmel_app/src/screens/transparency_screens/transparency_screen.dart';
+import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,14 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return WillPopScope(
       child: BlocBuilder<BranchBloc, BranchState>(
         builder: (context, state) {
-          final bloc = BlocProvider.of<BranchBloc>(context);
           if (state is BranchUninitialized) {
             return Center(
               child: LoadingIndicator(),
             );
           } else if (state is BranchLoaded) {
             print(BranchLoaded);
-            return TabSelector();
+            return BlocProvider(
+                builder: (context) => TabBloc(),
+                child: HomeBottomNavigator());
           } else if (state is BranchLoading) {
             return Scaffold(
               body: Center(
@@ -54,11 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
           return Container();
         },
       ),
-      onWillPop: _exitDialog,
+      onWillPop:() {return _exitDialog(context);},
     );
   }
 
-  Future<bool> _exitDialog() {
+  Future<bool> _exitDialog(BuildContext context) {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -74,7 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
           FlatButton(
             child: Text('Yes'),
             onPressed: () {
+//              final bloc = BlocProvider.of<BranchBloc>(context);
               Navigator.pop(context, true);
+//              bloc.dispatch(CloseApp());
             },
           ),
           FlatButton(
