@@ -13,8 +13,6 @@ import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:mt_carmel_app/src/repositories/branches_repo.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class BranchBloc extends Bloc<BranchEvent, BranchState> {
   final BranchesRepo _branchesRepo;

@@ -1,5 +1,5 @@
 /*
-*  Filename    :   youtube_player_screen.dart
+*  Filename    :   live_stream_screen.dart
 *  Purpose     :
 *  Created     :   2019-07-25 09:16 by Detective Conan
 *  Updated     :   2019-08-28 14:54 by Detective conan
@@ -11,15 +11,15 @@ import 'package:flutter/services.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class YoutubePlayerScreen extends StatefulWidget {
-  YoutubePlayerScreen({Key key, this.title}) : super(key: key);
+class LiveStreamScreen extends StatefulWidget {
+  LiveStreamScreen({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _YoutubePlayerScreenState createState() => _YoutubePlayerScreenState();
+  _LiveStreamScreenState createState() => _LiveStreamScreenState();
 }
 
-class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
+class _LiveStreamScreenState extends State<LiveStreamScreen> {
   YoutubePlayerController _controller = YoutubePlayerController();
   var _seekToController = TextEditingController();
   double _volume = 100;

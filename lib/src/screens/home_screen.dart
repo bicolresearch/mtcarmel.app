@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
+import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
@@ -36,9 +38,17 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           } else if (state is BranchLoaded) {
             print(BranchLoaded);
-            return BlocProvider(
-                builder: (context) => TabBloc(),
-                child: HomeBottomNavigator());
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider<TabBloc>(
+                    builder: (context) => TabBloc(),),
+                BlocProvider<NewsFeedBloc>(
+                  // TODO: pass the branch id from api
+                  builder: (context) => NewsFeedBloc("1")..dispatch(FetchFeed()),
+                )
+              ],
+                child: HomeBottomNavigator()
+            );
           } else if (state is BranchLoading) {
             return Scaffold(
               body: Center(

@@ -49,7 +49,6 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
       setState(
         () {
           if (response.statusCode == 200) {
-            print(response.body);
             _sendHelpList = (json.decode(response.body) as List)
                 .map((data) => new SendHelp.fromJson(data))
                 .toList();
@@ -147,7 +146,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
             child: (sendHelp.coverPhoto == null)
                 ? Container()
                 : CachedNetworkImage(
-//                    key: Key(sendHelp.coverPhoto?.replaceAll("/", "")),
+                    key: Key(sendHelp.id),
                     imageUrl:
                         AppConstants.API_BASE_URL + sendHelp.coverPhoto ?? "",
                     placeholder: (context, url) => LoadingIndicator(),

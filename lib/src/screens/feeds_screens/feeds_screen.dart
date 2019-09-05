@@ -20,7 +20,7 @@ import 'dart:async';
 
 import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
-import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
+import 'package:mt_carmel_app/src/screens/feeds_screens/live_stream_screen.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
@@ -130,7 +130,7 @@ class _FeedScreenState extends State<FeedScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => YoutubePlayerScreen(),
+                        builder: (context) => LiveStreamScreen(),
                       ),
                     )
                   },
