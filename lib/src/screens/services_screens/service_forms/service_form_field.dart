@@ -3,9 +3,8 @@
 *  Purpose     :	 Responsible for the calling of which type of form field
 *                  to be used.
 *  Created     :   2019-07-15 17:02 by Detective Conan
-*	 Updated			:   16/07/2019 2:23 PM PM by Detective Conan
-*  Updated     :   2019-07-22 15:37 by Detective conan
-*  Changes     :   Added civil status dropdown
+*	 Updated			:   05/09/2019 4:01 PM PM by Detective Conan
+*	 Changes			:   Added call for country_province_city form.
 */
 
 import 'package:flutter/material.dart';
@@ -52,6 +51,11 @@ class ServiceFormField extends StatelessWidget {
       return CountryAndRelatedFormFields(
         churchFormField: churchFormField,
         fieldsToShow: FieldsToShow.CountryProvinceCityBarangay,
+      );
+    else if (churchFormField.textFieldType == "country_province_city")
+      return CountryAndRelatedFormFields(
+        churchFormField: churchFormField,
+        fieldsToShow: FieldsToShow.CountryProvinceCity,
       );
     else if (churchFormField.textFieldType == "selection")
       return SelectionFormField(churchFormField: churchFormField);
