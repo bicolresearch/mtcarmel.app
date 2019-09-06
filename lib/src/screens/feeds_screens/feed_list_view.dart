@@ -2,8 +2,8 @@
 *   Filename    :   feed_list_view.dart
 *   Purpose     :
 *   Created     :   05/09/2019 10:58 AM by Detective Conan
-*   Updated     :   05/09/2019 10:58 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   06/09/2019 3:20 PM PM by Detective Conan
+*	 Changes			:   Removed the gestureDetector. used inkwell instead.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -88,76 +88,76 @@ class _FeedListViewState extends State<FeedListView> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 4.0),
       height: 250,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(width: 0.20),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
-        child: GestureDetector(
-          onTap: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FeedDetailScreen(postData),
-              ),
+      child: InkWell(
+        onTap: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FeedDetailScreen(postData),
             ),
-          },
+          ),
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 0.20),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.brown,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    postData.title,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .subhead
-                        .copyWith(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
                   width: double.infinity,
-                  height: 260,
-                  child: CachedNetworkImage(
-                      key: Key(postData.mediaId),
-                      imageUrl: url,
-                      placeholder: (context, url) => LoadingIndicator(),
-                      errorWidget: (context, url, error) =>
-                      new Icon(Icons.error),
-                      fit: BoxFit.cover),
+                  decoration: BoxDecoration(
+                    color: Colors.brown,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      postData.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .subhead
+                          .copyWith(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
-              ),
-              Container(
-                height: 50.0,
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  html2md.convert(postData.content),
-                  style: Theme.of(context).primaryTextTheme.subhead,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    height: 260,
+                    child: CachedNetworkImage(
+                        key: Key(postData.mediaId),
+                        imageUrl: url,
+                        placeholder: (context, url) => LoadingIndicator(),
+                        errorWidget: (context, url, error) =>
+                        new Icon(Icons.error),
+                        fit: BoxFit.cover),
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  height: 50.0,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    html2md.convert(postData.content),
+                    style: Theme.of(context).primaryTextTheme.subhead,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
     );
   }
 
