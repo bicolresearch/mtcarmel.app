@@ -2,8 +2,8 @@
 *  Filename    :   module_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-01 16:31 by Detective Conan
-*	 Updated			:   02/09/2019 9:30 AM PM by Detective Conan
-*	 Changes			:   Margins set to const.
+*	 Updated			:   06/09/2019 3:28 PM PM by Detective Conan
+*	 Changes			:   Changed the GestureDetector with InkWell
 */
 
 import 'package:flutter/material.dart';
@@ -62,7 +62,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
                             child: ListView.builder(
                               itemCount: _churchModule.churchSubModules.length,
                               itemBuilder: (context, index) {
-                                return GestureDetector(
+                                return InkWell(
                                   onTap: () async {
                                     final result = await Navigator.push(
                                       context,

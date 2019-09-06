@@ -2,8 +2,8 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*	 Updated			:   02/09/2019 9:31 AM PM by Detective Conan
-*	 Changes			:   Removed unnecessary class. 
+*	 Updated			:   06/09/2019 3:27 PM PM by Detective Conan
+*	 Changes			:   Changed the GestureDetector with InkWell
 */
 
 import 'package:flutter/material.dart';
@@ -144,7 +144,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   }
 
   Widget _moduleReferenceItem(context, final ModuleReference moduleReference) {
-    return GestureDetector(
+    return InkWell(
       onTap: () async {
         final result = await Navigator.push(
           context,

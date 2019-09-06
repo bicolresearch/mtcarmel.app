@@ -2,8 +2,9 @@
 *	 Filename		 :	 feeds_screen.dart
 *	 Purpose		 :	 Displays the news feed such as photos, videos
 *  Created		 :   2019-06-04 16:28:01 by Detective Conan
-*  Updated     :   2019-08-28 14:54 by Detective conan
-*  Changes     :   Changed api reference.
+*	 Updated			:   06/09/2019 3:34 PM PM by Detective Conan
+*	 Changes			:   Changed the GestureDetector with InkWell.
+*	                  Changed the Icon type to IconButton.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,14 +19,12 @@ import 'package:mt_carmel_app/src/models/feed.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'dart:async';
 
-import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/live_stream_screen.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class FeedScreen extends StatefulWidget {
-
   @override
   _FeedScreenState createState() => _FeedScreenState();
 }
@@ -125,7 +124,7 @@ class _FeedScreenState extends State<FeedScreen> {
             centerTitle: true,
             actions: <Widget>[
               Center(
-                child: GestureDetector(
+                child: InkWell(
                   onTap: () => {
                     Navigator.push(
                       context,
@@ -146,16 +145,8 @@ class _FeedScreenState extends State<FeedScreen> {
               ),
               Divider(),
               Container(
-                child: GestureDetector(
-                  onTap: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CalendarPage(),
-                      ),
-                    )
-                  },
-                  child: Icon(
+                child: IconButton(
+                  icon: Icon(
                     MountCarmelIcons.calendar,
                     color: Colors.brown,
                   ),
@@ -180,7 +171,7 @@ class _FeedScreenState extends State<FeedScreen> {
           itemCount: _feed.data.length,
           itemBuilder: (context, index) {
             try {
-              return _feedContent(_feed.data[_feed.data.length - (index+1)]);
+              return _feedContent(_feed.data[_feed.data.length - (index + 1)]);
             } catch (e) {
               debugPrint(e.toString());
             }

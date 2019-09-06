@@ -2,8 +2,8 @@
 *  Filename    :   service_type_screen.dart
 *  Purpose     :   Displays the subtypes of service selected
 *  Created     :   2019-07-22 15:12 by Detective Conan
-*  Updated     :   2019-07-22 15:12 by Detective Conan
-*  Changes     :
+*	 Updated			:   06/09/2019 3:28 PM PM by Detective Conan
+*	 Changes			:   Changed the GestureDetector with InkWell
 */
 
 import 'package:flutter/material.dart';
@@ -47,7 +47,7 @@ class _ServiceTypeScreenState extends State<ServiceTypeScreen> {
                 child: ListView.builder(
                   itemCount: widget.churchModule.churchSubModules?.length,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
+                    return InkWell(
                       onTap: () async {
                         final result = await Navigator.push(
                             context,

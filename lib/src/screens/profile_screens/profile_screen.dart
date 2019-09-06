@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-08-27 10:58 by Detective conan
-*  Changes     :   Changed the dropdown selection of settings to bottomModalSheet
+*	 Updated			:   06/09/2019 3:39 PM PM by Detective Conan
+*	 Changes			:   Changed the GestureDetector with InkWell
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -179,7 +179,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: (_currentProfileFilter == ProfileFilter.Login)
                           ? Container()
                           : lineWidget()),
-                  GestureDetector(onTap: _moveUp, child: _arrowMoreUp),
                   Expanded(
                     child: Container(
                       alignment: Alignment.center,
@@ -209,7 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  GestureDetector(onTap: _moveDown, child: _arrowMoreDown),
+
                   (_currentProfileFilter == ProfileFilter.Login)
                       ? Spacer()
                       : Container(),
@@ -308,7 +307,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 Spacer(),
-                GestureDetector(
+                InkWell(
                     onTap: () {
                       print("Forgot password pressed");
                     },
@@ -321,7 +320,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 10.0,
             ),
-            GestureDetector(
+            InkWell(
               onTap: () async {
                 print("Sign-up pressed");
                 final result = await Navigator.push(
@@ -341,7 +340,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.brown, fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       _currentProfileFilter = ProfileFilter.Guest;
                       _clearLoginForm();
@@ -404,7 +403,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _skippedHeader() {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         if (this.mounted)
           setState(() {
@@ -487,7 +486,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(20.0)),
                       ),
                     ),
-                    GestureDetector(
+                    InkWell(
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
@@ -504,7 +503,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    GestureDetector(
+                                    InkWell(
                                       onTap: () {
                                         Navigator.pushReplacement(
                                           context,
@@ -527,7 +526,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                       ),
                                     ),
-                                    GestureDetector(
+                                    InkWell(
                                       onTap: () {
                                         if (this.mounted)
                                           setState(
@@ -554,7 +553,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                     ),
-                                    GestureDetector(
+                                    InkWell(
                                       onTap: () {
                                         Navigator.pop(context);
                                       },
@@ -612,7 +611,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _aboutItem(context, String itemText) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.push(
             context,

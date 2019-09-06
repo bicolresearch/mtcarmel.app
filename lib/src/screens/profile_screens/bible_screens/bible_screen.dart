@@ -2,8 +2,8 @@
 *	 Filename		 :	 bible_screen.dart
 *	 Purpose		 :	 displays the list of bible books
 *  Created		 :   2019-06-18 10:02:34 by Detective Conan
-*  Updated     :   2019-08-28 10:37 by Detective conan
-*  Changes     :   Changed to expansionTiles
+*	 Updated			:   06/09/2019 3:30 PM PM by Detective Conan
+*	 Changes			:   Changed the GestureDetector with InkWell
 */
 
 import 'package:flutter/material.dart';
@@ -117,7 +117,7 @@ class _BibleScreenState extends State<BibleScreen> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
