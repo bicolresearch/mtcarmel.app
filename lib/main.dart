@@ -34,6 +34,7 @@ final DevelopmentProductionEnum developmentProductionEnum =
     DevelopmentProductionEnum.Development;
 
 void main() {
+  setupLocator();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) => initializeDateFormatting().then(
       (__) => runApp(
@@ -46,7 +47,6 @@ void main() {
 class MtCarmelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    setupLocator();
     return MaterialApp(
       title: AppConstants.APP_TITLE,
       debugShowCheckedModeBanner: false,

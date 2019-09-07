@@ -36,5 +36,4 @@ void setupLocator() {
   locator.registerLazySingleton(() => CrudService());
   locator.registerLazySingleton(() => RegularChurchScheduleService());
   locator.registerLazySingleton(() => NewsFeedService());
-
 }

@@ -20,7 +20,9 @@ class HomeScreen extends StatefulWidget {
   @required
   final branchRepo;
 
-  const HomeScreen({Key key, this.branchRepo}) : super(key: key);
+  final branchId;
+
+  const HomeScreen({Key key, this.branchRepo, this.branchId}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
