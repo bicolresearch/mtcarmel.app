@@ -2,8 +2,9 @@
 *  Filename    :   service_info_screen.dart
 *  Purpose     :   Displays the service info
 *  Created     :   2019-07-22 09:21 by Detective Conan
-*  Updated     :   2019-07-31 17:50 by Detective conan
-*  Changes     :   route to login screen when accept and not logged in.
+*	 Updated			:   08/09/2019 4:09 AM PM by Detective Conan
+*	 Changes			:   Temporarily removed the accept button,
+*	                  while services is not ready.
 */
 
 import 'package:flutter/material.dart';
@@ -71,89 +72,101 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30.0),
-              child: Text(
-                widget.churchServiceSubtype.name,
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .headline
-                    .copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            lineWidget(),
-            _arrowMoreUp,
-            Expanded(
-              child: NotificationListener<ScrollNotification>(
-                onNotification: (scrollNotification) {
-                  if (scrollNotification is ScrollStartNotification) {
-                    _onStartScroll(scrollNotification.metrics);
-                  } else if (scrollNotification is ScrollUpdateNotification) {
-                    _onUpdateScroll(scrollNotification.metrics);
-                  } else if (scrollNotification is ScrollEndNotification) {
-                    _onEndScroll(scrollNotification.metrics);
-                  }
-                  return;
-                },
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: HtmlTextView(
-                      data:
-                          "<div style='color: #5d4037'>${widget.churchServiceSubtype.acceptanceContent}</div>",
-                    ),
-                    key: _htmlKey,
+      body: Stack(
+        children: <Widget>[
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30.0),
+                  child: Text(
+                    widget.churchServiceSubtype.name,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .headline
+                        .copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-            ),
-            _arrowMoreDown,
-            Container(
-              child: Column(
-                children: <Widget>[
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    color: Colors.brown,
-                    child: const Text(
-                      "Accept",
-                      style: TextStyle(color: Colors.white),
+                lineWidget(),
+                _arrowMoreUp,
+                Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: (scrollNotification) {
+                      if (scrollNotification is ScrollStartNotification) {
+                        _onStartScroll(scrollNotification.metrics);
+                      } else if (scrollNotification is ScrollUpdateNotification) {
+                        _onUpdateScroll(scrollNotification.metrics);
+                      } else if (scrollNotification is ScrollEndNotification) {
+                        _onEndScroll(scrollNotification.metrics);
+                      }
+                      return;
+                    },
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: HtmlTextView(
+                          data:
+                              "<div style='color: #5d4037'>${widget.churchServiceSubtype.acceptanceContent}</div>",
+                        ),
+                        key: _htmlKey,
+                      ),
                     ),
-                    onPressed: _isScrolledToTheLast
-                        ? () async {
-                            if (!_isLoggedIn) {
-                              _isLoggedIn = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginScreen(),
-                                ),
-                              );
-                            }
-
-                            if (_isLoggedIn) {
-                              final result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ServiceFormScreen(
-                                          subModule:
-                                              widget.churchServiceSubtype)));
-                              if (result) Navigator.pop(context, true);
-                            }
-                          }
-                        : null,
                   ),
-                  leftArrowBackButton(context: context),
-                ],
-              ),
+                ),
+                _arrowMoreDown,
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      // TODO Remove comment if services is ready
+//                      RaisedButton(
+//                        shape: RoundedRectangleBorder(
+//                            borderRadius: BorderRadius.circular(15.0)),
+//                        color: Colors.brown,
+//                        child: const Text(
+//                          "Accept",
+//                          style: TextStyle(color: Colors.white),
+//                        ),
+//                        onPressed: _isScrolledToTheLast
+//                            ? () async {
+//                                if (!_isLoggedIn) {
+//                                  _isLoggedIn = await Navigator.push(
+//                                    context,
+//                                    MaterialPageRoute(
+//                                      builder: (context) => LoginScreen(),
+//                                    ),
+//                                  );
+//                                }
+//
+//                                if (_isLoggedIn) {
+//                                  final result = await Navigator.push(
+//                                      context,
+//                                      MaterialPageRoute(
+//                                          builder: (context) => ServiceFormScreen(
+//                                              subModule:
+//                                                  widget.churchServiceSubtype)));
+//                                  if (result) Navigator.pop(context, true);
+//                                }
+//                              }
+//                            : null,
+//                      ),
+                    ],
+                  ),
+                ),
+                leftArrowBackButton(context: context),
+              ],
             ),
-          ],
-        ),
+          ),
+          //TODO Removed when Services is ready
+//          Container(
+//              margin: EdgeInsets.only(bottom: 60.0),
+//              height: double.infinity,
+//              width: double.infinity,
+//              color: Color.fromRGBO(0, 0, 0, 0.7)
+//          ),
+        ],
       ),
     );
   }
