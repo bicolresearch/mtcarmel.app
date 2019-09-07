@@ -2,8 +2,8 @@
 *  Filename    :   live_stream_screen.dart
 *  Purpose     :
 *  Created     :   2019-07-25 09:16 by Detective Conan
-*  Updated     :   2019-08-28 14:54 by Detective conan
-*  Changes     :   Returns the screen to portrait only upon exiting.
+*	 Updated			:   08/09/2019 5:07 AM PM by Detective Conan
+*	 Changes			:   Upgraded to latest version of youtube_flutter package.
 */
 
 import 'package:flutter/material.dart';
@@ -63,16 +63,18 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
                   YoutubePlayer(
                     context: context,
                     videoId: _videoId,
-                    mute: _muted,
-                    autoPlay: true,
-                    forceHideAnnotation: false,
-                    showVideoProgressIndicator: true,
+                    flags: YoutubePlayerFlags(
+                      mute: _muted,
+                      autoPlay: true,
+                      forceHideAnnotation: true,
+                      showVideoProgressIndicator: true,
+                      isLive: true,
+                    ),
                     videoProgressIndicatorColor: Colors.red,
                     progressColors: ProgressColors(
                       playedColor: Colors.red,
                       handleColor: Colors.redAccent,
                     ),
-                    isLive: true,
                     onPlayerInitialized: (controller) {
                       _controller = controller;
                       _controller.addListener(listener);
@@ -159,9 +161,11 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
             ),
           ),
           Container(
-            child: _controller.value.isFullScreen?null:leftArrowBackButton(context: context),
+            child: _controller.value.isFullScreen
+                ? null
+                : leftArrowBackButton(context: context),
             alignment: Alignment.bottomCenter,
-            margin: EdgeInsets.only(bottom: 10.0),
+            margin: const EdgeInsets.only(bottom: 10.0),
           ),
         ],
       ),

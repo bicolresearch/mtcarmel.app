@@ -6,7 +6,6 @@
 *  Changes     :
 */
 
-
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -32,8 +31,10 @@ class _VideoListState extends State<VideoList> {
         itemBuilder: (context, index) => YoutubePlayer(
           context: context,
           videoId: videoIds[index],
-          autoPlay: false,
-          showVideoProgressIndicator: true,
+          flags: YoutubePlayerFlags(
+            autoPlay: false,
+            showVideoProgressIndicator: true,
+          ),
         ),
         separatorBuilder: (_, i) => SizedBox(
           height: 10.0,
