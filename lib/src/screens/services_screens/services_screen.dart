@@ -2,8 +2,8 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*	 Updated			:   06/09/2019 3:27 PM PM by Detective Conan
-*	 Changes			:   Changed the GestureDetector with InkWell
+*	 Updated			:   08/09/2019 4:40 AM PM by Detective Conan
+*	 Changes			:   Temporary covered the screen with container. to disable the screen while services in not ready.
 */
 
 import 'package:flutter/material.dart';
@@ -99,47 +99,57 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: _isLoading
-          ? LoadingIndicator()
-          : Scaffold(
-              key: _scaffoldKey,
-              body: Column(
-                children: <Widget>[
-                  ServiceHeader(),
-                  _arrowMoreUp,
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 20.0,
+      child: Stack(
+        children: <Widget>[
+          _isLoading
+              ? LoadingIndicator()
+              : Scaffold(
+                  key: _scaffoldKey,
+                  body: Column(
+                    children: <Widget>[
+                      ServiceHeader(),
+                      _arrowMoreUp,
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 20.0,
+                          ),
+                          child: NotificationListener<ScrollNotification>(
+                            onNotification: (scrollNotification) {
+                              if (scrollNotification is ScrollStartNotification) {
+                                _onStartScroll(scrollNotification.metrics);
+                              } else if (scrollNotification
+                                  is ScrollUpdateNotification) {
+                                _onUpdateScroll(scrollNotification.metrics);
+                              } else if (scrollNotification
+                                  is ScrollEndNotification) {
+                                _onEndScroll(scrollNotification.metrics);
+                              }
+                              return;
+                            },
+                            child: ListView.builder(
+                                controller: _scrollController,
+                                itemCount: _moduleReferences.length,
+                                itemBuilder: (context, index) {
+                                  return _moduleReferenceItem(
+                                      context, _moduleReferences[index]);
+                                }),
+                          ),
+                        ),
                       ),
-                      child: NotificationListener<ScrollNotification>(
-                        onNotification: (scrollNotification) {
-                          if (scrollNotification is ScrollStartNotification) {
-                            _onStartScroll(scrollNotification.metrics);
-                          } else if (scrollNotification
-                              is ScrollUpdateNotification) {
-                            _onUpdateScroll(scrollNotification.metrics);
-                          } else if (scrollNotification
-                              is ScrollEndNotification) {
-                            _onEndScroll(scrollNotification.metrics);
-                          }
-                          return;
-                        },
-                        child: ListView.builder(
-                            controller: _scrollController,
-                            itemCount: _moduleReferences.length,
-                            itemBuilder: (context, index) {
-                              return _moduleReferenceItem(
-                                  context, _moduleReferences[index]);
-                            }),
-                      ),
-                    ),
+                      _arrowMoreDown,
+                    ],
                   ),
-                  _arrowMoreDown,
-                ],
-              ),
-            ),
+                ),
+          //TODO Removed when SendHelp is ready
+          Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: Color.fromRGBO(0, 0, 0, 0.7)
+          ),
+        ],
+      ),
     );
   }
 

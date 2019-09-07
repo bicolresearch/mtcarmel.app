@@ -2,9 +2,8 @@
 *  Filename    :   service_info_screen.dart
 *  Purpose     :   Displays the service info
 *  Created     :   2019-07-22 09:21 by Detective Conan
-*	 Updated			:   08/09/2019 4:09 AM PM by Detective Conan
-*	 Changes			:   Temporarily removed the accept button,
-*	                  while services is not ready.
+*	 Updated			:   08/09/2019 4:35 AM PM by Detective Conan
+*	 Changes			:   Put back the accept button
 */
 
 import 'package:flutter/material.dart';
@@ -120,38 +119,37 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                 Container(
                   child: Column(
                     children: <Widget>[
-                      // TODO Remove comment if services is ready
-//                      RaisedButton(
-//                        shape: RoundedRectangleBorder(
-//                            borderRadius: BorderRadius.circular(15.0)),
-//                        color: Colors.brown,
-//                        child: const Text(
-//                          "Accept",
-//                          style: TextStyle(color: Colors.white),
-//                        ),
-//                        onPressed: _isScrolledToTheLast
-//                            ? () async {
-//                                if (!_isLoggedIn) {
-//                                  _isLoggedIn = await Navigator.push(
-//                                    context,
-//                                    MaterialPageRoute(
-//                                      builder: (context) => LoginScreen(),
-//                                    ),
-//                                  );
-//                                }
-//
-//                                if (_isLoggedIn) {
-//                                  final result = await Navigator.push(
-//                                      context,
-//                                      MaterialPageRoute(
-//                                          builder: (context) => ServiceFormScreen(
-//                                              subModule:
-//                                                  widget.churchServiceSubtype)));
-//                                  if (result) Navigator.pop(context, true);
-//                                }
-//                              }
-//                            : null,
-//                      ),
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)),
+                        color: Colors.brown,
+                        child: const Text(
+                          "Accept",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: _isScrolledToTheLast
+                            ? () async {
+                                if (!_isLoggedIn) {
+                                  _isLoggedIn = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginScreen(),
+                                    ),
+                                  );
+                                }
+
+                                if (_isLoggedIn) {
+                                  final result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ServiceFormScreen(
+                                              subModule:
+                                                  widget.churchServiceSubtype)));
+                                  if (result) Navigator.pop(context, true);
+                                }
+                              }
+                            : null,
+                      ),
                     ],
                   ),
                 ),
