@@ -2,8 +2,9 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*	 Updated			:   04/09/2019 1:32 PM PM by Detective Conan
-*	 Changes			:   Added error handling on fetching data
+*	 Updated			:   08/09/2019 4:02 AM PM by Detective Conan
+*	 Changes			:   Temporarily cover the screen with container to disable the content,
+*	                  while send help is not ready.
 */
 
 import 'package:flutter/material.dart';
@@ -234,6 +235,12 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
                 ),
               ),
             ],
+          ),
+          //TODO Removed when SendHelp is ready
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Color.fromRGBO(0, 0, 0, 0.7)
           ),
         ],
       ),
