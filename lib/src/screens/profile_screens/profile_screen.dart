@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   06/09/2019 3:39 PM PM by Detective Conan
-*	 Changes			:   Changed the GestureDetector with InkWell
+*	 Updated			:   08/09/2019 4:31 AM PM by Detective Conan
+*	 Changes			:   Temporary disabled the Logged-in screen.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -69,11 +69,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoggedIn = false;
   bool _isLoginFailed = false;
   bool _isTextEditing = false;
-  bool _isLoading = true;
+  bool _isLoading = false; // TODO temporary set to false
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
 
   UserProfile _userProfile;
-  ProfileFilter _currentProfileFilter = ProfileFilter.Login;
+  ProfileFilter _currentProfileFilter = ProfileFilter.Guest; //TODO Temporary set to Guest. Changed to Login when ready
 
   Widget _header = Container();
 
@@ -128,7 +128,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
-    _checkLoginStatus();
+    //TODO Temporarily disabled
+//    _checkLoginStatus();
     _updateList();
     _updateProfileScreen();
     _initializeArrows();
@@ -403,30 +404,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _skippedHeader() {
-    return InkWell(
-      onTap: () {
-        if (this.mounted)
-          setState(() {
-            _currentProfileFilter = ProfileFilter.Login;
-            _updateProfileScreen();
-          });
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
-        child: Row(
-          children: <Widget>[
-            Icon(
-              Icons.keyboard_arrow_down,
-              size: 20,
-            ),
-            Text(
-              "Login",
-              style: TextStyle(color: Colors.brown, fontSize: 12),
-            )
-          ],
-        ),
-      ),
-    );
+    //TODO Temporary disabled.
+    return Container();
+//    return InkWell(
+//      onTap: () {
+//        if (this.mounted)
+//          setState(() {
+//            _currentProfileFilter = ProfileFilter.Login;
+//            _updateProfileScreen();
+//          });
+//      },
+//      child: Padding(
+//        padding: const EdgeInsets.only(left: 20.0),
+//        child: Row(
+//          children: <Widget>[
+//            Icon(
+//              Icons.keyboard_arrow_down,
+//              size: 20,
+//            ),
+//            Text(
+//              "Login",
+//              style: TextStyle(color: Colors.brown, fontSize: 12),
+//            )
+//          ],
+//        ),
+//      ),
+//    );
   }
 
   Widget _userHeader() {
