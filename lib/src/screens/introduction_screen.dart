@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
+import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
+import 'package:mt_carmel_app/src/screens/home_screen.dart';
+import 'package:provider/provider.dart';
 import '../constants/app_constants.dart';
 import '../screens/tab_navigator.dart';
 import '../helpers/screen_slider.dart';
@@ -82,12 +87,17 @@ class _IntroScreenState extends State<IntroScreen> {
     ));
   }
 
-  void onDonePress() {
-    SharedPreferencesHelper.setFirstUsageFlag(false);
+  Future onDonePress() async {
+    await SharedPreferencesHelper.setFirstUsageFlag(false);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => TabNavigator(),
+        builder: (context) {
+          final branchId =
+              Provider.of<BranchSelectionBloc>(context).selectedBranch.branchId;
+          Provider.of<BranchBloc>(context).dispatch(GetBranch(branchId));
+          return HomeScreen();
+        },
       ),
     );
   }

@@ -54,3 +54,9 @@ class DoneSaveSelectedBranch extends BranchSelectionState {
   @override
   String toString() => 'DoneSaveSelectedBranch';
 }
+
+class FirstUsageState extends BranchSelectionState {
+
+  @override
+  String toString() => 'FirstUsageState';
+}

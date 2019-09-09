@@ -84,4 +84,6 @@ class BranchSelectionBloc
       yield DoneSaveSelectedBranch();
     }
   }
+
+  bool get isFirstUsage => _isFirstUsage;
 }

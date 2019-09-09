@@ -2,8 +2,8 @@
 *   Filename    :   branch_selection_screen.dart
 *   Purpose     :
 *   Created     :   09/09/2019 11:08 AM by Detective Conan
-*	 Updated			:   09/09/2019 4:23 PM PM by Detective Conan
-*	 Changes			:   Used provider.of instead of introduce provider inside of this class
+*	 Updated			:   09/09/2019 5:01 PM PM by Detective Conan
+*	 Changes			:   Added check if first usage. Navigate to IntroScreen if first usage.
 */
 
 import 'package:flutter/material.dart';
@@ -15,6 +15,7 @@ import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_e
 import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
+import 'introduction_screen.dart';
 
 class BranchSelectionScreen extends StatelessWidget {
   @override
@@ -75,6 +76,10 @@ class BranchSelectionScreen extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) {
+          final sectionBloc = Provider.of<BranchSelectionBloc>(context);
+          if (sectionBloc.isFirstUsage) {
+            return IntroScreen();
+          }
           Provider.of<BranchBloc>(context).dispatch(GetBranch(branchId));
           return HomeScreen();
         },

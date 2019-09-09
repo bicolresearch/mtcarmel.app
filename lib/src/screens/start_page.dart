@@ -15,6 +15,7 @@ import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_b
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_state.dart';
 import 'package:mt_carmel_app/src/screens/branch_selection_screen.dart';
 import 'package:mt_carmel_app/src/screens/home_screen.dart';
+import 'package:mt_carmel_app/src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -33,8 +34,11 @@ class StartPage extends StatelessWidget {
         //TODO implement code
       }
       if (state is BranchSelectionSelected) {
-        final branchId =
-            Provider.of<BranchSelectionBloc>(context).selectedBranch.branchId;
+        final sectionBloc = Provider.of<BranchSelectionBloc>(context);
+        if (sectionBloc.isFirstUsage) {
+          return IntroScreen();
+        }
+        final branchId = sectionBloc.selectedBranch.branchId;
         Provider.of<BranchBloc>(context).dispatch(GetBranch(branchId));
         return HomeScreen();
       }
