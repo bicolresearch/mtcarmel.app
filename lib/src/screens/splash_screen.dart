@@ -1,5 +1,5 @@
 /*
-*	Filename		:	splash.dart
+*	Filename		:	splash_screen.dart
 *	Purpose			:	Displays log and ads before the main screen.
 * Created			: 2019-05-27 11:47:55 by Detective Conan
 *	Updated			: 2019-07-01 11:45:23 by Detective Conan

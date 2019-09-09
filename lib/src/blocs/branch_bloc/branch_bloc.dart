@@ -15,11 +15,8 @@ import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:mt_carmel_app/src/repositories/branches_repo.dart';
 
 class BranchBloc extends Bloc<BranchEvent, BranchState> {
-  final BranchesRepo _branchesRepo;
 
-  BranchBloc({@required branchesRepo})
-      : assert(branchesRepo != null),
-        _branchesRepo = branchesRepo;
+  Branch _branch;
 
   @override
   BranchState get initialState => BranchUninitialized();
@@ -29,10 +26,20 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
     if (event is GetBranch){
       yield BranchLoading();
       print(event.branchId);
-      final branch = await _fetchBranch(event.branchId);
-      print(branch);
-      if(branch != null)
-        yield BranchLoaded(branch);
+      if(_branch != null && event.branchId != _branch?.branchId) {
+        final branch = await _fetchBranch(event.branchId);
+        print(branch);
+        if (branch != null) {
+          _branch = branch;
+          yield BranchLoaded(branch);
+        }
+        else
+          yield BranchNotLoaded();
+          await Future.delayed(Duration(milliseconds: 300));
+          yield BranchLoaded(_branch);
+      }else{
+        yield BranchLoaded(_branch);
+      }
     }
   }
 

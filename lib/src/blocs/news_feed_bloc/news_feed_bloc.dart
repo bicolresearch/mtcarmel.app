@@ -14,10 +14,9 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 
 class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
-  final branchId;
   List<String> _postIds = [];
 
-  NewsFeedBloc(this.branchId);
+  NewsFeedBloc();
 
   @override
   NewsFeedState get initialState => FeedUninitialized();

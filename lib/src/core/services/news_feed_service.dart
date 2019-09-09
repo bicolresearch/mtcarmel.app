@@ -8,6 +8,8 @@
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/feed.dart';
@@ -15,10 +17,12 @@ import 'package:mt_carmel_app/src/models/feed.dart';
 class NewsFeedService {
   Future<Feed> getFeed() async {
     Feed _feed;
+    final branchId = locator<BranchService>().branchId;
     await http
-        .get(AppConstants.FEEDS_JSON_URL)
+        .get("${AppConstants.FEEDS_JSON_URL}/?branch_id=$branchId")
         .then(
           (value) {
+            print(value);
             if (value.statusCode == 200) {
               final body = json.decode(value.body);
               _feed = Feed.fromJson(body);

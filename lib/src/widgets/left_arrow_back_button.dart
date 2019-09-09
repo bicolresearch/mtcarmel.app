@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 Widget leftArrowBackButton({@required BuildContext context}){
   assert(context != null);
-  return GestureDetector(
+  return InkWell(
     onTap: (){
       Navigator.pop(context, false);
     },

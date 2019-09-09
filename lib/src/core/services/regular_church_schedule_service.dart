@@ -8,6 +8,8 @@
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/data_schedule.dart';
 import 'dart:convert';
 
@@ -18,10 +20,11 @@ import 'package:mt_carmel_app/src/models/schedule.dart';
 class RegularChurchScheduleService {
 
   List<Schedule> _regularChurchSchedules = [];
+  final _branchId = locator<BranchService>().branchId;
 
   Future<List<Schedule>> getJsonData() async {
     var response = await http
-        .get(AppConstants.CHURCH_SCHEDULE_JSON_URL)
+        .get("${AppConstants.CHURCH_SCHEDULE_JSON_URL}/?branch_id=$_branchId")
         .timeout(Duration(seconds: 5));
 
     if (response.statusCode == 200) {

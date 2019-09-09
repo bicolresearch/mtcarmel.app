@@ -9,6 +9,8 @@
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/church_module.dart';
@@ -17,10 +19,13 @@ import 'package:mt_carmel_app/src/models/church_module.dart';
 class ModuleListService {
 
   List<ModuleReference> _moduleReferences = [];
-
+  final _branchId = locator<BranchService>().branchId;
   Future<void> getJsonData() async {
     var response = await http
-        .get(AppConstants.SERVICES_JSON_URL)
+    // TODO remove when final api is ready
+    .get("${AppConstants.SERVICES_JSON_URL}")
+    // TODO uncomment when final api is ready
+//        .get("${AppConstants.SERVICES_JSON_URL}/branch_id=$_branchId")
         .timeout(Duration(seconds: 3));
 
     if (response.statusCode == 200) {

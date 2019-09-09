@@ -18,6 +18,8 @@ class BranchSelectionBloc
     extends Bloc<BranchSelectionEvent, BranchSelectionState> {
   List<BranchId> _branchSelection;
 
+  List<BranchId> get branchSelection => _branchSelection;
+
   @override
   BranchSelectionState get initialState => BranchSelectionUninitialized();
 
@@ -28,6 +30,7 @@ class BranchSelectionBloc
       yield BranchSelectionLoading();
       try {
         _branchSelection = await locator<BranchSelectionService>().getJsonData();
+        await Future.delayed(Duration(seconds: 3));
         if(_branchSelection.isNotEmpty)
           yield BranchSelectionLoaded();
         else
