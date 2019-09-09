@@ -43,3 +43,14 @@ class BranchSelectionNoBranchFetched extends BranchSelectionState {
   String toString() => 'BranchSelectionNoBranchFetched';
 }
 
+class BranchSelectionSelected extends BranchSelectionState {
+
+  @override
+  String toString() => 'BranchSelectionSelected';
+}
+
+class DoneSaveSelectedBranch extends BranchSelectionState {
+
+  @override
+  String toString() => 'DoneSaveSelectedBranch';
+}

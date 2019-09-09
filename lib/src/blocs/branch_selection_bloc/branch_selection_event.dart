@@ -24,4 +24,14 @@ class BranchSelectionReset extends BranchSelectionEvent {
   @override
   String toString() => 'BranchSelectionReset';
 }
-//TODO: Add events
+
+
+class SaveSelectedBranch extends BranchSelectionEvent {
+
+  final branchId;
+
+  SaveSelectedBranch(this.branchId):super([branchId]);
+
+  @override
+  String toString() => 'SaveSelectedBranch';
+}

@@ -51,9 +51,16 @@ class MtCarmelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocSupervisor.delegate = ConcreteBlocDelegate();
-    return BlocProvider(
-      builder: (context) =>
-          BranchSelectionBloc()..dispatch(BranchSelectionFetch()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BranchSelectionBloc>(
+          builder: (context) =>
+              BranchSelectionBloc()..dispatch(BranchSelectionFetch()),
+        ),
+        BlocProvider<BranchBloc>(
+          builder: (context) => BranchBloc(),
+        )
+      ],
       child: MaterialApp(
         title: AppConstants.APP_TITLE,
         debugShowCheckedModeBanner: false,
@@ -131,7 +138,6 @@ class _PageState extends State<Page> {
     if (isFirstUsage) {
       return IntroScreen();
     }
-    final branchesRepo = BranchesRepo();
     return BlocProvider(
       builder: (builder) => BranchBloc()..dispatch(GetBranch("1")),
       child: HomeScreen(),

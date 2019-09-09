@@ -6,29 +6,36 @@
 *   Changes     :   
 */
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_state.dart';
+import 'package:mt_carmel_app/src/screens/branch_route_page.dart';
 import 'package:mt_carmel_app/src/screens/branch_selection_screen.dart';
+import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:mt_carmel_app/src/screens/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BranchSelectionBloc, BranchSelectionState>(
-    builder: (context, state) {
-      if(state is BranchSelectionLoading){
+        builder: (context, state) {
+      if (state is BranchSelectionLoading) {
         return SplashScreen();
       }
-      if(state is BranchSelectionLoaded){
+      if (state is BranchSelectionLoaded) {
         return BranchSelectionScreen();
       }
-      if(state is BranchSelectionError){
-
+      if (state is BranchSelectionError) {
+        //TODO implement code
       }
-      return Container();
+      if (state is BranchSelectionSelected) {
+        return BranchRoutePage();
+      }
+      return Scaffold();
     });
   }
 }

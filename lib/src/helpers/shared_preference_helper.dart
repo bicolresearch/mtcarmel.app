@@ -17,6 +17,9 @@ class SharedPreferencesHelper {
   static const String _PASSWORD_SHARED_PREFS_KEY = "passwordPrefsKey";
   static const String _AUTHENTICATION_TIME_KEY = "authenticationTimeKey";
   static const String _AUTHENTICATION_ROLE_ID_KEY = "authenticationRoleIdKey";
+  static const String _BRANCH_ID_KEY = "branch_id_key";
+  static const String _BRANCH_NAME_KEY = "branch_name_key";
+  static const String _ID_BRANCH_KEY = "id_branch";
 
   // first usage
   static Future<bool> getFirstUsageFlag() async {
@@ -29,6 +32,42 @@ class SharedPreferencesHelper {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return prefs.setBool(_FIRST_USAGE_FLAG_NAME, isFirstUsage);
+  }
+
+  static Future<String> getBranchIdFlag() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString(_BRANCH_ID_KEY);
+  }
+
+  static Future<void> setBranchIdFlag(String branchId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.setString(_BRANCH_ID_KEY, branchId);
+  }
+
+  static Future<String> getBranchNameFlag() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString(_BRANCH_NAME_KEY);
+  }
+
+  static Future<void> setBranchNameFlag(String branchName) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.setString(_BRANCH_NAME_KEY, branchName);
+  }
+
+  static Future<String> getIdBranchFlag() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString(_ID_BRANCH_KEY);
+  }
+
+  static Future<void> setIdBranchFlag(String idBranch) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.setString(_ID_BRANCH_KEY, idBranch);
   }
 
   // user id
