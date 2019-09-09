@@ -2,17 +2,16 @@
 *   Filename    :   branch_selection_screen.dart
 *   Purpose     :
 *   Created     :   09/09/2019 11:08 AM by Detective Conan
-*   Updated     :   09/09/2019 11:08 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   09/09/2019 4:23 PM PM by Detective Conan
+*	 Changes			:   Used provider.of instead of introduce provider inside of this class
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
-import 'package:mt_carmel_app/src/models/branch_selection.dart';
+
 import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
@@ -46,7 +45,8 @@ class BranchSelectionScreen extends StatelessWidget {
                 try {
                   return InkWell(
                     onTap: () {
-                       branchSelectionBloc.dispatch(SaveSelectedBranch(branchSelection[index]));
+                      branchSelectionBloc
+                          .dispatch(SaveSelectedBranch(branchSelection[index]));
                       _navigateToHome(context, branchSelection[index].branchId);
                     },
                     child: Text(
@@ -75,12 +75,8 @@ class BranchSelectionScreen extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) {
-          return BlocProvider(
-            builder: (builder) => BranchBloc()
-              ..dispatch(
-                  GetBranch(branchId)),
-            child: HomeScreen(),
-          );
+          Provider.of<BranchBloc>(context).dispatch(GetBranch(branchId));
+          return HomeScreen();
         },
       ),
     );

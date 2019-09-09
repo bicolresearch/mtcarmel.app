@@ -17,6 +17,8 @@ import 'package:mt_carmel_app/src/models/branch_selection.dart';
 
 class BranchSelectionBloc
     extends Bloc<BranchSelectionEvent, BranchSelectionState> {
+  bool _isFirstUsage = true;
+
   List<BranchId> _branchSelection;
 
   List<BranchId> get branchSelection => _branchSelection;
@@ -48,6 +50,10 @@ class BranchSelectionBloc
       String idBranch;
       await SharedPreferencesHelper.getIdBranchFlag().then((value) {
         idBranch = value;
+      }).catchError((e) => print(e));
+
+      await SharedPreferencesHelper.getFirstUsageFlag().then((value) {
+        _isFirstUsage = value;
       }).catchError((e) => print(e));
 
       if (branchId == null  || branchId.isEmpty)

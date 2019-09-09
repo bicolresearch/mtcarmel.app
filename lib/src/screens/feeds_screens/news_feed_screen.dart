@@ -31,7 +31,7 @@ class NewsFeedScreen extends StatelessWidget {
         centerTitle: true,
         actions: <Widget>[
           Center(
-            child: GestureDetector(
+            child: InkWell(
               onTap: () => {
                 Navigator.push(
                   context,
@@ -54,7 +54,7 @@ class NewsFeedScreen extends StatelessWidget {
           ),
           Divider(),
           Container(
-            child: GestureDetector(
+            child: InkWell(
               onTap: () => {
                 Navigator.push(
                   context,
