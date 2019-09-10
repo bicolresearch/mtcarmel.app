@@ -68,7 +68,7 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
                       autoPlay: true,
                       forceHideAnnotation: true,
                       showVideoProgressIndicator: true,
-                      isLive: true,
+                      isLive: false,
                     ),
                     videoProgressIndicatorColor: Colors.red,
                     progressColors: ProgressColors(

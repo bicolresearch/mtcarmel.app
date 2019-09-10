@@ -46,7 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context) => TabBloc(),),
                 BlocProvider<NewsFeedBloc>(
                   // TODO: pass the branch id from api
-                  builder: (context) => NewsFeedBloc()..dispatch(FetchFeed()),
+                  builder: (context) => NewsFeedBloc()
+//          ..dispatch(FetchFeed()),
                 )
               ],
                 child: HomeBottomNavigator()

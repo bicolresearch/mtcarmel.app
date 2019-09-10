@@ -68,7 +68,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
     super.initState();
     print("initializing sendHelp screen...");
     _checkLoginStatus().then((_) {
-      this.getJsonData();
+      this.getJsonData().catchError((e) =>print(e));
     }).catchError((e) {
       debugPrint(e);
     });

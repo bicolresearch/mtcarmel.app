@@ -2,8 +2,8 @@
 *   Filename    :   news_feed_bloc.dart
 *   Purpose     :
 *   Created     :   04/09/2019 7:11 PM by Detective Conan
-*   Updated     :   04/09/2019 7:11 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   10/09/2019 9:29 AM PM by Detective Conan
+*	 Changes			:   The not loaded state will not throw on when list of post is already loaded.
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
@@ -25,36 +25,35 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
   Stream<NewsFeedState> mapEventToState(NewsFeedEvent event) async* {
     if (event is FetchFeed) {
       try {
-        yield FeedLoading();
+        if (_postIds.isEmpty) yield FeedLoading();
         final feed = await locator<NewsFeedService>().getFeed();
         if (feed != null) {
           if (_hasFeedChanged(feed))
             yield FeedLoaded(feed);
           else
-            yield FeedNotChanged();
+           if (_postIds.isEmpty)  yield FeedNotChanged();
         } else
           yield FeedErrorLoading();
       } catch (e) {
         yield FeedErrorLoading();
       }
     }
-    if(event is RefreshFeed){
+    if (event is RefreshFeed) {
       try {
 //        yield FeedRefreshing();
         final feed = await locator<NewsFeedService>().getFeed();
         if (feed != null) {
           if (_hasFeedChanged(feed)) {
             yield FeedLoaded(feed);
-          }
-          else {
-//            yield FeedNotChanged();
+          } else {
+            if(_postIds.isEmpty)yield FeedNotChanged();
           }
         } else {
-//          yield FeedErrorLoading();
+          if(_postIds.isEmpty)yield FeedErrorLoading();
         }
       } catch (e) {
         print("NewsFeedBloc:mapEventToStat() $e");
-//        yield FeedErrorLoading();
+       if(_postIds.isEmpty) yield FeedErrorLoading();
       }
     }
   }
@@ -68,7 +67,7 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
         changed = true;
       }
     }
-    if(changed){
+    if (changed) {
       _postIds = newIds;
     }
     return changed;
