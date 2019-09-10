@@ -2,8 +2,8 @@
 *	 Filename		 :	 module_reference_tiles.dart
 *	 Purpose		 :	 Displays the list of the services of the church
 *  Created		 :   2019-06-11 15:52:50 by Detective Conan
-*	 Updated			:   04/08/2019 9:22 PM PM by Detective Conan
-*	 Changes			:   Changed to stateless widget.
+*	 Updated			:   10/09/2019 9:50 AM PM by Detective Conan
+*	 Changes			:   Fixed the height and width of container of logo.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,7 +14,6 @@ import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class ModuleReferenceTile extends StatelessWidget {
-
   final ModuleReference moduleReference;
 
   const ModuleReferenceTile({BuildContext context, this.moduleReference});
@@ -27,17 +26,18 @@ class ModuleReferenceTile extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: (moduleReference.coverPhoto == null)
-                ? Container()
-                : Container(
+            child: Container(
+              width: 60.0,
               height: 60.0,
-              child: CachedNetworkImage(
-                  imageUrl: AppConstants.API_BASE_URL +
-                      moduleReference.coverPhoto,
-                  placeholder: (context, url) => LoadingIndicator(),
-                  errorWidget: (context, url, error) =>
-                      Icon(MountCarmelIcons.services),
-                  fit: BoxFit.cover),
+              child: (moduleReference.coverPhoto == null)
+                  ? Container()
+                  : CachedNetworkImage(
+                      imageUrl: AppConstants.API_BASE_URL +
+                          moduleReference.coverPhoto,
+                      placeholder: (context, url) => LoadingIndicator(),
+                      errorWidget: (context, url, error) =>
+                         const Icon(MountCarmelIcons.services),
+                      fit: BoxFit.cover),
             ),
           ),
           Expanded(
