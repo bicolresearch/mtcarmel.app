@@ -21,7 +21,7 @@ class BranchId {
   BranchId(this.id, this.branchId, this.branchName);
 
   factory BranchId.fromJson(Map<String, dynamic> json) =>
-      _$BranchSelectionFromJson(json);
+      _$BranchIdFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BranchSelectionToJson(this);
+  Map<String, dynamic> toJson() => _$BranchIdToJson(this);
 }

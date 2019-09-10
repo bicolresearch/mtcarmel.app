@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/location_map.dart';
@@ -33,7 +35,10 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   Future<void> getJsonMapData() async {
-    var response = await http.get(AppConstants.MAP_JSON_URL);
+    final branchId = locator<BranchService>().branchId;
+    await Future.delayed(Duration(milliseconds: 800));
+    var response =
+        await http.get("${AppConstants.MAP_JSON_URL}?branch_id=$branchId");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {

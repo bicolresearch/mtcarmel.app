@@ -25,24 +25,25 @@ class AppConstants {
   static const String BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
   static const String KJV_TRANSLATION_PATH = 'tranlation=kjv';
 
-  static const String FEEDS_JSON_URL = "https://api.mountcarmel.ph/posts";
-  static const String ADS_JSON_URL = "https://api.mountcarmel.ph/ads";
+  static const String LIVE_STREAM_JSON_URL = "https://api.mountcarmel.ph/live_streams/";
+  static const String FEEDS_JSON_URL = "https://api.mountcarmel.ph/posts/";
+  static const String ADS_JSON_URL = "https://api.mountcarmel.ph/ads/";
 
   static const String TRANSACTION_JSON_URL =
       'https://api.mountcarmel.ph/donations';
-  static const String PRIESTS_JSON_URL = 'https://api.mountcarmel.ph/carmelites';
-  static const String PASTORS_JSON_URL = 'https://api.mountcarmel.ph/pastors';
-  static const String ABOUT_JSON_URL = 'https://api.mountcarmel.ph/histories';
+  static const String PRIESTS_JSON_URL = 'https://api.mountcarmel.ph/carmelites/';
+  static const String PASTORS_JSON_URL = 'https://api.mountcarmel.ph/pastors/';
+  static const String ABOUT_JSON_URL = 'https://api.mountcarmel.ph/histories/';
   static const String CONTACT_DETAILS_JSON_URL =
       'https://api.mountcarmel.ph/contacts';
   static const String CHURCH_SCHEDULE_JSON_URL =
       'https://api.mountcarmel.ph/schedules';
-  static const String SERVICES_JSON_URL = 'https://api.mountcarmel.ph/modules';
-  static const String MAP_JSON_URL = 'https://api.mountcarmel.ph/maps';
+  static const String SERVICES_JSON_URL = 'https://api.mountcarmel.ph/modules/';
+  static const String MAP_JSON_URL = 'https://api.mountcarmel.ph/maps/';
   static const String BOUNDARIES_JSON_URL =
-      'https://api.mountcarmel.ph/boundaries';
+      'https://api.mountcarmel.ph/boundaries/';
   static const String SEND_HELP_JSON_URL =
-      "https://api.mountcarmel.ph/donation_type";
+      "https://api.mountcarmel.ph/donation_type/";
 
   static const String COMPANY_NAME = "Mount Carmel Basilica";
   static const String LOCATION_NAME = "Ordo Carmelitarum Discalceatorum";

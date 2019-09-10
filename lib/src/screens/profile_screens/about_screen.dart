@@ -11,6 +11,8 @@ import 'package:flutter_html_textview_render/html_text_view.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -51,7 +53,9 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   Future<void> getJasonData() async {
-    var response = await http.get(AppConstants.ABOUT_JSON_URL);
+    final branchId = locator<BranchService>().branchId;
+    var response =
+        await http.get("${AppConstants.ABOUT_JSON_URL}?branch_id=$branchId");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
@@ -143,8 +147,9 @@ class _AboutScreenState extends State<AboutScreen> {
           Text(
             "History",
             style: Theme.of(context)
-                      .primaryTextTheme
-                      .title.copyWith(fontWeight : FontWeight.bold),
+                .primaryTextTheme
+                .title
+                .copyWith(fontWeight: FontWeight.bold),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -174,9 +179,7 @@ class _AboutScreenState extends State<AboutScreen> {
               Expanded(
                 child: Text(
                   "${aboutItem.label()} :",
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subhead,
+                  style: Theme.of(context).primaryTextTheme.subhead,
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -186,9 +189,7 @@ class _AboutScreenState extends State<AboutScreen> {
               Expanded(
                 child: Text(
                   "${aboutItem._value}",
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subhead,
+                  style: Theme.of(context).primaryTextTheme.subhead,
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -209,8 +210,9 @@ class _AboutScreenState extends State<AboutScreen> {
           child: Text(
             "About the Church",
             style: Theme.of(context)
-                      .primaryTextTheme
-                      .title.copyWith(fontWeight : FontWeight.bold),
+                .primaryTextTheme
+                .title
+                .copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
         ),

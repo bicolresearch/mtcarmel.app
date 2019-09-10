@@ -23,7 +23,7 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class PriestsScreen extends StatefulWidget {
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   PriestsScreen(BuildContext context);
 
@@ -32,11 +32,11 @@ class PriestsScreen extends StatefulWidget {
 }
 
 class _PriestsScreenState extends State<PriestsScreen> {
-
   static const String _TYPE_ID = "107";
 
   List<Priest> _priestList = [];
   var _isLoading = true;
+
   //TODO handle different screen states
   var _isJsonFailed = false;
 
@@ -48,15 +48,13 @@ class _PriestsScreenState extends State<PriestsScreen> {
 
   Future<void> getJsonData() async {
     final branchId = locator<BranchService>().branchId;
-    var response = await http.get("${AppConstants.PRIESTS_JSON_URL}?branch_id=$branchId");
+    var response =
+        await http.get("${AppConstants.PRIESTS_JSON_URL}?branch_id=$branchId");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
           final body = json.decode(response.body);
-          _priestList = DataPriest
-              .fromJson(body)
-              .data
-              .where((priest) {
+          _priestList = DataPriest.fromJson(body).data.where((priest) {
             return priest.typeId == _TYPE_ID;
           }).toList();
           _isLoading = false;
@@ -82,59 +80,58 @@ class _PriestsScreenState extends State<PriestsScreen> {
                 child: (this._isLoading || _priestList.isEmpty)
                     ? LoadingIndicator()
                     : Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 50.0),
-                      height: 40.0,
-                      decoration: BoxDecoration(
-                        color: Colors.brown[600],
-                        borderRadius: BorderRadius.circular(10.0),
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 50.0),
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              color: Colors.brown[600],
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                AppConstants.COMPANY_NAME,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .subhead
+                                    .copyWith(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Carmelite Priests",
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .title
+                                  .copyWith(fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                                child: GridView.count(
+                              physics: ScrollPhysics(parent: ScrollPhysics()),
+                              shrinkWrap: true,
+                              primary: true,
+                              crossAxisCount: 2,
+                              children:
+                                  List.generate(_priestList.length, (index) {
+                                try {
+                                  return getStructuredGridCell(
+                                      _priestList[index]);
+                                } catch (e) {
+                                  print(e.toString());
+                                  return Container();
+                                }
+                              }),
+                            )),
+                          ),
+                        ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppConstants.COMPANY_NAME,
-                          style: Theme
-                              .of(context)
-                              .primaryTextTheme
-                              .subhead.copyWith(color: Colors.white),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Priests",
-                        style: Theme
-                            .of(context)
-                            .primaryTextTheme
-                            .title
-                            .copyWith(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                          child: GridView.count(
-                            physics: ScrollPhysics(parent: ScrollPhysics()),
-                            shrinkWrap: true,
-                            primary: true,
-                            crossAxisCount: 2,
-                            children:
-                            List.generate(_priestList.length, (index) {
-                              try {
-                                return getStructuredGridCell(
-                                    _priestList[index]);
-                              } catch (e) {
-                                print(e.toString());
-                                return Container();
-                              }
-                            }),
-                          )),
-                    ),
-                  ],
-                ),
               ),
             ),
             Padding(
@@ -171,29 +168,26 @@ class _PriestsScreenState extends State<PriestsScreen> {
               children: <Widget>[
                 Text(
                   priest.name,
-                  style: Theme
-                      .of(context)
-                      .primaryTextTheme
-                      .caption.copyWith(fontWeight: FontWeight.bold,),
+                  style: Theme.of(context).primaryTextTheme.caption.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                   textAlign: TextAlign.center,
                   softWrap: true,
                 ),
                 (priest.position != null)
                     ? Text(
-                  priest.position,
-                  style: Theme
-                      .of(context)
-                      .primaryTextTheme
-                      .caption,
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                )
+                        priest.position,
+                        style: Theme.of(context).primaryTextTheme.caption,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                      )
                     : Container(),
               ],
             ),
           )
         ],
-      ),);
+      ),
+    );
   }
 
   void close() {

@@ -24,8 +24,6 @@ import 'package:html2md/html2md.dart' as html2md;
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class ContactDetailScreen extends StatefulWidget {
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   ContactDetailScreen();
 

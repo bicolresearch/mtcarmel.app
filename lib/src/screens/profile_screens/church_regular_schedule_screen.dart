@@ -2,8 +2,8 @@
 *	 Filename		 :	 church_regular_schedule_screen.dart
 *	 Purpose		 :	 Displays the different schedules of the church
 *  Created		 :   2019-06-14 09:42:18 by Detective Conan
-*  Updated     :   2019-08-29 12:02 by Detective conan
-*  Changes     :   Sorted the schedules. Changed the font colors.
+*	 Updated			:   10/09/2019 2:58 PM PM by Detective Conan
+*	 Changes			:   Adapted to new Api.
 */
 
 import 'package:flutter/material.dart';
@@ -116,9 +116,9 @@ class _ChurchRegularScheduleScreenState
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            height: 40.0,
+                            height: 80.0,
                             child: Text(
-                              "Church Schedules",
+                              "${AppConstants.COMPANY_NAME}\n Regular Schedules",
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .title
@@ -177,12 +177,15 @@ class _ChurchRegularScheduleScreenState
     for (Schedule schedule in schedules) {
       switch (schedule.day) {
         case "Sunday":
+        case "Sundays":
           sundaySchedules.add(schedule);
           break;
         case "Weekday":
+        case "Weekdays":
           weekdaySchedules.add(schedule);
           break;
         case "Saturday":
+        case "Saturdays":
           saturdaySchedules.add(schedule);
           break;
         case "Everyday":

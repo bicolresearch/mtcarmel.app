@@ -6,7 +6,7 @@ part of 'branch_selection.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BranchId _$BranchSelectionFromJson(Map<String, dynamic> json) {
+BranchId _$BranchIdFromJson(Map<String, dynamic> json) {
   return BranchId(
     json['id'],
     json['branch_id'],
@@ -14,8 +14,7 @@ BranchId _$BranchSelectionFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BranchSelectionToJson(BranchId instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BranchIdToJson(BranchId instance) => <String, dynamic>{
       'id': instance.id,
       'branch_id': instance.branchId,
       'branch_name': instance.branchName,

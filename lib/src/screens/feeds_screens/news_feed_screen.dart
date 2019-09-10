@@ -7,6 +7,9 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_event.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 
@@ -14,7 +17,13 @@ import 'package:mt_carmel_app/src/screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_list_view.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/live_stream_screen.dart';
 
-class NewsFeedScreen extends StatelessWidget {
+
+class NewsFeedScreen extends StatefulWidget {
+  @override
+  _NewsFeedScreenState createState() => _NewsFeedScreenState();
+}
+
+class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +44,12 @@ class NewsFeedScreen extends StatelessWidget {
               onTap: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => LiveStreamScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) {
+                    return BlocProvider<LiveStreamBloc>(
+                        builder: (context) =>
+                            LiveStreamBloc()..dispatch(FetchLiveStream()),
+                        child: LiveStreamScreen());
+                  }),
                 )
               },
               child: Padding(
@@ -76,4 +88,3 @@ class NewsFeedScreen extends StatelessWidget {
     );
   }
 }
-
