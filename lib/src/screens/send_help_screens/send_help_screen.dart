@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
@@ -40,10 +41,12 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
   bool _isJsonFailed = false;
 
   Future<void> getJsonData() async {
+    final branchId = locator<BranchService>().branchId;
     _isJsonFailed = false;
     _isLoading = true;
-    var response =
-        await http.get(AppConstants.SEND_HELP_JSON_URL).catchError((e) {
+    var response = await http
+        .get("${AppConstants.SEND_HELP_JSON_URL}?branch_id=$branchId")
+        .catchError((e) {
       throw Exception(e);
     });
     if (this.mounted) {
@@ -68,7 +71,7 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
     super.initState();
     print("initializing sendHelp screen...");
     _checkLoginStatus().then((_) {
-      this.getJsonData().catchError((e) =>print(e));
+      this.getJsonData().catchError((e) => print(e));
     }).catchError((e) {
       debugPrint(e);
     });
@@ -238,10 +241,9 @@ class _SendHelpScreenState extends State<SendHelpScreen> {
           ),
           //TODO Removed when SendHelp is ready
           Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Color.fromRGBO(0, 0, 0, 0.7)
-          ),
+              height: double.infinity,
+              width: double.infinity,
+              color: Color.fromRGBO(0, 0, 0, 0.7)),
         ],
       ),
     );

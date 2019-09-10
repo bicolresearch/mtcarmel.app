@@ -2,8 +2,8 @@
 *  Filename    :   donations.dart.dart
 *  Purpose     :	 Model for total donations and list of 30 recent donations
 *  Created     :   2019-07-01 17:20 by Detective Conan
-*  Updated     :   2019-07-01 17:20 by Detective Conan 
-*  Changes     :
+*	 Updated			:   10/09/2019 6:38 PM PM by Detective Conan
+*	 Changes			:   Adapted to new API
 */
 
 import 'package:json_annotation/json_annotation.dart';
@@ -12,12 +12,12 @@ part 'donations.g.dart';
 
 @JsonSerializable()
 class Donations {
-  Donations(this.totalDonations, this.donationsList);
+  Donations(this.totalDonations, this.donationsRecord);
 
   @JsonKey(name: "total_donations")
   final TotalDonations totalDonations;
   @JsonKey(name: "donations_list")
-  final List<Donation> donationsList;
+  final DonationRecord donationsRecord;
 
   factory Donations.fromJson(Map<String, dynamic> json) =>
       _$DonationsFromJson(json);
@@ -37,6 +37,24 @@ class TotalDonations {
       _$TotalDonationsFromJson(json);
 
   Map<String, dynamic> toJson() => _$TotalDonationsToJson(this);
+}
+
+// TODO think a better name
+@JsonSerializable()
+class DonationRecord {
+  final draw;
+  @JsonKey(name: "recordTotal")
+  final recordTotal;
+  @JsonKey(name: "recordsFiltered")
+  final recordsFiltered;
+  final List<Donation> data;
+
+  DonationRecord(this.draw, this.recordTotal, this.recordsFiltered, this.data);
+
+  factory DonationRecord.fromJson(Map<String, dynamic> json) =>
+      _$DonationRecordFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DonationRecordToJson(this);
 }
 
 @JsonSerializable()

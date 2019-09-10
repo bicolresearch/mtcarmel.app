@@ -2,8 +2,8 @@
 *	 Filename		 :	 transparency_screen.dart
 *	 Purpose		 :	 Displays the recent donation transactions
 *  Created		 :   2019-06-05 09:10:50 Detective Conan
-*  Updated     :   2019-08-30 16:54 by Detective conan
-*  Changes     :   Modified coverPhot with mediPath
+*	 Updated			:   10/09/2019 6:37 PM PM by Detective Conan
+*	 Changes			:   Adapted to new api.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -20,7 +20,6 @@ import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class TransparencyScreen extends StatefulWidget {
-
   @override
   _TransparencyScreenState createState() => _TransparencyScreenState();
 }
@@ -54,7 +53,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     this.getDonationsJson().then((result) {
       _isJsonLoading = false;
       print(_isJsonLoading);
-    });
+    }).catchError((e) => print(e));
   }
 
   Future _initializeArrows() async {
@@ -93,83 +92,80 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                     margin: EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Column(
                       children: <Widget>[
-                          Container(
-                            child: Column(
-                              children: <Widget>[
-                                Flexible(
-                                  flex: 2,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.only(bottom: 10.0),
-                                        child: Icon(
-                                          MountCarmelIcons.transparency,
-                                          size: 100,
-                                        ),
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+                              Flexible(
+                                flex: 2,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(bottom: 10.0),
+                                      child: Icon(
+                                        MountCarmelIcons.transparency,
+                                        size: 100,
                                       ),
-                                      Text(
-                                        "Transparency",
+                                    ),
+                                    Text(
+                                      "Transparency",
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .title
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        "Total help received online for this year",
                                         style: Theme.of(context)
                                             .primaryTextTheme
-                                            .title
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold),
+                                            .caption,
                                         textAlign: TextAlign.justify,
                                       ),
-                                      Center(
-                                        child: Text(
-                                          "Total help received online for this year",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .caption,
-                                          textAlign: TextAlign.justify,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          child: Container(
+                                              width: 200.0,
+                                              height: 20.0,
+                                              decoration: BoxDecoration(
+                                                color: Colors.brown[600],
+                                                border: Border.all(width: 0.8),
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                              ),
+                                              child: getTotal()),
                                         ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            child: Container(
-                                                width: 200.0,
-                                                height: 20.0,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.brown[600],
-                                                  border:
-                                                      Border.all(width: 0.8),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20.0),
-                                                ),
-                                                child: getTotal()),
+                                        IconButton(
+                                          icon: Icon(
+                                            MountCarmelIcons.refresh,
                                           ),
-                                          IconButton(
-                                            icon: Icon(
-                                              MountCarmelIcons.refresh,
-                                            ),
-                                            onPressed: () {
-                                              print("Refresh button pressed.");
-                                              setState(() {
-                                                _refreshIndicatorKey
-                                                    .currentState
-                                                    .show();
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      Divider(),
-                                    ],
-                                  ),
+                                          onPressed: () {
+                                            print("Refresh button pressed.");
+                                            setState(() {
+                                              _refreshIndicatorKey.currentState
+                                                  .show();
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            height: MediaQuery.of(context).size.height / 2,
-                            width: double.infinity,
+                              ),
+                            ],
                           ),
+                          height: MediaQuery.of(context).size.height / 2,
+                          width: double.infinity,
+                        ),
 
                         //TRANSACTION LIST
                         _arrowMoreUp,
@@ -196,15 +192,15 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                 onRefresh: _refresh,
                                 child: ListView.builder(
                                   controller: _scrollController,
-                                  itemCount: (_donations.donationsList == null)
+                                  itemCount: (_donations.donationsRecord.data == null)
                                       ? 0
-                                      : _donations.donationsList.length,
+                                      : _donations.donationsRecord.data.length,
                                   itemBuilder: (context, index) {
                                     return Container(
                                         child: _isJsonLoading
                                             ? LoadingIndicator()
                                             : _transactionContent(_donations
-                                                .donationsList[index]));
+                                                .donationsRecord.data[index]));
                                   },
                                 ),
                               ),
@@ -311,63 +307,71 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
     if (!_scrollController.hasClients) return;
     try {
       if (_scrollController.offset ==
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           _scrollController.offset ==
               _scrollController.position.minScrollExtent) {
         setState(
-              () {
+          () {
             _arrowMoreDown = VisibilityHelper(
-                child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowDown,
+                visibility: VisibilityFlag.gone);
             _arrowMoreUp = VisibilityHelper(
-                child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
+                child: VisibilityHelper.arrowUp,
+                visibility: VisibilityFlag.gone);
           },
         );
         return;
       }
       if (_scrollController.offset >=
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           !_scrollController.position.outOfRange) {
         if (_currentMoreArrow != MoreArrowEnum.MoreUpOnly) {
           _currentMoreArrow = MoreArrowEnum.MoreUpOnly;
           setState(
-                () {
+            () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.gone);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.visible);
             },
           );
         }
         return;
       }
       if (_scrollController.offset <=
-          _scrollController.position.minScrollExtent &&
+              _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
         if (_currentMoreArrow != MoreArrowEnum.MoreDownOnly) {
           _currentMoreArrow = MoreArrowEnum.MoreDownOnly;
           setState(
-                () {
+            () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.gone);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.gone);
             },
           );
         }
         return;
       }
       if (_scrollController.offset <
-          _scrollController.position.maxScrollExtent &&
+              _scrollController.position.maxScrollExtent &&
           _scrollController.offset >
               _scrollController.position.minScrollExtent) {
         if (_currentMoreArrow != MoreArrowEnum.MoreUpAndDown) {
           _currentMoreArrow = MoreArrowEnum.MoreUpAndDown;
           setState(
-                () {
+            () {
               _arrowMoreDown = VisibilityHelper(
-                  child: VisibilityHelper.arrowDown, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowDown,
+                  visibility: VisibilityFlag.visible);
               _arrowMoreUp = VisibilityHelper(
-                  child: VisibilityHelper.arrowUp, visibility: VisibilityFlag.visible);
+                  child: VisibilityHelper.arrowUp,
+                  visibility: VisibilityFlag.visible);
             },
           );
         }

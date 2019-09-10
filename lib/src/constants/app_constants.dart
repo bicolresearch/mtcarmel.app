@@ -43,7 +43,7 @@ class AppConstants {
   static const String BOUNDARIES_JSON_URL =
       'https://api.mountcarmel.ph/boundaries/';
   static const String SEND_HELP_JSON_URL =
-      "https://api.mountcarmel.ph/donation_type/";
+      "https://api.mountcarmel.ph/donations/";
 
   static const String COMPANY_NAME = "Mount Carmel Basilica";
   static const String LOCATION_NAME = "Ordo Carmelitarum Discalceatorum";

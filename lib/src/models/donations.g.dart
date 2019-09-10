@@ -12,16 +12,16 @@ Donations _$DonationsFromJson(Map<String, dynamic> json) {
         ? null
         : TotalDonations.fromJson(
             json['total_donations'] as Map<String, dynamic>),
-    (json['donations_list'] as List)
-        ?.map((e) =>
-            e == null ? null : Donation.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    json['donations_list'] == null
+        ? null
+        : DonationRecord.fromJson(
+            json['donations_list'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$DonationsToJson(Donations instance) => <String, dynamic>{
       'total_donations': instance.totalDonations,
-      'donations_list': instance.donationsList,
+      'donations_list': instance.donationsRecord,
     };
 
 TotalDonations _$TotalDonationsFromJson(Map<String, dynamic> json) {
@@ -33,6 +33,26 @@ TotalDonations _$TotalDonationsFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$TotalDonationsToJson(TotalDonations instance) =>
     <String, dynamic>{
       'amount': instance.amount,
+    };
+
+DonationRecord _$DonationRecordFromJson(Map<String, dynamic> json) {
+  return DonationRecord(
+    json['draw'],
+    json['recordTotal'],
+    json['recordsFiltered'],
+    (json['data'] as List)
+        ?.map((e) =>
+            e == null ? null : Donation.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$DonationRecordToJson(DonationRecord instance) =>
+    <String, dynamic>{
+      'draw': instance.draw,
+      'recordTotal': instance.recordTotal,
+      'recordsFiltered': instance.recordsFiltered,
+      'data': instance.data,
     };
 
 Donation _$DonationFromJson(Map<String, dynamic> json) {
