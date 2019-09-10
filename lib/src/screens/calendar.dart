@@ -2,10 +2,9 @@
 *	Filename		:	<filename.extension>
 *	Purpose			:	
 * Created			: 2019-06-04 16:46:46 by Detective Conan
-*  Updated     :   2019-08-30 16:18 by Detective conan
-*  Changes     :   Fetching regular church schedule from the server.
+*	 Updated			:   10/09/2019 10:12 AM PM by Detective Conan
+*	 Changes			:   Handled empty error in fetching schedules.
 */
-
 
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
@@ -80,12 +79,16 @@ class _CalendarPageState extends State<CalendarPage>
       _regularSchedules = await locator<RegularChurchScheduleService>()
           .getJsonData()
           .catchError((e) {
-        debugPrint(e);
+        debugPrint("$e");
+        if (this.mounted)
+          setState(() {
+            _isLoading = false;
+          });
         return;
       });
       if (this.mounted) {
+        _getRecurrentSchedules();
         setState(() {
-          _getRecurrentSchedules();
           _events = _getVisibleRecurrentEvents(
               _selectedDay.subtract(Duration(days: _selectedDay.day - 1)),
               _selectedDay.add(Duration(days: 31 - _selectedDay.day)));
@@ -420,6 +423,8 @@ class _CalendarPageState extends State<CalendarPage>
   }
 
   void _getRecurrentSchedules() {
+    if(_recurrentSchedules.isEmpty)
+      return;
     for (var schedule in _regularSchedules) {
       if (_days.values.contains(schedule.day))
         _addSchedule(schedule, _recurrentSchedules, schedule.day);
