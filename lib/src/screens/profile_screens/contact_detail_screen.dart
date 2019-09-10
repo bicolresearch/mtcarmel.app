@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/contact.dart';
 import 'package:mt_carmel_app/src/models/data_contact.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
@@ -43,7 +45,9 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
   }
 
   Future<void> getJasonData() async {
-    var response = await http.get(AppConstants.CONTACT_DETAILS_JSON_URL);
+    final branchId = locator<BranchService>().branchId;
+    var response = await http
+        .get("${AppConstants.CONTACT_DETAILS_JSON_URL}?branch_id=$branchId");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {

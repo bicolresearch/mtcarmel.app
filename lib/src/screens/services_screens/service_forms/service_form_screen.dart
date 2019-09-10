@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:http/http.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_form_field.dart';
@@ -288,9 +289,9 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
       });
 
       if (userId == null || userId == "") throw Exception("Not login");
-
+      final branchId = locator<BranchService>().branchId;
       fieldsValue.putIfAbsent("user_id", () => userId);
-      fieldsValue.putIfAbsent("branch_id", () => "1");
+      fieldsValue.putIfAbsent("branch_id", () => branchId);
       debugPrint(fieldsValue.toString());
       print(headers);
       Map<String, String> casted = fieldsValue.cast();

@@ -18,6 +18,7 @@ class AppConstants {
   // site api
   static const String API_BASE_URL = "https://api.mountcarmel.ph/";
 
+  static const String LIVE_STREAM_URL = "https://api.mountcarmel.ph/live_streams/";
   static const String USER_PROFILE_JSON =
       "https://api.mountcarmel.ph/users/user/id/";
 
@@ -29,9 +30,9 @@ class AppConstants {
 
   static const String TRANSACTION_JSON_URL =
       'https://api.mountcarmel.ph/donations';
-  static const String PRIESTS_JSON_URL = 'https://api.mountcarmel.ph/priests';
+  static const String PRIESTS_JSON_URL = 'https://api.mountcarmel.ph/carmelites';
   static const String PASTORS_JSON_URL = 'https://api.mountcarmel.ph/pastors';
-  static const String ABOUT_JSON_URL = 'https://api.mountcarmel.ph/history';
+  static const String ABOUT_JSON_URL = 'https://api.mountcarmel.ph/histories';
   static const String CONTACT_DETAILS_JSON_URL =
       'https://api.mountcarmel.ph/contacts';
   static const String CHURCH_SCHEDULE_JSON_URL =

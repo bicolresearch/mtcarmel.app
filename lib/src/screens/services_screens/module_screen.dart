@@ -7,6 +7,8 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_info/service_info_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
@@ -175,7 +177,8 @@ class _ModuleScreenState extends State<ModuleScreen> {
 
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
       String confraternityUrl) async {
-    final response = await http.get(confraternityUrl);
+    final branchId = locator<BranchService>().branchId;
+    final response = await http.get("$confraternityUrl/?branch_id=$branchId");
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);

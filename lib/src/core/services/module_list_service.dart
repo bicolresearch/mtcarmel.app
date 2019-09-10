@@ -2,8 +2,8 @@
 *  Filename    :   module_list_service.dart
 *  Purpose     :	
 *  Created     :   2019-08-16 14:44 by Detective Conan
-*  Updated     :   2019-08-16 14:44 by Detective Conan 
-*  Changes     :
+*	 Updated			:   10/09/2019 11:20 AM PM by Detective Conan
+*	 Changes			:   Added branch id retrieval
 */
 
 
@@ -20,12 +20,11 @@ class ModuleListService {
 
   List<ModuleReference> _moduleReferences = [];
   final _branchId = locator<BranchService>().branchId;
+
   Future<void> getJsonData() async {
+    print(_branchId);
     var response = await http
-    // TODO remove when final api is ready
-    .get("${AppConstants.SERVICES_JSON_URL}")
-    // TODO uncomment when final api is ready
-//        .get("${AppConstants.SERVICES_JSON_URL}/branch_id=$_branchId")
+        .get("${AppConstants.SERVICES_JSON_URL}?branch_id=$_branchId")
         .timeout(Duration(seconds: 3));
 
     if (response.statusCode == 200) {

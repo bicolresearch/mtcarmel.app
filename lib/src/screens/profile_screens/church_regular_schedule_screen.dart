@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/schedule.dart';
 import 'package:mt_carmel_app/src/models/data_schedule.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
@@ -21,7 +23,6 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 
 class ChurchRegularScheduleScreen extends StatefulWidget {
-
   ChurchRegularScheduleScreen();
 
   @override
@@ -48,7 +49,9 @@ class _ChurchRegularScheduleScreenState
   }
 
   Future<void> getJsonData() async {
-    var response = await http.get(AppConstants.CHURCH_SCHEDULE_JSON_URL);
+    final branchId = locator<BranchService>().branchId;
+    var response = await http
+        .get("${AppConstants.CHURCH_SCHEDULE_JSON_URL}?branch_id=$branchId");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
@@ -193,7 +196,9 @@ class _ChurchRegularScheduleScreenState
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 4.0, ),
+          margin: EdgeInsets.symmetric(
+            horizontal: 4.0,
+          ),
           child: Column(
             children: <Widget>[
               Text(

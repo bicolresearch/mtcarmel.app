@@ -2,8 +2,8 @@
 *	Filename		:	<filename.extension>
 *	Purpose			:	
 * Created			: 2019-06-04 16:46:46 by Detective Conan
-*	 Updated			:   10/09/2019 10:12 AM PM by Detective Conan
-*	 Changes			:   Handled empty error in fetching schedules.
+*	 Updated			:   10/09/2019 2:49 PM PM by Detective Conan
+*	 Changes			:   Adjusted to new new api.
 */
 
 import 'package:date_utils/date_utils.dart';
@@ -44,6 +44,13 @@ class _CalendarPageState extends State<CalendarPage>
     5: "Friday",
     6: "Saturday",
     7: "Sunday",
+    8: "Mondays",
+    9: "Tuesdays",
+    10: "Wednesdays",
+    11: "Thursdays",
+    12: "Fridays",
+    13: "Saturdays",
+    14: "Sundays",
   };
 
   DateTime _selectedDay;
@@ -78,8 +85,7 @@ class _CalendarPageState extends State<CalendarPage>
     if (_regularSchedules.isEmpty) {
       _regularSchedules = await locator<RegularChurchScheduleService>()
           .getJsonData()
-          .catchError((e) {
-        debugPrint("$e");
+          .catchError((e) async {
         if (this.mounted)
           setState(() {
             _isLoading = false;
@@ -87,8 +93,8 @@ class _CalendarPageState extends State<CalendarPage>
         return;
       });
       if (this.mounted) {
-        _getRecurrentSchedules();
         setState(() {
+          _getRecurrentSchedules();
           _events = _getVisibleRecurrentEvents(
               _selectedDay.subtract(Duration(days: _selectedDay.day - 1)),
               _selectedDay.add(Duration(days: 31 - _selectedDay.day)));
@@ -423,21 +429,21 @@ class _CalendarPageState extends State<CalendarPage>
   }
 
   void _getRecurrentSchedules() {
-    if(_recurrentSchedules.isEmpty)
-      return;
     for (var schedule in _regularSchedules) {
-      if (_days.values.contains(schedule.day))
-        _addSchedule(schedule, _recurrentSchedules, schedule.day);
-      else {
+      if (_days.values.contains(schedule.day)) {
+        final key = _days.keys
+            .firstWhere((k) => _days[k] == schedule.day, orElse: () => null);
+        if(key == null) continue;
+        _addSchedule(schedule, _recurrentSchedules, _days[(key-1)%7+1]);
+      } else {
         if (schedule.day == "Everyday") {
-          for (var day in _days.values)
-            _addSchedule(schedule, _recurrentSchedules, day);
+          for (int i = 1; i<=7; i++) {
+            _addSchedule(schedule, _recurrentSchedules, _days[i]);
+          }
         }
-        if (schedule.day == "Weekday") {
-          for (var day in _days.values) {
-            if (day == "Sunday" || day == "Saturday") continue;
-
-            _addSchedule(schedule, _recurrentSchedules, day);
+        if (schedule.day == "Weekdays" || schedule.day == "Weekday") {
+          for (int i = 1; i<=5; i++) {
+            _addSchedule(schedule, _recurrentSchedules, _days[i]);
           }
         }
       }

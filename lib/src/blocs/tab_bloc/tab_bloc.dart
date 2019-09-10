@@ -11,14 +11,13 @@ import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 
 class TabBloc extends Bloc<TabEvent, AppTab> {
-
   @override
   AppTab get initialState => AppTab.NewsFeed;
 
   @override
   Stream<AppTab> mapEventToState(TabEvent event) async* {
     if (event is UpdateTab) {
-      yield event.tab;
+      if (event.tab != null) yield event.tab;
     }
   }
 }
