@@ -43,7 +43,7 @@ class _FeedListViewState extends State<FeedListView> {
           }
           else if (state is FeedErrorLoading){
             print("error loading");
-            return ErrorMessage.errMsg(errorMessage: "Something Went wrong");
+            return ErrorMessage.errMsg(errorMessage: "Something went wrong!");
           }
             return Container();
         }

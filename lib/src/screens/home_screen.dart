@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
+import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
@@ -46,9 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context) => TabBloc(),),
                 BlocProvider<NewsFeedBloc>(
                   // TODO: pass the branch id from api
-                  builder: (context) => NewsFeedBloc()
+                  builder: (context) => NewsFeedBloc(),
 //          ..dispatch(FetchFeed()),
-                )
+                ),
+                BlocProvider<ServicesBloc>(
+                  builder: (context)=> ServicesBloc(),
+                ),
               ],
                 child: HomeBottomNavigator()
             );

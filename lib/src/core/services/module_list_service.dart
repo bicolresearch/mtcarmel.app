@@ -6,7 +6,6 @@
 *	 Changes			:   Added branch id retrieval
 */
 
-
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
@@ -15,14 +14,11 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/church_module.dart';
 
-
 class ModuleListService {
-
   List<ModuleReference> _moduleReferences = [];
   final _branchId = locator<BranchService>().branchId;
 
   Future<void> getJsonData() async {
-    print(_branchId);
     var response = await http
         .get("${AppConstants.SERVICES_JSON_URL}?branch_id=$_branchId")
         .timeout(Duration(seconds: 3));
@@ -32,10 +28,36 @@ class ModuleListService {
           .map((data) => ModuleReference.fromJson(data))
           .toList();
     } else {
+      _moduleReferences.clear();
       throw Exception("Failure in retrieving modules");
     }
   }
 
   List<ModuleReference> get moduleReferences => _moduleReferences;
 
+  Future<List<ModuleReference>> getData() async {
+    var response;
+
+    try {
+      response = await http
+          .get("${AppConstants.SERVICES_JSON_URL}?branch_id=$_branchId")
+          .timeout(Duration(seconds: 3));
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+
+    if (response.statusCode == 200) {
+      try {
+        return (json.decode(response.body) as List)
+            .map((data) => ModuleReference.fromJson(data))
+            .toList();
+      } catch (e) {
+        print(e);
+        throw e;
+      }
+    } else {
+      throw Exception("Failure in retrieving modules");
+    }
+  }
 }

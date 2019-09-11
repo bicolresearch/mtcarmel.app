@@ -7,16 +7,17 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/core/services/module_list_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_event.dart';
+
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
-import 'package:mt_carmel_app/src/screens/services_screens/module_screen.dart';
-import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/sub_services_screen.dart';
 import 'package:mt_carmel_app/src/widgets/module_reference_tile.dart';
 import 'package:mt_carmel_app/src/widgets/service_header.dart';
 import 'dart:async';
-import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class ServicesScreen extends StatefulWidget {
   @override
@@ -30,9 +31,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<ModuleReference> _moduleReferences = [];
-
-  bool _isLoading = true;
-  bool _isJsonFailed = false;
 
   VisibilityHelper _arrowMoreUp = VisibilityHelper(
     child: VisibilityHelper.arrowUp,
@@ -49,39 +47,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
     print("initializing serviceScreen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    _moduleReferences = locator<ModuleListService>().moduleReferences;
-    if (_moduleReferences.isEmpty) {
-      getModules();
-    } else {
-      if (this.mounted)
-        setState(() {
-          _isJsonFailed = false;
-          _isLoading = false;
-        });
-    }
-  }
-
-  Future getModules() async {
-    await locator<ModuleListService>().getJsonData().then(
-      (_) {
-        _initializeArrows();
-        if (this.mounted)
-          setState(() {
-            _moduleReferences = locator<ModuleListService>().moduleReferences;
-            _isJsonFailed = false;
-            _isLoading = false;
-          });
-      },
-    ).catchError(
-      (e) {
-        debugPrint("ServiceScreen.initState: $e");
-        if (this.mounted)
-          setState(() {
-            _isJsonFailed = true;
-            _isLoading = false;
-          });
-      },
-    );
+    _moduleReferences = BlocProvider.of<ServicesBloc>(context).moduleReferences;
+    _initializeArrows();
   }
 
   Future _initializeArrows() async {
@@ -101,47 +68,45 @@ class _ServicesScreenState extends State<ServicesScreen> {
     return SafeArea(
       child: Stack(
         children: <Widget>[
-          _isLoading
-              ? LoadingIndicator()
-              : Scaffold(
-                  key: _scaffoldKey,
-                  body: Column(
-                    children: <Widget>[
-                      ServiceHeader(),
-                      _arrowMoreUp,
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.bottomCenter,
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 20.0,
-                          ),
-                          child: NotificationListener<ScrollNotification>(
-                            onNotification: (scrollNotification) {
-                              if (scrollNotification is ScrollStartNotification) {
-                                _onStartScroll(scrollNotification.metrics);
-                              } else if (scrollNotification
-                                  is ScrollUpdateNotification) {
-                                _onUpdateScroll(scrollNotification.metrics);
-                              } else if (scrollNotification
-                                  is ScrollEndNotification) {
-                                _onEndScroll(scrollNotification.metrics);
-                              }
-                              return;
-                            },
-                            child: ListView.builder(
-                                controller: _scrollController,
-                                itemCount: _moduleReferences.length,
-                                itemBuilder: (context, index) {
-                                  return _moduleReferenceItem(
-                                      context, _moduleReferences[index]);
-                                }),
-                          ),
-                        ),
-                      ),
-                      _arrowMoreDown,
-                    ],
+          Scaffold(
+            key: _scaffoldKey,
+            body: Column(
+              children: <Widget>[
+                ServiceHeader(),
+                _arrowMoreUp,
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                    ),
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (scrollNotification) {
+                        if (scrollNotification is ScrollStartNotification) {
+                          _onStartScroll(scrollNotification.metrics);
+                        } else if (scrollNotification
+                            is ScrollUpdateNotification) {
+                          _onUpdateScroll(scrollNotification.metrics);
+                        } else if (scrollNotification
+                            is ScrollEndNotification) {
+                          _onEndScroll(scrollNotification.metrics);
+                        }
+                        return;
+                      },
+                      child: ListView.builder(
+                          controller: _scrollController,
+                          itemCount: _moduleReferences.length,
+                          itemBuilder: (context, index) {
+                            return _moduleReferenceItem(
+                                  context, _moduleReferences[index]);
+                          }),
+                    ),
                   ),
                 ),
+                _arrowMoreDown,
+              ],
+            ),
+          ),
           //TODO Removed when SendHelp is ready
 //          Container(
 //              height: double.infinity,
@@ -159,9 +124,17 @@ class _ServicesScreenState extends State<ServicesScreen> {
         final result = await Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ModuleScreen(
-                    moduleReference: moduleReference,
-                  )),
+            builder: (context) {
+              return BlocProvider<SubServicesBloc>(
+                  builder: (context) => SubServicesBloc()
+                ..dispatch(
+                    FetchSubServices(moduleReference)),
+              child: SubServicesScreen());
+//                ModuleScreen(
+//                moduleReference: moduleReference,
+//              );
+            },
+          ),
         );
         if (result.runtimeType == String) {
           final String val = result;

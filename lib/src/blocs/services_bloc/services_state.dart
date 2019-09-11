@@ -7,6 +7,7 @@
 */
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/models/church_module.dart';
 
 @immutable
 abstract class ServicesState extends Equatable {
@@ -14,13 +15,11 @@ abstract class ServicesState extends Equatable {
 }
 
 class ServicesUninitialized extends ServicesState {
-
   @override
   String toString() => 'ServicesUninitialized';
 }
 
-class ServicesLoading extends  ServicesState {
-
+class ServicesLoading extends ServicesState {
   @override
   String toString() => 'ServicesLoading';
 }
@@ -31,16 +30,11 @@ class ServicesLoaded extends ServicesState {
   String toString() => 'ServicesLoaded';
 }
 
+class ServicesError extends ServicesState {
+  final exception;
 
-class ServicesErrorLoading extends ServicesState {
-
-  @override
-  String toString() => 'ServicesErrorLoading';
-}
-
-class NoServicesLoaded extends ServicesState {
+  ServicesError(this.exception) : super([exception]);
 
   @override
-  String toString() => 'NoServicesLoaded';
+  String toString() => 'ServicesError';
 }
-

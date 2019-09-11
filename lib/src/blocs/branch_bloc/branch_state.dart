@@ -20,7 +20,7 @@ class BranchUninitialized extends BranchState {
   String toString() => 'BranchUninitialized';
 }
 
-class BranchLoading extends BranchState{
+class BranchLoading extends BranchState {
   @override
   String toString() => 'BranchLoading';
 }
@@ -34,7 +34,11 @@ class BranchLoaded extends BranchState {
   String toString() => 'BranchLoaded { tabs: ${this.branch} }';
 }
 
-class BranchNotLoaded extends BranchState {
+class BranchError extends BranchState {
+  final exception;
+
+  BranchError(this.exception) : super([exception]);
+
   @override
   String toString() => 'BranchNotLoaded';
 }

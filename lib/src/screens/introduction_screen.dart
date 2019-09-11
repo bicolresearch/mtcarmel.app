@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
@@ -92,9 +93,10 @@ class _IntroScreenState extends State<IntroScreen> {
       context,
       MaterialPageRoute(
         builder: (context) {
-          final branchId =
-              Provider.of<BranchSelectionBloc>(context).selectedBranch.branchId;
-          Provider.of<BranchBloc>(context).dispatch(GetBranch(branchId));
+          final branchId = BlocProvider.of<BranchSelectionBloc>(context)
+              .selectedBranch
+              .branchId;
+          BlocProvider.of<BranchBloc>(context).dispatch(GetBranch(branchId));
           return HomeScreen();
         },
       ),

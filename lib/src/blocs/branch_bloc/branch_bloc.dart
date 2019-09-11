@@ -15,7 +15,6 @@ import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:mt_carmel_app/src/repositories/branches_repo.dart';
 
 class BranchBloc extends Bloc<BranchEvent, BranchState> {
-
   Branch _branch;
 
   @override
@@ -23,21 +22,25 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
 
   @override
   Stream<BranchState> mapEventToState(BranchEvent event) async* {
-    if (event is GetBranch){
+    if (event is GetBranch) {
       yield BranchLoading();
-      print(event.branchId);
-      if(_branch != null && event.branchId != _branch?.branchId) {
-        final branch = await _fetchBranch(event.branchId);
-        print(branch);
+      if (_branch == null && event.branchId != _branch?.branchId) {
+        var branch;
+        try {
+          branch = await _fetchBranch(event.branchId);
+        } catch (e) {
+          yield BranchError(Exception("$e"));
+          return;
+        }
+
         if (branch != null) {
           _branch = branch;
           yield BranchLoaded(branch);
-        }
-        else
-          yield BranchNotLoaded();
+        } else {
           await Future.delayed(Duration(milliseconds: 300));
           yield BranchLoaded(_branch);
-      }else{
+        }
+      } else {
         yield BranchLoaded(_branch);
       }
     }
@@ -48,13 +51,11 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
     final BranchesRepo branchesRepo = BranchesRepo();
     //TODO Temporary. use the api instead
     final branches = branchesRepo.branches;
-    for (var item in branches)
-      {
-        if(item.containsKey("branch_id")) {
-          if(item["branch_id"] == branchId)
-            return Branch.fromJson(item);
-        }
+    for (var item in branches) {
+      if (item.containsKey("branch_id")) {
+        if (item["branch_id"] == branchId) return Branch.fromJson(item);
       }
+    }
 
     print("no branch");
     return null;
