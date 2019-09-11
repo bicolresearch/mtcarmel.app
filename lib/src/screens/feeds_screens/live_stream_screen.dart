@@ -12,6 +12,7 @@ import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_state.dart';
 import 'package:mt_carmel_app/src/models/live_stream.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
+import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,9 @@ class LiveStreamScreen extends StatelessWidget {
             children: <Widget>[
               Expanded(child: Center(child: LoadingIndicator())),
               leftArrowBackButton(context: context),
-              SizedBox(height: 20,)
+              SizedBox(
+                height: 20,
+              )
             ],
           );
         }
@@ -36,6 +39,9 @@ class LiveStreamScreen extends StatelessWidget {
           final String videoId = liveStream.data[0].videoId;
           if (videoId == null || videoId.isEmpty) return Container();
           return YoutubePlayerScreen(videoId: videoId);
+        }
+        if (state is LiveStreamError) {
+          return ErrorMessage.errMsg(errorMessage: "Something Went wrong");
         }
         return Container();
       }),

@@ -2,12 +2,14 @@
 *	 Filename		 :	 pastor_screen.dart
 *	 Purpose		 :	 Displays the list of pastors
 *  Created	 	 :   2019-06-11 15:56:33 by Detective Conan
-*  Updated     :   2019-08-27 15:01 by Detective conan
-*  Changes     :   Changed the api's url.
+*	 Updated			:   11/09/2019 3:45 PM PM by Detective Conan
+*	 Changes			:   Added fetching current branchId to to filter pastors with branch
 */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/data_pastor.dart';
 import 'package:mt_carmel_app/src/models/data_priest.dart';
 import 'package:mt_carmel_app/src/models/pastor.dart';
@@ -44,12 +46,17 @@ class _PastorsScreenState extends State<PastorsScreen> {
 
   Future<void> getJasonData() async {
     // url the same with priest. they shared api. to be identified by type_id
-    var response = await http.get(AppConstants.PRIESTS_JSON_URL);
+    final branchId = locator<BranchService>().branchId;
+    var response = await http.get(
+        "${AppConstants.PRIESTS_JSON_URL}/?branch_id=$branchId&?type_name=Pastor");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
           final body = json.decode(response.body);
-          _pastorList = DataPriest.fromJson(body).data.where((priest) {
+          _pastorList = DataPriest
+              .fromJson(body)
+              .data
+              .where((priest) {
             return priest.typeId == _TYPE_ID;
           }).toList();
         } else {
@@ -75,64 +82,66 @@ class _PastorsScreenState extends State<PastorsScreen> {
               child: (_isLoading)
                   ? Center(child: LoadingIndicator())
                   : _isJsonFailed
-                      ? failedMessage(context)
-                      : Container(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 10.0,
-                                ),
-                                height: 40.0,
-                                decoration: BoxDecoration(
-                                  color: Colors.brown[600],
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    AppConstants.COMPANY_NAME,
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .subhead
-                                        .copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Pastors",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .title
-                                      .copyWith(fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: 50.0,
-                                  ),
-                                  child: ListView.builder(
-                                      physics: ScrollPhysics(
-                                          parent: ScrollPhysics()),
-                                      shrinkWrap: true,
-                                      reverse: true,
-                                      itemCount: _pastorList.length,
-                                      itemBuilder: (context, index) {
-                                        return _pastorItem(
-                                            context, _pastorList[index]);
-                                      }),
-                                ),
-                              ),
-                            ],
-                          ),
+                  ? failedMessage(context)
+                  : Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: 10.0,
+                      ),
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        color: Colors.brown[600],
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          AppConstants.COMPANY_NAME,
+                          style: Theme
+                              .of(context)
+                              .primaryTextTheme
+                              .subhead
+                              .copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Pastors",
+                        style: Theme
+                            .of(context)
+                            .primaryTextTheme
+                            .title
+                            .copyWith(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 50.0,
+                        ),
+                        child: ListView.builder(
+                            physics: ScrollPhysics(
+                                parent: ScrollPhysics()),
+                            shrinkWrap: true,
+                            reverse: true,
+                            itemCount: _pastorList.length,
+                            itemBuilder: (context, index) {
+                              return _pastorItem(
+                                  context, _pastorList[index]);
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             leftArrowBackButton(context: context),
           ],
@@ -148,12 +157,18 @@ class _PastorsScreenState extends State<PastorsScreen> {
         ListTile(
           title: Text(
             '${pastor.name}',
-            style: Theme.of(context).primaryTextTheme.subhead,
+            style: Theme
+                .of(context)
+                .primaryTextTheme
+                .subhead,
             textAlign: TextAlign.center,
           ),
           subtitle: Text(
-            '${pastor.position??""}\n${pastor.congregation}',
-            style: Theme.of(context).primaryTextTheme.caption,
+            '${pastor.position ?? ""}\n${pastor.congregation}',
+            style: Theme
+                .of(context)
+                .primaryTextTheme
+                .caption,
             textAlign: TextAlign.center,
           ),
         ),
