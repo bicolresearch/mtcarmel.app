@@ -13,7 +13,6 @@ import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/contact.dart';
-import 'package:mt_carmel_app/src/models/data_contact.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/failed_message.dart';
 import 'package:mt_carmel_app/src/widgets/item_widget.dart';
@@ -24,7 +23,6 @@ import 'package:html2md/html2md.dart' as html2md;
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class ContactDetailScreen extends StatefulWidget {
-
   ContactDetailScreen();
 
   @override
@@ -32,7 +30,7 @@ class ContactDetailScreen extends StatefulWidget {
 }
 
 class _ContactDetailScreenState extends State<ContactDetailScreen> {
-  List<Contact> _contactList = [];
+  ContactData _contactData;
   var _isLoading = true;
   var _isJsonFailed = false;
 
@@ -44,13 +42,13 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
 
   Future<void> getJasonData() async {
     final branchId = locator<BranchService>().branchId;
-    var response = await http
-        .get("${AppConstants.CONTACT_DETAILS_JSON_URL}?branch_id=$branchId");
+    var response = await http.get(
+        "${AppConstants.CONTACT_DETAILS_JSON_URL}?branch_id=$branchId&id=1");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {
           final body = json.decode(response.body);
-          _contactList = DataContact.fromJson(body).data;
+          _contactData = ContactData.fromJson(body);
         } else {
           print(response.statusCode);
           _isJsonFailed = true;
@@ -88,7 +86,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
                             Divider(),
                             Expanded(
                               child: Container(
-                                child: _contactList.isEmpty
+                                child: (_contactData == null)
                                     ? Container()
                                     : _contactDetailContent(context),
                               ),
@@ -110,19 +108,19 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
   }
 
   Widget _contactDetailContent(BuildContext context) {
-    if (_contactList.isEmpty) return Container();
+    if (_contactData == null) return Container();
 
     final List<_ContactItem> contactItems = [
-      _ContactItem("Church name", _contactList[0].name ?? ""),
+      _ContactItem("Church name", _contactData.name ?? ""),
       _ContactItem("Address",
-          '''${_contactList[0].address1 ?? ""} ${_contactList[0].address2 ?? ""} 
-              ${_contactList[0].city ?? ""} ${_contactList[0].province ?? ""}
-              ${_contactList[0].country ?? ""}
+          '''${_contactData.address1 ?? ""} ${_contactData.address2 ?? ""} 
+              ${_contactData.cityName ?? ""} ${_contactData.provinceName ?? ""}
+              ${_contactData.countryName ?? ""}
               '''),
-      _ContactItem("Email", _contactList[0].email ?? ""),
-      _ContactItem("Social Media", _contactList[0].socialMedia ?? ""),
-      _ContactItem("Landline", _contactList[0].landLine ?? ""),
-      _ContactItem("Mobile", _contactList[0].mobile ?? ""),
+      _ContactItem("Email", _contactData.email ?? ""),
+//      _ContactItem("Social Media", _contactData.socialMedia ?? ""),
+      _ContactItem("Landline", _contactData.landLine ?? ""),
+      _ContactItem("Mobile", _contactData.mobile ?? ""),
     ];
 
     return Container(

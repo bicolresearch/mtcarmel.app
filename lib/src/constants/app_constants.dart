@@ -35,7 +35,7 @@ class AppConstants {
   static const String PASTORS_JSON_URL = 'https://api.mountcarmel.ph/pastors/';
   static const String ABOUT_JSON_URL = 'https://api.mountcarmel.ph/histories/';
   static const String CONTACT_DETAILS_JSON_URL =
-      'https://api.mountcarmel.ph/contacts';
+      'https://api.mountcarmel.ph/contacts/contact/';
   static const String CHURCH_SCHEDULE_JSON_URL =
       'https://api.mountcarmel.ph/schedules';
   static const String SERVICES_JSON_URL = 'https://api.mountcarmel.ph/modules/';

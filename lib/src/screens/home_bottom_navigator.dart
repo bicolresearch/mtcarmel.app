@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
-import 'package:mt_carmel_app/src/screens/feeds_screens/feeds_screen.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/news_feed_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/send_help_screens/send_help_screen.dart';

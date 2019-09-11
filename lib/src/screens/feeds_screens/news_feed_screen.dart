@@ -13,7 +13,7 @@ import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_event.dart'
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 
-import 'package:mt_carmel_app/src/screens/calendar.dart';
+import 'package:mt_carmel_app/src/screens/feeds_screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_list_view.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/live_stream_screen.dart';
 

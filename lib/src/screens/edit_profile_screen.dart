@@ -14,7 +14,6 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
 import 'package:mt_carmel_app/src/utils/image_upload_form.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mt_carmel_app/src/models/user_profile.dart';
 
@@ -50,7 +49,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              lineWidget(),
+              Divider(),
               SizedBox(
                 height: 10.0,
               ),

@@ -5,7 +5,6 @@ import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_b
 import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import '../constants/app_constants.dart';
-import '../screens/tab_navigator.dart';
 import '../helpers/screen_slider.dart';
 import '../presentations/mount_carmel_icons.dart';
 import '../helpers/shared_preference_helper.dart';

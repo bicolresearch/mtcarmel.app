@@ -29,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            lineWidget(),
+            Divider(),
             SizedBox(
               height: 10.0,
             ),
