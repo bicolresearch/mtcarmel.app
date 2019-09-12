@@ -107,12 +107,12 @@ class _ServicesScreenState extends State<ServicesScreen> {
               ],
             ),
           ),
-          //TODO Removed when SendHelp is ready
-//          Container(
-//              height: double.infinity,
-//              width: double.infinity,
-//              color: Color.fromRGBO(0, 0, 0, 0.7)
-//          ),
+          //TODO Removed when Services is ready
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Color.fromRGBO(0, 0, 0, 0.7),
+          ),
         ],
       ),
     );

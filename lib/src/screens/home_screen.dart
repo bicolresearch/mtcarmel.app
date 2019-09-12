@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
@@ -51,6 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 BlocProvider<ServicesBloc>(
                   builder: (context)=> ServicesBloc(),
+                ),
+
+                BlocProvider<SendHelpBloc>(
+                  builder: (context)=> SendHelpBloc(),
                 ),
               ],
                 child: HomeBottomNavigator()

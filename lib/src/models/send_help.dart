@@ -12,20 +12,43 @@ part 'send_help.g.dart';
 
 @JsonSerializable()
 class SendHelp {
-  final String id;
-  String name;
-  @JsonKey(name: "branch_id")
-  final String branchId;
-  final String description;
-  final String schedule;
-  @JsonKey(name: "cover_photo")
-  final String coverPhoto;
+  SendHelp(this.draw, this.recordsTotal, this.recordsFiltered, this.data);
 
-  SendHelp(this.id, this.name, this.branchId, this.description, this.schedule,
-      this.coverPhoto);
+  final draw;
+  @JsonKey(name: "recordsTotal")
+  final recordsTotal;
+  @JsonKey(name: "recordsFiltered")
+  final recordsFiltered;
+  final List<SendHelpData> data;
+
 
   factory SendHelp.fromJson(Map<String, dynamic> json) =>
       _$SendHelpFromJson(json);
 
   Map<String, dynamic> toJson() => _$SendHelpToJson(this);
+}
+
+
+@JsonSerializable()
+class SendHelpData {
+
+  SendHelpData(this.id, this.name, this.description, this.dtCreated,
+      this.dtUpdated, this.createdBy, this.updatedBy);
+
+  final id;
+  final name;
+  final description;
+  @JsonKey(name: "dt_created")
+  final dtCreated;
+  @JsonKey(name: "dt_updated")
+  final dtUpdated;
+  @JsonKey(name: "created_by")
+  final createdBy;
+  @JsonKey(name: "updated_by")
+  final updatedBy;
+
+  factory SendHelpData.fromJson(Map<String, dynamic> json) =>
+      _$SendHelpDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SendHelpDataToJson(this);
 }

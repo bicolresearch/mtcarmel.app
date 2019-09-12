@@ -20,6 +20,7 @@ import 'package:mt_carmel_app/src/core/services/regular_church_schedule_service.
 import 'package:mt_carmel_app/src/core/services/repositories/address_repository.dart';
 import 'package:mt_carmel_app/src/core/services/selection_service.dart';
 import 'package:mt_carmel_app/src/core/services/church_modules_service.dart';
+import 'package:mt_carmel_app/src/core/services/send_help_service.dart';
 import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
 
@@ -42,4 +43,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => BranchService());
   locator.registerLazySingleton(() => BranchSelectionService());
   locator.registerLazySingleton(() => ChurchModuleService());
+  locator.registerLazySingleton(() => SendHelpService());
 }

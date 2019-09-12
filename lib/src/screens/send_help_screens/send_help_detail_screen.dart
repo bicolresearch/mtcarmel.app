@@ -9,15 +9,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
 import 'package:mt_carmel_app/src/utils/payment_screen.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
-import '../../constants/app_constants.dart';
 
 class SendHelpDetails extends StatefulWidget {
-  SendHelpDetails(this.sendHelp);
+  SendHelpDetails(this.sendHelpData);
 
-  final SendHelp sendHelp;
+  final SendHelpData sendHelpData;
 
   @override
   _SendHelpDetailsState createState() => _SendHelpDetailsState();
@@ -37,16 +37,17 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
         resizeToAvoidBottomPadding: false,
         body: Stack(
           children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height,
-              child: CachedNetworkImage(
-//                  key: Key(widget.sendHelp.coverPhoto.replaceAll("/", "")),
-                  imageUrl:
-                      AppConstants.API_BASE_URL + widget.sendHelp.coverPhoto,
-                  placeholder: (context, url) => LoadingIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                  fit: BoxFit.cover),
-            ),
+            //TODO uncomment when send help is ready
+//            Container(
+//              height: MediaQuery.of(context).size.height,
+//              child: CachedNetworkImage(
+////                  key: Key(widget.sendHelp.coverPhoto.replaceAll("/", "")),
+//                  imageUrl:
+//                      AppConstants.API_BASE_URL + widget.sendHelp.coverPhoto,
+//                  placeholder: (context, url) => LoadingIndicator(),
+//                  errorWidget: (context, url, error) => Icon(Icons.error),
+//                  fit: BoxFit.cover),
+//            ),
             Column(
               children: <Widget>[
                 _isTextEditing
@@ -162,7 +163,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
                 height: 20.0,
               ),
               Text(
-                widget.sendHelp.description,
+                widget.sendHelpData.description,
                 style: Theme.of(context)
                     .primaryTextTheme
                     .title

@@ -8,20 +8,42 @@ part of 'send_help.dart';
 
 SendHelp _$SendHelpFromJson(Map<String, dynamic> json) {
   return SendHelp(
-    json['id'] as String,
-    json['name'] as String,
-    json['branch_id'] as String,
-    json['description'] as String,
-    json['schedule'] as String,
-    json['cover_photo'] as String,
+    json['draw'],
+    json['recordsTotal'],
+    json['recordsFiltered'],
+    (json['data'] as List)
+        ?.map((e) =>
+            e == null ? null : SendHelpData.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
 Map<String, dynamic> _$SendHelpToJson(SendHelp instance) => <String, dynamic>{
+      'draw': instance.draw,
+      'recordsTotal': instance.recordsTotal,
+      'recordsFiltered': instance.recordsFiltered,
+      'data': instance.data,
+    };
+
+SendHelpData _$SendHelpDataFromJson(Map<String, dynamic> json) {
+  return SendHelpData(
+    json['id'],
+    json['name'],
+    json['description'],
+    json['dt_created'],
+    json['dt_updated'],
+    json['created_by'],
+    json['updated_by'],
+  );
+}
+
+Map<String, dynamic> _$SendHelpDataToJson(SendHelpData instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'branch_id': instance.branchId,
       'description': instance.description,
-      'schedule': instance.schedule,
-      'cover_photo': instance.coverPhoto,
+      'dt_created': instance.dtCreated,
+      'dt_updated': instance.dtUpdated,
+      'created_by': instance.createdBy,
+      'updated_by': instance.updatedBy,
     };
