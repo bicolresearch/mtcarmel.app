@@ -55,7 +55,7 @@ class ChurchModuleService {
   ChurchSubModule _getChurchSubModule(
       SubModuleAndFormFields subModuleAndFormFields) {
     return ChurchSubModule(
-        name: subModuleAndFormFields.subModule.name,
+        name: subModuleAndFormFields.subModule?.name,
         formFields: subModuleAndFormFields.formFields,
         acceptanceContent: subModuleAndFormFields.subModule.acceptanceContent,
         thankYouContent: subModuleAndFormFields.subModule.thankYouContent,

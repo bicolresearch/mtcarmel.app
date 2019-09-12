@@ -98,7 +98,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           itemCount: _moduleReferences.length,
                           itemBuilder: (context, index) {
                             return _moduleReferenceItem(
-                                  context, _moduleReferences[index]);
+                                context, _moduleReferences[index]);
                           }),
                     ),
                   ),
@@ -107,12 +107,12 @@ class _ServicesScreenState extends State<ServicesScreen> {
               ],
             ),
           ),
-          //TODO Removed when Services is ready
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Color.fromRGBO(0, 0, 0, 0.7),
-          ),
+//          //TODO Removed when Services is ready
+//          Container(
+//            height: double.infinity,
+//            width: double.infinity,
+//            color: Color.fromRGBO(0, 0, 0, 0.7),
+//          ),
         ],
       ),
     );
@@ -121,33 +121,42 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget _moduleReferenceItem(context, final ModuleReference moduleReference) {
     return InkWell(
       onTap: () async {
-        final result = await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return BlocProvider<SubServicesBloc>(
-                  builder: (context) => SubServicesBloc()
-                ..dispatch(
-                    FetchSubServices(moduleReference)),
-              child: SubServicesScreen());
-//                ModuleScreen(
-//                moduleReference: moduleReference,
-//              );
-            },
+        _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text(
+              'This feature is not yet available',
+              textAlign: TextAlign.center,
+            ),
+            duration: Duration(seconds: 3),
           ),
         );
-        if (result.runtimeType == String) {
-          final String val = result;
-          if (val.contains("No sub-services")) {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text(
-                '$val',
-                textAlign: TextAlign.center,
-              ),
-              duration: Duration(seconds: 3),
-            ));
-          }
-        }
+//        final result = await Navigator.push(
+//          context,
+//          MaterialPageRoute(
+//            builder: (context) {
+//              return BlocProvider<SubServicesBloc>(
+//                  builder: (context) => SubServicesBloc()
+//                ..dispatch(
+//                    FetchSubServices(moduleReference)),
+//              child: SubServicesScreen());
+////                ModuleScreen(
+////                moduleReference: moduleReference,
+////              );
+//            },
+//          ),
+//        );
+//        if (result.runtimeType == String) {
+//          final String val = result;
+//          if (val.contains("No sub-services")) {
+//            _scaffoldKey.currentState.showSnackBar(SnackBar(
+//              content: Text(
+//                '$val',
+//                textAlign: TextAlign.center,
+//              ),
+//              duration: Duration(seconds: 3),
+//            ));
+//          }
+//        }
       },
       child: ModuleReferenceTile(
           context: context, moduleReference: moduleReference),

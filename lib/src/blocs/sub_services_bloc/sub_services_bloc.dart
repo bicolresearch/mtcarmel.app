@@ -9,7 +9,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_event.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_state.dart';
-import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/core/services/church_modules_service.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
