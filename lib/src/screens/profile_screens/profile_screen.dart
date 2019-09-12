@@ -16,7 +16,7 @@ import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/user_profile.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/screens/edit_profile_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screen.dart';

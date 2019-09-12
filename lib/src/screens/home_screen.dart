@@ -14,6 +14,7 @@ import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
+import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
@@ -41,25 +42,25 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           } else if (state is BranchLoaded) {
             print(BranchLoaded);
-            return MultiBlocProvider(
-              providers: [
-                BlocProvider<TabBloc>(
-                    builder: (context) => TabBloc(),),
-                BlocProvider<NewsFeedBloc>(
-                  // TODO: pass the branch id from api
-                  builder: (context) => NewsFeedBloc(),
+            return MultiBlocProvider(providers: [
+              BlocProvider<TabBloc>(
+                builder: (context) => TabBloc(),
+              ),
+              BlocProvider<NewsFeedBloc>(
+                // TODO: pass the branch id from api
+                builder: (context) => NewsFeedBloc(),
 //          ..dispatch(FetchFeed()),
-                ),
-                BlocProvider<ServicesBloc>(
-                  builder: (context)=> ServicesBloc(),
-                ),
-
-                BlocProvider<SendHelpBloc>(
-                  builder: (context)=> SendHelpBloc(),
-                ),
-              ],
-                child: HomeBottomNavigator()
-            );
+              ),
+              BlocProvider<ServicesBloc>(
+                builder: (context) => ServicesBloc(),
+              ),
+              BlocProvider<SendHelpBloc>(
+                builder: (context) => SendHelpBloc(),
+              ),
+              BlocProvider<TransparencyBloc>(
+                builder: (context) => TransparencyBloc(),
+              ),
+            ], child: HomeBottomNavigator());
           } else if (state is BranchLoading) {
             return Scaffold(
               body: Center(
@@ -71,7 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
           return Container();
         },
       ),
-      onWillPop:() {return _exitDialog(context);},
+      onWillPop: () {
+        return _exitDialog(context);
+      },
     );
   }
 

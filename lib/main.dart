@@ -24,7 +24,7 @@ import 'package:mt_carmel_app/src/screens/branch_selection_screen.dart';
 import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:mt_carmel_app/src/screens/start_page.dart';
 import 'package:mt_carmel_app/src/screens/tab_selector.dart';
-import 'package:mt_carmel_app/src/screens/edit_profile_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/utils/development_production_enum.dart';
 import 'package:mt_carmel_app/src/widgets/app_theme_data.dart';
 import 'src/screens/splash_screen.dart';
