@@ -137,7 +137,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
 
   Future _getSubModules() async {
     final List<String> subModules =
-        widget.moduleReference.subModules.split(",");
+        widget.moduleReference.subModuleIds.split(",");
 
     List<ChurchSubModule> churchSubmodules = [];
 

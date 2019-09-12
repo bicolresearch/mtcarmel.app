@@ -1,61 +1,59 @@
 /*
-*   Filename    :   sub_modules_service.dart
+*   Filename    :   church_modules_service.dart
 *   Purpose     :
 *   Created     :   11/09/2019 1:02 PM by Detective Conan
 *   Updated     :   11/09/2019 1:02 PM by Detective Conan
 *   Changes     :   
 */
 
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class SubModuleService {
-
+class ChurchModuleService {
   Future<ChurchModule> getChurchModule(ModuleReference moduleReference) async {
     var churchSubModules;
     try {
-      churchSubModules= await _getSubModules(moduleReference);
+      churchSubModules = await _getSubModules(moduleReference);
     } catch (e) {
       print(e);
       throw Exception(e);
     }
 
     return ChurchModule(
-        moduleReference: moduleReference,
-        churchSubModules: churchSubModules);
+        moduleReference: moduleReference, churchSubModules: churchSubModules);
   }
 
   Future _getSubModules(ModuleReference moduleReference) async {
-    final List<String> subModules =
-    moduleReference.subModules?.split(",");
+    final List<String> subModuleIds =
+        moduleReference.subModuleIds?.split(",") ?? [];
 
-    if (subModules.isEmpty)
-      throw Exception(
-          "No sub module for ${moduleReference.name}");
+    if (subModuleIds.isEmpty)
+      throw Exception("No sub module for ${moduleReference?.name}");
 
     List<ChurchSubModule> churchSubmodules = [];
 
-    for (var api in subModules) {
+    for (var id in subModuleIds) {
       try {
+        final subModuleId = "$id";
         SubModuleAndFormFields subModuleAndFormFields =
-        await _getSubModuleAndFormFields(api);
-        churchSubmodules.add(_getChurchSubModule(subModuleAndFormFields, api));
+            await _getSubModuleAndFormFields(subModuleId);
+        churchSubmodules.add(_getChurchSubModule(subModuleAndFormFields));
       } catch (e) {
-        print("ModuleScreen._getSubModules: $e");
+        print("ChurchModulesService._getSubModules: $e");
       }
     }
 
-    if (churchSubmodules.isEmpty)
-      throw Exception("No SubModule retrieved");
+    if (churchSubmodules.isEmpty) throw Exception("No SubModule retrieved");
 
     return churchSubmodules;
   }
 
   ChurchSubModule _getChurchSubModule(
-      SubModuleAndFormFields subModuleAndFormFields, String urlApi) {
+      SubModuleAndFormFields subModuleAndFormFields) {
     return ChurchSubModule(
         name: subModuleAndFormFields.subModule.name,
         formFields: subModuleAndFormFields.formFields,
@@ -65,15 +63,27 @@ class SubModuleService {
   }
 
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
-      String subModuleUrl) async {
+      String subModuleId) async {
     final branchId = locator<BranchService>().branchId;
-    final response = await http.get("$subModuleUrl/?branch_id=$branchId");
-
+    final response = await http
+        .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}?branch_id=$branchId&id=$subModuleId");
+    print("${AppConstants.SUB_SERVICES_BASE_JSON_URL}?branch_id=$branchId&id=$subModuleId");
+    print(response.statusCode);
     if (response.statusCode == 200) {
+      print(response.body);
       final body = json.decode(response.body);
+      print(body);
       return SubModuleAndFormFields.fromJson(body);
     } else {
       throw Exception("Error in SubModlueAndFormFields data gathering.");
     }
+//    if (response.statusCode == 200) {
+//      return (json.decode(response.body) as List)
+//          .map((data) => SubModuleAndFormFields.fromJson(data))
+//          .toList()
+//          .firstWhere((value) => value.subModule.id == subModuleId);
+//    } else {
+//      throw Exception('Failed to load');
+//    }
   }
 }

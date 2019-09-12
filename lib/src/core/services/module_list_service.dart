@@ -49,11 +49,10 @@ class ModuleListService {
 
     if (response.statusCode == 200) {
       try {
-        return (json.decode(response.body) as List)
-            .map((data) => ModuleReference.fromJson(data))
-            .toList();
+        final body = jsonDecode(response.body);
+        return ModuleReferenceRoot.fromJson(body).data;
       } catch (e) {
-        print(e);
+        print("$e");
         throw e;
       }
     } else {

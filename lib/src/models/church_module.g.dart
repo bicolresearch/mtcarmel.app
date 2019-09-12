@@ -92,6 +92,28 @@ Map<String, dynamic> _$ChurchFormFieldToJson(ChurchFormField instance) =>
       'max_lines': instance.maxLines,
     };
 
+ModuleReferenceRoot _$ModuleReferenceRootFromJson(Map<String, dynamic> json) {
+  return ModuleReferenceRoot(
+    json['draw'],
+    json['recordsTotal'],
+    json['recordsFiltered'],
+    (json['data'] as List)
+        ?.map((e) => e == null
+            ? null
+            : ModuleReference.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$ModuleReferenceRootToJson(
+        ModuleReferenceRoot instance) =>
+    <String, dynamic>{
+      'draw': instance.draw,
+      'recordsTotal': instance.recordsTotal,
+      'recordsFiltered': instance.recordsFiltered,
+      'data': instance.data,
+    };
+
 ModuleReference _$ModuleReferenceFromJson(Map<String, dynamic> json) {
   return ModuleReference(
     json['id'] as String,
@@ -99,7 +121,7 @@ ModuleReference _$ModuleReferenceFromJson(Map<String, dynamic> json) {
     json['name'] as String,
     json['description'] as String,
     json['cover_photo'] as String,
-    json['sub_modules'] as String,
+    json['sub_modules_ids'] as String,
   );
 }
 
@@ -110,7 +132,7 @@ Map<String, dynamic> _$ModuleReferenceToJson(ModuleReference instance) =>
       'name': instance.name,
       'description': instance.description,
       'cover_photo': instance.coverPhoto,
-      'sub_modules': instance.subModules,
+      'sub_modules_ids': instance.subModuleIds,
     };
 
 SubModuleAndFormFields _$SubModuleAndFormFieldsFromJson(
@@ -134,18 +156,46 @@ Map<String, dynamic> _$SubModuleAndFormFieldsToJson(
       'form_fields': instance.formFields,
     };
 
+SubModuleRoot _$SubModuleRootFromJson(Map<String, dynamic> json) {
+  return SubModuleRoot(
+    json['draw'],
+    json['recordsTotal'],
+    json['recordsFiltered'],
+    (json['data'] as List)
+        ?.map((e) =>
+            e == null ? null : SubModule.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$SubModuleRootToJson(SubModuleRoot instance) =>
+    <String, dynamic>{
+      'draw': instance.draw,
+      'recordsTotal': instance.recordsTotal,
+      'recordsFiltered': instance.recordsFiltered,
+      'data': instance.data,
+    };
+
 SubModule _$SubModuleFromJson(Map<String, dynamic> json) {
   return SubModule(
-    name: json['name'] as String,
-    acceptanceContent: json['acceptance_content'] as String,
-    thankYouContent: json['thank_you_content'] as String,
-    url: json['url'] as String,
+    json['module_id'],
+    json['id'],
+    json['name'],
+    json['description'],
+    json['acceptance_content'],
+    json['thank_you_content'],
+    json['url'],
+    json['cover_photo'],
   );
 }
 
 Map<String, dynamic> _$SubModuleToJson(SubModule instance) => <String, dynamic>{
+      'module_id': instance.moduleId,
+      'id': instance.id,
       'name': instance.name,
+      'description': instance.description,
       'acceptance_content': instance.acceptanceContent,
       'thank_you_content': instance.thankYouContent,
       'url': instance.url,
+      'cover_photo': instance.coverPhoto,
     };

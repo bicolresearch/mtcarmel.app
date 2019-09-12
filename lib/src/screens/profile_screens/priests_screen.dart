@@ -22,9 +22,6 @@ import 'dart:convert';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class PriestsScreen extends StatefulWidget {
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
   PriestsScreen(BuildContext context);
 
   @override
@@ -48,8 +45,8 @@ class _PriestsScreenState extends State<PriestsScreen> {
 
   Future<void> getJsonData() async {
     final branchId = locator<BranchService>().branchId;
-    var response =
-        await http.get("${AppConstants.PRIESTS_JSON_URL}?branch_id=$branchId");
+    var response = await http.get(
+        "${AppConstants.PRIESTS_JSON_URL}?branch_id=$branchId&type_id=$_TYPE_ID");
     if (this.mounted) {
       setState(() {
         if (response.statusCode == 200) {

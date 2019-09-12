@@ -11,7 +11,7 @@ import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_event.dar
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_state.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/core/services/sub_modules_service.dart';
+import 'package:mt_carmel_app/src/core/services/church_modules_service.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 
 class SubServicesBloc extends Bloc<SubServicesEvent, SubServicesState> {
@@ -30,7 +30,7 @@ class SubServicesBloc extends Bloc<SubServicesEvent, SubServicesState> {
     if (event is FetchSubServices) {
       yield SubServicesLoading();
       try {
-        _churchModule = await locator<SubModuleService>()
+        _churchModule = await locator<ChurchModuleService>()
                   .getChurchModule(event.moduleReference);
         _moduleReference = event.moduleReference;
         yield SubServicesLoaded();

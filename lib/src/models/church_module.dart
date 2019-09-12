@@ -108,6 +108,24 @@ class ChurchFormField {
 }
 
 @JsonSerializable()
+class ModuleReferenceRoot {
+  ModuleReferenceRoot(
+      this.draw, this.recordsTotal, this.recordsFiltered, this.data);
+
+  final draw;
+  @JsonKey(name: "recordsTotal")
+  final recordsTotal;
+  @JsonKey(name: "recordsFiltered")
+  final recordsFiltered;
+  final List<ModuleReference> data;
+
+  factory ModuleReferenceRoot.fromJson(Map<String, dynamic> json) =>
+      _$ModuleReferenceRootFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ModuleReferenceRootToJson(this);
+}
+
+@JsonSerializable()
 class ModuleReference {
   ModuleReference(
     this.id,
@@ -115,7 +133,7 @@ class ModuleReference {
     this.name,
     this.description,
     this.coverPhoto,
-    this.subModules,
+    this.subModuleIds,
   );
 
   final String id;
@@ -125,8 +143,8 @@ class ModuleReference {
   final String description;
   @JsonKey(name: "cover_photo")
   final String coverPhoto;
-  @JsonKey(name: "sub_modules")
-  final String subModules;
+  @JsonKey(name: "sub_modules_ids")
+  final String subModuleIds;
 
   factory ModuleReference.fromJson(Map<String, dynamic> json) =>
       _$ModuleReferenceFromJson(json);
@@ -152,16 +170,39 @@ class SubModuleAndFormFields {
 }
 
 @JsonSerializable()
-class SubModule {
-  SubModule(
-      {this.name, this.acceptanceContent, this.thankYouContent, this.url});
+class SubModuleRoot {
+  SubModuleRoot(this.draw, this.recordsTotal, this.recordsFiltered, this.data);
 
-  final String name;
+  final draw;
+  @JsonKey(name: "recordsTotal")
+  final recordsTotal;
+  @JsonKey(name: "recordsFiltered")
+  final recordsFiltered;
+  final List<SubModule> data;
+
+  factory SubModuleRoot.fromJson(Map<String, dynamic> json) =>
+      _$SubModuleRootFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SubModuleRootToJson(this);
+}
+
+@JsonSerializable()
+class SubModule {
+  SubModule(this.moduleId, this.id, this.name, this.description,
+      this.acceptanceContent, this.thankYouContent, this.url, this.coverPhoto);
+
+  @JsonKey(name: "module_id")
+  final moduleId;
+  final id;
+  final name;
+  final description;
   @JsonKey(name: "acceptance_content")
-  final String acceptanceContent;
+  final acceptanceContent;
   @JsonKey(name: "thank_you_content")
-  final String thankYouContent;
-  final String url;
+  final thankYouContent;
+  final url;
+  @JsonKey(name: "cover_photo")
+  final coverPhoto;
 
   factory SubModule.fromJson(Map<String, dynamic> json) =>
       _$SubModuleFromJson(json);

@@ -39,11 +39,12 @@ class AppConstants {
   static const String CHURCH_SCHEDULE_JSON_URL =
       'https://api.mountcarmel.ph/schedules';
   static const String SERVICES_JSON_URL = 'https://api.mountcarmel.ph/modules/';
+  static const String SUB_SERVICES_BASE_JSON_URL = "https://api.mountcarmel.ph/sub_modules/sub_module/";
   static const String MAP_JSON_URL = 'https://api.mountcarmel.ph/maps/';
   static const String BOUNDARIES_JSON_URL =
       'https://api.mountcarmel.ph/boundaries/';
   static const String SEND_HELP_JSON_URL =
-      "https://api.mountcarmel.ph/donations/";
+      "https://api.mountcarmel.ph/donation_Type";
 
   static const String COMPANY_NAME = "Mount Carmel Basilica";
   static const String LOCATION_NAME = "Ordo Carmelitarum Discalceatorum";
