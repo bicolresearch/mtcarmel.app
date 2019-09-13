@@ -17,6 +17,7 @@ import 'package:mt_carmel_app/src/screens/branch_selection_screen.dart';
 import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:mt_carmel_app/src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/screens/splash_screen.dart';
+import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:provider/provider.dart';
 
 class StartPage extends StatelessWidget {
@@ -31,7 +32,7 @@ class StartPage extends StatelessWidget {
         return BranchSelectionScreen();
       }
       if (state is BranchSelectionError) {
-        //TODO implement code
+        ErrorMessage.errMsg(errorMessage: "Something went wrong!");
       }
       if (state is BranchSelectionSelected) {
         final sectionBloc = Provider.of<BranchSelectionBloc>(context);

@@ -1,5 +1,5 @@
 /*
-*	 Filename	   :	 profile_screen.dart
+*	 Filename	   :	 profile_screen_old.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
 *	 Updated			:   08/09/2019 4:31 AM PM by Detective Conan
@@ -39,578 +39,54 @@ enum ProfileFilter {
   Login,
 }
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   // TODO Get the list from the API
-  static const String BIBLE = "Holy Bible";
-  static const String REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
-  static const String LOCATION_MAP = "Location Map";
-  static const String PRIESTS = "Carmelite Priests";
-  static const String PASTORS = "Carmelite Pastors";
-  static const String CONTACT_DETAILS = "Contact Details";
-  static const String ABOUT_THE_PARISH = "About the Parish";
+  static const String _BIBLE = "Holy Bible";
+  static const String _REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
+  static const String _LOCATION_MAP = "Location Map";
+  static const String _PRIESTS = "Carmelite Priests";
+  static const String _PASTORS = "Carmelite Pastors";
+  static const String _CONTACT_DETAILS = "Contact Details";
+  static const String _ABOUT_THE_PARISH = "About the Parish";
 
-  // TODO Get the list from the API
-  // User's list
-  static const String USER_SCHEDULE = "My Schedule";
-  static const String PRAYER_REQUESTS = "Prayer Requests";
-  static const String MASS_REQUESTS = "Mass Requests";
-  static const String POST_NEWS = "Post News";
-  static const String ADD_PROJECT = "Add Project";
-  static const String ADD_SERVICE_TRANSACTION = "Add Service Transaction";
-  static const String PRIESTS_SCHEDULES = "Priests Schedule";
-  static const String SERVICES_SCHEDULES = "Services Schedules";
-  static const String DONATION_REPORT = "Donation Report";
-
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  bool _isLoggedIn = false;
-  bool _isLoginFailed = false;
-  bool _isTextEditing = false;
-  bool _isLoading = false; // TODO temporary set to false
-  MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
-
-  UserProfile _userProfile;
-  ProfileFilter _currentProfileFilter = ProfileFilter.Guest; //TODO Temporary set to Guest. Changed to Login when ready
-
-  Widget _header = Container();
-
-  ScrollController _scrollController;
-
-  final _textControllerEmail = TextEditingController();
-  final _textControllerPassword = TextEditingController();
-
-  static Icon _arrowUp = Icon(
-    Icons.keyboard_arrow_up,
-  );
-  static Icon _arrowDown = Icon(
-    Icons.keyboard_arrow_down,
-  );
-
-  VisibilityHelper _arrowMoreUp = VisibilityHelper(
-    child: _arrowUp,
-    visibility: VisibilityFlag.gone,
-  );
-  VisibilityHelper _arrowMoreDown = VisibilityHelper(
-    child: _arrowDown,
-    visibility: VisibilityFlag.gone,
-  );
-
-  final List<String> _aboutList = [
-    ProfileScreen.BIBLE,
-    ProfileScreen.REGULAR_MASS_SCHEDULE,
-    ProfileScreen.LOCATION_MAP,
-    ProfileScreen.PRIESTS,
-    ProfileScreen.PASTORS,
-    ProfileScreen.CONTACT_DETAILS,
-    ProfileScreen.ABOUT_THE_PARISH,
+  final List<String> _totalList = [
+    ProfileScreen._BIBLE,
+    ProfileScreen._REGULAR_MASS_SCHEDULE,
+    ProfileScreen._LOCATION_MAP,
+    ProfileScreen._PRIESTS,
+    ProfileScreen._PASTORS,
+    ProfileScreen._CONTACT_DETAILS,
+    ProfileScreen._ABOUT_THE_PARISH,
   ];
-
-  final List<String> _userList = [
-    ProfileScreen.USER_SCHEDULE,
-    ProfileScreen.PRAYER_REQUESTS,
-    ProfileScreen.MASS_REQUESTS,
-    ProfileScreen.POST_NEWS,
-    ProfileScreen.ADD_PROJECT,
-    ProfileScreen.ADD_SERVICE_TRANSACTION,
-    ProfileScreen.PRIESTS_SCHEDULES,
-    ProfileScreen.SERVICES_SCHEDULES,
-    ProfileScreen.DONATION_REPORT,
-  ];
-
-  List<String> _totalList = [];
-
-  @override
-  void initState() {
-    print("initializing profile screen...");
-    _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
-    super.initState();
-    //TODO Temporarily disabled
-//    _checkLoginStatus();
-    _updateList();
-    _updateProfileScreen();
-    _initializeArrows();
-  }
-
-  void _updateList() {
-    switch (_currentProfileFilter) {
-      case ProfileFilter.User:
-        _totalList = _userList + _aboutList;
-        break;
-      case ProfileFilter.Guest:
-        _totalList = _aboutList;
-        break;
-      default:
-        _totalList = [];
-    }
-  }
-
-  Future _initializeArrows() async {
-    await Future.delayed(Duration(milliseconds: 300));
-    _scrollListener();
-  }
-
-  @override
-  void setState(fn) {
-    super.setState(fn);
-  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: _isLoading
-          ? LoadingIndicator()
-          : Scaffold(
-              body: Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  (_currentProfileFilter == ProfileFilter.Login)
-                      ? Spacer()
-                      : Container(),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                      child: _header),
-                  Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: (_currentProfileFilter == ProfileFilter.Login)
-                          ? Container()
-                          : lineWidget()),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: NotificationListener<ScrollNotification>(
-                        onNotification: (scrollNotification) {
-                          if (scrollNotification is ScrollStartNotification) {
-                            _onStartScroll(scrollNotification.metrics);
-                          } else if (scrollNotification
-                              is ScrollUpdateNotification) {
-                            _onUpdateScroll(scrollNotification.metrics);
-                          } else if (scrollNotification
-                              is ScrollEndNotification) {
-                            _onEndScroll(scrollNotification.metrics);
-                          }
-                          return true;
-                        },
-                        child: ListView.builder(
-                          controller: _scrollController,
-                          itemCount: _totalList.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: EdgeInsets.symmetric(horizontal: 40.0),
-                              child: _aboutItem(context, _totalList[index]),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  (_currentProfileFilter == ProfileFilter.Login)
-                      ? Spacer()
-                      : Container(),
-                ],
-              )),
-            ),
-    );
-  }
-
-  Widget loginWidget() {
-    return Container(
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 50.0,
-        ),
-        child: Column(
-          children: <Widget>[
-            _isTextEditing
-                ? Container()
-                : Container(
-                    child: Image.asset(
-                      AppConstants.MT_CARMEL_LOGO_PATH,
-                      height: 160,
-                    ),
-                  ),
-            SizedBox(
-              height: 10.0,
-            ),
-            SizedBox(
-              height: 40.0,
-              child: TextField(
-                onSubmitted: (_) async {
-                  await Future.delayed(Duration(milliseconds: 500)).then((_) {
-                    _isTextEditing = false;
-                  });
-                  _updateProfileScreen();
-                },
-                onTap: () {
-                  _isTextEditing = true;
-                  _updateProfileScreen();
-                },
-                controller: _textControllerEmail,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Email",
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            SizedBox(
-              height: 40.0,
-              child: TextField(
-                onTap: () {
-                  _isTextEditing = true;
-                  _updateProfileScreen();
-                },
-                onSubmitted: (_) async {
-                  await Future.delayed(Duration(milliseconds: 500)).then((_) {
-                    _isTextEditing = false;
-                  });
-                  _updateProfileScreen();
-                },
-                controller: _textControllerPassword,
-                obscureText: true,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Password",
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 4,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Login",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      print("Login pressed");
-                      validate(_textControllerEmail.value.text,
-                          _textControllerPassword.value.text);
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: ListView.builder(
+                    itemCount: _totalList.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 40.0),
+                        child: _aboutItem(context, _totalList[index]),
+                      );
                     },
                   ),
                 ),
-                Spacer(),
-                InkWell(
-                    onTap: () {
-                      print("Forgot password pressed");
-                    },
-                    child: Text(
-                      "Forgot password",
-                      style: TextStyle(color: Colors.brown),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            InkWell(
-              onTap: () async {
-                print("Sign-up pressed");
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignUpScreen(),
-                  ),
-                );
-                if (result) print("Signup successful");
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(children: <Widget>[
-                  Text(
-                    "Sign-up",
-                    style: TextStyle(
-                        color: Colors.brown, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  InkWell(
-                    onTap: () {
-                      _currentProfileFilter = ProfileFilter.Guest;
-                      _clearLoginForm();
-                      _updateProfileScreen();
-                    },
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "Skip",
-                          style: TextStyle(
-                              color: Colors.brown, fontStyle: FontStyle.italic),
-                        ),
-                        Icon(
-                          Icons.keyboard_arrow_up,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ]),
               ),
-            ),
-            (!_isLoggedIn && _isLoginFailed)
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.error,
-                          color: Colors.red,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Login failed! Make sure the email and password are correct.",
-                              style: TextStyle(
-                                  fontSize: 12.0,
-                                  fontFamily: "Helvetica",
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red),
-                              softWrap: true,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ))
-                : Container(),
-          ],
+            ],
+          ),
         ),
       ),
     );
-  }
-
-  void _clearLoginForm() {
-    _isTextEditing = false;
-    _isLoginFailed = false;
-    _textControllerPassword.clear();
-    _textControllerEmail.clear();
-  }
-
-  Widget _skippedHeader() {
-    //TODO Temporary disabled.
-    return Container();
-//    return InkWell(
-//      onTap: () {
-//        if (this.mounted)
-//          setState(() {
-//            _currentProfileFilter = ProfileFilter.Login;
-//            _updateProfileScreen();
-//          });
-//      },
-//      child: Padding(
-//        padding: const EdgeInsets.only(left: 20.0),
-//        child: Row(
-//          children: <Widget>[
-//            Icon(
-//              Icons.keyboard_arrow_down,
-//              size: 20,
-//            ),
-//            Text(
-//              "Login",
-//              style: TextStyle(color: Colors.brown, fontSize: 12),
-//            )
-//          ],
-//        ),
-//      ),
-//    );
-  }
-
-  Widget _userHeader() {
-    final userPhotoSuffix = _userProfile?.avatar ?? "";
-
-    var imageUrl;
-    if (userPhotoSuffix == null || userPhotoSuffix == "")
-      imageUrl = "";
-    else
-      imageUrl = AppConstants.API_BASE_URL + _userProfile.avatar;
-
-    return Container(
-      height: 100,
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(5.0),
-            width: 80.0,
-            height: 80.0,
-            child: (imageUrl == "")
-                ? Icon(
-                    MountCarmelIcons.profile,
-                    size: 80,
-                  )
-                : CircleAvatar(
-                    backgroundImage: CachedNetworkImageProvider(imageUrl),
-                    backgroundColor: Colors.brown,
-                  ),
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '${_userProfile.firstName} ${_userProfile.lastName}',
-                  style: Theme.of(context).primaryTextTheme.subhead,
-                  textAlign: TextAlign.left,
-                ),
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: RaisedButton(
-                        //TODO implement the onPress button
-                        onPressed: () => "",
-                        color: Colors.brown,
-                        child: Text(
-                          "My Donations",
-                          style: TextStyle(
-                              fontFamily: 'Helvetica', color: Colors.white),
-                        ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          backgroundColor: Colors.transparent,
-                          builder: (builder) {
-                            return Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20.0),
-                                  ),
-                                  color: Colors.white),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditProfileScreen()),
-                                        );
-//                                        Navigator.pop(context);
-                                      },
-                                      child: ListTile(
-                                        title: Text(
-                                          "Edit profile",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .subhead,
-                                        ),
-                                        leading: Icon(
-                                          Icons.build,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        if (this.mounted)
-                                          setState(
-                                            () {
-                                              _currentProfileFilter =
-                                                  ProfileFilter.Login;
-                                              locator<AuthenticationService>()
-                                                  .logout();
-                                              _updateProfileScreen();
-                                            },
-                                          );
-                                        Navigator.pop(context);
-                                      },
-                                      child: ListTile(
-                                          title: Text(
-                                            "Logout",
-                                            style: Theme.of(context)
-                                                .primaryTextTheme
-                                                .subhead,
-                                          ),
-                                          leading: Icon(
-                                            Icons.exit_to_app,
-                                            color: Theme.of(context).primaryColor,
-                                          ),
-                                        ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: ListTile(
-                                        title: Text(
-                                          "Cancel",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .subhead,
-                                        ),
-                                        leading: Icon(
-                                          Icons.cancel,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: Icon(
-                        MountCarmelIcons.settings,
-                        color: Colors.brown,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  _updateProfileScreen() {
-    if (this.mounted)
-      setState(() {
-        switch (_currentProfileFilter) {
-          case ProfileFilter.User:
-            _header = _userHeader();
-            break;
-          case ProfileFilter.Guest:
-            _header = _skippedHeader();
-            break;
-          default: //ProfileFilter.Login
-            _header = loginWidget();
-        }
-        _updateList();
-        _initializeArrows();
-      });
   }
 
   Widget _aboutItem(context, String itemText) {
@@ -619,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => _navigateToDetail(itemText),
+              builder: (context) => _navigateToDetail(context, itemText),
             ));
       },
       child: Padding(
@@ -633,218 +109,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _navigateToDetail(String itemText) {
+  Widget _navigateToDetail(BuildContext context, String itemText) {
     switch (itemText) {
-      case ProfileScreen.ABOUT_THE_PARISH:
-        return AboutScreen();
-      case ProfileScreen.PRIESTS:
+      case _PRIESTS:
         return PriestsScreen(context);
-      case ProfileScreen.PASTORS:
+      case _PASTORS:
         return PastorsScreen(context);
-      case ProfileScreen.CONTACT_DETAILS:
+      case _CONTACT_DETAILS:
         return ContactDetailScreen();
-      case ProfileScreen.REGULAR_MASS_SCHEDULE:
+      case _REGULAR_MASS_SCHEDULE:
         return ChurchRegularScheduleScreen();
-      case ProfileScreen.BIBLE:
+      case _BIBLE:
         return BibleScreen(context);
-      case ProfileScreen.LOCATION_MAP:
+      case _LOCATION_MAP:
         return LocationScreen();
-      case ProfileScreen.PRAYER_REQUESTS:
-        return PrayerRequestScreen();
-      case ProfileScreen.MASS_REQUESTS:
-        return MassRequestScreen();
-      default:
-        // show the default if not yet implemented
-        return DefaultScreen();
+      default: //  _ABOUT_THE_PARISH:
+        return AboutScreen();
     }
-  }
-
-  _scrollListener() {
-    if (!_scrollController.hasClients) return;
-    try {
-      if (_scrollController.offset ==
-              _scrollController.position.maxScrollExtent &&
-          _scrollController.offset ==
-              _scrollController.position.minScrollExtent) {
-        setState(
-          () {
-            _arrowMoreDown = VisibilityHelper(
-                child: _arrowDown, visibility: VisibilityFlag.gone);
-            _arrowMoreUp = VisibilityHelper(
-                child: _arrowUp, visibility: VisibilityFlag.gone);
-          },
-        );
-        return;
-      }
-      if (_scrollController.offset >=
-              _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange) {
-        if (_currentMoreArrow != MoreArrowEnum.MoreUpOnly) {
-          _currentMoreArrow = MoreArrowEnum.MoreUpOnly;
-          setState(
-            () {
-              _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.gone);
-              _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
-            },
-          );
-        }
-        return;
-      }
-      if (_scrollController.offset <=
-              _scrollController.position.minScrollExtent &&
-          !_scrollController.position.outOfRange) {
-        if (_currentMoreArrow != MoreArrowEnum.MoreDownOnly) {
-          _currentMoreArrow = MoreArrowEnum.MoreDownOnly;
-          setState(
-            () {
-              _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
-              _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.gone);
-            },
-          );
-        }
-        return;
-      }
-      if (_scrollController.offset <
-              _scrollController.position.maxScrollExtent &&
-          _scrollController.offset >
-              _scrollController.position.minScrollExtent) {
-        if (_currentMoreArrow != MoreArrowEnum.MoreUpAndDown) {
-          _currentMoreArrow = MoreArrowEnum.MoreUpAndDown;
-          setState(
-            () {
-              _arrowMoreDown = VisibilityHelper(
-                  child: _arrowDown, visibility: VisibilityFlag.visible);
-              _arrowMoreUp = VisibilityHelper(
-                  child: _arrowUp, visibility: VisibilityFlag.visible);
-            },
-          );
-        }
-        return;
-      }
-    } catch (e) {
-      print(e.toString());
-      print("error in _scrolListener");
-    }
-  }
-
-  @override
-  void dispose() {
-    print("disposing profile screen...");
-    _textControllerEmail.dispose();
-    _textControllerPassword.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  _moveUp() {
-    if (_scrollController.offset >= _scrollController.position.minScrollExtent)
-      _scrollController.animateTo(_scrollController.offset - 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
-  }
-
-  _moveDown() {
-    if (_scrollController.offset <= _scrollController.position.maxScrollExtent)
-      _scrollController.animateTo(_scrollController.offset + 200,
-          curve: Curves.linear, duration: Duration(milliseconds: 500));
-  }
-
-  void _onStartScroll(ScrollMetrics metrics) {}
-
-  void _onUpdateScroll(ScrollMetrics metrics) {}
-
-  void _onEndScroll(ScrollMetrics metrics) {
-    _scrollListener();
-  }
-
-  Future _checkLoginStatus() async {
-    await locator<AuthenticationService>()
-        .isLoggedIn()
-        .then((isLoggedIn) async {
-      _isLoggedIn = isLoggedIn;
-      if (_isLoggedIn) {
-        _currentProfileFilter = ProfileFilter.User;
-        await locator<AuthenticationService>().getUserId().then((id) async {
-          await locator<UserProfileService>().getUserProfile(id).then((user) {
-            _userProfile = user;
-          });
-          _isLoading = false;
-          _updateProfileScreen();
-        });
-      } else {
-        _currentProfileFilter = ProfileFilter.Login;
-        _isLoading = false;
-        _updateProfileScreen();
-      }
-    }).catchError((error) {
-      print(error);
-      _isLoggedIn = false;
-    });
-  }
-
-  String _encrypted(String text) {
-    final crypto = PasswordCrypto();
-    return crypto.sha512(text);
-  }
-
-  validate(String email, String password) async {
-    if (email.isEmpty ||
-        password.isEmpty ||
-        !email.contains("@") ||
-        email.contains(" ")) {
-//      if(this.mounted) setState(() {
-      _isLoginFailed = true;
-      _updateProfileScreen();
-//      });
-      return;
-    }
-    await locator<LoginModel>()
-        .login(email, _encrypted(password))
-        .then((value) async {
-      print("print(value); $value");
-      _isLoggedIn = value;
-      if (_isLoggedIn) {
-        await locator<AuthenticationService>().getUserId().then((id) async {
-          await locator<UserProfileService>().getUserProfile(id).then((user) {
-            _userProfile = user;
-          });
-        });
-        print("success");
-        _clearLoginForm();
-        _isLoginFailed = false;
-        _currentProfileFilter = ProfileFilter.User;
-        _updateProfileScreen();
-      } else {
-        print("failed");
-        _isLoginFailed = true;
-        _updateProfileScreen();
-      }
-    });
-  }
-}
-
-// TODO use for un-implemented screen
-class DefaultScreen extends StatelessWidget {
-  const DefaultScreen({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Not yet implemented."),
-            SizedBox(
-              height: 40.0,
-            ),
-            leftArrowBackButton(context: context),
-          ],
-        ),
-      ),
-    );
   }
 }

@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
+import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_event.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_event.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
@@ -17,7 +19,8 @@ import 'package:mt_carmel_app/src/blocs/services_bloc/services_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/news_feed_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/profile_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/profile_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/profile_screen_old.dart';
 import 'package:mt_carmel_app/src/screens/send_help_screens/send_help_page.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/services_page.dart';
 import 'package:mt_carmel_app/src/screens/tab_selector.dart';
@@ -60,7 +63,9 @@ class HomeBottomNavigator extends StatelessWidget {
         bloc.dispatch(FetchTransparency());
         return TransparencyPage();
       case AppTab.Profile:
-        return ProfileScreen();
+        final bloc = BlocProvider.of<ProfileBloc>(context);
+        bloc.dispatch(FetchProfile());
+        return ProfilePage();
     }
   }
 }
