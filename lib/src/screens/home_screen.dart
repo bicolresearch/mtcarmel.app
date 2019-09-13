@@ -37,8 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: BlocBuilder<BranchBloc, BranchState>(
         builder: (context, state) {
           if (state is BranchUninitialized) {
-            return Center(
-              child: LoadingIndicator(),
+            return Scaffold(
+              body: Center(
+                child: LoadingIndicator(),
+              ),
             );
           } else if (state is BranchLoaded) {
             print(BranchLoaded);
@@ -49,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocProvider<NewsFeedBloc>(
                 // TODO: pass the branch id from api
                 builder: (context) => NewsFeedBloc(),
-//          ..dispatch(FetchFeed()),
               ),
               BlocProvider<ServicesBloc>(
                 builder: (context) => ServicesBloc(),
