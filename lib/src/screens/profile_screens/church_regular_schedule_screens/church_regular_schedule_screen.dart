@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/constants/regular_schedule_constants.dart';
 import 'package:mt_carmel_app/src/models/schedule.dart';
 import 'package:mt_carmel_app/src/utils/schedule_type.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
@@ -57,35 +58,79 @@ class ChurchRegularScheduleScreen extends StatelessWidget {
                               children: <Widget>[
                                 //Holy Mass
                                 scheduleCategories.containsKey(
-                                        ScheduleType.HolyMassSchedule)
-                                    ? _categoryScheduleTable(
-                                        context,
-                                        scheduleCategories[
-                                            ScheduleType.HolyMassSchedule])
+                                        RegularScheduleConstants.HOLY_MASS)
+                                    ? Column(children: [
+                                        Text(
+                                          "${RegularScheduleConstants.HOLY_MASS}",
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .title
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold),
+                                        ),
+                                        lineWidget(),
+                                        _categoryScheduleTable(
+                                            context,
+                                            scheduleCategories[
+                                                RegularScheduleConstants
+                                                    .HOLY_MASS]),
+                                      ])
                                     : Container(),
                                 //Confessions
                                 scheduleCategories.containsKey(
-                                        ScheduleType.ConfessionSchedule)
-                                    ? _categoryScheduleTable(
-                                        context,
-                                        scheduleCategories[
-                                            ScheduleType.ConfessionSchedule])
+                                        RegularScheduleConstants.CONFESSION)
+                                    ? Column(children: <Widget>[
+                                        Text(
+                                          "${RegularScheduleConstants.CONFESSION}",
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .title
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold),
+                                        ),
+                                        lineWidget(),
+                                        _categoryScheduleTable(
+                                            context,
+                                            scheduleCategories[
+                                                RegularScheduleConstants
+                                                    .CONFESSION])
+                                      ])
                                     : Container(),
                                 //Blessings
                                 scheduleCategories.containsKey(
-                                        ScheduleType.BlessingSchedule)
-                                    ? _categoryScheduleTable(
-                                        context,
-                                        scheduleCategories[
-                                            ScheduleType.BlessingSchedule])
+                                        RegularScheduleConstants.BLESSINGS)
+                                    ? Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "${RegularScheduleConstants.BLESSINGS}",
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .title
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                          ),
+                                          lineWidget(),
+                                          _categoryScheduleTable(
+                                              context,
+                                              scheduleCategories[
+                                                  RegularScheduleConstants
+                                                      .BLESSINGS]),
+                                        ],
+                                      )
                                     : Container(),
                                 //Live Mass
                                 scheduleCategories.containsKey(
-                                        ScheduleType.LiveMassSchedule)
-                                    ? _categoryScheduleTable(
-                                        context,
-                                        scheduleCategories[
-                                            ScheduleType.LiveMassSchedule])
+                                        RegularScheduleConstants.LIVE_MASS)
+                                    ? Column(
+                                        children: <Widget>[
+                                          _categoryScheduleTable(
+                                              context,
+                                              scheduleCategories[
+                                                  RegularScheduleConstants
+                                                      .LIVE_MASS]),
+                                        ],
+                                      )
                                     : Container(),
                               ],
                             ),
@@ -138,6 +183,7 @@ class ChurchRegularScheduleScreen extends StatelessWidget {
 
   _categoryScheduleTable(
       BuildContext context, Map<String, List<Schedule>> scheduleCategory) {
+    print(scheduleCategory);
     return Column(
       children: <Widget>[
         //TODO create key constants

@@ -19,15 +19,15 @@ class ChurchRegularSchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChurchRegularScheduleBloc, ChurchRegularScheduleState>(
       builder: (context, state) {
-        if(state is ChurchRegularScheduleLoading || state is ChurchRegularScheduleUninitialized)
-          return LoadingIndicator();
-        if(state is ChurchRegularScheduleLoaded){
+        if (state is ChurchRegularScheduleLoading ||
+            state is ChurchRegularScheduleUninitialized)
+          return Scaffold(body: LoadingIndicator());
+        if (state is ChurchRegularScheduleLoaded) {
           return ChurchRegularScheduleScreen();
         }
-        if(state is ChurchRegularScheduleError)
-          {
-            return ErrorMessage.errMsg(errorMessage: "Something went wrong");
-          }
+        if (state is ChurchRegularScheduleError) {
+          return ErrorMessage.errMsg(errorMessage: "Something went wrong");
+        }
         return Container();
       },
     );

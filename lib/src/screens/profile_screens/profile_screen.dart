@@ -7,8 +7,12 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_screen_old.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_screen.dart';
@@ -96,7 +100,11 @@ class ProfileScreen extends StatelessWidget {
       case _CONTACT_DETAILS:
         return ContactDetailScreen();
       case _REGULAR_MASS_SCHEDULE:
-        return ChurchRegularScheduleScreenOld();
+//        return ChurchRegularSchedulePage();
+        return BlocProvider<ChurchRegularScheduleBloc>(
+            builder: (context) => ChurchRegularScheduleBloc()
+              ..dispatch(FetchChurchRegularSchedule()),
+            child: ChurchRegularSchedulePage());
       case _BIBLE:
         return BibleScreen(context);
       case _LOCATION_MAP:

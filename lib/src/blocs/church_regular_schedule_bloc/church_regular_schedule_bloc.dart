@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_state.dart';
+import 'package:mt_carmel_app/src/constants/regular_schedule_constants.dart';
 import 'package:mt_carmel_app/src/core/services/church_regular_schedule_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/schedule.dart';
@@ -16,10 +17,6 @@ import 'package:mt_carmel_app/src/utils/schedule_type.dart';
 
 class ChurchRegularScheduleBloc
     extends Bloc<ChurchRegularScheduleEvent, ChurchRegularScheduleState> {
-  static const String _HOLY_MASS = "Holy Mass";
-  static const String _CONFESSION = "Confession";
-  static const String _BLESSINGS = "Blessings";
-  static const String _LIVE_MASS = "Live Mass";
 
   List<Schedule> _churchScheduleList = [];
   List<Schedule> _holyMassSchedule = [];
@@ -61,16 +58,16 @@ class ChurchRegularScheduleBloc
   _sortSchedules() {
     for (Schedule schedule in _churchScheduleList) {
       switch (schedule.name) {
-        case _HOLY_MASS: // holy mass
+        case RegularScheduleConstants.HOLY_MASS: // holy mass
           _holyMassSchedule.add(schedule);
           break;
-        case _CONFESSION: //confessions
+        case RegularScheduleConstants.CONFESSION: //confessions
           _confessionSchedule.add(schedule);
           break;
-        case _BLESSINGS: // Blessings
+        case RegularScheduleConstants.BLESSINGS: // Blessings
           _blessingSchedule.add(schedule);
           break;
-        case _LIVE_MASS: // Live Mass
+        case RegularScheduleConstants.LIVE_MASS: // Live Mass
           _liveMassSchedule.add(schedule);
           break;
         default:
@@ -95,19 +92,19 @@ class ChurchRegularScheduleBloc
     switch (scheduleType) {
       case ScheduleType.HolyMassSchedule:
         schedules = _holyMassSchedule;
-        key = _HOLY_MASS;
+        key = RegularScheduleConstants.HOLY_MASS;
         break;
       case ScheduleType.ConfessionSchedule:
         schedules = _confessionSchedule;
-        key = _CONFESSION;
+        key = RegularScheduleConstants.CONFESSION;
         break;
       case ScheduleType.BlessingSchedule:
         schedules = _blessingSchedule;
-        key = _BLESSINGS;
+        key = RegularScheduleConstants.BLESSINGS;
         break;
       case ScheduleType.LiveMassSchedule:
         schedules = _liveMassSchedule;
-        key = _LIVE_MASS;
+        key = RegularScheduleConstants.LIVE_MASS;
         break;
     }
 
@@ -139,31 +136,35 @@ class ChurchRegularScheduleBloc
     }
 
     if (sundaySchedules.isNotEmpty) {
-      if (scheduleDayMap.containsKey("Sundays"))
+      if (!scheduleDayMap.containsKey("Sundays"))
         scheduleDayMap.putIfAbsent("Sundays", () => sundaySchedules);
-      else
+      else {
         scheduleDayMap["Sundays"].addAll(sundaySchedules);
+      }
     }
 
     if (saturdaySchedules.isNotEmpty) {
-      if (scheduleDayMap.containsKey("Saturdays"))
+      if (!scheduleDayMap.containsKey("Saturdays"))
         scheduleDayMap.putIfAbsent("Saturdays", () => saturdaySchedules);
-      else
+      else {
         scheduleDayMap["Saturdays"].addAll(saturdaySchedules);
+      }
     }
 
     if (everydaySchedules.isNotEmpty) {
-      if (scheduleDayMap.containsKey("Everyday"))
+      if (!scheduleDayMap.containsKey("Everyday"))
         scheduleDayMap.putIfAbsent("Everyday", () => everydaySchedules);
-      else
+      else {
         scheduleDayMap["Everyday"].addAll(everydaySchedules);
+      }
     }
 
     if (weekdaySchedules.isNotEmpty) {
-      if (scheduleDayMap.containsKey("Weekdays"))
+      if (!scheduleDayMap.containsKey("Weekdays"))
         scheduleDayMap.putIfAbsent("Weekdays", () => weekdaySchedules);
-      else
+      else {
         scheduleDayMap["Weekdays"].addAll(weekdaySchedules);
+      }
     }
 
     // put all the days for schedule category
@@ -172,10 +173,11 @@ class ChurchRegularScheduleBloc
       _schedulesCategories.remove(key);
 
     if (scheduleDayMap.isNotEmpty) {
-      if (_schedulesCategories.containsKey(key))
+      if (!_schedulesCategories.containsKey(key))
         _schedulesCategories.putIfAbsent(key, () => scheduleDayMap);
-      else
+      else {
         _schedulesCategories[key].addAll(scheduleDayMap);
+      }
     }
   }
 }
