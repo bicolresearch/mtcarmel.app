@@ -1,43 +1,21 @@
 /*
-*	 Filename	   :	 profile_screen_old.dart
+*	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   08/09/2019 4:31 AM PM by Detective Conan
-*	 Changes			:   Temporary disabled the Logged-in screen.
+*	 Updated			:   13/09/2019 11:33 AM PM by Detective Conan
+*	 Changes			:   Removed unused imports and enums.
 */
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mt_carmel_app/src/core/models/login_model.dart';
-import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
-import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
-import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
-import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
-import 'package:mt_carmel_app/src/models/user_profile.dart';
-import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_screen_old.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_screen.dart';
-import 'package:mt_carmel_app/src/screens/sign_up_screen.dart';
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:mt_carmel_app/src/widgets/line.dart';
-import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
-import '../../constants/app_constants.dart';
-
-enum ProfileFilter {
-  User,
-  Guest,
-  Login,
-}
 
 class ProfileScreen extends StatelessWidget {
   // TODO Get the list from the API
@@ -118,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
       case _CONTACT_DETAILS:
         return ContactDetailScreen();
       case _REGULAR_MASS_SCHEDULE:
-        return ChurchRegularScheduleScreen();
+        return ChurchRegularScheduleScreenOld();
       case _BIBLE:
         return BibleScreen(context);
       case _LOCATION_MAP:

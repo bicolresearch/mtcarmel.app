@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
 import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
@@ -66,6 +67,9 @@ class HomeBottomNavigator extends StatelessWidget {
         final bloc = BlocProvider.of<ProfileBloc>(context);
         bloc.dispatch(FetchProfile());
         return ProfilePage();
+//        return BlocProvider<ChurchRegularScheduleBloc>(
+//            builder: (context) => ChurchRegularScheduleBloc(),
+//            child: ProfilePage());
     }
   }
 }

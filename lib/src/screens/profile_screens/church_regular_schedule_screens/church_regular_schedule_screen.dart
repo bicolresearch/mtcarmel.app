@@ -1,104 +1,27 @@
 /*
-*	 Filename		 :	 church_regular_schedule_screen.dart
+*	 Filename		 :	 church_regular_schedule_screen_old.dart
 *	 Purpose		 :	 Displays the different schedules of the church
 *  Created		 :   2019-06-14 09:42:18 by Detective Conan
-*	 Updated			:   10/09/2019 2:58 PM PM by Detective Conan
-*	 Changes			:   Adapted to new Api.
+*	 Updated			:   13/09/2019 2:03 PM PM by Detective Conan
+*	 Changes			:   Modified for bloc implementation.
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-
-import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/core/services/branch_service.dart';
-import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/schedule.dart';
-import 'package:mt_carmel_app/src/models/data_schedule.dart';
-import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
-import 'package:mt_carmel_app/src/widgets/failed_message.dart';
-import 'dart:async';
-import 'dart:convert';
+import 'package:mt_carmel_app/src/utils/schedule_type.dart';
+import 'package:mt_carmel_app/src/widgets/error_message.dart';
 
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 
-class ChurchRegularScheduleScreen extends StatefulWidget {
-  ChurchRegularScheduleScreen();
-
-  @override
-  _ChurchRegularScheduleScreenState createState() =>
-      _ChurchRegularScheduleScreenState();
-}
-
-class _ChurchRegularScheduleScreenState
-    extends State<ChurchRegularScheduleScreen> {
-  List<Schedule> _churchScheduleList = [];
-
-  List<Schedule> _holyMassSchedule = [];
-  List<Schedule> _confessionSchedule = [];
-  List<Schedule> _blessingSchedule = [];
-  List<Schedule> _liveMassSchedule = [];
-
-  var _isLoading = true;
-  var _isJsonFailed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    this.getJsonData();
-  }
-
-  Future<void> getJsonData() async {
-    final branchId = locator<BranchService>().branchId;
-    var response = await http
-        .get("${AppConstants.CHURCH_SCHEDULE_JSON_URL}?branch_id=$branchId");
-    if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          final body = json.decode(response.body);
-          _churchScheduleList = DataSchedule.fromJson(body).data;
-          _sortSchedules();
-        } else {
-          print(response.statusCode);
-          _isJsonFailed = true;
-        }
-        _isLoading = false;
-      });
-    }
-  }
-
-  _sortSchedules() {
-    for (Schedule schedule in _churchScheduleList) {
-      switch (schedule.name) {
-        case "Holy Mass": // holy mass
-          _holyMassSchedule.add(schedule);
-          break;
-        case "Confession": //confessions
-          _confessionSchedule.add(schedule);
-          break;
-        case "Blessings": // Blessings
-          _blessingSchedule.add(schedule);
-          break;
-        case "Live Mass": // Live Mass
-          _liveMassSchedule.add(schedule);
-          break;
-        default:
-          break;
-      }
-    }
-    _holyMassSchedule.sort((a, b) => DateTime.parse("2000-01-01 ${a.timeFrom}")
-        .compareTo(DateTime.parse("2000-01-01 ${b.timeFrom}")));
-    _confessionSchedule.sort((a, b) =>
-        DateTime.parse("2000-01-01 ${a.timeFrom}")
-            .compareTo(DateTime.parse("2000-01-01 ${b.timeFrom}")));
-    _blessingSchedule.sort((a, b) => DateTime.parse("2000-01-01 ${a.timeFrom}")
-        .compareTo(DateTime.parse("2000-01-01 ${b.timeFrom}")));
-    _liveMassSchedule.sort((a, b) => DateTime.parse("2000-01-01 ${a.timeFrom}")
-        .compareTo(DateTime.parse("2000-01-01 ${b.timeFrom}")));
-  }
-
+class ChurchRegularScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Map<String, Map<String, List<Schedule>>> scheduleCategories =
+        BlocProvider.of<ChurchRegularScheduleBloc>(context).schedulesCategories;
     return Scaffold(
         body: Container(
       padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 0.0),
@@ -106,133 +29,76 @@ class _ChurchRegularScheduleScreenState
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          _isLoading
-              ? Expanded(child: LoadingIndicator())
-              : _isJsonFailed
-                  ? failedMessage(context)
-                  : Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            height: 80.0,
-                            child: Text(
-                              "${AppConstants.COMPANY_NAME}\n Regular Schedules",
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .title
-                                  .copyWith(fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  height: 80.0,
+                  child: Text(
+                    "${AppConstants.COMPANY_NAME}\n Regular Schedules",
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .title
+                        .copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                lineWidget(),
+                Expanded(
+                  child: scheduleCategories.keys.isEmpty
+                      ? ErrorMessage.errMsg(
+                          errorMessage: "No church regular schedule!")
+                      : SingleChildScrollView(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Column(
+                              children: <Widget>[
+                                //Holy Mass
+                                scheduleCategories.containsKey(
+                                        ScheduleType.HolyMassSchedule)
+                                    ? _categoryScheduleTable(
+                                        context,
+                                        scheduleCategories[
+                                            ScheduleType.HolyMassSchedule])
+                                    : Container(),
+                                //Confessions
+                                scheduleCategories.containsKey(
+                                        ScheduleType.ConfessionSchedule)
+                                    ? _categoryScheduleTable(
+                                        context,
+                                        scheduleCategories[
+                                            ScheduleType.ConfessionSchedule])
+                                    : Container(),
+                                //Blessings
+                                scheduleCategories.containsKey(
+                                        ScheduleType.BlessingSchedule)
+                                    ? _categoryScheduleTable(
+                                        context,
+                                        scheduleCategories[
+                                            ScheduleType.BlessingSchedule])
+                                    : Container(),
+                                //Live Mass
+                                scheduleCategories.containsKey(
+                                        ScheduleType.LiveMassSchedule)
+                                    ? _categoryScheduleTable(
+                                        context,
+                                        scheduleCategories[
+                                            ScheduleType.LiveMassSchedule])
+                                    : Container(),
+                              ],
                             ),
                           ),
-                          lineWidget(),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                child: Column(
-                                  children: <Widget>[
-                                    // Holy mass
-                                    _holyMassSchedule.isEmpty
-                                        ? Container()
-                                        : _scheduleTypeTable(
-                                            context, _holyMassSchedule),
-                                    // Confession
-                                    _confessionSchedule.isEmpty
-                                        ? Container()
-                                        : _scheduleTypeTable(
-                                            context, _confessionSchedule),
-                                    // Blessings
-                                    _blessingSchedule.isEmpty
-                                        ? Container()
-                                        : _scheduleTypeTable(
-                                            context, _blessingSchedule),
-                                    // Live Mass
-                                    _liveMassSchedule.isEmpty
-                                        ? Container()
-                                        : _scheduleTypeTable(
-                                            context, _liveMassSchedule),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                ),
+              ],
+            ),
+          ),
           leftArrowBackButton(context: context),
         ],
       ),
     ));
-  }
-
-  Widget _scheduleTypeTable(context, List<Schedule> schedules) {
-    List<Schedule> sundaySchedules = [];
-    List<Schedule> saturdaySchedules = [];
-    List<Schedule> weekdaySchedules = [];
-    List<Schedule> everydaySchedules = [];
-
-    for (Schedule schedule in schedules) {
-      switch (schedule.day) {
-        case "Sunday":
-        case "Sundays":
-          sundaySchedules.add(schedule);
-          break;
-        case "Weekday":
-        case "Weekdays":
-          weekdaySchedules.add(schedule);
-          break;
-        case "Saturday":
-        case "Saturdays":
-          saturdaySchedules.add(schedule);
-          break;
-        case "Everyday":
-          everydaySchedules.add(schedule);
-          break;
-        default:
-          break;
-      }
-    }
-
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: 4.0,
-          ),
-          child: Column(
-            children: <Widget>[
-              Text(
-                "${schedules[0].name}",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .title
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              lineWidget()
-            ],
-          ),
-        ),
-        // Sundays
-        sundaySchedules.isNotEmpty
-            ? _dayScheduleTable(context, sundaySchedules)
-            : Container(),
-        //Saturdays
-        saturdaySchedules.isNotEmpty
-            ? _dayScheduleTable(context, saturdaySchedules)
-            : Container(),
-        // weekdays
-        weekdaySchedules.isNotEmpty
-            ? _dayScheduleTable(context, weekdaySchedules)
-            : Container(),
-        // everyday
-        everydaySchedules.isNotEmpty
-            ? _dayScheduleTable(context, everydaySchedules)
-            : Container(),
-      ],
-    );
   }
 
   Widget _dayScheduleTable(context, List<Schedule> schedules) {
@@ -267,6 +133,27 @@ class _ChurchRegularScheduleScreenState
           ),
         ],
       ),
+    );
+  }
+
+  _categoryScheduleTable(
+      BuildContext context, Map<String, List<Schedule>> scheduleCategory) {
+    return Column(
+      children: <Widget>[
+        //TODO create key constants
+        scheduleCategory.containsKey("Sundays")
+            ? _dayScheduleTable(context, scheduleCategory["Sundays"])
+            : Container(),
+        scheduleCategory.containsKey("Saturdays")
+            ? _dayScheduleTable(context, scheduleCategory["Saturdays"])
+            : Container(),
+        scheduleCategory.containsKey("Weekdays")
+            ? _dayScheduleTable(context, scheduleCategory["Weekdays"])
+            : Container(),
+        scheduleCategory.containsKey("Everyday")
+            ? _dayScheduleTable(context, scheduleCategory["Everyday"])
+            : Container(),
+      ],
     );
   }
 }

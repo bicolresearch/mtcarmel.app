@@ -1,5 +1,5 @@
 /*
-*  Filename    :   regular_church_schedule_service.dart
+*  Filename    :   church_regular_schedule_service.dart
 *  Purpose     :	
 *  Created     :   2019-08-30 14:16 by Detective Conan
 *  Updated     :   2019-08-30 14:16 by Detective Conan 
@@ -17,26 +17,26 @@ import 'package:mt_carmel_app/src/models/schedule.dart';
 
 
 
-class RegularChurchScheduleService {
+class ChurchRegularScheduleService {
 
-  List<Schedule> _regularChurchSchedules = [];
+  List<Schedule> _churchRegularSchedules = [];
 
-  Future<List<Schedule>> getJsonData() async {
+  Future<List<Schedule>> getData() async {
     final _branchId = locator<BranchService>().branchId;
-    print("regularChurchScheduleService: $_branchId");
+    print("ChurchRegularScheduleService: $_branchId");
     var response = await http
         .get("${AppConstants.CHURCH_SCHEDULE_JSON_URL}?branch_id=$_branchId")
         .timeout(Duration(seconds: 5));
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
-      _regularChurchSchedules = DataSchedule.fromJson(body).data;
+      _churchRegularSchedules = DataSchedule.fromJson(body).data;
     } else {
       throw Exception("Failure in retrieving schedules");
     }
-    return _regularChurchSchedules;
+    return _churchRegularSchedules;
   }
 
-  List<Schedule> get regularChurchSchedules => _regularChurchSchedules;
+  List<Schedule> get churchRegularSchedules => _churchRegularSchedules;
 
 }

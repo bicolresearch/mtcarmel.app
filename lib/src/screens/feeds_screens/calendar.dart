@@ -9,7 +9,7 @@
 import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:mt_carmel_app/src/core/services/regular_church_schedule_service.dart';
+import 'package:mt_carmel_app/src/core/services/church_regular_schedule_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/date_time_helper.dart';
 import 'package:mt_carmel_app/src/models/schedule.dart';
@@ -77,14 +77,14 @@ class _CalendarPageState extends State<CalendarPage>
     _controller.forward();
 
     _regularSchedules =
-        locator<RegularChurchScheduleService>().regularChurchSchedules;
+        locator<ChurchRegularScheduleService>().churchRegularSchedules;
     _initializeEvents();
   }
 
   _initializeEvents() async {
     if (_regularSchedules.isEmpty) {
-      _regularSchedules = await locator<RegularChurchScheduleService>()
-          .getJsonData()
+      _regularSchedules = await locator<ChurchRegularScheduleService>()
+          .getData()
           .catchError((e) async {
         if (this.mounted)
           setState(() {
