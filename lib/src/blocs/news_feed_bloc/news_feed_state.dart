@@ -42,6 +42,12 @@ class FeedNotChanged extends NewsFeedState {
   String toString() => 'FeedNotChanged';
 }
 
+class FeedNoPost extends NewsFeedState {
+
+  @override
+  String toString() => 'FeedNoPost';
+}
+
 class FeedErrorLoading extends NewsFeedState {
 
   @override

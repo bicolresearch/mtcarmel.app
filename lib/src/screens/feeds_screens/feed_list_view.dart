@@ -39,26 +39,26 @@ class _FeedListViewState extends State<FeedListView> {
         return LoadingIndicator();
       } else if (state is FeedLoaded) {
         final feed = state.feed;
-        print("feed.data ${feed.data}");
         return _postsView(feed.data);
       } else if (state is FeedErrorLoading) {
         print("error loading");
         return ErrorMessage.errMsg(errorMessage: "Something went wrong!");
       }
+      else if(state is FeedNoPost){
+        print("No posts at the moment!");
+        return ErrorMessage.errMsg(errorMessage: "No posts at the moment!");
+          }
       return Container();
     }));
   }
 
   Widget _postsView(List<PostData> posts) {
-    print("posts.isEmpty ${posts.isEmpty}");
     return Container(
       padding: EdgeInsets.all(10),
       child: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _getFeedData,
-        child: posts.isEmpty
-            ? ErrorMessage.errMsg(errorMessage: "No posts at the moment!")
-            : ListView.builder(
+        child: ListView.builder(
                 itemCount: posts.length,
                 itemBuilder: (context, index) {
                   try {

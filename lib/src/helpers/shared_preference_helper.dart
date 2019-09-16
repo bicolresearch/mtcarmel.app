@@ -20,6 +20,7 @@ class SharedPreferencesHelper {
   static const String _BRANCH_ID_KEY = "branch_id_key";
   static const String _BRANCH_NAME_KEY = "branch_name_key";
   static const String _ID_BRANCH_KEY = "id_branch";
+  static const String _RESET_BRANCH_KEY = "reset_banrch_key";
 
   // first usage
   static Future<bool> getFirstUsageFlag() async {
@@ -134,5 +135,17 @@ class SharedPreferencesHelper {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return prefs.setString(_AUTHENTICATION_ROLE_ID_KEY, roleId);
+  }
+
+  static Future<void> setResetBranch(bool isReset) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.setBool(_RESET_BRANCH_KEY, isReset);
+  }
+
+  static Future<bool> getResetBranch() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getBool(_RESET_BRANCH_KEY)??true;
   }
 }

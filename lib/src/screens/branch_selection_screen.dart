@@ -29,7 +29,7 @@ class BranchSelectionScreen extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
-        padding: EdgeInsets.all(50),
+        padding: EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
             SizedBox(

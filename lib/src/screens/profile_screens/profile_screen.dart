@@ -107,7 +107,7 @@ class ProfileScreen extends StatelessWidget {
                     BranchSelectionBloc()..dispatch(BranchSelectionFetch()),
                   ),
                   BlocProvider<BranchBloc>(
-                    builder: (context) => BranchBloc(),
+                    builder: (context) => BranchBloc()
                   )
                 ],
                 child: MaterialApp(

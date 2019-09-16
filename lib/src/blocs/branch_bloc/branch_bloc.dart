@@ -12,6 +12,7 @@ import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
 
 class BranchBloc extends Bloc<BranchEvent, BranchState> {
@@ -24,10 +25,10 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
   Stream<BranchState> mapEventToState(BranchEvent event) async* {
     if (event is GetBranch) {
       yield BranchLoading();
-      if (_branch == null && event.branchId != _branch?.id) {
+      final bool isResetBranch = await SharedPreferencesHelper.getResetBranch();
+      if (isResetBranch || _branch == null && event.branchId != _branch?.id) {
         var branch;
         try {
-          print("branch = await _fetchBranch(event.branchId); ${event.branchId}");
           branch = await _fetchBranch(event.branchId);
         } catch (e) {
           yield BranchError(Exception("$e"));
@@ -39,8 +40,6 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
           yield BranchLoaded(branch);
         } else {
           yield BranchError(Exception("Selected branch not loaded."));
-//          await Future.delayed(Duration(milliseconds: 300));
-//          yield BranchLoaded(_branch);
         }
       } else {
         yield BranchLoaded(_branch);

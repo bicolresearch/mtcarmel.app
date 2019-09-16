@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/widgets/basic_message.dart';
 
-enum ErrorMessageEnum { NoInternetError, LoadingError, SomethingWrong }
+enum ErrorMessageEnum { NoInternetError, LoadingError, SomethingWrong, CustomError }
 
 class ErrorMessage extends BasicMessage {
   static double iconSize = 56.0;
