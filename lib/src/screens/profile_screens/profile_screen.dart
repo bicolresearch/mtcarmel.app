@@ -10,12 +10,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/main.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_state.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/screens/change_branch_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
@@ -27,6 +32,8 @@ import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/locat
 
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_screen.dart';
+import 'package:mt_carmel_app/src/screens/start_page.dart';
+import 'package:mt_carmel_app/src/widgets/app_theme_data.dart';
 
 class ProfileScreen extends StatelessWidget {
   // TODO Get the list from the API
@@ -82,16 +89,36 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _aboutItem(context, String itemText) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (itemText == _CHANGE_BRANCH)
-//        BlocProvider.of<BranchBloc>(context).dispose();
-//        BlocProvider.of<BranchSelectionBloc>(context).dispatch(BranchSelectionFetch());
+//        final branchBloc = BlocProvider.of<BranchBloc>(context).dispose();
+//        final branchSelectionBloc = BlocProvider.of<BranchSelectionBloc>(context).dispatch(BranchSelectionFetch());
         {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChangeBranchPage(),
-              ));
+          await SharedPreferencesHelper.setBranchNameFlag(null);
+          await SharedPreferencesHelper.setBranchIdFlag(null);
+          await SharedPreferencesHelper.setFirstUsageFlag(true);
+          locator<BranchService>().clearBranch();
+          Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) {
+             return MultiBlocProvider(
+                providers: [
+                  BlocProvider<BranchSelectionBloc>(
+                    builder: (context) =>
+                    BranchSelectionBloc()..dispatch(BranchSelectionFetch()),
+                  ),
+                  BlocProvider<BranchBloc>(
+                    builder: (context) => BranchBloc(),
+                  )
+                ],
+                child: MaterialApp(
+                  title: AppConstants.APP_TITLE,
+                  debugShowCheckedModeBanner: false,
+                  theme: appThemeData(context),
+                  home: StartPage(),
+                ),
+              );
+            },
+          ));
           return;
         }
         Navigator.push(

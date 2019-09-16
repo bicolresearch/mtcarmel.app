@@ -40,7 +40,7 @@ class BranchSelectionBloc
       BranchSelectionEvent event) async* {
     if (event is BranchSelectionFetch) {
       yield BranchSelectionLoading();
-      String branchId;
+      var branchId;
       await SharedPreferencesHelper.getBranchIdFlag().then((value) {
         branchId = value;
       }).catchError((e) => print(e));

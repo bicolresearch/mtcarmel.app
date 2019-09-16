@@ -36,8 +36,12 @@ class LiveStreamScreen extends StatelessWidget {
         }
         if (state is LiveStreamLoaded) {
           final LiveStream liveStream = state.liveStream;
-          final String videoId = liveStream.data[0].videoId;
-          if (videoId == null || videoId.isEmpty) return Container();
+          final String videoId =
+              (liveStream.data != null && liveStream.data.isNotEmpty)
+                  ? liveStream.data[0].videoId
+                  : null;
+          if (videoId == null || videoId.isEmpty)
+            return ErrorMessage.errMsg(errorMessage: "Something Went wrong");
           return YoutubePlayerScreen(videoId: videoId);
         }
         if (state is LiveStreamError) {
