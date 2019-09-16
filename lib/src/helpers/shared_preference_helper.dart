@@ -58,17 +58,17 @@ class SharedPreferencesHelper {
     return prefs.setString(_BRANCH_NAME_KEY, branchName);
   }
 
-  static Future<String> getIdBranchFlag() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    return prefs.getString(_ID_BRANCH_KEY);
-  }
-
-  static Future<void> setIdBranchFlag(String idBranch) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    return prefs.setString(_ID_BRANCH_KEY, idBranch);
-  }
+//  static Future<String> getIdBranchFlag() async {
+//    final SharedPreferences prefs = await SharedPreferences.getInstance();
+//
+//    return prefs.getString(_ID_BRANCH_KEY);
+//  }
+//
+//  static Future<void> setIdBranchFlag(String idBranch) async {
+//    final SharedPreferences prefs = await SharedPreferences.getInstance();
+//
+//    return prefs.setString(_ID_BRANCH_KEY, idBranch);
+//  }
 
   // user id
   static Future<String> getUserId() async {

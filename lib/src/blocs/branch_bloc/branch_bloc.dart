@@ -8,11 +8,11 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
-import 'package:mt_carmel_app/src/repositories/branches_repo.dart';
 
 class BranchBloc extends Bloc<BranchEvent, BranchState> {
   Branch _branch;
@@ -24,9 +24,10 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
   Stream<BranchState> mapEventToState(BranchEvent event) async* {
     if (event is GetBranch) {
       yield BranchLoading();
-      if (_branch == null && event.branchId != _branch?.branchId) {
+      if (_branch == null && event.branchId != _branch?.id) {
         var branch;
         try {
+          print("branch = await _fetchBranch(event.branchId); ${event.branchId}");
           branch = await _fetchBranch(event.branchId);
         } catch (e) {
           yield BranchError(Exception("$e"));
@@ -37,8 +38,9 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
           _branch = branch;
           yield BranchLoaded(branch);
         } else {
-          await Future.delayed(Duration(milliseconds: 300));
-          yield BranchLoaded(_branch);
+          yield BranchError(Exception("Selected branch not loaded."));
+//          await Future.delayed(Duration(milliseconds: 300));
+//          yield BranchLoaded(_branch);
         }
       } else {
         yield BranchLoaded(_branch);
@@ -47,14 +49,20 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
   }
 
   Future<Branch> _fetchBranch(String branchId) async {
-    await Future.delayed(Duration(microseconds: 300));
-    final BranchesRepo branchesRepo = BranchesRepo();
-    //TODO Temporary. use the api instead
-    final branches = branchesRepo.branches;
-    for (var item in branches) {
-      if (item.containsKey("branch_id")) {
-        if (item["branch_id"] == branchId) return Branch.fromJson(item);
-      }
+//    final List<Branch> branches = await locator<BranchListService>().getData();
+//
+//    for (var branch in branches) {
+//      if (branch.id == branchId) {
+//        return branch;
+//      }
+//    }
+
+    try {
+      _branch = await locator<BranchService>().getBranch(branchId);
+      return _branch;
+    } catch (e) {
+      print(e);
+      throw e;
     }
 
     print("no branch");

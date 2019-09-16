@@ -49,7 +49,7 @@ class _ChurchRegularScheduleScreenOldState
   }
 
   Future<void> getJsonData() async {
-    final branchId = locator<BranchService>().branchId;
+    final branchId = locator<BranchService>().branch.id;
     var response = await http
         .get("${AppConstants.CHURCH_SCHEDULE_JSON_URL}?branch_id=$branchId");
     if (this.mounted) {

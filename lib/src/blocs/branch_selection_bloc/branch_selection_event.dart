@@ -7,6 +7,7 @@
 */
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/models/branch.dart';
 
 @immutable
 abstract class BranchSelectionEvent extends Equatable {
@@ -28,9 +29,19 @@ class BranchSelectionReset extends BranchSelectionEvent {
 
 class SaveSelectedBranch extends BranchSelectionEvent {
 
-  final branchId;
+  final Branch branch;
 
-  SaveSelectedBranch(this.branchId):super([branchId]);
+  SaveSelectedBranch(this.branch):super([branch]);
+
+  @override
+  String toString() => 'SaveSelectedBranch';
+}
+
+class SelectedBranch extends BranchSelectionEvent {
+
+  final Branch branch;
+
+  SelectedBranch(this.branch):super([branch]);
 
   @override
   String toString() => 'SaveSelectedBranch';

@@ -64,11 +64,9 @@ class ChurchModuleService {
 
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
       String subModuleId) async {
-    final branchId = locator<BranchService>().branchId;
+    final branchId = locator<BranchService>().branch.id;
     final response = await http
         .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}?branch_id=$branchId&id=$subModuleId");
-    print("${AppConstants.SUB_SERVICES_BASE_JSON_URL}?branch_id=$branchId&id=$subModuleId");
-    print(response.statusCode);
     if (response.statusCode == 200) {
       print(response.body);
       final body = json.decode(response.body);

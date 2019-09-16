@@ -11,20 +11,54 @@ import 'package:json_annotation/json_annotation.dart';
 part 'branch.g.dart';
 
 @JsonSerializable()
+class DataBranch{
+  DataBranch(
+      this.draw,
+      this.recordsTotal,
+      this.recordsFiltered,
+      this.data,
+      );
+
+  final int draw;
+  final int recordsTotal;
+  final int recordsFiltered;
+  final List<Branch> data;
+
+  factory DataBranch.fromJson(Map<String, dynamic> json) => _$DataBranchFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataBranchToJson(this);
+}
+
+
+
+@JsonSerializable()
 class Branch {
-  Branch(this.id, this.branchId, this.newsFeed, this.sendHelp, this.services,
-      this.transparency, this.profile);
+  Branch(
+      {this.id,
+      this.name,
+      this.description,
+      this.churchOrderId,
+      this.churchOrderName,
+      this.dtCreated,
+      this.dtUpdated,
+      this.createdBy,
+      this.updatedBy});
 
   final id;
-  @JsonKey(name: "branch_id")
-  final branchId;
-  @JsonKey(name: "news_feed")
-  final newsFeed;
-  @JsonKey(name: "send_help")
-  final sendHelp;
-  final services;
-  final transparency;
-  final profile;
+  final name;
+  final description;
+  @JsonKey(name: "church_order_id")
+  final churchOrderId;
+  @JsonKey(name: "church_order_name")
+  final churchOrderName;
+  @JsonKey(name: "dt_created")
+  final dtCreated;
+  @JsonKey(name: "dt_updated")
+  final dtUpdated;
+  @JsonKey(name: "created_by")
+  final createdBy;
+  @JsonKey(name: "updated_by")
+  final updatedBy;
 
   factory Branch.fromJson(Map<String, dynamic> json) => _$BranchFromJson(json);
 

@@ -7,6 +7,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+import 'package:mt_carmel_app/src/models/branch.dart';
 
 abstract class BranchEvent extends Equatable{
   BranchEvent([List props = const []]): super(props);
@@ -16,6 +17,15 @@ class GetBranch extends BranchEvent{
   final String branchId;
 
   GetBranch(this.branchId):super([branchId]);
+
+  @override
+  String toString() => 'GetBranch';
+}
+
+class LoadBranch extends BranchEvent{
+  final Branch branch;
+
+  LoadBranch(this.branch):super([branch]);
 
   @override
   String toString() => 'GetBranch';

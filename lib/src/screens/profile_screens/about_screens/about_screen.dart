@@ -53,7 +53,7 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   Future<void> getJasonData() async {
-    final branchId = locator<BranchService>().branchId;
+    final branchId = locator<BranchService>().branch.id;
     var response =
         await http.get("${AppConstants.ABOUT_JSON_URL}?branch_id=$branchId");
     if (this.mounted) {

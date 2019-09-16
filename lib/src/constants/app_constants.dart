@@ -18,20 +18,25 @@ class AppConstants {
   // site api
   static const String API_BASE_URL = "https://api.mountcarmel.ph/";
 
-  static const String LIVE_STREAM_URL = "https://api.mountcarmel.ph/live_streams/";
+  static const String BRANCHES_JSON_URL = "https://api.mountcarmel.ph/branches/";
+
+  static const String LIVE_STREAM_URL =
+      "https://api.mountcarmel.ph/live_streams/";
   static const String USER_PROFILE_JSON =
       "https://api.mountcarmel.ph/users/user/id/";
 
   static const String BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
   static const String KJV_TRANSLATION_PATH = 'tranlation=kjv';
 
-  static const String LIVE_STREAM_JSON_URL = "https://api.mountcarmel.ph/live_streams/";
+  static const String LIVE_STREAM_JSON_URL =
+      "https://api.mountcarmel.ph/live_streams/";
   static const String FEEDS_JSON_URL = "https://api.mountcarmel.ph/posts/";
   static const String ADS_JSON_URL = "https://api.mountcarmel.ph/ads/";
 
   static const String TRANSACTION_JSON_URL =
       'https://api.mountcarmel.ph/donations';
-  static const String PRIESTS_JSON_URL = 'https://api.mountcarmel.ph/carmelites/';
+  static const String PRIESTS_JSON_URL =
+      'https://api.mountcarmel.ph/carmelites/';
   static const String PASTORS_JSON_URL = 'https://api.mountcarmel.ph/pastors/';
   static const String ABOUT_JSON_URL = 'https://api.mountcarmel.ph/histories/';
   static const String CONTACT_DETAILS_JSON_URL =
@@ -39,13 +44,15 @@ class AppConstants {
   static const String CHURCH_SCHEDULE_JSON_URL =
       'https://api.mountcarmel.ph/schedules';
   static const String SERVICES_JSON_URL = 'https://api.mountcarmel.ph/modules/';
-  static const String SUB_SERVICES_BASE_JSON_URL = "https://api.mountcarmel.ph/sub_modules/sub_module/";
+  static const String SUB_SERVICES_BASE_JSON_URL =
+      "https://api.mountcarmel.ph/sub_modules/sub_module/";
   static const String MAP_JSON_URL = 'https://api.mountcarmel.ph/maps/';
   static const String BOUNDARIES_JSON_URL =
       'https://api.mountcarmel.ph/boundaries/';
   static const String SEND_HELP_JSON_URL =
       "https://api.mountcarmel.ph/donation_Type";
 
+  static const String DEFAULT_BRANCH_ID = "1";
   static const String COMPANY_NAME = "Mount Carmel Basilica";
   static const String LOCATION_NAME = "Ordo Carmelitarum Discalceatorum";
   static const String NATIONAL_SHRINE_TEXT =
@@ -69,9 +76,6 @@ class AppConstants {
 
   static const String sample_message =
       "lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
-
-
-
 
   // services
   static const String JOIN_US = 'Join us';

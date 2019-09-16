@@ -46,7 +46,7 @@ class _PastorsScreenState extends State<PastorsScreen> {
 
   Future<void> getJasonData() async {
     // url the same with priest. they shared api. to be identified by type_id
-    final branchId = locator<BranchService>().branchId;
+    final branchId = locator<BranchService>().branch.id;
     var response = await http.get(
         "${AppConstants.PRIESTS_JSON_URL}/?branch_id=$branchId&?type_id=$_TYPE_ID");
     if (this.mounted) {

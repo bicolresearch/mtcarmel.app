@@ -17,6 +17,7 @@ import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
+import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -50,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context) => TabBloc(),
               ),
               BlocProvider<NewsFeedBloc>(
-                // TODO: pass the branch id from api
                 builder: (context) => NewsFeedBloc(),
               ),
               BlocProvider<ServicesBloc>(
@@ -72,7 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: LoadingIndicator(),
               ),
             );
-          } else
+          } else if (state is BranchError)
+            return Scaffold(
+              body: ErrorMessage.errMsg(errorMessage: "Something went wrong!"),
+            );
+          else
             print("Else");
           return Container();
         },

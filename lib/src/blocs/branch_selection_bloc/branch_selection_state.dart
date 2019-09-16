@@ -60,3 +60,13 @@ class FirstUsageState extends BranchSelectionState {
   @override
   String toString() => 'FirstUsageState';
 }
+
+class SelectedBranchNotLoaded extends BranchSelectionState {
+
+  final Exception exception;
+
+  SelectedBranchNotLoaded(this.exception):super([exception]);
+
+  @override
+  String toString() => 'SelectedBranchNotLoaded';
+}

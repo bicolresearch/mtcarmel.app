@@ -16,7 +16,7 @@ import 'package:mt_carmel_app/src/models/church_module.dart';
 
 class ModuleListService {
   List<ModuleReference> _moduleReferences = [];
-  final _branchId = locator<BranchService>().branchId;
+  final _branchId = locator<BranchService>().branch.id;
 
   Future<void> getJsonData() async {
     var response = await http

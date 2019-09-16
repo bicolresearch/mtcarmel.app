@@ -12,12 +12,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_state.dart';
 import 'package:mt_carmel_app/src/screens/branch_selection_screen.dart';
 import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:mt_carmel_app/src/screens/introduction_screen.dart';
 import 'package:mt_carmel_app/src/screens/splash_screen.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 class StartPage extends StatelessWidget {
@@ -32,15 +34,20 @@ class StartPage extends StatelessWidget {
         return BranchSelectionScreen();
       }
       if (state is BranchSelectionError) {
-        ErrorMessage.errMsg(errorMessage: "Something went wrong!");
+        return ErrorMessage.errMsg(errorMessage: "Something went wrong!");
       }
       if (state is BranchSelectionSelected) {
-        final sectionBloc = Provider.of<BranchSelectionBloc>(context);
-        if (sectionBloc.isFirstUsage) {
+        final selectionBloc = Provider.of<BranchSelectionBloc>(context);
+        if (selectionBloc.isFirstUsage) {
           return IntroScreen();
         }
-        final branchId = sectionBloc.selectedBranch.branchId;
-        Provider.of<BranchBloc>(context).dispatch(GetBranch(branchId));
+        var branch;
+        branch = selectionBloc.selectedBranch;
+        if (branch == null) {
+          selectionBloc.dispatch(BranchSelectionFetch());
+          return Scaffold(body: LoadingIndicator());
+        }
+        Provider.of<BranchBloc>(context).dispatch(GetBranch(branch.id));
         return HomeScreen();
       }
       return Scaffold();

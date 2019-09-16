@@ -9,23 +9,24 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_state.dart';
-import 'package:mt_carmel_app/src/core/services/branch_selection_service.dart';
+import 'package:mt_carmel_app/src/core/services/branch_list_service.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
+import 'package:mt_carmel_app/src/models/branch.dart';
 
-import 'package:mt_carmel_app/src/models/branch_selection.dart';
 
 class BranchSelectionBloc
     extends Bloc<BranchSelectionEvent, BranchSelectionState> {
   bool _isFirstUsage = true;
 
-  List<BranchId> _branchSelection;
+  List<Branch> _branchSelection;
 
-  List<BranchId> get branchSelection => _branchSelection;
+  List<Branch> get branchSelection => _branchSelection;
 
-  BranchId _selectedBranch;
+  Branch _selectedBranch;
 
-  BranchId get selectedBranch => _selectedBranch;
+  Branch get selectedBranch => _selectedBranch;
 
   clearBranch() {
     _selectedBranch = null;
@@ -47,19 +48,19 @@ class BranchSelectionBloc
       await SharedPreferencesHelper.getBranchNameFlag().then((value) {
         branchName = value;
       }).catchError((e) => print(e));
-      String idBranch;
-      await SharedPreferencesHelper.getIdBranchFlag().then((value) {
-        idBranch = value;
-      }).catchError((e) => print(e));
+//      String idBranch;
+//      await SharedPreferencesHelper.getIdBranchFlag().then((value) {
+//        idBranch = value;
+//      }).catchError((e) => print(e));
 
       await SharedPreferencesHelper.getFirstUsageFlag().then((value) {
         _isFirstUsage = value;
       }).catchError((e) => print(e));
 
-      if (branchId == null  || branchId.isEmpty)
+      if (branchId == null || branchId.isEmpty)
         try {
           _branchSelection =
-          await locator<BranchSelectionService>().getJsonData();
+          await locator<BranchListService>().getData();
           await Future.delayed(Duration(seconds: 3));
           if (_branchSelection.isNotEmpty)
             yield BranchSelectionLoaded();
@@ -70,20 +71,41 @@ class BranchSelectionBloc
           yield BranchSelectionError();
         }
       else {
-        _selectedBranch = BranchId(idBranch, branchId, branchName);
+        final Branch branch = await locator<BranchService>().getBranch(
+            branchId);
+        _selectedBranch = branch;
         await Future.delayed(Duration(seconds: 2));
         yield BranchSelectionSelected();
       }
     }
 
-    if(event is SaveSelectedBranch){
-      _selectedBranch = event.branchId;
-      await SharedPreferencesHelper.setIdBranchFlag(event.branchId.id);
-      await SharedPreferencesHelper.setBranchIdFlag(event.branchId.branchId);
-      await SharedPreferencesHelper.setBranchNameFlag(event.branchId.branchName);
-      yield DoneSaveSelectedBranch();
+    if (event is SelectedBranch) {
+      try {
+        _selectedBranch =
+              await locator<BranchService>().getBranch(event.branch.id);
+        await SharedPreferencesHelper.setBranchIdFlag(_selectedBranch.id);
+        await SharedPreferencesHelper.setBranchNameFlag(_selectedBranch.name);
+        yield DoneSaveSelectedBranch();
+      } catch (e) {
+        print(e);
+        yield SelectedBranchNotLoaded(Exception("${event.branch.name} branch is not available."));
+      }
+    }
+
+    if (event is SaveSelectedBranch) {
+      try {
+        _selectedBranch =
+        await locator<BranchService>().getBranch(event.branch.id);
+        await SharedPreferencesHelper.setBranchIdFlag(_selectedBranch.id);
+        await SharedPreferencesHelper.setBranchNameFlag(_selectedBranch.name);
+        yield DoneSaveSelectedBranch();
+      } catch (e) {
+        print(e);
+        yield SelectedBranchNotLoaded(Exception("${event.branch.name} branch is not available."));
+      }
     }
   }
 
   bool get isFirstUsage => _isFirstUsage;
+
 }

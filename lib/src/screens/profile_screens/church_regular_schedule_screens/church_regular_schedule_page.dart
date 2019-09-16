@@ -26,7 +26,8 @@ class ChurchRegularSchedulePage extends StatelessWidget {
           return ChurchRegularScheduleScreen();
         }
         if (state is ChurchRegularScheduleError) {
-          return ErrorMessage.errMsg(errorMessage: "Something went wrong");
+          return Scaffold(
+              body: ErrorMessage.errMsg(errorMessage: "Something went wrong"));
         }
         return Container();
       },

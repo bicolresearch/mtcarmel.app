@@ -44,7 +44,8 @@ class _PriestsScreenState extends State<PriestsScreen> {
   }
 
   Future<void> getJsonData() async {
-    final branchId = locator<BranchService>().branchId;
+    final branchId = locator<BranchService>().branch.id;
+    print("priests $branchId");
     var response = await http.get(
         "${AppConstants.PRIESTS_JSON_URL}?branch_id=$branchId&type_id=$_TYPE_ID");
     if (this.mounted) {

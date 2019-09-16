@@ -41,7 +41,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen> {
   }
 
   Future<void> getJasonData() async {
-    final branchId = locator<BranchService>().branchId;
+    final branchId = locator<BranchService>().branch.id;
     var response = await http.get(
         "${AppConstants.CONTACT_DETAILS_JSON_URL}?branch_id=$branchId&id=1");
     if (this.mounted) {
