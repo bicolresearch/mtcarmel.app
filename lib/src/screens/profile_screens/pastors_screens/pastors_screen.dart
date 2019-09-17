@@ -93,7 +93,6 @@ class PastorsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            leftArrowBackButton(context: context),
           ],
         ),
       ),

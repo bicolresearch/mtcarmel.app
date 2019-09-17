@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   17/09/2019 1:49 PM PM by Detective Conan
-*	 Changes			:   Sets the ResetFlag after selection of change church.
+*	 Updated			:   17/09/2019 5:51 PM PM by Detective Conan
+*	 Changes			:   Added confirmation dialog box when clicking the change church
 */
 
 import 'package:flutter/material.dart';
@@ -86,6 +86,10 @@ class ProfileScreen extends StatelessWidget {
   Widget _aboutItem(context, String itemText) {
     return InkWell(
       onTap: () async {
+        final bool confirmed = await _confirmationDialog(context);
+        if(!confirmed)
+          return;
+
         if (itemText == _CHANGE_BRANCH) {
           await SharedPreferencesHelper.setBranchNameFlag(null);
           await SharedPreferencesHelper.setBranchIdFlag(null);
@@ -147,5 +151,35 @@ class ProfileScreen extends StatelessWidget {
       default: //  _ABOUT_THE_PARISH:
         return AboutScreen();
     }
+  }
+
+  _confirmationDialog(context) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: ListTile(
+          title: Text("Do you want to change church branch?"),
+          leading: Icon(
+            Icons.help,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Yes'),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+          FlatButton(
+            child: Text('No'),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
