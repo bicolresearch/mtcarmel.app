@@ -27,15 +27,20 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
     if (event is FetchFeed) {
       bool isResetBranch = await SharedPreferencesHelper.getResetBranch();
       if (isResetBranch) _postIds.clear();
-      print("if (isResetBranch) _postIds.clear(); ${_postIds.isEmpty}");
       try {
         if (_postIds.isEmpty) yield FeedLoading();
         final feed = await locator<NewsFeedService>().getFeed();
         if (feed != null) {
-          if (_hasFeedChanged(feed))
+          if (_hasFeedChanged(feed)) {
+            await SharedPreferencesHelper.setResetBranch(false);
             yield FeedLoaded(feed);
-          else if (isResetBranch) yield FeedNoPost();
-          else if (_postIds.isEmpty) yield FeedNotChanged();
+          }  else if (_postIds.isEmpty) {
+            if (isResetBranch) {
+//              await SharedPreferencesHelper.setResetBranch(false);
+              yield FeedNoPost();
+            }
+            //yield FeedNotChanged();
+          }
         } else
           yield FeedErrorLoading();
       } catch (e) {
@@ -56,7 +61,6 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
           if (_postIds.isEmpty) yield FeedErrorLoading();
         }
       } catch (e) {
-        print("NewsFeedBloc:mapEventToStat() $e");
         if (_postIds.isEmpty) yield FeedErrorLoading();
       }
     }

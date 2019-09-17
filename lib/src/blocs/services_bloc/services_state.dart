@@ -38,3 +38,9 @@ class ServicesError extends ServicesState {
   @override
   String toString() => 'ServicesError';
 }
+
+class NoServicesLoad extends ServicesState {
+
+  @override
+  String toString() => 'NoServicesLoad';
+}

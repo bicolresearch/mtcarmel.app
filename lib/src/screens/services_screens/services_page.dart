@@ -25,10 +25,13 @@ class ServicesPage extends StatelessWidget {
         if (state is ServicesLoaded) {
           return ServicesScreen();
         }
-        if(state is ServicesError)
-          {
-            return ErrorMessage.errMsg(errorMessage: "Something went wrong!");
-          }
+        if (state is ServicesError) {
+          return ErrorMessage.errMsg(errorMessage: "Something went wrong!");
+        }
+
+        if (state is NoServicesLoad) {
+          return ErrorMessage.errMsg(errorMessage: "No services loaded!");
+        }
         return Container();
       },
     );

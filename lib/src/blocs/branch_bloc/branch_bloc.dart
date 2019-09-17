@@ -24,20 +24,22 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
   @override
   Stream<BranchState> mapEventToState(BranchEvent event) async* {
     if (event is GetBranch) {
+//      final bool isResetBranch = await SharedPreferencesHelper.getResetBranch();
+//      if(isResetBranch)
       yield BranchLoading();
-      final bool isResetBranch = await SharedPreferencesHelper.getResetBranch();
-      if (isResetBranch || _branch == null && event.branchId != _branch?.id) {
+      if (_branch == null && event.branchId != _branch?.id) {
         var branch;
         try {
           branch = await _fetchBranch(event.branchId);
         } catch (e) {
+//          if(!isResetBranch)
           yield BranchError(Exception("$e"));
           return;
         }
 
         if (branch != null) {
           _branch = branch;
-          await SharedPreferencesHelper.setResetBranch(false);
+//          await SharedPreferencesHelper.setResetBranch(false);
           yield BranchLoaded(branch);
         } else {
           yield BranchError(Exception("Selected branch not loaded."));

@@ -2,8 +2,8 @@
 *   Filename    :   send_help_page.dart
 *   Purpose     :
 *   Created     :   12/09/2019 1:12 PM by Detective Conan
-*   Updated     :   12/09/2019 1:12 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   17/09/2019 2:47 PM PM by Detective Conan
+*	 Changes			:   Added message when no send help loaded.
 */
 
 import 'package:flutter/material.dart';
@@ -23,6 +23,10 @@ class SendHelpPage extends StatelessWidget {
           return LoadingIndicator();
         if(state is SendHelpLoaded){
           return SendHelpScreen();
+        }
+        if(state is NoSendHelpLoaded)
+        {
+          return ErrorMessage.errMsg(errorMessage: "No sendh help loaded.");
         }
         if(state is SendHelpError)
           {

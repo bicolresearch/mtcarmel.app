@@ -27,7 +27,11 @@ class SendHelpBloc extends Bloc<SendHelpEvent, SendHelpState> {
       if (_sendHelpDataList.isEmpty) yield SendHelpLoading();
       try {
         _sendHelpDataList = await locator<SendHelpService>().getData();
-        yield SendHelpLoaded();
+        if (_sendHelpDataList.isNotEmpty) {
+          yield SendHelpLoaded();
+        } else {
+          yield NoSendHelpLoaded();
+        }
       } catch (e) {
         print(e);
         yield SendHelpError(e);

@@ -39,4 +39,9 @@ class SendHelpError extends SendHelpState {
   String toString() => 'SendHelpError';
 }
 
-//TODO: Add states
+class NoSendHelpLoaded extends SendHelpState {
+
+  @override
+  String toString() => 'NoSendHelpLoaded';
+}
+

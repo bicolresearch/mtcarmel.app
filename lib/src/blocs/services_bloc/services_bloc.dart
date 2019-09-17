@@ -2,9 +2,10 @@
 *   Filename    :   services_bloc.dart
 *   Purpose     :
 *   Created     :   05/09/2019 6:30 PM by Detective Conan
-*   Updated     :   05/09/2019 6:30 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   17/09/2019 2:41 PM PM by Detective Conan
+*	 Changes			:   Added NoServicesLoad state.
 */
+
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_event.dart';
@@ -32,7 +33,10 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         yield ServicesError(Exception("e"));
         return;
       }
-      yield ServicesLoaded();
+      if(_moduleReferences.isNotEmpty)
+        yield ServicesLoaded();
+      else
+        yield NoServicesLoad();
     }
   }
 }
