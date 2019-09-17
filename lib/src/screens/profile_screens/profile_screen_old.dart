@@ -638,7 +638,7 @@ class _ProfileScreenOldState extends State<ProfileScreenOld> {
       case ProfileScreenOld.ABOUT_THE_PARISH:
         return AboutScreen();
       case ProfileScreenOld.PRIESTS:
-        return PriestsScreen(context);
+        return PriestsScreen();
       case ProfileScreenOld.PASTORS:
         return PastorsScreen(context);
       case ProfileScreenOld.CONTACT_DETAILS:

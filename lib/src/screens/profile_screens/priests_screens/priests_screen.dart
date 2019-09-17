@@ -8,6 +8,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:http/http.dart' as http;
@@ -21,52 +23,10 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
-class PriestsScreen extends StatefulWidget {
-  PriestsScreen(BuildContext context);
-
-  @override
-  _PriestsScreenState createState() => _PriestsScreenState();
-}
-
-class _PriestsScreenState extends State<PriestsScreen> {
-  static const String _TYPE_ID = "107";
-
-  List<Priest> _priestList = [];
-  var _isLoading = true;
-
-  //TODO handle different screen states
-  var _isJsonFailed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    this.getJsonData();
-  }
-
-  Future<void> getJsonData() async {
-    final branchId = locator<BranchService>().branch.id;
-    print("priests $branchId");
-    var response = await http.get(
-        "${AppConstants.PRIESTS_JSON_URL}?branch_id=$branchId&type_id=$_TYPE_ID");
-    if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          final body = json.decode(response.body);
-          _priestList = DataPriest.fromJson(body).data.where((priest) {
-            return priest.typeId == _TYPE_ID;
-          }).toList();
-          _isLoading = false;
-        } else {
-          print(response.statusCode);
-          _isJsonFailed = true;
-          _isLoading = false;
-        }
-      });
-    }
-  }
-
+class PriestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _priests = BlocProvider.of<PriestsBloc>(context).priests;
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Column(
@@ -75,61 +35,58 @@ class _PriestsScreenState extends State<PriestsScreen> {
           children: <Widget>[
             Expanded(
               child: Container(
-                child: (this._isLoading || _priestList.isEmpty)
-                    ? LoadingIndicator()
-                    : Column(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(top: 50.0),
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              color: Colors.brown[600],
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                AppConstants.COMPANY_NAME,
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .subhead
-                                    .copyWith(color: Colors.white),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Carmelite Priests",
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .title
-                                  .copyWith(fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                                child: GridView.count(
-                              physics: ScrollPhysics(parent: ScrollPhysics()),
-                              shrinkWrap: true,
-                              primary: true,
-                              crossAxisCount: 2,
-                              children:
-                                  List.generate(_priestList.length, (index) {
-                                try {
-                                  return getStructuredGridCell(
-                                      _priestList[index]);
-                                } catch (e) {
-                                  print(e.toString());
-                                  return Container();
-                                }
-                              }),
-                            )),
-                          ),
-                        ],
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 50.0),
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        color: Colors.brown[600],
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          AppConstants.COMPANY_NAME,
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .subhead
+                              .copyWith(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Carmelite Priests",
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .title
+                            .copyWith(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                          child: GridView.count(
+                        physics: ScrollPhysics(parent: ScrollPhysics()),
+                        shrinkWrap: true,
+                        primary: true,
+                        crossAxisCount: 2,
+                        children: List.generate(_priests.length, (index) {
+                          try {
+                            return getStructuredGridCell(
+                                context, _priests[index]);
+                          } catch (e) {
+                            print(e.toString());
+                            return Container();
+                          }
+                        }),
+                      )),
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -140,7 +97,7 @@ class _PriestsScreenState extends State<PriestsScreen> {
         ));
   }
 
-  Card getStructuredGridCell(Priest priest) {
+  Card getStructuredGridCell(context, Priest priest) {
     String url = AppConstants.API_BASE_URL + priest.mediaPath;
     return Card(
       elevation: 1.5,
@@ -186,9 +143,5 @@ class _PriestsScreenState extends State<PriestsScreen> {
         ],
       ),
     );
-  }
-
-  void close() {
-    this.dispose();
   }
 }

@@ -11,6 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
+import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
@@ -22,10 +24,9 @@ import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
 
 import 'package:mt_carmel_app/src/screens/start_page.dart';
-import 'package:mt_carmel_app/src/widgets/app_theme_data.dart';
 
 class ProfileScreen extends StatelessWidget {
   // TODO Get the list from the API
@@ -82,8 +83,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _aboutItem(context, String itemText) {
     return InkWell(
       onTap: () async {
-        if (itemText == _CHANGE_BRANCH)
-        {
+        if (itemText == _CHANGE_BRANCH) {
           await SharedPreferencesHelper.setBranchNameFlag(null);
           await SharedPreferencesHelper.setBranchIdFlag(null);
           await SharedPreferencesHelper.setResetBranch(true);
@@ -123,13 +123,14 @@ class ProfileScreen extends StatelessWidget {
   Widget _navigateToDetail(BuildContext context, String itemText) {
     switch (itemText) {
       case _PRIESTS:
-        return PriestsScreen(context);
+        return BlocProvider<PriestsBloc>(
+            builder: (context) => PriestsBloc()..dispatch(FetchPriests()),
+            child: PriestsPage());
       case _PASTORS:
         return PastorsScreen(context);
       case _CONTACT_DETAILS:
         return ContactDetailScreen();
       case _REGULAR_MASS_SCHEDULE:
-//        return ChurchRegularSchedulePage();
         return BlocProvider<ChurchRegularScheduleBloc>(
             builder: (context) => ChurchRegularScheduleBloc()
               ..dispatch(FetchChurchRegularSchedule()),

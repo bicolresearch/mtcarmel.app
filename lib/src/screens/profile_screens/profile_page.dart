@@ -19,15 +19,15 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if(state is ProfileLoading || state is ProfileUninitialized)
+        if (state is ProfileLoading || state is ProfileUninitialized)
           return LoadingIndicator();
-        if(state is ProfileLoaded){
+        if (state is ProfileLoaded) {
           return ProfileScreen();
         }
-        if(state is ProfileError)
-          {
-            return ErrorMessage.errMsg(errorMessage: "Something went wrong");
-          }
+        if (state is ProfileError) {
+          return Scaffold(
+              body: ErrorMessage.errMsg(errorMessage: "Something went wrong"));
+        }
         return Container();
       },
     );
