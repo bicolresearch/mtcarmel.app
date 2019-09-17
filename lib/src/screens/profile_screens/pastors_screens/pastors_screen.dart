@@ -7,6 +7,8 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
@@ -22,54 +24,10 @@ import 'dart:convert';
 
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
-class PastorsScreen extends StatefulWidget {
-  PastorsScreen(BuildContext context);
-
-  @override
-  _PastorsScreenState createState() => _PastorsScreenState();
-}
-
-class _PastorsScreenState extends State<PastorsScreen> {
-  static const _TYPE_ID = "108";
-
-  List<Priest> _pastorList = [];
-
-  var _isLoading = true;
-
-  var _isJsonFailed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    this.getJasonData();
-  }
-
-  Future<void> getJasonData() async {
-    // url the same with priest. they shared api. to be identified by type_id
-    final branchId = locator<BranchService>().branch.id;
-    var response = await http.get(
-        "${AppConstants.PRIESTS_JSON_URL}/?branch_id=$branchId&?type_id=$_TYPE_ID");
-    if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          final body = json.decode(response.body);
-          _pastorList = DataPriest
-              .fromJson(body)
-              .data
-              .where((priest) {
-            return priest.typeId == _TYPE_ID;
-          }).toList();
-        } else {
-          print(response.statusCode);
-          _isJsonFailed = true;
-        }
-        _isLoading = false;
-      });
-    }
-  }
-
+class PastorsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final pastors = BlocProvider.of<PastorsBloc>(context).pastors;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Container(
@@ -79,11 +37,7 @@ class _PastorsScreenState extends State<PastorsScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: (_isLoading)
-                  ? Center(child: LoadingIndicator())
-                  : _isJsonFailed
-                  ? failedMessage(context)
-                  : Container(
+              child: Container(
                 child: Column(
                   children: <Widget>[
                     Container(
@@ -99,13 +53,12 @@ class _PastorsScreenState extends State<PastorsScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           AppConstants.COMPANY_NAME,
-                          style: Theme
-                              .of(context)
+                          style: Theme.of(context)
                               .primaryTextTheme
                               .subhead
                               .copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -114,8 +67,7 @@ class _PastorsScreenState extends State<PastorsScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Pastors",
-                        style: Theme
-                            .of(context)
+                        style: Theme.of(context)
                             .primaryTextTheme
                             .title
                             .copyWith(fontWeight: FontWeight.bold),
@@ -128,14 +80,12 @@ class _PastorsScreenState extends State<PastorsScreen> {
                           horizontal: 50.0,
                         ),
                         child: ListView.builder(
-                            physics: ScrollPhysics(
-                                parent: ScrollPhysics()),
+                            physics: ScrollPhysics(parent: ScrollPhysics()),
                             shrinkWrap: true,
                             reverse: true,
-                            itemCount: _pastorList.length,
+                            itemCount: pastors.length,
                             itemBuilder: (context, index) {
-                              return _pastorItem(
-                                  context, _pastorList[index]);
+                              return _pastorItem(context, pastors[index]);
                             }),
                       ),
                     ),
@@ -150,25 +100,19 @@ class _PastorsScreenState extends State<PastorsScreen> {
     );
   }
 
-  Widget _pastorItem(context, Priest pastor) {
+  Widget _pastorItem(context, Pastor pastor) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         ListTile(
           title: Text(
             '${pastor.name}',
-            style: Theme
-                .of(context)
-                .primaryTextTheme
-                .subhead,
+            style: Theme.of(context).primaryTextTheme.subhead,
             textAlign: TextAlign.center,
           ),
           subtitle: Text(
             '${pastor.position ?? ""}\n${pastor.congregation}',
-            style: Theme
-                .of(context)
-                .primaryTextTheme
-                .caption,
+            style: Theme.of(context).primaryTextTheme.caption,
             textAlign: TextAlign.center,
           ),
         ),

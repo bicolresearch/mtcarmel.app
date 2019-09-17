@@ -28,19 +28,6 @@ class Priest {
       this.createdBy,
       this.updatedBy);
 
-//  final String id;
-//  @JsonKey(name: "branch_id")
-//  final String branchId;
-//  final String name;
-//  final String position;
-//  final String rank;
-//  @JsonKey(name: "posted_on")
-//  final String postedOn;
-//  @JsonKey(name: "updated_on")
-//  final String updatedOn;
-//  @JsonKey(name: "cover_photo")
-//  final String coverPhoto;
-//  final String author;
 
   final String id;
   @JsonKey(name: "branch_id")
