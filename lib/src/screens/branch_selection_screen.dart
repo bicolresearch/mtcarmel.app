@@ -7,17 +7,18 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
-import 'introduction_screen.dart';
 
 class BranchSelectionScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -102,12 +103,14 @@ class BranchSelectionScreen extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) {
-          final selectionBloc = Provider.of<BranchSelectionBloc>(context);
-          if (selectionBloc.isFirstUsage) {
-            return IntroScreen();
-          }
-          Provider.of<BranchBloc>(context).dispatch(GetBranch(branchId));
-          return HomeScreen();
+          return MultiBlocProvider(providers: [
+            BlocProvider<BranchBloc>(
+              builder: (context) => BranchBloc()..dispatch(GetBranch(branchId)),
+            ),
+            BlocProvider<TabBloc>(
+              builder: (context) => TabBloc(),
+            )
+          ], child: HomeScreen());
         },
       ),
     );

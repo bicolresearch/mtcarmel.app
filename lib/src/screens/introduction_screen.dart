@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
-import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
-import 'package:mt_carmel_app/src/models/branch.dart';
-import 'package:mt_carmel_app/src/screens/home_screen.dart';
+import 'package:mt_carmel_app/src/screens/start_page.dart';
 import '../constants/app_constants.dart';
 import '../helpers/screen_slider.dart';
 import '../presentations/mount_carmel_icons.dart';
@@ -92,12 +87,7 @@ class _IntroScreenState extends State<IntroScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) {
-          Branch branch =
-              BlocProvider.of<BranchSelectionBloc>(context).selectedBranch;
-          BlocProvider.of<BranchBloc>(context).dispatch(GetBranch(branch.id));
-          return HomeScreen();
-        },
+        builder: (context) => StartPage(),
       ),
     );
   }
@@ -136,7 +126,7 @@ class _IntroScreenState extends State<IntroScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                GestureDetector(
+                InkWell(
                   child: currentSlide.container(),
                 ),
               ],

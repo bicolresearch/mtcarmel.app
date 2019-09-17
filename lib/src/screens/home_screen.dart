@@ -2,8 +2,8 @@
 *   Filename    :   home_screen.dart
 *   Purpose     :
 *   Created     :   02/09/2019 10:57 AM by Detective Conan
-*	 Updated			:   04/09/2019 3:41 PM PM by Detective Conan
-*	 Changes			:   Added blocProvider for tabBloc
+*	 Updated			:   17/09/2019 1:09 PM PM by Detective Conan
+*	 Changes			:   Moved the TabBloc provider to calling class.
 */
 
 import 'package:flutter/material.dart';
@@ -14,19 +14,16 @@ import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
-  @required
-  final branchRepo;
 
   final branchId;
 
-  const HomeScreen({Key key, this.branchRepo, this.branchId}) : super(key: key);
+  const HomeScreen({Key key, this.branchId}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -45,11 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else if (state is BranchLoaded) {
-            print(BranchLoaded);
             return MultiBlocProvider(providers: [
-              BlocProvider<TabBloc>(
-                builder: (context) => TabBloc(),
-              ),
               BlocProvider<NewsFeedBloc>(
                 builder: (context) => NewsFeedBloc(),
               ),
@@ -103,9 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
           FlatButton(
             child: Text('Yes'),
             onPressed: () {
-//              final bloc = BlocProvider.of<BranchBloc>(context);
               Navigator.pop(context, true);
-//              bloc.dispatch(CloseApp());
             },
           ),
           FlatButton(

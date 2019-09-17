@@ -48,23 +48,14 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
   }
 
   Future<Branch> _fetchBranch(String branchId) async {
-//    final List<Branch> branches = await locator<BranchListService>().getData();
-//
-//    for (var branch in branches) {
-//      if (branch.id == branchId) {
-//        return branch;
-//      }
-//    }
-
     try {
-      _branch = await locator<BranchService>().getBranch(branchId);
+      _branch = await locator<BranchService>()
+          .getBranch(branchId)
+          .timeout(Duration(seconds: 3));
       return _branch;
     } catch (e) {
       print(e);
       throw e;
     }
-
-    print("no branch");
-    return null;
   }
 }

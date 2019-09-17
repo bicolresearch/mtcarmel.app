@@ -7,13 +7,21 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 class LoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: CircularProgressIndicator(
-      strokeWidth: 2.0,
-    ));
+    return Stack(
+      children: <Widget>[
+        Center(
+          child: Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 40),
+        ),
+        Center(
+            child: CircularProgressIndicator(
+          strokeWidth: 2.0,
+        )),
+      ],
+    );
   }
 }

@@ -2,18 +2,13 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   13/09/2019 11:33 AM PM by Detective Conan
-*	 Changes			:   Removed unused imports and enums.
+*	 Updated			:   17/09/2019 1:14 PM PM by Detective Conan
+*	 Changes			:   Moved the dispatching of GetBranch to StartPage.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mt_carmel_app/main.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
-import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
-import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_state.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
@@ -21,17 +16,15 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
-import 'package:mt_carmel_app/src/screens/change_branch_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_screen_old.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_screen.dart';
+
 import 'package:mt_carmel_app/src/screens/start_page.dart';
 import 'package:mt_carmel_app/src/widgets/app_theme_data.dart';
 
@@ -91,24 +84,18 @@ class ProfileScreen extends StatelessWidget {
     return InkWell(
       onTap: () async {
         if (itemText == _CHANGE_BRANCH)
-//        final branchBloc = BlocProvider.of<BranchBloc>(context).dispose();
-//        final branchSelectionBloc = BlocProvider.of<BranchSelectionBloc>(context).dispatch(BranchSelectionFetch());
         {
           await SharedPreferencesHelper.setBranchNameFlag(null);
           await SharedPreferencesHelper.setBranchIdFlag(null);
-          await SharedPreferencesHelper.setFirstUsageFlag(true);
           locator<BranchService>().clearBranch();
+          BlocProvider.of<TabBloc>(context).dispose();
+          BlocProvider.of<BranchBloc>(context).dispose();
           Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
-             return MultiBlocProvider(
+              return MultiBlocProvider(
                 providers: [
-                  BlocProvider<BranchSelectionBloc>(
-                    builder: (context) =>
-                    BranchSelectionBloc()..dispatch(BranchSelectionFetch()),
-                  ),
-                  BlocProvider<BranchBloc>(
-                    builder: (context) => BranchBloc()
-                  )
+                  BlocProvider<BranchBloc>(builder: (context) => BranchBloc()),
+                  BlocProvider<TabBloc>(builder: (context) => TabBloc())
                 ],
                 child: MaterialApp(
                   title: AppConstants.APP_TITLE,
@@ -156,10 +143,6 @@ class ProfileScreen extends StatelessWidget {
         return BibleScreen(context);
       case _LOCATION_MAP:
         return LocationScreen();
-//      case _CHANGE_BRANCH:
-////        BlocProvider.of<BranchBloc>(context).dispose();
-////        BlocProvider.of<BranchSelectionBloc>(context).dispatch(BranchSelectionFetch());
-//        return ChangeBranchPage();
       default: //  _ABOUT_THE_PARISH:
         return AboutScreen();
     }
