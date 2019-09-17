@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   17/09/2019 5:51 PM PM by Detective Conan
-*	 Changes			:   Added confirmation dialog box when clicking the change church
+*	 Updated			:   17/09/2019 6:01 PM PM by Detective Conan
+*	 Changes			:   Moved the dialog appearance only when change church branch click.
 */
 
 import 'package:flutter/material.dart';
@@ -26,7 +26,6 @@ import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 
-import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
 
 import 'package:mt_carmel_app/src/screens/start_page.dart';
@@ -86,11 +85,10 @@ class ProfileScreen extends StatelessWidget {
   Widget _aboutItem(context, String itemText) {
     return InkWell(
       onTap: () async {
-        final bool confirmed = await _confirmationDialog(context);
-        if(!confirmed)
-          return;
-
         if (itemText == _CHANGE_BRANCH) {
+          final bool confirmed = await _confirmationDialog(context);
+          if (!confirmed) return;
+
           await SharedPreferencesHelper.setBranchNameFlag(null);
           await SharedPreferencesHelper.setBranchIdFlag(null);
           await SharedPreferencesHelper.setResetBranch(true);
