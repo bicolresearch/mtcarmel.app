@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   17/09/2019 1:14 PM PM by Detective Conan
-*	 Changes			:   Moved the dispatching of GetBranch to StartPage.
+*	 Updated			:   17/09/2019 1:49 PM PM by Detective Conan
+*	 Changes			:   Sets the ResetFlag after selection of change church.
 */
 
 import 'package:flutter/material.dart';
@@ -12,7 +12,6 @@ import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
@@ -87,6 +86,7 @@ class ProfileScreen extends StatelessWidget {
         {
           await SharedPreferencesHelper.setBranchNameFlag(null);
           await SharedPreferencesHelper.setBranchIdFlag(null);
+          await SharedPreferencesHelper.setResetBranch(true);
           locator<BranchService>().clearBranch();
           BlocProvider.of<TabBloc>(context).dispose();
           BlocProvider.of<BranchBloc>(context).dispose();
@@ -97,12 +97,7 @@ class ProfileScreen extends StatelessWidget {
                   BlocProvider<BranchBloc>(builder: (context) => BranchBloc()),
                   BlocProvider<TabBloc>(builder: (context) => TabBloc())
                 ],
-                child: MaterialApp(
-                  title: AppConstants.APP_TITLE,
-                  debugShowCheckedModeBanner: false,
-                  theme: appThemeData(context),
-                  home: StartPage(),
-                ),
+                child: StartPage(),
               );
             },
           ));

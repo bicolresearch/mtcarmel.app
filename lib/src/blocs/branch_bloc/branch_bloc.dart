@@ -2,8 +2,8 @@
 *   Filename    :   branch_bloc.dart
 *   Purpose     :
 *   Created     :   02/09/2019 12:52 PM by Detective Conan
-*   Updated     :   02/09/2019 12:52 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   17/09/2019 1:47 PM PM by Detective Conan
+*	 Changes			:   Added check if the bloc was reset.
 */
 
 import 'dart:async';
@@ -37,6 +37,7 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
 
         if (branch != null) {
           _branch = branch;
+          await SharedPreferencesHelper.setResetBranch(false);
           yield BranchLoaded(branch);
         } else {
           yield BranchError(Exception("Selected branch not loaded."));
