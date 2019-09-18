@@ -12,6 +12,7 @@ import 'package:mt_carmel_app/src/core/services/about_service.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_list_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/contact_detail_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
 import 'package:mt_carmel_app/src/core/services/location_map_service.dart';
 import 'package:mt_carmel_app/src/core/services/module_list_service.dart';
@@ -56,4 +57,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => PastorsService());
   locator.registerLazySingleton(() => LocationMapService());
   locator.registerLazySingleton(() => AboutService());
+  locator.registerLazySingleton(() => ContactDetailService());
 }

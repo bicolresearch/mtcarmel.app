@@ -13,6 +13,8 @@ import 'package:mt_carmel_app/src/blocs/about_bloc/about_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
+import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
@@ -27,6 +29,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_pa
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
@@ -142,7 +145,10 @@ class ProfileScreen extends StatelessWidget {
             builder: (context) => PastorsBloc()..dispatch(FetchPastors()),
             child: PastorsPage());
       case _CONTACT_DETAILS:
-        return ContactDetailScreen();
+        return BlocProvider<ContactDetailBloc>(
+            builder: (context) =>
+                ContactDetailBloc()..dispatch(FetchContactDetail()),
+            child: ContactDetailPage());
       case _REGULAR_MASS_SCHEDULE:
         return BlocProvider<ChurchRegularScheduleBloc>(
             builder: (context) => ChurchRegularScheduleBloc()
