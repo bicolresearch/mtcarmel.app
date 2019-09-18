@@ -20,7 +20,8 @@ class SendHelpService {
     var response;
     try {
       response = await http
-              .get("${AppConstants.SEND_HELP_JSON_URL}?branch_id=$branchId")
+              //.get("${AppConstants.SEND_HELP_JSON_URL}?branch_id=$branchId")
+              .get("${AppConstants.SEND_HELP_JSON_URL}")
               .timeout(Duration(seconds: 3));
     } catch (e) {
       print(e);

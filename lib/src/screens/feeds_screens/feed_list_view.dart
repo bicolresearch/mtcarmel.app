@@ -2,8 +2,8 @@
 *   Filename    :   feed_list_view.dart
 *   Purpose     :
 *   Created     :   05/09/2019 10:58 AM by Detective Conan
-*	 Updated			:   06/09/2019 3:20 PM PM by Detective Conan
-*	 Changes			:   Removed the gestureDetector. used inkwell instead.
+*	 Updated			:   18/09/2019 1:31 PM PM by Detective Conan
+*	 Changes			:   Added button for retry and reloading the posts.
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -42,12 +42,51 @@ class _FeedListViewState extends State<FeedListView> {
         return _postsView(feed.data);
       } else if (state is FeedErrorLoading) {
         print("error loading");
-        return ErrorMessage.errMsg(errorMessage: "Something went wrong!");
-      }
-      else if(state is FeedNoPost){
+        return Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Center(child: Text("Something went wrong!")),
+              RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+                color: Colors.brown,
+                child: Text(
+                  "Retry",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  BlocProvider.of<NewsFeedBloc>(context).dispatch(FetchFeed());
+                },
+              ),
+            ],
+          ),
+        );
+      } else if (state is FeedNoPost) {
         print("No posts at the moment!");
-        return ErrorMessage.errMsg(errorMessage: "No posts at the moment!");
-          }
+        return Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Center(child: Text("No posts at the moment.")),
+              RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+                color: Colors.brown,
+                child: Text(
+                  "Reload",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  BlocProvider.of<NewsFeedBloc>(context).dispatch(FetchFeed());
+                },
+              ),
+            ],
+          ),
+        );
+      }
       return Container();
     }));
   }
@@ -59,16 +98,16 @@ class _FeedListViewState extends State<FeedListView> {
         key: _refreshIndicatorKey,
         onRefresh: _getFeedData,
         child: ListView.builder(
-                itemCount: posts.length,
-                itemBuilder: (context, index) {
-                  try {
-                    return _postContent(posts[posts.length - (index + 1)]);
-                  } catch (e) {
-                    debugPrint(e.toString());
-                  }
-                  return Container();
-                },
-              ),
+          itemCount: posts.length,
+          itemBuilder: (context, index) {
+            try {
+              return _postContent(posts[posts.length - (index + 1)]);
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
