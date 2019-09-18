@@ -18,6 +18,8 @@ import 'package:mt_carmel_app/src/models/branch.dart';
 class BranchBloc extends Bloc<BranchEvent, BranchState> {
   Branch _branch;
 
+  Branch get branch => _branch;
+
   @override
   BranchState get initialState => BranchUninitialized();
 
