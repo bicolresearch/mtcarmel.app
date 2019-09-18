@@ -11,6 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
+import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
@@ -23,6 +25,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_sc
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 
@@ -145,7 +148,10 @@ class ProfileScreen extends StatelessWidget {
       case _BIBLE:
         return BibleScreen(context);
       case _LOCATION_MAP:
-        return LocationScreen();
+        return BlocProvider<LocationMapBloc>(
+            builder: (context) =>
+                LocationMapBloc()..dispatch(FetchLocationMap()),
+            child: LocationMapPage());
       default: //  _ABOUT_THE_PARISH:
         return AboutScreen();
     }
