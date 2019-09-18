@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   17/09/2019 6:01 PM PM by Detective Conan
-*	 Changes			:   Moved the dialog appearance only when change church branch click.
+*	 Updated			:   18/09/2019 12:57 PM PM by Detective Conan
+*	 Changes			:   Changed the border of the confirmation dialog rounded.
 */
 
 import 'package:flutter/material.dart';
@@ -26,13 +26,10 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
@@ -176,10 +173,9 @@ class ProfileScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         content: ListTile(
           title: Text("Do you want to change church branch?"),
-          leading: Icon(
-            Icons.help,
-            color: Theme.of(context).primaryColor,
-          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
         ),
         actions: <Widget>[
           FlatButton(

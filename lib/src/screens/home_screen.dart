@@ -2,8 +2,9 @@
 *   Filename    :   home_screen.dart
 *   Purpose     :
 *   Created     :   02/09/2019 10:57 AM by Detective Conan
-*	 Updated			:   17/09/2019 1:09 PM PM by Detective Conan
-*	 Changes			:   Moved the TabBloc provider to calling class.
+*	 Updated			:   18/09/2019 1:00 PM PM by Detective Conan
+*	 Changes			:   Changed the border of the confirmation dialog rounded.
+*                   Removed the icon of exit confirmation.
 */
 
 import 'package:flutter/material.dart';
@@ -20,7 +21,6 @@ import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
-
   final branchId;
 
   const HomeScreen({Key key, this.branchId}) : super(key: key);
@@ -87,10 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) => AlertDialog(
         content: ListTile(
           title: Text("Would you like to close the app?"),
-          leading: Icon(
-            Icons.help,
-            color: Theme.of(context).primaryColor,
-          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
         ),
         actions: <Widget>[
           FlatButton(
