@@ -2,8 +2,8 @@
 *   Filename    :   news_feed_screen.dart
 *   Purpose     :
 *   Created     :   05/09/2019 10:30 AM by Detective Conan
-*   Updated     :   05/09/2019 10:30 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   19/09/2019 2:15 PM PM by Detective Conan
+*	 Changes			:   Moved the Branch name to the feed list view.
 */
 
 import 'package:flutter/material.dart';
@@ -29,7 +29,6 @@ class NewsFeedScreen extends StatefulWidget {
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
   Widget build(BuildContext context) {
-    final branch = locator<BranchService>().branch;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -93,27 +92,27 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-              decoration: BoxDecoration(
-                color: Colors.brown,
-                border: Border.all(width: 0.0),
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "${branch.name}",
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subhead
-                      .copyWith(color: Colors.white),
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                ),
-              ),
-            ),
+//            Container(
+//              width: double.infinity,
+//              margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+//              decoration: BoxDecoration(
+//                color: Colors.brown,
+//                border: Border.all(width: 0.0),
+//                borderRadius: BorderRadius.circular(16.0),
+//              ),
+//              child: Padding(
+//                padding: const EdgeInsets.all(8.0),
+//                child: Text(
+//                  "${branch.name}",
+//                  style: Theme.of(context)
+//                      .primaryTextTheme
+//                      .subhead
+//                      .copyWith(color: Colors.white),
+//                  textAlign: TextAlign.center,
+//                  softWrap: true,
+//                ),
+//              ),
+//            ),
             Expanded(child: Container(child: FeedListView())),
           ],
         ),

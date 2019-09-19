@@ -2,8 +2,8 @@
 *   Filename    :   feed_list_view.dart
 *   Purpose     :
 *   Created     :   05/09/2019 10:58 AM by Detective Conan
-*	 Updated			:   18/09/2019 1:31 PM PM by Detective Conan
-*	 Changes			:   Added button for retry and reloading the posts.
+*	 Updated			:   19/09/2019 2:14 PM PM by Detective Conan
+*	 Changes			:   Branch name follows the scrolling
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,6 +13,8 @@ import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_state.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
@@ -97,23 +99,39 @@ class _FeedListViewState extends State<FeedListView> {
   }
 
   Widget _postsView(List<PostData> posts) {
+    final branch = locator<BranchService>().branch;
     return Container(
       padding: EdgeInsets.all(10),
       child: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: _getFeedData,
-        child: ListView.builder(
-          physics: ScrollPhysics(parent: ScrollPhysics()),
-          shrinkWrap: true,
-          itemCount: posts.length,
-          itemBuilder: (context, index) {
-            try {
-              return _postContent(posts[posts.length - (index + 1)]);
-            } catch (e) {
-              debugPrint(e.toString());
-            }
-            return Container();
-          },
+        child: ListView(
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+              decoration: BoxDecoration(
+                color: Colors.brown,
+                border: Border.all(width: 0.0),
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "${branch.name}",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead
+                      .copyWith(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                ),
+              ),
+            ),
+
+            for(int i = posts.length - 1; i>=0; i--)
+              _postContent(posts[i]),
+          ],
         ),
       ),
     );
