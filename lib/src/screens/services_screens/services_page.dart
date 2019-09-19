@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/services_bloc/services_event.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_state.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/services_screen.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
@@ -26,11 +27,53 @@ class ServicesPage extends StatelessWidget {
           return ServicesScreen();
         }
         if (state is ServicesError) {
-          return ErrorMessage.errMsg(errorMessage: "Something went wrong!");
+          return Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("Something went wrong!")),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "Reload",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<ServicesBloc>(context)
+                        .dispatch(FetchServices());
+                  },
+                ),
+              ],
+            ),
+          );
         }
 
         if (state is NoServicesLoad) {
-          return ErrorMessage.errMsg(errorMessage: "No services loaded!");
+          return Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("No services")),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "Retry",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<ServicesBloc>(context)
+                        .dispatch(FetchServices());
+                  },
+                ),
+              ],
+            ),
+          );
         }
         return Container();
       },

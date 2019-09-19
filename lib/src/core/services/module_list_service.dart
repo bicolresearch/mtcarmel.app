@@ -19,6 +19,7 @@ class ModuleListService {
   final _branchId = locator<BranchService>().branch.id;
 
   Future<void> getJsonData() async {
+    print("${AppConstants.SERVICES_JSON_URL}?branch_id=$_branchId");
     var response = await http
         .get("${AppConstants.SERVICES_JSON_URL}?branch_id=$_branchId")
         .timeout(Duration(seconds: 3));

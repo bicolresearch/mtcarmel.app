@@ -39,9 +39,9 @@ class ChurchModuleService {
     for (var id in subModuleIds) {
       try {
         final subModuleId = "$id";
-        SubModuleAndFormFields subModuleAndFormFields =
-            await _getSubModuleAndFormFields(subModuleId);
-        churchSubmodules.add(_getChurchSubModule(subModuleAndFormFields));
+//        SubModuleAndFormFields subModuleAndFormFields =
+//        await _getSubModuleAndFormFields(subModuleId);
+        churchSubmodules.add(await _getChurchSubModule(subModuleId));
       } catch (e) {
         print("ChurchModulesService._getSubModules: $e");
       }
@@ -52,21 +52,57 @@ class ChurchModuleService {
     return churchSubmodules;
   }
 
-  ChurchSubModule _getChurchSubModule(
-      SubModuleAndFormFields subModuleAndFormFields) {
-    return ChurchSubModule(
-        name: subModuleAndFormFields.subModule?.name,
-        formFields: subModuleAndFormFields.formFields,
-        acceptanceContent: subModuleAndFormFields.subModule.acceptanceContent,
-        thankYouContent: subModuleAndFormFields.subModule.thankYouContent,
-        url: subModuleAndFormFields.subModule.url);
+
+
+//  Future _getSubModules(ModuleReference moduleReference) async {
+//    final List<String> subModuleIds =
+//        moduleReference.subModuleIds?.split(",") ?? [];
+//
+//    if (subModuleIds.isEmpty)
+//      throw Exception("No sub module for ${moduleReference?.name}");
+//
+//    List<ChurchSubModule> churchSubmodules = [];
+//
+//    for (var id in subModuleIds) {
+//      try {
+//        final subModuleId = "$id";
+//        SubModuleAndFormFields subModuleAndFormFields =
+//            await _getSubModuleAndFormFields(subModuleId);
+//        churchSubmodules.add(_getChurchSubModule(subModuleAndFormFields));
+//      } catch (e) {
+//        print("ChurchModulesService._getSubModules: $e");
+//      }
+//    }
+//
+//    if (churchSubmodules.isEmpty) throw Exception("No SubModule retrieved");
+//
+//    return churchSubmodules;
+//  }
+
+  Future<ChurchSubModule> _getChurchSubModule(String subModuleId) async {
+    final branchId = locator<BranchService>().branch.id;
+    final response = await http
+        .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId");
+    if (response.statusCode == 200) {
+      final body = json.decode(response.body);
+      return ChurchSubModule.fromJson(body);
+    } else {
+      throw Exception("Error in SubModlueAndFormFields data gathering.");
+    }
+//    return ChurchSubModule(
+//        name: subModuleAndFormFields.subModule?.name,
+//        formFields: subModuleAndFormFields.formFields,
+//        acceptanceContent: subModuleAndFormFields.subModule.acceptanceContent,
+//        thankYouContent: subModuleAndFormFields.subModule.thankYouContent,
+//        url: subModuleAndFormFields.subModule.url);
   }
 
+//TODO
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
       String subModuleId) async {
     final branchId = locator<BranchService>().branch.id;
     final response = await http
-        .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}?branch_id=$branchId&id=$subModuleId");
+        .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId");
     if (response.statusCode == 200) {
       print(response.body);
       final body = json.decode(response.body);

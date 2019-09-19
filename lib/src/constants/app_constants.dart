@@ -45,7 +45,7 @@ class AppConstants {
       'https://api.mountcarmel.ph/schedules';
   static const String SERVICES_JSON_URL = 'https://api.mountcarmel.ph/modules/';
   static const String SUB_SERVICES_BASE_JSON_URL =
-      "https://api.mountcarmel.ph/sub_modules/sub_module/";
+      "https://api.mountcarmel.ph/sub_modules/";
   static const String MAP_JSON_URL = 'https://api.mountcarmel.ph/maps/';
   static const String BOUNDARIES_JSON_URL =
       'https://api.mountcarmel.ph/boundaries/';

@@ -2,12 +2,15 @@
 *  Filename    :   service_info_screen.dart
 *  Purpose     :   Displays the service info
 *  Created     :   2019-07-22 09:21 by Detective Conan
-*	 Updated			:   08/09/2019 4:35 AM PM by Detective Conan
-*	 Changes			:   Put back the accept button
+*	 Updated			:   19/09/2019 1:09 PM PM by Detective Conan
+*	 Changes			:   Inherits the ChurchSubModule instead of passing the value to the constructor.
+*                   Temporary proceeding to the next page when clicking the accept button
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
+import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
@@ -16,19 +19,22 @@ import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/widgets/login_screen.dart';
+import 'package:provider/provider.dart';
 
 class ServiceInfoScreen extends StatefulWidget {
-  @required
-  final ChurchSubModule churchServiceSubtype;
-
-  const ServiceInfoScreen({Key key, this.churchServiceSubtype})
-      : super(key: key);
+//  @required
+//  final ChurchSubModule churchServiceSubtype;
+//
+//  const ServiceInfoScreen({Key key, this.churchServiceSubtype})
+//      : super(key: key);
 
   @override
   _ServiceInfoScreenState createState() => _ServiceInfoScreenState();
 }
 
 class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   bool _isScrolledToTheLast = false;
   bool _isLoggedIn = false;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
@@ -70,17 +76,20 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final churchSubType = Provider.of<ChurchSubModule>(context);
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+            margin:
+                const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
             child: Column(
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Text(
-                    widget.churchServiceSubtype.name,
+                    churchSubType.name,
                     style: Theme.of(context)
                         .primaryTextTheme
                         .headline
@@ -95,7 +104,8 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                     onNotification: (scrollNotification) {
                       if (scrollNotification is ScrollStartNotification) {
                         _onStartScroll(scrollNotification.metrics);
-                      } else if (scrollNotification is ScrollUpdateNotification) {
+                      } else if (scrollNotification
+                          is ScrollUpdateNotification) {
                         _onUpdateScroll(scrollNotification.metrics);
                       } else if (scrollNotification is ScrollEndNotification) {
                         _onEndScroll(scrollNotification.metrics);
@@ -108,7 +118,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                         margin: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: HtmlTextView(
                           data:
-                              "<div style='color: #5d4037'>${widget.churchServiceSubtype.acceptanceContent}</div>",
+                              "<div style='color: #5d4037'>${churchSubType.acceptanceContent}</div>",
                         ),
                         key: _htmlKey,
                       ),
@@ -129,24 +139,35 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                         ),
                         onPressed: _isScrolledToTheLast
                             ? () async {
-                                if (!_isLoggedIn) {
-                                  _isLoggedIn = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginScreen(),
+                                _scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'This feature is not yet available',
+                                      textAlign: TextAlign.center,
                                     ),
-                                  );
-                                }
+                                    duration: Duration(seconds: 3),
+                                  ),
+                                );
 
-                                if (_isLoggedIn) {
-                                  final result = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ServiceFormScreen(
-                                              subModule:
-                                                  widget.churchServiceSubtype)));
-                                  if (result) Navigator.pop(context, true);
-                                }
+                                //TODO uncomment when ready
+//                                if (!_isLoggedIn) {
+//                                  _isLoggedIn = await Navigator.push(
+//                                    context,
+//                                    MaterialPageRoute(
+//                                      builder: (context) => LoginScreen(),
+//                                    ),
+//                                  );
+//                                }
+//
+//                                if (_isLoggedIn) {
+//                                  final result = await Navigator.push(
+//                                      context,
+//                                      MaterialPageRoute(
+//                                          builder: (context) => ServiceFormScreen(
+//                                              subModule:
+//                                                  widget.churchServiceSubtype)));
+//                                  if (result) Navigator.pop(context, true);
+//                                }
                               }
                             : null,
                       ),

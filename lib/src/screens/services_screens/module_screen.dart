@@ -69,9 +69,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
                                     final result = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ServiceInfoScreen(
-                                            churchServiceSubtype: _churchModule
-                                                .churchSubModules[index]),
+                                        builder: (context) => ServiceInfoScreen(),
                                       ),
                                     );
                                     if (result) Navigator.pop(context);
