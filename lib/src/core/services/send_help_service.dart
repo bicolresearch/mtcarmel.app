@@ -16,7 +16,7 @@ import 'dart:convert';
 
 class SendHelpService {
   Future<List<SendHelpData>> getData() async {
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     var response;
     try {
       response = await http

@@ -35,7 +35,7 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   Future<void> getJsonMapData() async {
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     await Future.delayed(Duration(milliseconds: 800));
     var response =
         await http.get("${AppConstants.MAP_JSON_URL}?branch_id=$branchId");

@@ -20,7 +20,7 @@ class PastorsService {
   List<Pastor> _pastors = [];
 
   Future<List<Pastor>> getData() async {
-    final _branchId = locator<BranchService>().branch.id;
+    final _branchId = await locator<BranchService>().branch.id;
     var response;
 
     try {

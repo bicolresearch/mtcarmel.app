@@ -42,8 +42,9 @@ class BranchSelectionBloc
       var branchId;
       await SharedPreferencesHelper.getBranchIdFlag().then((value) {
         branchId = value;
-      }).catchError((e) => print(e));
-      if (branchId == null || branchId.isEmpty)
+      }).catchError((e) => print("BranchSelectionBloc.mapEventToState: $e"));
+
+      if (branchId == null || branchId.isEmpty) {
         try {
           _branchSelection = await locator<BranchListService>()
               .getData()
@@ -58,7 +59,7 @@ class BranchSelectionBloc
           yield BranchSelectionError(
               Exception("Error in fetching the list of branches."));
         }
-      else {
+      } else {
         try {
           final Branch branch =
               await locator<BranchService>().getBranch(branchId);

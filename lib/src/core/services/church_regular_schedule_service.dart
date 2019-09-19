@@ -22,7 +22,7 @@ class ChurchRegularScheduleService {
   List<Schedule> _churchRegularSchedules = [];
 
   Future<List<Schedule>> getData() async {
-    final _branchId = locator<BranchService>().branch.id;
+    final _branchId = await locator<BranchService>().branch.id;
     print("ChurchRegularScheduleService: $_branchId");
     var response = await http
         .get("${AppConstants.CHURCH_SCHEDULE_JSON_URL}?branch_id=$_branchId")

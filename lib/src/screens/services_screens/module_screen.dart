@@ -175,7 +175,7 @@ class _ModuleScreenState extends State<ModuleScreen> {
 
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
       String confraternityUrl) async {
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     final response = await http.get("$confraternityUrl/?branch_id=$branchId");
 
     if (response.statusCode == 200) {

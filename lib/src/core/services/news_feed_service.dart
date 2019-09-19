@@ -17,7 +17,7 @@ import 'package:mt_carmel_app/src/models/feed.dart';
 class NewsFeedService {
   Future<Feed> getFeed() async {
     Feed _feed;
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     await http
         .get("${AppConstants.FEEDS_JSON_URL}/?branch_id=$branchId")
         .then(

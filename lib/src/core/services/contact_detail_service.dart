@@ -16,7 +16,7 @@ import 'package:mt_carmel_app/src/models/contact.dart';
 
 class ContactDetailService {
   Future<ContactData> getData() async {
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     ContactData contactData;
     var response = await http.get(
         "${AppConstants.CONTACT_DETAILS_JSON_URL}contact/?branch_id=$branchId&id=$branchId");

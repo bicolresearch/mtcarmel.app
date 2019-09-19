@@ -289,7 +289,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
       });
 
       if (userId == null || userId == "") throw Exception("Not login");
-      final branchId = locator<BranchService>().branch.id;
+      final branchId = await locator<BranchService>().branch.id;
       fieldsValue.putIfAbsent("user_id", () => userId);
       fieldsValue.putIfAbsent("branch_id", () => branchId);
       debugPrint(fieldsValue.toString());

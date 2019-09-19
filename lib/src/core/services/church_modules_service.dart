@@ -80,7 +80,7 @@ class ChurchModuleService {
 //  }
 
   Future<ChurchSubModule> _getChurchSubModule(String subModuleId) async {
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     final response = await http
         .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId");
     if (response.statusCode == 200) {
@@ -100,7 +100,7 @@ class ChurchModuleService {
 //TODO
   Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
       String subModuleId) async {
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     final response = await http
         .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId");
     if (response.statusCode == 200) {

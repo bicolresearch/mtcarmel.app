@@ -15,7 +15,7 @@ import 'dart:convert';
 
 class AboutService {
   Future<About> getData() async {
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     About _about;
     var response = await http.get(
         "${AppConstants.ABOUT_JSON_URL}/history/?branch_id=$branchId&id=$branchId");

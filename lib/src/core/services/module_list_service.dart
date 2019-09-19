@@ -16,12 +16,13 @@ import 'package:mt_carmel_app/src/models/church_module.dart';
 
 class ModuleListService {
   List<ModuleReference> _moduleReferences = [];
-  final _branchId = locator<BranchService>().branch.id;
+
 
   Future<void> getJsonData() async {
-    print("${AppConstants.SERVICES_JSON_URL}?branch_id=$_branchId");
+    final branchId = locator<BranchService>().branch.id;
+    print("${AppConstants.SERVICES_JSON_URL}?branch_id=$branchId");
     var response = await http
-        .get("${AppConstants.SERVICES_JSON_URL}?branch_id=$_branchId")
+        .get("${AppConstants.SERVICES_JSON_URL}?branch_id=$branchId")
         .timeout(Duration(seconds: 3));
 
     if (response.statusCode == 200) {
@@ -37,11 +38,12 @@ class ModuleListService {
   List<ModuleReference> get moduleReferences => _moduleReferences;
 
   Future<List<ModuleReference>> getData() async {
+    final branchId = await locator<BranchService>().branch.id;
     var response;
 
     try {
       response = await http
-          .get("${AppConstants.SERVICES_JSON_URL}?branch_id=$_branchId")
+          .get("${AppConstants.SERVICES_JSON_URL}?branch_id=$branchId")
           .timeout(Duration(seconds: 3));
     } catch (e) {
       print(e);

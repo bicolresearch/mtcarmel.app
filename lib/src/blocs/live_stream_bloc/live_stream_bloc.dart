@@ -35,7 +35,7 @@ class LiveStreamBloc extends Bloc<LiveStreamEvent, LiveStreamState> {
 
   Future<LiveStream> _fetchData() async {
     LiveStream _liveStream;
-    final branchId = locator<BranchService>().branch.id;
+    final branchId = await locator<BranchService>().branch.id;
     await http
         .get("${AppConstants.LIVE_STREAM_JSON_URL}/?branch_id=$branchId")
         .then(
