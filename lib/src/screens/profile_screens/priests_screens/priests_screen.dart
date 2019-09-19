@@ -2,9 +2,9 @@
 *	 Filename		 :	 priest_screen.dart
 *	 Purpose		 :	 Shows the Carmelites Priests
 *  Created		 :   2019-06-11 14:14:18 by Detective Conan
-*	 Updated			:   19/09/2019 9:27 AM PM by Detective Conan
-*	 Changes			:   Changed the top tile from the Carmel to current church view
-*/
+*	 Updated			:   19/09/2019 10:11 AM PM by Detective Conan
+*	 Changes			:   Changed the title to current branch view
+**/
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class PriestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final branch = locator<BranchService>().branch;
-    final _priests = BlocProvider.of<PriestsBloc>(context).priests;
+    final priests = BlocProvider.of<PriestsBloc>(context).priests;
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Column(
@@ -49,7 +49,7 @@ class PriestsScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          AppConstants.COMPANY_NAME,
+                          "${branch.name}",
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subhead
@@ -76,10 +76,10 @@ class PriestsScreen extends StatelessWidget {
                         shrinkWrap: true,
                         primary: true,
                         crossAxisCount: 2,
-                        children: List.generate(_priests.length, (index) {
+                        children: List.generate(priests.length, (index) {
                           try {
                             return getStructuredGridCell(
-                                context, _priests[index]);
+                                context, priests[index]);
                           } catch (e) {
                             print(e.toString());
                             return Container();

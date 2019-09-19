@@ -55,13 +55,20 @@ class BranchSelectionBloc
             yield BranchSelectionNoBranchFetched();
         } catch (e) {
           print(e);
-          yield BranchSelectionError();
+          yield BranchSelectionError(
+              Exception("Error in fetching the list of branches."));
         }
       else {
-        final Branch branch =
-            await locator<BranchService>().getBranch(branchId);
-        _selectedBranch = branch;
-        yield BranchSelectionSelected();
+        try {
+          final Branch branch =
+              await locator<BranchService>().getBranch(branchId);
+          _selectedBranch = branch;
+          yield BranchSelectionSelected();
+        } catch (e) {
+          print(e);
+          yield BranchSelectionError(
+              Exception("Error in fetching branch by id."));
+        }
       }
     }
 
