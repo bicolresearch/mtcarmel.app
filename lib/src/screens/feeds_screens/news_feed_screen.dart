@@ -94,6 +94,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
+              width: double.infinity,
               margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
               decoration: BoxDecoration(
                 color: Colors.brown,

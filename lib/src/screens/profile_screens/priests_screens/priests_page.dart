@@ -2,13 +2,14 @@
 *   Filename    :   priests_page.dart
 *   Purpose     :
 *   Created     :   17/09/2019 3:21 PM by Detective Conan
-*   Updated     :   17/09/2019 3:21 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   19/09/2019 10:27 AM PM by Detective Conan
+*	 Changes			:   Added retry and reload buttons
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_state.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_screen.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
@@ -31,13 +32,51 @@ class PriestsPage extends StatelessWidget {
                 }
                 if (state is PriestsError) {
                   return Scaffold(
-                      body: ErrorMessage.errMsg(
-                          errorMessage: "Something went wrong"));
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("Something went wrong!")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Reload",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<PriestsBloc>(context)
+                                .dispatch(FetchPriests());
+                          },
+                        ),
+                      ],
+                    ),
+                  );
                 }
                 if (state is NoPriestsLoaded) {
                   return Scaffold(
-                      body: ErrorMessage.errMsg(
-                          errorMessage: "No priests loaded"));
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("No priests listed.")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Reload",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<PriestsBloc>(context)
+                                .dispatch(FetchPriests());
+                          },
+                        ),
+                      ],
+                    ),
+                  );
                 }
                 return Container();
               },

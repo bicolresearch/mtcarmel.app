@@ -2,13 +2,14 @@
 *   Filename    :   priests_page.dart
 *   Purpose     :
 *   Created     :   17/09/2019 3:21 PM by Detective Conan
-*   Updated     :   17/09/2019 3:21 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   19/09/2019 10:27 AM PM by Detective Conan
+*	 Changes			:   Added retry and reload buttons
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_state.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_state.dart';
@@ -34,11 +35,51 @@ class PastorsPage extends StatelessWidget {
                 }
                 if (state is PastorsError) {
                   return Scaffold(
-                      body: ErrorMessage.errMsg(errorMessage: "Something went wrong"));
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("Something went wrong!")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Retry",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<PastorsBloc>(context)
+                                .dispatch(FetchPastors());
+                          },
+                        ),
+                      ],
+                    ),
+                  );
                 }
                 if (state is NoPastorsLoaded) {
                   return Scaffold(
-                      body: ErrorMessage.errMsg(errorMessage: "No pastors loaded"));
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("No pastors listed.")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Reload",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<PastorsBloc>(context)
+                                .dispatch(FetchPastors());
+                          },
+                        ),
+                      ],
+                    ),
+                  );
                 }
                 return Scaffold();
               },

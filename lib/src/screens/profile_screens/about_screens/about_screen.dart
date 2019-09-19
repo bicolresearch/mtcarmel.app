@@ -2,8 +2,8 @@
 *	 Filename		 :	 about_screen.dart
 *	 Purpose		 :	 Show the details about the church.
 *  Created		 :   2019-06-13 12:37:11 by Detective Conan
-*	 Updated			:   18/09/2019 5:27 PM PM by Detective Conan
-*	 Changes			:   Changed the branch name size to soft wrap.
+*	 Updated			:   19/09/2019 10:25 AM PM by Detective Conan
+*	 Changes			:   Expanded the title.
 */
 
 import 'package:flutter/material.dart';
@@ -33,11 +33,12 @@ class AboutScreen extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Container(
+                      width: double.infinity,
                       margin: EdgeInsets.only(top: 30.0),
                       decoration: BoxDecoration(
                         color: Colors.brown,
                         border: Border.all(width: 0.0),
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
