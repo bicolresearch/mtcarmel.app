@@ -136,7 +136,7 @@ class _TransparencyScreenState extends State<TransparencyScreen> {
                                                     width: 200.0,
                                                     height: 20.0,
                                                     decoration: BoxDecoration(
-                                                      color: Colors.brown[600],
+                                                      color: Colors.brown,
                                                       border: Border.all(width: 0.8),
                                                       borderRadius:
                                                       BorderRadius.circular(20.0),

@@ -2,9 +2,8 @@
 *   Filename    :   branch_selection_screen.dart
 *   Purpose     :
 *   Created     :   09/09/2019 11:08 AM by Detective Conan
-*	 Updated			:   09/09/2019 5:01 PM PM by Detective Conan
-*	 Changes			:   Added check if first usage. Navigate to IntroScreen if first usage.
-*/
+*	 Updated			:   19/09/2019 9:41 AM PM by Detective Conan
+*	 Changes			:   Each branch text changed to listTile*/
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +12,7 @@ import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
@@ -36,8 +36,9 @@ class BranchSelectionScreen extends StatelessWidget {
             SizedBox(
               height: 30.0,
             ),
+            Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 60),
             Text(
-              "Select church",
+              "Carmel branches",
               style: Theme.of(context)
                   .primaryTextTheme
                   .headline
@@ -46,8 +47,8 @@ class BranchSelectionScreen extends StatelessWidget {
             Divider(),
             Expanded(
               child: Container(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => Divider(),
+                child: ListView.builder(
+//                  separatorBuilder: (context, index) => Divider(),
                   shrinkWrap: true,
                   itemCount: branchSelection?.length,
                   itemBuilder: (context, index) {
@@ -75,13 +76,21 @@ class BranchSelectionScreen extends StatelessWidget {
                             );
                           }
                         },
-                        child: Text(
-                          "${branchSelection[index].name}",
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .title
-                              .copyWith(fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
+                        child: Card(
+                          child: Container(
+                            height: 80.0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "${branchSelection[index].name}",
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .title
+                                    .copyWith(fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     } catch (e) {

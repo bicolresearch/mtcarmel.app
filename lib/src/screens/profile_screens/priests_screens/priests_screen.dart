@@ -2,8 +2,8 @@
 *	 Filename		 :	 priest_screen.dart
 *	 Purpose		 :	 Shows the Carmelites Priests
 *  Created		 :   2019-06-11 14:14:18 by Detective Conan
-*  Updated     :   2019-08-27 15:01 by Detective conan
-*  Changes     :   Changed api's url.
+*	 Updated			:   19/09/2019 9:27 AM PM by Detective Conan
+*	 Changes			:   Changed the top tile from the Carmel to current church view
 */
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -26,6 +26,7 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 class PriestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final branch = locator<BranchService>().branch;
     final _priests = BlocProvider.of<PriestsBloc>(context).priests;
     return Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -38,11 +39,12 @@ class PriestsScreen extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(top: 50.0),
-                      height: 40.0,
+                      margin:
+                          EdgeInsets.only(top: 50.0, left: 10.0, right: 10.0),
+                      width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.brown[600],
-                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.brown,
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

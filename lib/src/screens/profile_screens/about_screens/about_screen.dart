@@ -2,8 +2,8 @@
 *	 Filename		 :	 about_screen.dart
 *	 Purpose		 :	 Show the details about the church.
 *  Created		 :   2019-06-13 12:37:11 by Detective Conan
-*	 Updated			:   18/09/2019 11:00 AM PM by Detective Conan
-*	 Changes			:   Changed to StatelessWidget. Move the fetching data to bloc.
+*	 Updated			:   18/09/2019 5:27 PM PM by Detective Conan
+*	 Changes			:   Changed the branch name size to soft wrap.
 */
 
 import 'package:flutter/material.dart';
@@ -17,9 +17,7 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/about.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
 
-
 class AboutScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final Branch branch = locator<BranchService>().branch;
@@ -36,9 +34,8 @@ class AboutScreen extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(top: 30.0),
-                      height: 40.0,
                       decoration: BoxDecoration(
-                        color: Colors.brown[600],
+                        color: Colors.brown,
                         border: Border.all(width: 0.0),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -49,6 +46,7 @@ class AboutScreen extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white, fontFamily: "Helvetica"),
                           textAlign: TextAlign.center,
+                          softWrap: true,
                         ),
                       ),
                     ),

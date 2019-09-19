@@ -2,15 +2,18 @@
 *	 Filename		 :	 church_regular_schedule_screen_old.dart
 *	 Purpose		 :	 Displays the different schedules of the church
 *  Created		 :   2019-06-14 09:42:18 by Detective Conan
-*	 Updated			:   13/09/2019 2:03 PM PM by Detective Conan
-*	 Changes			:   Modified for bloc implementation.
+*	 Updated			:   18/09/2019 6:33 PM PM by Detective Conan
+*	 Changes			:   Removed left arrow back button. Added branch fetching from locator
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/constants/regular_schedule_constants.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/schedule.dart';
 import 'package:mt_carmel_app/src/utils/schedule_type.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
@@ -21,6 +24,7 @@ import 'package:mt_carmel_app/src/widgets/line.dart';
 class ChurchRegularScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final branch = locator<BranchService>().branch;
     Map<String, Map<String, List<Schedule>>> scheduleCategories =
         BlocProvider.of<ChurchRegularScheduleBloc>(context).schedulesCategories;
     return Scaffold(
@@ -36,9 +40,8 @@ class ChurchRegularScheduleScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  height: 80.0,
                   child: Text(
-                    "${AppConstants.COMPANY_NAME}\n Regular Schedules",
+                    "${branch.name}\n Regular Schedules",
                     style: Theme.of(context)
                         .primaryTextTheme
                         .title
@@ -140,7 +143,6 @@ class ChurchRegularScheduleScreen extends StatelessWidget {
               ],
             ),
           ),
-          leftArrowBackButton(context: context),
         ],
       ),
     ));

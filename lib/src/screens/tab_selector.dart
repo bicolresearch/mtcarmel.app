@@ -61,14 +61,14 @@ class TabSelector extends StatelessWidget {
           ),
           title: Text(""),
         );
-      case AppTab.Transparency:
-        return BottomNavigationBarItem(
-          icon: Icon(
-            MountCarmelIcons.transparency,
-            key: AppKeys.transparencyTab,
-          ),
-          title: Text(""),
-        );
+//      case AppTab.Transparency:
+//        return BottomNavigationBarItem(
+//          icon: Icon(
+//            MountCarmelIcons.transparency,
+//            key: AppKeys.transparencyTab,
+//          ),
+//          title: Text(""),
+//        );
       case AppTab.Profile:
         return BottomNavigationBarItem(
           icon: Icon(

@@ -13,6 +13,6 @@ class AppKeys{
   static final newsFeedTab = const Key("__newsFeedTabKey__");
   static final sendHelpTab = const Key("__sendHelpTabkey__");
   static final servicesTab = const Key("__servicesTabkey__");
-  static final transparencyTab = const Key("__transactionTabkey__");
+//  static final transparencyTab = const Key("__transactionTabkey__");
   static final profileTab = const Key("__profileTabkey__");
 }

@@ -10,6 +10,6 @@ enum AppTab{
   NewsFeed,
   SendHelp,
   Services,
-  Transparency,
+//  Transparency,
   Profile
 }

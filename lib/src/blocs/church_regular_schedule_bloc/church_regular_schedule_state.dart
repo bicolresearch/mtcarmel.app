@@ -39,4 +39,8 @@ class ChurchRegularScheduleError extends ChurchRegularScheduleState {
   String toString() => 'ChurchRegularScheduleError';
 }
 
-//TODO: Add states
+class NoChurchRegularSchedule extends ChurchRegularScheduleState {
+
+  @override
+  String toString() => 'NoChurchRegularSchedule';
+}

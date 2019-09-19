@@ -41,6 +41,11 @@ class ChurchRegularScheduleBloc
         _churchScheduleList =
             await locator<ChurchRegularScheduleService>().getData();
 
+        if(_churchScheduleList.isEmpty) {
+          yield NoChurchRegularSchedule();
+          return;
+        }
+
         _sortSchedules();
 
         _scheduleType(ScheduleType.HolyMassSchedule);

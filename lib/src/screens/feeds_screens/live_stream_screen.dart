@@ -49,10 +49,6 @@ class LiveStreamScreen extends StatelessWidget {
               return Container();
             }),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: leftArrowBackButton(context: context),
-          ),
         ],
       ),
     );

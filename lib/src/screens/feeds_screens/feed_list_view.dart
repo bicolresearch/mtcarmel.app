@@ -30,65 +30,70 @@ class _FeedListViewState extends State<FeedListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body:
-        BlocBuilder<NewsFeedBloc, NewsFeedState>(builder: (context, state) {
-      if (state is FeedUninitialized) {
-        return LoadingIndicator();
-      }
-      if (state is FeedLoading) {
-        return LoadingIndicator();
-      } else if (state is FeedLoaded) {
-        final feed = state.feed;
-        return _postsView(feed.data);
-      } else if (state is FeedErrorLoading) {
-        print("error loading");
-        return Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Center(child: Text("Something went wrong!")),
-              RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                color: Colors.brown,
-                child: Text(
-                  "Retry",
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  BlocProvider.of<NewsFeedBloc>(context).dispatch(FetchFeed());
-                },
+    return Scaffold(
+      body: BlocBuilder<NewsFeedBloc, NewsFeedState>(
+        builder: (context, state) {
+          if (state is FeedUninitialized) {
+            return LoadingIndicator();
+          }
+          if (state is FeedLoading) {
+            return LoadingIndicator();
+          } else if (state is FeedLoaded) {
+            final feed = state.feed;
+            return _postsView(feed.data);
+          } else if (state is FeedErrorLoading) {
+            print("error loading");
+            return Scaffold(
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(child: Text("Something went wrong!")),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Retry",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<NewsFeedBloc>(context)
+                          .dispatch(FetchFeed());
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
-      } else if (state is FeedNoPost) {
-        print("No posts at the moment!");
-        return Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Center(child: Text("No posts at the moment.")),
-              RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                color: Colors.brown,
-                child: Text(
-                  "Reload",
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  BlocProvider.of<NewsFeedBloc>(context).dispatch(FetchFeed());
-                },
+            );
+          } else if (state is FeedNoPost) {
+            print("No posts at the moment!");
+            return Scaffold(
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(child: Text("No posts at the moment.")),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Reload",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<NewsFeedBloc>(context)
+                          .dispatch(FetchFeed());
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
-      }
-      return Container();
-    }));
+            );
+          }
+          return Container();
+        },
+      ),
+    );
   }
 
   Widget _postsView(List<PostData> posts) {
@@ -98,6 +103,8 @@ class _FeedListViewState extends State<FeedListView> {
         key: _refreshIndicatorKey,
         onRefresh: _getFeedData,
         child: ListView.builder(
+          physics: ScrollPhysics(parent: ScrollPhysics()),
+          shrinkWrap: true,
           itemCount: posts.length,
           itemBuilder: (context, index) {
             try {

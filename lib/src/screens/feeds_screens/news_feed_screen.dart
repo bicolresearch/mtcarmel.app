@@ -11,12 +11,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_event.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 
 import 'package:mt_carmel_app/src/screens/feeds_screens/calendar.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_list_view.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/live_stream_screen.dart';
-
+import 'package:mt_carmel_app/src/widgets/line.dart';
 
 class NewsFeedScreen extends StatefulWidget {
   @override
@@ -26,6 +29,7 @@ class NewsFeedScreen extends StatefulWidget {
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
   Widget build(BuildContext context) {
+    final branch = locator<BranchService>().branch;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -84,7 +88,35 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
           ),
         ],
       ),
-      body: FeedListView(),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+              decoration: BoxDecoration(
+                color: Colors.brown,
+                border: Border.all(width: 0.0),
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "${branch.name}",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .subhead
+                      .copyWith(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                ),
+              ),
+            ),
+            Expanded(child: Container(child: FeedListView())),
+          ],
+        ),
+      ),
     );
   }
 }

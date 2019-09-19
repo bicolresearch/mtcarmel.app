@@ -57,10 +57,10 @@ class HomeBottomNavigator extends StatelessWidget {
         final bloc = BlocProvider.of<ServicesBloc>(context);
         bloc.dispatch(FetchServices());
         return ServicesPage();
-      case AppTab.Transparency:
-        final bloc = BlocProvider.of<TransparencyBloc>(context);
-        bloc.dispatch(FetchTransparency());
-        return TransparencyPage();
+//      case AppTab.Transparency:
+//        final bloc = BlocProvider.of<TransparencyBloc>(context);
+//        bloc.dispatch(FetchTransparency());
+//        return TransparencyPage();
       case AppTab.Profile:
         final bloc = BlocProvider.of<ProfileBloc>(context);
         bloc.dispatch(FetchProfile());

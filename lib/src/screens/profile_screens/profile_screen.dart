@@ -22,6 +22,7 @@ import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
@@ -67,6 +68,7 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 100),
               Expanded(
                 child: Container(
                   alignment: Alignment.center,

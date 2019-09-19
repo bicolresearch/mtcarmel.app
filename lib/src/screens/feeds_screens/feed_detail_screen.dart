@@ -39,7 +39,7 @@ class FeedDetailScreen extends StatelessWidget {
                           height: 50.0,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Colors.brown[600],
+                            color: Colors.brown,
                             border:
                                 Border.all(color: Colors.transparent, width: 0.8),
                             borderRadius: BorderRadius.circular(10.0),

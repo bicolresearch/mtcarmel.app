@@ -2,8 +2,8 @@
 *	 Filename		 :	 pastor_screen.dart
 *	 Purpose		 :	 Displays the list of pastors
 *  Created	 	 :   2019-06-11 15:56:33 by Detective Conan
-*	 Updated			:   11/09/2019 3:45 PM PM by Detective Conan
-*	 Changes			:   Added fetching current branchId to to filter pastors with branch
+*	 Updated			:   19/09/2019 9:26 AM PM by Detective Conan
+*	 Changes			:   Changed the top tile from the Carmel to current church view
 */
 
 import 'package:flutter/material.dart';
@@ -27,6 +27,7 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 class PastorsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final branch = locator<BranchService>().branch;
     final pastors = BlocProvider.of<PastorsBloc>(context).pastors;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -41,18 +42,16 @@ class PastorsScreen extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(
-                        top: 10.0,
-                      ),
-                      height: 40.0,
+                      margin: EdgeInsets.only(top: 10.0, left: 10, right: 10),
+                      width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.brown[600],
-                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.brown,
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          AppConstants.COMPANY_NAME,
+                          "${branch.name}",
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subhead
