@@ -8,40 +8,40 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
+import 'package:mt_carmel_app/src/models/branch_location.dart';
 
 @immutable
 abstract class BranchSelectionEvent extends Equatable {
   BranchSelectionEvent([List props = const []]) : super(props);
 }
 
-class BranchSelectionFetch extends BranchSelectionEvent {
+class BranchSelectionFetchByLocationId extends BranchSelectionEvent {
+  final BranchLocation branchLocation;
+
+  BranchSelectionFetchByLocationId(this.branchLocation) : super([branchLocation]);
 
   @override
   String toString() => 'BranchSelectionFetch';
 }
 
 class BranchSelectionReset extends BranchSelectionEvent {
-
   @override
   String toString() => 'BranchSelectionReset';
 }
 
-
 class SaveSelectedBranch extends BranchSelectionEvent {
-
   final Branch branch;
 
-  SaveSelectedBranch(this.branch):super([branch]);
+  SaveSelectedBranch(this.branch) : super([branch]);
 
   @override
   String toString() => 'SaveSelectedBranch';
 }
 
 class SelectedBranch extends BranchSelectionEvent {
-
   final Branch branch;
 
-  SelectedBranch(this.branch):super([branch]);
+  SelectedBranch(this.branch) : super([branch]);
 
   @override
   String toString() => 'SaveSelectedBranch';

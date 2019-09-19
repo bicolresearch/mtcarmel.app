@@ -7,6 +7,7 @@
 */
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:mt_carmel_app/src/models/branch_location.dart';
 
 @immutable
 abstract class BranchSelectionState extends Equatable {
@@ -38,6 +39,10 @@ class BranchSelectionError extends BranchSelectionState {
 }
 
 class BranchSelectionNoBranchFetched extends BranchSelectionState {
+  final BranchLocation branchLocation;
+
+  BranchSelectionNoBranchFetched(this.branchLocation) : super([branchLocation]);
+
   @override
   String toString() => 'BranchSelectionNoBranchFetched';
 }

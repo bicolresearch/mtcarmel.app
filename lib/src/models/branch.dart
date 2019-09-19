@@ -11,42 +11,47 @@ import 'package:json_annotation/json_annotation.dart';
 part 'branch.g.dart';
 
 @JsonSerializable()
-class DataBranch{
+class DataBranch {
   DataBranch(
-      this.draw,
-      this.recordsTotal,
-      this.recordsFiltered,
-      this.data,
-      );
+    this.draw,
+    this.recordsTotal,
+    this.recordsFiltered,
+    this.data,
+  );
 
   final int draw;
   final int recordsTotal;
   final int recordsFiltered;
   final List<Branch> data;
 
-  factory DataBranch.fromJson(Map<String, dynamic> json) => _$DataBranchFromJson(json);
+  factory DataBranch.fromJson(Map<String, dynamic> json) =>
+      _$DataBranchFromJson(json);
 
   Map<String, dynamic> toJson() => _$DataBranchToJson(this);
 }
 
-
-
 @JsonSerializable()
 class Branch {
   Branch(
-      {this.id,
+      this.id,
       this.name,
       this.description,
+      this.locationId,
+      this.locationName,
       this.churchOrderId,
       this.churchOrderName,
       this.dtCreated,
       this.dtUpdated,
       this.createdBy,
-      this.updatedBy});
+      this.updatedBy);
 
   final id;
   final name;
   final description;
+  @JsonKey(name: "location_id")
+  final locationId;
+  @JsonKey(name: "location_name")
+  final locationName;
   @JsonKey(name: "church_order_id")
   final churchOrderId;
   @JsonKey(name: "church_order_name")

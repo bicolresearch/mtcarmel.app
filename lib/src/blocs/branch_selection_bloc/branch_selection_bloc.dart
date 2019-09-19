@@ -37,39 +37,20 @@ class BranchSelectionBloc
   @override
   Stream<BranchSelectionState> mapEventToState(
       BranchSelectionEvent event) async* {
-    if (event is BranchSelectionFetch) {
+    if (event is BranchSelectionFetchByLocationId) {
       yield BranchSelectionLoading();
-      var branchId;
-      await SharedPreferencesHelper.getBranchIdFlag().then((value) {
-        branchId = value;
-      }).catchError((e) => print("BranchSelectionBloc.mapEventToState: $e"));
-
-      if (branchId == null || branchId.isEmpty) {
-        try {
-          _branchSelection = await locator<BranchListService>()
-              .getData()
-              .timeout(Duration(seconds: 5));
-          await Future.delayed(Duration(seconds: 3));
-          if (_branchSelection.isNotEmpty)
-            yield BranchSelectionLoaded();
-          else
-            yield BranchSelectionNoBranchFetched();
-        } catch (e) {
-          print(e);
-          yield BranchSelectionError(
-              Exception("Error in fetching the list of branches."));
-        }
-      } else {
-        try {
-          final Branch branch =
-              await locator<BranchService>().getBranch(branchId);
-          _selectedBranch = branch;
-          yield BranchSelectionSelected();
-        } catch (e) {
-          print(e);
-          yield BranchSelectionError(
-              Exception("Error in fetching branch by id."));
-        }
+      try {
+        _branchSelection = await locator<BranchListService>()
+            .getLocations(event.branchLocation.id)
+            .timeout(Duration(seconds: 5));
+        if (_branchSelection.isNotEmpty)
+          yield BranchSelectionLoaded();
+        else
+          yield BranchSelectionNoBranchFetched(event.branchLocation);
+      } catch (e) {
+        print(e);
+        yield BranchSelectionError(
+            Exception("Error in fetching the list of branches."));
       }
     }
 

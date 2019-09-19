@@ -11,12 +11,18 @@ import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:mt_carmel_app/src/models/branch_location.dart';
+
 class BranchListService {
-  Future<List<Branch>> getData() async {
+  Future<List<Branch>> getLocations(String locationId) async {
     List<Branch> _branches = [];
 
+    print(
+      "${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
+    );
+
     final response = await http.get(
-      AppConstants.BRANCHES_JSON_URL,
+      "${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
     );
 
     if (response.statusCode == 200) {

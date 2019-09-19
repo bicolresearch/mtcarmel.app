@@ -25,7 +25,7 @@ class BranchSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final branchSelectionBloc = Provider.of<BranchSelectionBloc>(context);
+    final branchSelectionBloc = BlocProvider.of<BranchSelectionBloc>(context);
     final branchSelection = branchSelectionBloc.branchSelection;
     return Scaffold(
       key: _scaffoldKey,

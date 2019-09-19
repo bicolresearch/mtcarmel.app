@@ -28,15 +28,17 @@ Map<String, dynamic> _$DataBranchToJson(DataBranch instance) =>
 
 Branch _$BranchFromJson(Map<String, dynamic> json) {
   return Branch(
-    id: json['id'],
-    name: json['name'],
-    description: json['description'],
-    churchOrderId: json['church_order_id'],
-    churchOrderName: json['church_order_name'],
-    dtCreated: json['dt_created'],
-    dtUpdated: json['dt_updated'],
-    createdBy: json['created_by'],
-    updatedBy: json['updated_by'],
+    json['id'],
+    json['name'],
+    json['description'],
+    json['location_id'],
+    json['location_name'],
+    json['church_order_id'],
+    json['church_order_name'],
+    json['dt_created'],
+    json['dt_updated'],
+    json['created_by'],
+    json['updated_by'],
   );
 }
 
@@ -44,6 +46,8 @@ Map<String, dynamic> _$BranchToJson(Branch instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
+      'location_id': instance.locationId,
+      'location_name': instance.locationName,
       'church_order_id': instance.churchOrderId,
       'church_order_name': instance.churchOrderName,
       'dt_created': instance.dtCreated,
