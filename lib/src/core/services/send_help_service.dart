@@ -2,8 +2,8 @@
 *   Filename    :   send_help_service.dart
 *   Purpose     :
 *   Created     :   12/09/2019 12:46 PM by Detective Conan
-*   Updated     :   12/09/2019 12:46 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   19/09/2019 3:01 PM PM by Detective Conan
+*	 Changes			:   Adapt to new API
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
@@ -20,8 +20,7 @@ class SendHelpService {
     var response;
     try {
       response = await http
-              //.get("${AppConstants.SEND_HELP_JSON_URL}?branch_id=$branchId")
-              .get("${AppConstants.SEND_HELP_JSON_URL}")
+              .get("${AppConstants.SEND_HELP_JSON_URL}?branch_id=$branchId")
               .timeout(Duration(seconds: 3));
     } catch (e) {
       print(e);

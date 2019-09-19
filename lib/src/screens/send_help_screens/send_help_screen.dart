@@ -2,16 +2,17 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*	 Updated			:   08/09/2019 4:02 AM PM by Detective Conan
-*	 Changes			:   Temporarily cover the screen with container to disable the content,
-*	                  while send help is not ready.
+*	 Updated			:   19/09/2019 3:02 PM PM by Detective Conan
+*	 Changes			:   Adapt to new API
 */
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class SendHelpScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -81,18 +82,17 @@ class SendHelpScreen extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            //TODO add if photo is ready
-//          Container(
-//            child: (sendHelp.coverPhoto == null)
-//                ? Container()
-//                : CachedNetworkImage(
-//                    key: Key(sendHelp.id),
-//                    imageUrl:
-//                        AppConstants.API_BASE_URL + sendHelp.coverPhoto ?? "",
-//                    placeholder: (context, url) => LoadingIndicator(),
-//                    errorWidget: (context, url, error) => new Icon(Icons.error),
-//                    fit: BoxFit.cover),
-//          ),
+          Container(
+            child: (sendHelp.mediaPath == null)
+                ? Container()
+                : CachedNetworkImage(
+                    key: Key(sendHelp.id),
+                    imageUrl:
+                        AppConstants.API_BASE_URL + sendHelp.mediaPath ?? "",
+                    placeholder: (context, url) => LoadingIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                    fit: BoxFit.cover),
+          ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

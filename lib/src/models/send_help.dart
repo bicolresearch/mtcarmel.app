@@ -2,8 +2,8 @@
 *  Filename    :   send_help.dart.dart
 *  Purpose     :	 Model for type of donation
 *  Created     :   2019-07-02 16:13 by Detective Conan
-*  Updated     :   2019-07-02 16:13 by Detective Conan 
-*  Changes     :
+*	 Updated			:   19/09/2019 3:02 PM PM by Detective Conan
+*	 Changes			:   Added mediaID and mediaPath
 */
 
 import 'package:json_annotation/json_annotation.dart';
@@ -21,23 +21,32 @@ class SendHelp {
   final recordsFiltered;
   final List<SendHelpData> data;
 
-
   factory SendHelp.fromJson(Map<String, dynamic> json) =>
       _$SendHelpFromJson(json);
 
   Map<String, dynamic> toJson() => _$SendHelpToJson(this);
 }
 
-
 @JsonSerializable()
 class SendHelpData {
-
-  SendHelpData(this.id, this.name, this.description, this.dtCreated,
-      this.dtUpdated, this.createdBy, this.updatedBy);
+  SendHelpData(
+      this.id,
+      this.name,
+      this.description,
+      this.mediaId,
+      this.mediaPath,
+      this.dtCreated,
+      this.dtUpdated,
+      this.createdBy,
+      this.updatedBy);
 
   final id;
   final name;
   final description;
+  @JsonKey(name: "media_id")
+  final mediaId;
+  @JsonKey(name: "media_path")
+  final mediaPath;
   @JsonKey(name: "dt_created")
   final dtCreated;
   @JsonKey(name: "dt_updated")
