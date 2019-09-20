@@ -2,12 +2,13 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*	 Updated			:   19/09/2019 3:02 PM PM by Detective Conan
-*	 Changes			:   Adapt to new API
+*	 Updated			:   20/09/2019 3:20 PM PM by Detective Conan
+*	 Changes			:   Changed the image cache to advance image cache
 */
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
@@ -82,17 +83,22 @@ class SendHelpScreen extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-          Container(
-            child: (sendHelp.mediaPath == null)
-                ? Container()
-                : CachedNetworkImage(
-                    key: Key(sendHelp.id),
-                    imageUrl:
-                        AppConstants.API_BASE_URL + sendHelp.mediaPath ?? "",
-                    placeholder: (context, url) => LoadingIndicator(),
-                    errorWidget: (context, url, error) => new Icon(Icons.error),
-                    fit: BoxFit.cover),
-          ),
+            Container(
+              child: (sendHelp.mediaPath == null)
+                  ? Container()
+                  : TransitionToImage(
+                      image: AdvancedNetworkImage(
+                        "${AppConstants.API_BASE_URL}${sendHelp.mediaPath}",
+                        useDiskCache: true,
+                        // TODO change duration
+                        cacheRule: CacheRule(
+                          maxAge: const Duration(minutes: 7),
+                        ),
+                      ),
+                      loadingWidget: LoadingIndicator(),
+                      fit: BoxFit.cover,
+                    ),
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

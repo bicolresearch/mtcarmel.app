@@ -76,7 +76,7 @@ class BranchSelectionScreen extends StatelessWidget {
                         child: Card(
                           child: Container(
                             alignment: Alignment.center,
-                            height: 100.0,
+                            height: 120.0,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ListTile(

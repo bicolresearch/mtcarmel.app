@@ -8,6 +8,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -31,13 +33,17 @@ class ModuleReferenceTile extends StatelessWidget {
               height: 60.0,
               child: (moduleReference.coverPhoto == null)
                   ? Container()
-                  : CachedNetworkImage(
-                      imageUrl: AppConstants.API_BASE_URL +
-                          moduleReference.coverPhoto,
-                      placeholder: (context, url) => LoadingIndicator(),
-                      errorWidget: (context, url, error) =>
-                         const Icon(MountCarmelIcons.services),
-                      fit: BoxFit.cover),
+                  : TransitionToImage(
+                      image: AdvancedNetworkImage(
+                        "${AppConstants.API_BASE_URL}${moduleReference.coverPhoto}",
+                        useDiskCache: true,
+                        cacheRule: CacheRule(
+                          maxAge: const Duration(days: 7),
+                        ),
+                      ),
+                      loadingWidget: LoadingIndicator(),
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           Expanded(

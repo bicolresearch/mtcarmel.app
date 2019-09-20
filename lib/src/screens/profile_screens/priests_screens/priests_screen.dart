@@ -8,6 +8,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
@@ -110,7 +111,13 @@ class PriestsScreen extends StatelessWidget {
             width: 88.0,
             height: 88.0,
             child: CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(url),
+              backgroundImage: AdvancedNetworkImage(
+                "$url",
+                useDiskCache: true,
+                cacheRule: CacheRule(
+                  maxAge: const Duration(days: 7),
+                ),
+              ),
               backgroundColor: Colors.brown,
             ),
           ),

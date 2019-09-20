@@ -2,11 +2,10 @@
 *   Filename    :   feed_list_view.dart
 *   Purpose     :
 *   Created     :   05/09/2019 10:58 AM by Detective Conan
-*	 Updated			:   19/09/2019 2:14 PM PM by Detective Conan
-*	 Changes			:   Branch name follows the scrolling
+*	 Updated			:   20/09/2019 3:19 PM PM by Detective Conan
+*	 Changes			:   Changed the image cache to advance image cache
 */
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
@@ -17,9 +16,11 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/feed_detail_screen.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:html2md/html2md.dart' as html2md;
+
+import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
 
 class FeedListView extends StatefulWidget {
   @override
@@ -109,7 +110,10 @@ class _FeedListViewState extends State<FeedListView> {
           children: <Widget>[
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 10.0, bottom: 10.0,),
+              margin: EdgeInsets.only(
+                top: 10.0,
+                bottom: 10.0,
+              ),
               decoration: BoxDecoration(
                 color: Colors.brown,
                 border: Border.all(width: 0.0),
@@ -128,9 +132,7 @@ class _FeedListViewState extends State<FeedListView> {
                 ),
               ),
             ),
-
-            for(int i = posts.length - 1; i>=0; i--)
-              _postContent(posts[i]),
+            for (int i = posts.length - 1; i >= 0; i--) _postContent(posts[i]),
           ],
         ),
       ),
@@ -199,13 +201,17 @@ class _FeedListViewState extends State<FeedListView> {
                 child: Container(
                   width: double.infinity,
                   height: 260,
-                  child: CachedNetworkImage(
-                      key: Key(postData.mediaId),
-                      imageUrl: url,
-                      placeholder: (context, url) => LoadingIndicator(),
-                      errorWidget: (context, url, error) =>
-                          new Icon(Icons.error),
-                      fit: BoxFit.cover),
+                  child: TransitionToImage(
+                    image: AdvancedNetworkImage(
+                      "${AppConstants.API_BASE_URL}${postData.mediaPath}",
+                      useDiskCache: true,
+                      cacheRule: CacheRule(
+                        maxAge: const Duration(days: 7),
+                      ),
+                    ),
+                    loadingWidget: LoadingIndicator(),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Container(
