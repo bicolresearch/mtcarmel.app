@@ -2,8 +2,8 @@
 *	 Filename		 :	 bible_screen.dart
 *	 Purpose		 :	 displays the list of bible books
 *  Created		 :   2019-06-18 10:02:34 by Detective Conan
-*	 Updated			:   06/09/2019 3:30 PM PM by Detective Conan
-*	 Changes			:   Changed the GestureDetector with InkWell
+*	 Updated			:   20/09/2019 9:26 AM PM by Detective Conan
+*	 Changes			:   Added card for the book name
 */
 
 import 'package:flutter/material.dart';
@@ -127,10 +127,19 @@ class _BibleScreenState extends State<BibleScreen> {
                         ),
                       );
                     },
-                      child: Text(
-                        bibleBooks[index].bookName,
-                        style: Theme.of(context).primaryTextTheme.title,
-                        textAlign: TextAlign.center,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 30.0),
+                        height: 50.0,
+                        child: Card(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                                bibleBooks[index].bookName,
+                                style: Theme.of(context).primaryTextTheme.title,
+                                textAlign: TextAlign.center,
+                              ),
+                          ),
+                        ),
                       ),
                   ),
                 );
