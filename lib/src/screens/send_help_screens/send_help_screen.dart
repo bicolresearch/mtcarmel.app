@@ -2,8 +2,8 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*	 Updated			:   20/09/2019 3:20 PM PM by Detective Conan
-*	 Changes			:   Changed the image cache to advance image cache
+*	 Updated			:   20/09/2019 3:25 PM PM by Detective Conan
+*	 Changes			:   Changed the duration of cache to 7 days
 */
 
 import 'package:flutter/material.dart';
@@ -90,9 +90,8 @@ class SendHelpScreen extends StatelessWidget {
                       image: AdvancedNetworkImage(
                         "${AppConstants.API_BASE_URL}${sendHelp.mediaPath}",
                         useDiskCache: true,
-                        // TODO change duration
                         cacheRule: CacheRule(
-                          maxAge: const Duration(minutes: 7),
+                          maxAge: const Duration(days: 7),
                         ),
                       ),
                       loadingWidget: LoadingIndicator(),

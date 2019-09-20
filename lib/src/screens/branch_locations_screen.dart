@@ -2,8 +2,8 @@
 *   Filename    :   branch_locations_screen.dart
 *   Purpose     :
 *   Created     :   19/09/2019 5:34 PM by Detective Conan
-*	 Updated			:   20/09/2019 10:17 AM PM by Detective Conan
-*	 Changes			:   Handled the routing of selected branch
+*	 Updated			:   20/09/2019 4:51 PM PM by Detective Conan
+*	 Changes			:   Changed the font and alignment of title.
 */
 
 import 'package:flutter/material.dart';
@@ -33,11 +33,12 @@ class BranchLocationsScreen extends StatelessWidget {
             ),
             Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 60),
             Text(
-              "Carmel Locations",
+              "${AppConstants.CARMELITE_MONASTERY} Locations",
               style: Theme.of(context)
                   .primaryTextTheme
-                  .headline
+                  .title
                   .copyWith(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             Divider(),
             Expanded(
