@@ -2,17 +2,21 @@
 *   Filename    :   branch_locations_screen.dart
 *   Purpose     :
 *   Created     :   19/09/2019 5:34 PM by Detective Conan
-*	 Updated			:   20/09/2019 9:03 AM PM by Detective Conan
-*	 Changes			:   Centered the location
+*	 Updated			:   20/09/2019 10:17 AM PM by Detective Conan
+*	 Changes			:   Handled the routing of selected branch
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_locations_bloc/branch_locations_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/screens/branch_selection_page.dart';
+import 'package:mt_carmel_app/src/screens/home_screen.dart';
 
 class BranchLocationsScreen extends StatelessWidget {
   @override
@@ -45,7 +49,7 @@ class BranchLocationsScreen extends StatelessWidget {
                     try {
                       return InkWell(
                         onTap: () async {
-                          Navigator.push(
+                          final result = await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) {
@@ -58,6 +62,10 @@ class BranchLocationsScreen extends StatelessWidget {
                               },
                             ),
                           );
+
+                          if (result.runtimeType == String) {
+                            _navigateToHome(context, result);
+                          }
                         },
                         child: Card(
                           child: Container(
@@ -87,6 +95,24 @@ class BranchLocationsScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _navigateToHome(context, branchId) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return MultiBlocProvider(providers: [
+            BlocProvider<BranchBloc>(
+              builder: (context) => BranchBloc()..dispatch(GetBranch(branchId)),
+            ),
+            BlocProvider<TabBloc>(
+              builder: (context) => TabBloc(),
+            )
+          ], child: HomeScreen());
+        },
       ),
     );
   }
