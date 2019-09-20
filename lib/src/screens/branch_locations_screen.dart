@@ -2,8 +2,8 @@
 *   Filename    :   branch_locations_screen.dart
 *   Purpose     :
 *   Created     :   19/09/2019 5:34 PM by Detective Conan
-*   Updated     :   19/09/2019 5:34 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   20/09/2019 9:03 AM PM by Detective Conan
+*	 Changes			:   Centered the location
 */
 
 import 'package:flutter/material.dart';
@@ -61,6 +61,7 @@ class BranchLocationsScreen extends StatelessWidget {
                         },
                         child: Card(
                           child: Container(
+                            alignment: Alignment.center,
                             height: 80.0,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),

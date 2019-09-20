@@ -2,8 +2,9 @@
 *   Filename    :   branch_selection_screen.dart
 *   Purpose     :
 *   Created     :   09/09/2019 11:08 AM by Detective Conan
-*	 Updated			:   19/09/2019 9:41 AM PM by Detective Conan
-*	 Changes			:   Each branch text changed to listTile*/
+*	 Updated			:   20/09/2019 9:03 AM PM by Detective Conan
+*	 Changes			:   Centered the branch name. Added Church order name.
+* */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +49,6 @@ class BranchSelectionScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 child: ListView.builder(
-//                  separatorBuilder: (context, index) => Divider(),
                   shrinkWrap: true,
                   itemCount: branchSelection?.length,
                   itemBuilder: (context, index) {
@@ -78,16 +78,26 @@ class BranchSelectionScreen extends StatelessWidget {
                         },
                         child: Card(
                           child: Container(
-                            height: 80.0,
+                            alignment: Alignment.center,
+                            height: 100.0,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "${branchSelection[index].name}",
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .title
-                                    .copyWith(fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
+                              child: ListTile(
+                                title: Text(
+                                  "${branchSelection[index].name}",
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .subhead
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                                subtitle: Text(
+                                  "(${branchSelection[index].churchOrderName})",
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .subhead,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                           ),
