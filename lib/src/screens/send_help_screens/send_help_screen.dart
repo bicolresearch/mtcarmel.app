@@ -2,8 +2,8 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*	 Updated			:   20/09/2019 3:25 PM PM by Detective Conan
-*	 Changes			:   Changed the duration of cache to 7 days
+*	 Updated			:   23/09/2019 2:35 PM PM by Detective Conan
+*	 Changes			:   Added removal of current snackbar before creation of new snackbar
 */
 
 import 'package:flutter/material.dart';
@@ -147,6 +147,7 @@ class SendHelpScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 10.0),
                     child: RaisedButton(
                       onPressed: () async => {
+                        _scaffoldKey.currentState.removeCurrentSnackBar(),
                         _scaffoldKey.currentState.showSnackBar(
                           SnackBar(
                             content: Text(
