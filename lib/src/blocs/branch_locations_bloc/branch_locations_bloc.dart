@@ -7,14 +7,12 @@
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
 import 'package:mt_carmel_app/src/blocs/branch_locations_bloc/branch_locations_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_locations_bloc/branch_locations_state.dart';
 import 'package:mt_carmel_app/src/core/services/branch_locations_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
-import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:mt_carmel_app/src/models/branch_location.dart';
 
 class BranchLocationsBloc
@@ -41,7 +39,12 @@ class BranchLocationsBloc
           _branchLocations = await locator<BranchLocationsService>().getData();
         } catch (e) {
           print(e);
+          if (e.toString().contains("No connection")) {
+            yield BranchLocationsNoConnection();
+            return;
+          }
           yield BranchLocationsError(Exception(e));
+          return;
         }
 
         if (_branchLocations != null) {

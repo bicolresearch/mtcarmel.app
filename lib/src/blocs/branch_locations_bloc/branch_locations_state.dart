@@ -51,3 +51,10 @@ class BranchSelected extends BranchLocationsState {
   @override
   String toString() => 'BranchSelected';
 }
+
+
+class BranchLocationsNoConnection extends BranchLocationsState {
+
+  @override
+  String toString() => 'BranchLocationsNoConnection';
+}
