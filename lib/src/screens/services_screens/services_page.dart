@@ -12,7 +12,7 @@ import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_event.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_state.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/services_screen.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
+
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class ServicesPage extends StatelessWidget {

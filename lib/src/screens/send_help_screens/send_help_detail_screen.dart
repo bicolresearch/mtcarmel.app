@@ -6,13 +6,10 @@
 *  Changes     :   Made the detail box rounded. Adjusted the position of the detail box.
 */
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
-import 'package:mt_carmel_app/src/utils/payment_screen.dart';
-import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class SendHelpDetails extends StatefulWidget {
   SendHelpDetails(this.sendHelpData);

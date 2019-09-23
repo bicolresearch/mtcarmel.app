@@ -6,23 +6,16 @@
 *	 Changes			:   Changed the title to current branch view
 **/
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/models/data_priest.dart';
 import 'package:mt_carmel_app/src/models/priest.dart';
-import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
-import 'dart:async';
-import 'dart:convert';
 
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class PriestsScreen extends StatelessWidget {
   @override

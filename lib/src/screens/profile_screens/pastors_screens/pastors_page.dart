@@ -11,11 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_state.dart';
-import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_state.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_screen.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 

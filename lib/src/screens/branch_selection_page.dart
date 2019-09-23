@@ -12,7 +12,7 @@ import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_b
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_selection_bloc/branch_selection_state.dart';
 import 'package:mt_carmel_app/src/screens/branch_selection_screen.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
+
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 

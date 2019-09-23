@@ -12,7 +12,7 @@ import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_event.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_state.dart';
 import 'package:mt_carmel_app/src/screens/send_help_screens/send_help_screen.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
+
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class SendHelpPage extends StatelessWidget {

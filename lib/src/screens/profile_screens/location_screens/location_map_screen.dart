@@ -13,12 +13,6 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/core/services/branch_service.dart';
-import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'dart:convert';
-
-import 'package:mt_carmel_app/src/models/location_map.dart';
 
 class LocationMapScreen extends StatefulWidget {
   @override

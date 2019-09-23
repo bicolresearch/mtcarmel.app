@@ -8,17 +8,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
+
 import 'package:mt_carmel_app/src/constants/regular_schedule_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/schedule.dart';
-import 'package:mt_carmel_app/src/utils/schedule_type.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
 
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/line.dart';
 
 class ChurchRegularScheduleScreen extends StatelessWidget {

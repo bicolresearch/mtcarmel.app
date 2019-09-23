@@ -9,20 +9,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/models/data_pastor.dart';
-import 'package:mt_carmel_app/src/models/data_priest.dart';
 import 'package:mt_carmel_app/src/models/pastor.dart';
-import 'package:http/http.dart' as http;
-import 'package:mt_carmel_app/src/models/priest.dart';
-import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
-import 'package:mt_carmel_app/src/widgets/failed_message.dart';
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class PastorsScreen extends StatelessWidget {
   @override
