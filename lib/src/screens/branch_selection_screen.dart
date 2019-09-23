@@ -2,9 +2,8 @@
 *   Filename    :   branch_selection_screen.dart
 *   Purpose     :
 *   Created     :   09/09/2019 11:08 AM by Detective Conan
-*	 Updated			:   20/09/2019 4:52 PM PM by Detective Conan
-*	 Changes			:   Changed the font and alignment of title.
-
+*	 Updated			:   23/09/2019 4:29 PM PM by Detective Conan
+*	 Changes			:   Added location name
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,14 +31,17 @@ class BranchSelectionScreen extends StatelessWidget {
               height: 30.0,
             ),
             Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 60),
-            Text(
-              "${AppConstants.CARMELITE_MONASTERY} branches",
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .title
-                  .copyWith(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
+            (branchSelection.isNotEmpty)
+                ? Text(
+                    "${AppConstants.CARMELITE_MONASTERY} branches for\n${branchSelection[0].locationName}",
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .title
+                        .copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                  )
+                : Container(),
             Divider(),
             Expanded(
               child: Container(
