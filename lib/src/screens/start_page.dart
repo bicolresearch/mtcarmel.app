@@ -2,8 +2,8 @@
 *   Filename    :   start_page.dart
 *   Purpose     :
 *   Created     :   17/09/2019 9:37 AM by Detective Conan
-*	 Updated			:   19/09/2019 6:04 PM PM by Detective Conan
-*	 Changes			:   Navigate to BranchLocationsScreen instead of BranchSelectionScreen
+*	 Updated			:   23/09/2019 10:29 AM PM by Detective Conan
+*	 Changes			:   Added messages for no connectivity, error and no locations loaded
 */
 
 import 'package:flutter/material.dart';
@@ -17,7 +17,6 @@ import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 import 'package:mt_carmel_app/src/screens/branch_locations_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/home_screen.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class StartPage extends StatelessWidget {
@@ -36,7 +35,75 @@ class StartPage extends StatelessWidget {
         }
         if (state is BranchLocationsError) {
           return Scaffold(
-              body: ErrorMessage.errMsg(errorMessage: "Something went wrong!"));
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("Something went wrong")),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "Retry",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<BranchLocationsBloc>(context)
+                        .dispatch(FetchBranchLocations());
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+        if (state is NoBranchLocationsLoaded) {
+          return Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("No branch location locaded")),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "Retry",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<BranchLocationsBloc>(context)
+                        .dispatch(FetchBranchLocations());
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+        if (state is BranchLocationsNoConnection) {
+          return Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("No Connection")),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "Retry",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<BranchLocationsBloc>(context)
+                        .dispatch(FetchBranchLocations());
+                  },
+                ),
+              ],
+            ),
+          );
         }
         if (state is BranchSelected) {
           final branchId = state.branch.id;

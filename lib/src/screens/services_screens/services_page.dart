@@ -2,8 +2,8 @@
 *   Filename    :   services_page.dart
 *   Purpose     :
 *   Created     :   11/09/2019 10:02 AM by Detective Conan
-*   Updated     :   11/09/2019 10:02 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   23/09/2019 10:23 AM PM by Detective Conan
+*	 Changes			:   Added message for no connectivity
 */
 
 import 'package:flutter/material.dart';
@@ -58,6 +58,30 @@ class ServicesPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Center(child: Text("No services")),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "Retry",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<ServicesBloc>(context)
+                        .dispatch(FetchServices());
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+        if (state is ServicesNoConnection) {
+          return Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("No connection")),
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),

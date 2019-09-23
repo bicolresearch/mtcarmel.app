@@ -44,3 +44,9 @@ class NoServicesLoad extends ServicesState {
   @override
   String toString() => 'NoServicesLoad';
 }
+
+class ServicesNoConnection extends ServicesState {
+
+  @override
+  String toString() => 'ServicesNoConnection';
+}
