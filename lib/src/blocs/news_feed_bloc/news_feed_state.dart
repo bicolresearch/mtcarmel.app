@@ -65,3 +65,9 @@ class FeedRefreshError extends NewsFeedState {
   @override
   String toString() => 'FeedRefreshError';
 }
+
+class FeedNoConnection extends NewsFeedState {
+
+  @override
+  String toString() => 'FeedNoConnection';
+}

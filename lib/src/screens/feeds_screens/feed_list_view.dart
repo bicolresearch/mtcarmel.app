@@ -2,8 +2,8 @@
 *   Filename    :   feed_list_view.dart
 *   Purpose     :
 *   Created     :   05/09/2019 10:58 AM by Detective Conan
-*	 Updated			:   20/09/2019 3:19 PM PM by Detective Conan
-*	 Changes			:   Changed the image cache to advance image cache
+*	 Updated			:   23/09/2019 10:43 AM PM by Detective Conan
+*	 Changes			:   Added message for no connectivity
 */
 
 import 'package:flutter/material.dart';
@@ -36,10 +36,7 @@ class _FeedListViewState extends State<FeedListView> {
     return Scaffold(
       body: BlocBuilder<NewsFeedBloc, NewsFeedState>(
         builder: (context, state) {
-          if (state is FeedUninitialized) {
-            return LoadingIndicator();
-          }
-          if (state is FeedLoading) {
+          if (state is FeedUninitialized || state is FeedLoading) {
             return LoadingIndicator();
           } else if (state is FeedLoaded) {
             final feed = state.feed;
@@ -82,6 +79,30 @@ class _FeedListViewState extends State<FeedListView> {
                     color: Colors.brown,
                     child: Text(
                       "Reload",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<NewsFeedBloc>(context)
+                          .dispatch(FetchFeed());
+                    },
+                  ),
+                ],
+              ),
+            );
+          } else if (state is FeedNoConnection) {
+            print("No connection!");
+            return Scaffold(
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(child: Text("No posts at the moment.")),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Retry",
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
