@@ -150,7 +150,7 @@ class SendHelpScreen extends StatelessWidget {
                         _scaffoldKey.currentState.showSnackBar(
                           SnackBar(
                             content: Text(
-                              'This feature is not yet available',
+                              'Online donations are not yet available.',
                               textAlign: TextAlign.center,
                             ),
                             duration: Duration(seconds: 3),

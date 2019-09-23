@@ -12,6 +12,7 @@ import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_state.dart'
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/live_stream.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -38,6 +39,13 @@ class LiveStreamBloc extends Bloc<LiveStreamEvent, LiveStreamState> {
   }
 
   Future<LiveStream> _fetchData() async {
+
+
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    if(!hasConnection)
+      throw Exception("No connection");
+
     LiveStream _liveStream;
     final branchId = await locator<BranchService>().branch.id;
     await http

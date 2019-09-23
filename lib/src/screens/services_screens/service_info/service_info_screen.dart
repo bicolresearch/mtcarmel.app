@@ -142,7 +142,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                                 _scaffoldKey.currentState.showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      'This feature is not yet available',
+                                      'Online applications are not yet available.',
                                       textAlign: TextAlign.center,
                                     ),
                                     duration: Duration(seconds: 3),

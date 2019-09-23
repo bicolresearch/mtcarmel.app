@@ -2,8 +2,8 @@
 *   Filename    :   branch_locations_bloc.dart
 *   Purpose     :
 *   Created     :   19/09/2019 5:19 PM by Detective Conan
-*   Updated     :   19/09/2019 5:19 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   23/09/2019 12:50 PM PM by Detective Conan
+*	 Changes			:   Added message when selected branch and no connection
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
@@ -34,7 +34,7 @@ class BranchLocationsBloc
         branchId = value;
       }).catchError((e) => print("BranchSelectionBloc.mapEventToState: $e"));
 
-      if(branchId == null || branchId.isEmpty) {
+      if (branchId == null || branchId.isEmpty) {
         try {
           _branchLocations = await locator<BranchLocationsService>().getData();
         } catch (e) {
@@ -53,12 +53,16 @@ class BranchLocationsBloc
           else
             yield NoBranchLocationsLoaded();
         }
-      }else{
+      } else {
         try {
           final branch = await locator<BranchService>().getBranch(branchId);
           yield BranchSelected(branch);
         } catch (e) {
           print(e);
+          if (e.toString().contains("No connection")) {
+            yield BranchLocationsNoConnection();
+            return;
+          }
           yield BranchLocationsError(
               Exception("Error in fetching branch by id."));
         }
