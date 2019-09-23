@@ -11,15 +11,12 @@ import 'package:connectivity/connectivity.dart';
 class ConnectivityChecker {
   static Future<bool> hasDataConnection() async {
     bool connected = false;
-    await (Connectivity().checkConnectivity())
-        .timeout(Duration(seconds: 10))
-        .then((onValue) {
-      print(onValue.toString());
-      if (onValue == ConnectivityResult.mobile ||
-          onValue == ConnectivityResult.wifi) {
-        connected = true;
-      }
-    });
+    final connectivity = await (Connectivity().checkConnectivity())
+        .timeout(Duration(seconds: 10));
+    if (connectivity == ConnectivityResult.mobile ||
+        connectivity == ConnectivityResult.wifi) {
+      connected = true;
+    }
     return connected;
   }
 }

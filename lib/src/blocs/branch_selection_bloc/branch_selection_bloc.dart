@@ -2,8 +2,8 @@
 *   Filename    :   branch_selection_bloc.dart
 *   Purpose     :
 *   Created     :   08/09/2019 12:56 AM by Detective Conan
-*	 Updated			:   17/09/2019 1:06 PM PM by Detective Conan
-*	 Changes			:   Cleaned up.
+*	 Updated			:   23/09/2019 9:32 AM PM by Detective Conan
+*	 Changes			:   Added connection checker
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
@@ -37,20 +37,24 @@ class BranchSelectionBloc
   @override
   Stream<BranchSelectionState> mapEventToState(
       BranchSelectionEvent event) async* {
-    if (event is BranchSelectionFetchByLocationId) {
+    if (event is BranchSelectionFetchByLocation) {
       yield BranchSelectionLoading();
       try {
         _branchSelection = await locator<BranchListService>()
             .getLocations(event.branchLocation.id)
-            .timeout(Duration(seconds: 5));
+            .timeout(Duration(seconds: 10));
         if (_branchSelection.isNotEmpty)
           yield BranchSelectionLoaded();
         else
           yield BranchSelectionNoBranchFetched(event.branchLocation);
       } catch (e) {
         print(e);
+        if (e.toString().contains("No connection")) {
+          yield BranchSelectionNoConnection(event.branchLocation);
+          return;
+        }
         yield BranchSelectionError(
-            Exception("Error in fetching the list of branches."));
+            Exception("Error in fetching the list of branches."), event.branchLocation);
       }
     }
 

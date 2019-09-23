@@ -2,19 +2,26 @@
 *   Filename    :   church_modules_service.dart
 *   Purpose     :
 *   Created     :   11/09/2019 1:02 PM by Detective Conan
-*   Updated     :   11/09/2019 1:02 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   23/09/2019 9:26 AM PM by Detective Conan
+*	 Changes			:   Added connectivity check
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ChurchModuleService {
   Future<ChurchModule> getChurchModule(ModuleReference moduleReference) async {
+
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    if(!hasConnection)
+      throw Exception('ChurchModuleService.getChurchModule: No connection');
+
     var churchSubModules;
     try {
       churchSubModules = await _getSubModules(moduleReference);

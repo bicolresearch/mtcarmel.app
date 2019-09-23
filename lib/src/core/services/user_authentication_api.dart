@@ -2,8 +2,8 @@
 *  Filename    :   user_authentication_api.dart
 *  Purpose     :	 validates user authentication
 *  Created     :   2019-07-11 12:13 by Detective Conan
-*  Updated     :   2019-07-11 12:23 by Detective conan
-*  Changes     :   Removed responsibility for checking the login status
+*	 Updated			:   23/09/2019 9:24 AM PM by Detective Conan
+*	 Changes			:   Added connectivity check
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';

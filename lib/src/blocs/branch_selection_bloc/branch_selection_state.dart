@@ -31,8 +31,10 @@ class BranchSelectionLoaded extends BranchSelectionState {
 
 class BranchSelectionError extends BranchSelectionState {
   final Exception exception;
+  final BranchLocation branchLocation;
 
-  BranchSelectionError(this.exception) : super([exception]);
+  BranchSelectionError(this.exception, this.branchLocation)
+      : super([exception, branchLocation]);
 
   @override
   String toString() => 'BranchSelectionError';
@@ -69,4 +71,13 @@ class SelectedBranchNotLoaded extends BranchSelectionState {
 
   @override
   String toString() => 'SelectedBranchNotLoaded';
+}
+
+class BranchSelectionNoConnection extends BranchSelectionState {
+  final BranchLocation branchLocation;
+
+  BranchSelectionNoConnection(this.branchLocation) : super([branchLocation]);
+
+  @override
+  String toString() => 'BranchSelectionNoConnection';
 }

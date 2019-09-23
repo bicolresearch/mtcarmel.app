@@ -2,8 +2,8 @@
 *   Filename    :   location_map_service.dart
 *   Purpose     :
 *   Created     :   17/09/2019 6:10 PM by Detective Conan
-*   Updated     :   17/09/2019 6:10 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   23/09/2019 9:26 AM PM by Detective Conan
+*	 Changes			:   Added connectivity check
 */
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,6 +11,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/location_map.dart';
@@ -25,6 +26,12 @@ class LocationMapService {
   LatLng get centerLocation => _centerLocation;
 
   Future<void> getMapData() async {
+
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    if(!hasConnection)
+      throw Exception('LocationMapService.getMapData: No connection');
+
     final branchId = await locator<BranchService>().branch.id;
     print("${AppConstants.MAP_JSON_URL}?branch_id=$branchId}");
     var response;

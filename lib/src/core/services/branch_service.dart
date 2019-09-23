@@ -2,11 +2,12 @@
 *   Filename    :   branch_service.dart
 *   Purpose     :
 *   Created     :   09/09/2019 9:36 AM by Detective Conan
-*   Updated     :   09/09/2019 9:36 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   23/09/2019 9:26 AM PM by Detective Conan
+*	 Changes			:   Added connectivity check
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -19,6 +20,11 @@ class BranchService {
   void clearBranch() => _branch = null;
 
   Future<Branch> getBranch(String branchId) async {
+
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    if(!hasConnection)
+      throw Exception('BranchService.getBranch: No connection');
 
     if(_branch != null)
       return _branch;

@@ -15,10 +15,10 @@ abstract class BranchSelectionEvent extends Equatable {
   BranchSelectionEvent([List props = const []]) : super(props);
 }
 
-class BranchSelectionFetchByLocationId extends BranchSelectionEvent {
+class BranchSelectionFetchByLocation extends BranchSelectionEvent {
   final BranchLocation branchLocation;
 
-  BranchSelectionFetchByLocationId(this.branchLocation) : super([branchLocation]);
+  BranchSelectionFetchByLocation(this.branchLocation) : super([branchLocation]);
 
   @override
   String toString() => 'BranchSelectionFetch';

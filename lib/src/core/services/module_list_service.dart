@@ -2,14 +2,15 @@
 *  Filename    :   module_list_service.dart
 *  Purpose     :	
 *  Created     :   2019-08-16 14:44 by Detective Conan
-*	 Updated			:   10/09/2019 11:20 AM PM by Detective Conan
-*	 Changes			:   Added branch id retrieval
+*	 Updated			:   23/09/2019 9:26 AM PM by Detective Conan
+*	 Changes			:   Added connectivity check
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/church_module.dart';
@@ -19,6 +20,12 @@ class ModuleListService {
 
 
   Future<void> getJsonData() async {
+
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    if(!hasConnection)
+      throw Exception('ModuleListService.getJsonData: No connection');
+
     final branchId = locator<BranchService>().branch.id;
     print("${AppConstants.SERVICES_JSON_URL}?branch_id=$branchId");
     var response = await http
