@@ -47,4 +47,8 @@ class NoLocationMapLoaded extends LocationMapState {
   String toString() => 'No LocationMap Loaded';
 }
 
-//TODO: Add states
+class LocationMapNoConnection extends LocationMapState {
+
+  @override
+  String toString() => 'LocationMapNoConnection';
+}

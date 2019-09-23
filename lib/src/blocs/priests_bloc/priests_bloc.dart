@@ -35,6 +35,10 @@ class PriestsBloc extends Bloc<PriestsEvent, PriestsState> {
         }
       } catch (e) {
         print(e);
+        if (e.toString().contains("No connection")) {
+          yield PriestsNoConnection();
+          return;
+        }
         yield PriestsError(e);
       }
     }

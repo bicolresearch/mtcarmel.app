@@ -9,12 +9,19 @@
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/about.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AboutService {
   Future<About> getData() async {
+
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    if(!hasConnection)
+      throw Exception('ModuleListService.getData: No connection');
+
     final branchId = await locator<BranchService>().branch.id;
     About _about;
     var response = await http.get(

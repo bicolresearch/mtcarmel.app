@@ -34,6 +34,10 @@ class LocationMapBloc extends Bloc<LocationMapEvent, LocationMapState> {
         yield LocationMapLoaded();
       } catch (e) {
         print(e);
+        if (e.toString().contains("No connection")) {
+          yield LocationMapNoConnection();
+          return;
+        }
         yield LocationMapError(
             Exception("Erron in loading map location and boundaries."));
       }

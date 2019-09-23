@@ -80,6 +80,32 @@ class AboutPage extends StatelessWidget {
                     ),
                   );
                 }
+                if (state is AboutNoConnection) {
+                  return Scaffold(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(
+                            child:
+                            Text("No connection.")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Retry",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<AboutBloc>(context)
+                                .dispatch(FetchAbout());
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
                 return Container();
               },
             ),

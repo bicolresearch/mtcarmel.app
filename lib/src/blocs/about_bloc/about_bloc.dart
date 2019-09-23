@@ -31,6 +31,10 @@ class AboutBloc extends Bloc<AboutEvent, AboutState> {
         yield AboutLoaded();
       } catch (e) {
         print(e);
+        if (e.toString().contains("No connection")) {
+          yield AboutNoConnection();
+          return;
+        }
         yield AboutError(e);
       }
     }

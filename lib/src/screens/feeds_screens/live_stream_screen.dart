@@ -63,12 +63,16 @@ class LiveStreamScreen extends StatelessWidget {
                               .dispatch(FetchLiveStream());
                         },
                       ),
+                      Container(
+                        padding: EdgeInsets.only(bottom: 20.0),
+                        child: leftArrowBackButton(context: context),
+                      ),
                     ],
                   ),
                 );
               }
               if (state is LiveStreamNoConnection) {
-                Scaffold(
+                return Scaffold(
                   body: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,16 +91,16 @@ class LiveStreamScreen extends StatelessWidget {
                               .dispatch(FetchLiveStream());
                         },
                       ),
+                      Container(
+                        padding: EdgeInsets.only(bottom: 20.0),
+                        child: leftArrowBackButton(context: context),
+                      ),
                     ],
                   ),
                 );
               }
               return Container();
             }),
-          ),
-          Container(
-            padding: EdgeInsets.only(bottom: 20.0),
-            child: leftArrowBackButton(context: context),
           ),
         ],
       ),

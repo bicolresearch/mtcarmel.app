@@ -56,9 +56,8 @@ class BranchLocationsScreen extends StatelessWidget {
                               builder: (context) {
                                 return BlocProvider<BranchSelectionBloc>(
                                     builder: (context) => BranchSelectionBloc()
-                                      ..dispatch(
-                                          BranchSelectionFetchByLocation(
-                                              branchLocations[index])),
+                                      ..dispatch(BranchSelectionFetchByLocation(
+                                          branchLocations[index])),
                                     child: BranchSelectionPage());
                               },
                             ),

@@ -47,4 +47,8 @@ class NoAboutLoaded extends AboutState {
   String toString() => 'No About Loaded';
 }
 
-//TODO: Add states
+class AboutNoConnection extends AboutState {
+
+  @override
+  String toString() => 'AboutNoConnection';
+}

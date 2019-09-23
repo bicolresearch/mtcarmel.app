@@ -45,6 +45,12 @@ class ModuleListService {
   List<ModuleReference> get moduleReferences => _moduleReferences;
 
   Future<List<ModuleReference>> getData() async {
+
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    if(!hasConnection)
+      throw Exception('ModuleListService.getData: No connection');
+
     final branchId = await locator<BranchService>().branch.id;
     var response;
 

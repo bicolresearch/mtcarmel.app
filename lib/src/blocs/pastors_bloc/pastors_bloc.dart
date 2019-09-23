@@ -34,7 +34,12 @@ class PastorsBloc extends Bloc<PastorsEvent, PastorsState> {
           yield PastorsLoaded();
       } catch (e) {
         print(e);
-        PastorsError(Exception("Error in loading pastors."));
+        if (e.toString().contains("No connection")) {
+          yield PastorsNoConnection();
+          return;
+        }
+        yield PastorsError(Exception("Error in loading pastors."));
+        return;
       }
     }
   }

@@ -33,7 +33,7 @@ class SubServicesScreen extends StatelessWidget {
                   return SubServicesList();
                 }
                 if (state is NoSubServicesLoaded) {
-                  Scaffold(
+                  return Scaffold(
                     body: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +81,7 @@ class SubServicesScreen extends StatelessWidget {
                   );
                 }
                 if (state is SubServicesNoConnection) {
-                  Scaffold(
+                  return Scaffold(
                     body: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

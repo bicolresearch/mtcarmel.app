@@ -96,7 +96,7 @@ class _FeedListViewState extends State<FeedListView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Center(child: Text("No posts at the moment.")),
+                  Center(child: Text("No connection.")),
                   RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0)),

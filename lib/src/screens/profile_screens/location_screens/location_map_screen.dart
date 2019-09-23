@@ -2,8 +2,8 @@
 *   Filename    :   location_map_screen.dart
 *   Purpose     :
 *   Created     :   18/09/2019 9:11 AM by Detective Conan
-*   Updated     :   18/09/2019 9:11 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   23/09/2019 1:48 PM PM by Detective Conan
+*	 Changes			:   Moved the floating action button to the locationMappage
 */
 
 import 'package:flutter/material.dart';
@@ -60,21 +60,6 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
     _initialPosition = CameraPosition(zoom: 14.0, target: _location);
     _setPolygon(context);
     return Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: FloatingActionButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.keyboard_arrow_left,
-              size: 40.0,
-              color: Colors.brown,
-            ),
-            backgroundColor: Colors.white,
-          ),
-        ),
         body: Stack(
           children: <Widget>[
             GoogleMap(

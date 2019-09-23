@@ -28,6 +28,9 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
       bool isResetBranch = await SharedPreferencesHelper.getResetBranch();
       if (isResetBranch) _postIds.clear();
       try {
+
+
+
         if (_postIds.isEmpty) yield FeedLoading();
         final feed = await locator<NewsFeedService>().getFeed();
         if (feed != null) {

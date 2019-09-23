@@ -27,7 +27,7 @@ class TransparencyPage extends StatelessWidget {
           return TransparencyScreen();
         }
         if (state is TransparencyError) {
-          ErrorMessage.errMsg(errorMessage: "Something went wrong!");
+          return ErrorMessage.errMsg(errorMessage: "Something went wrong!");
         }
         return Container();
       },

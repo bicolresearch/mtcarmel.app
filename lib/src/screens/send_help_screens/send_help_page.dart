@@ -25,7 +25,7 @@ class SendHelpPage extends StatelessWidget {
           return SendHelpScreen();
         }
         if (state is NoSendHelpLoaded) {
-          Scaffold(
+         return Scaffold(
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,7 +73,7 @@ class SendHelpPage extends StatelessWidget {
           );
         }
         if (state is SendHelpNoConnection) {
-          Scaffold(
+          return  Scaffold(
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
