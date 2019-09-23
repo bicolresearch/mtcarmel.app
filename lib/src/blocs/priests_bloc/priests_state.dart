@@ -14,25 +14,21 @@ abstract class PriestsState extends Equatable {
 }
 
 class PriestsUninitialized extends PriestsState {
-
   @override
   String toString() => 'PriestsUninitialized';
 }
 
 class PriestsLoading extends PriestsState {
-
   @override
   String toString() => 'PriestsLoading';
 }
 
 class PriestsLoaded extends PriestsState {
-
   @override
   String toString() => 'PriestsLoaded';
 }
 
 class PriestsError extends PriestsState {
-
   final exception;
 
   PriestsError(this.exception) : super([exception]);
@@ -42,9 +38,11 @@ class PriestsError extends PriestsState {
 }
 
 class NoPriestsLoaded extends PriestsState {
-
   @override
   String toString() => 'NoPriestsLoaded';
 }
 
-
+class PriestsNoConnection extends PriestsState {
+  @override
+  String toString() => 'PriestsNoConnection';
+}

@@ -2,8 +2,8 @@
 *   Filename    :   priests_page.dart
 *   Purpose     :
 *   Created     :   17/09/2019 3:21 PM by Detective Conan
-*	 Updated			:   19/09/2019 10:27 AM PM by Detective Conan
-*	 Changes			:   Added retry and reload buttons
+*	 Updated			:   23/09/2019 10:19 AM PM by Detective Conan
+*	 Changes			:   Added message for no connectivity
 */
 
 import 'package:flutter/material.dart';
@@ -61,6 +61,30 @@ class PriestsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Center(child: Text("No priests listed.")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Reload",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<PriestsBloc>(context)
+                                .dispatch(FetchPriests());
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                if (state is PriestsNoConnection) {
+                  return Scaffold(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("No connection!")),
                         RaisedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0)),
