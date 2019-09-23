@@ -45,3 +45,9 @@ class NoSendHelpLoaded extends SendHelpState {
   String toString() => 'NoSendHelpLoaded';
 }
 
+class SendHelpNoConnection extends SendHelpState {
+
+  @override
+  String toString() => 'SendHelpNoConnection';
+}
+

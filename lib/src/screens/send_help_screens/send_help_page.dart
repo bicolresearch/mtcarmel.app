@@ -2,8 +2,8 @@
 *   Filename    :   send_help_page.dart
 *   Purpose     :
 *   Created     :   12/09/2019 1:12 PM by Detective Conan
-*	 Updated			:   18/09/2019 1:36 PM PM by Detective Conan
-*	 Changes			:   Added retry and reload button when fetching data failure.
+*	 Updated			:   23/09/2019 10:22 AM PM by Detective Conan
+*	 Changes			:   Added message for no connectivity
 */
 
 import 'package:flutter/material.dart';
@@ -55,6 +55,30 @@ class SendHelpPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Center(child: Text("Something went wrong!")),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "Retry",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<SendHelpBloc>(context)
+                        .dispatch(FetchSendHelp());
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+        if (state is SendHelpNoConnection) {
+          Scaffold(
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("No connectio!")),
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
