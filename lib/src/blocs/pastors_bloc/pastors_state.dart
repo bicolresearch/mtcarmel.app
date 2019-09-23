@@ -47,4 +47,8 @@ class NoPastorsLoaded extends PastorsState {
   String toString() => 'No Pastors Loaded';
 }
 
-//TODO: Add states
+class PastorsNoConnection extends PastorsState {
+
+  @override
+  String toString() => 'PastorsNoConnection';
+}
