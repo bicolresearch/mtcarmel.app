@@ -47,4 +47,8 @@ class NoContactDetailLoaded extends ContactDetailState {
   String toString() => 'No ContactDetails Loaded';
 }
 
-//TODO: Add states
+class ContactDetailNoConnection extends ContactDetailState {
+
+  @override
+  String toString() => 'ContactDetailNoConnection';
+}

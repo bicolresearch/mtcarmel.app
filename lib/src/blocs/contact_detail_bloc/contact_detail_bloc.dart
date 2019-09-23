@@ -33,7 +33,12 @@ class ContactDetailBloc
         yield ContactDetailLoaded();
       } catch (e) {
         print(e);
+        if (e.toString().contains("No connection")) {
+          yield ContactDetailNoConnection();
+          return;
+        }
         yield ContactDetailError(e);
+        return;
       }
     }
   }
