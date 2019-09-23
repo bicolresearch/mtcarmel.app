@@ -2,8 +2,8 @@
 *   Filename    :   branch_bloc.dart
 *   Purpose     :
 *   Created     :   02/09/2019 12:52 PM by Detective Conan
-*	 Updated			:   17/09/2019 1:47 PM PM by Detective Conan
-*	 Changes			:   Added check if the bloc was reset.
+*	 Updated			:   23/09/2019 10:40 AM PM by Detective Conan
+*	 Changes			:   Added checking of no connectivity
 */
 
 import 'dart:async';
@@ -35,7 +35,11 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
           branch = await _fetchBranch(event.branchId);
         } catch (e) {
 //          if(!isResetBranch)
-          yield BranchError(Exception("$e"));
+          if (e.toString().contains("No connection")) {
+            yield BranchNoConnection(event.branchId);
+            return;
+          }
+          yield BranchError(Exception("$e"), event.branchId);
           return;
         }
 
@@ -44,7 +48,9 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
 //          await SharedPreferencesHelper.setResetBranch(false);
           yield BranchLoaded(branch);
         } else {
-          yield BranchError(Exception("Selected branch not loaded."));
+          yield BranchError(
+              Exception("Selected branch not loaded."), event.branchId);
+          return;
         }
       } else {
         yield BranchLoaded(_branch);
@@ -56,7 +62,7 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
     try {
       _branch = await locator<BranchService>()
           .getBranch(branchId)
-          .timeout(Duration(seconds: 3));
+          .timeout(Duration(seconds: 10));
       return _branch;
     } catch (e) {
       print(e);

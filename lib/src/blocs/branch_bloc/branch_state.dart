@@ -36,9 +36,19 @@ class BranchLoaded extends BranchState {
 
 class BranchError extends BranchState {
   final exception;
+  final String branchId;
 
-  BranchError(this.exception) : super([exception]);
+  BranchError(this.exception, this.branchId) : super([exception, branchId]);
 
   @override
   String toString() => 'BranchNotLoaded';
+}
+
+class BranchNoConnection extends BranchState {
+  final String branchId;
+
+  BranchNoConnection(this.branchId) : super([branchId]);
+
+  @override
+  String toString() => 'BranchNoConnection';
 }

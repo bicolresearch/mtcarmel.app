@@ -2,14 +2,14 @@
 *   Filename    :   home_screen.dart
 *   Purpose     :
 *   Created     :   02/09/2019 10:57 AM by Detective Conan
-*	 Updated			:   18/09/2019 1:00 PM PM by Detective Conan
-*	 Changes			:   Changed the border of the confirmation dialog rounded.
-*                   Removed the icon of exit confirmation.
+*	 Updated			:   23/09/2019 10:41 AM PM by Detective Conan
+*	 Changes			:   Added messages for no connectivity and error
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
@@ -17,7 +17,6 @@ import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -65,11 +64,53 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: LoadingIndicator(),
               ),
             );
-          } else if (state is BranchError)
+          } else if (state is BranchError) {
             return Scaffold(
-              body: ErrorMessage.errMsg(errorMessage: "Something went wrong!"),
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(child: Text("Something went wrong")),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Retry",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<BranchBloc>(context)
+                          .dispatch(GetBranch(state.branchId));
+                    },
+                  ),
+                ],
+              ),
             );
-          else
+          } else if (state is BranchNoConnection) {
+            return Scaffold(
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(child: Text("No connection!")),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Retry",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<BranchBloc>(context)
+                          .dispatch(GetBranch(state.branchId));
+                    },
+                  ),
+                ],
+              ),
+            );
+          } else
             print("Else");
           return Container();
         },
