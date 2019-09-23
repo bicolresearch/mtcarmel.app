@@ -34,6 +34,10 @@ class SendHelpBloc extends Bloc<SendHelpEvent, SendHelpState> {
         }
       } catch (e) {
         print(e);
+        if (e.toString().contains("No connection")) {
+          yield SendHelpNoConnection();
+          return;
+        }
         yield SendHelpError(e);
       }
     }

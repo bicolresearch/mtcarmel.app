@@ -2,16 +2,17 @@
 *   Filename    :   sub_services_screen.dart
 *   Purpose     :
 *   Created     :   11/09/2019 2:46 PM by Detective Conan
-*   Updated     :   11/09/2019 2:46 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   23/09/2019 11:26 AM PM by Detective Conan
+*	 Changes			:   Added messages for no connectivity and errors.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_event.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_state.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/sub_services_list.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
+
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
@@ -31,15 +32,86 @@ class SubServicesScreen extends StatelessWidget {
                 if (state is SubServicesLoaded) {
                   return SubServicesList();
                 }
-                if(state is SubServicesError){
-                  return ErrorMessage.errMsg(errorMessage: "Something Went wrong");
+                if (state is NoSubServicesLoaded) {
+                  Scaffold(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("No Sub services loaded.")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Reload",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<SubServicesBloc>(context).dispatch(
+                                FetchSubServices(state.moduleReference));
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                if (state is SubServicesError) {
+                  return Scaffold(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("Something went wrong!")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Retry",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<SubServicesBloc>(context).dispatch(
+                                FetchSubServices(state.moduleReference));
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                if (state is SubServicesNoConnection) {
+                  Scaffold(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("No connection!")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Retry",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<SubServicesBloc>(context).dispatch(
+                                FetchSubServices(state.moduleReference));
+                          },
+                        ),
+                      ],
+                    ),
+                  );
                 }
                 return Container();
               },
             ),
           ),
           leftArrowBackButton(context: context),
-          SizedBox(height: 20.0,)
+          SizedBox(
+            height: 20.0,
+          )
         ],
       ),
     );

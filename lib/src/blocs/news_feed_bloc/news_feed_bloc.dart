@@ -44,6 +44,10 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
         } else
           yield FeedErrorLoading();
       } catch (e) {
+        if (e.toString().contains("No connection")) {
+          yield FeedNoConnection();
+          return;
+        }
         yield FeedErrorLoading();
       }
     }

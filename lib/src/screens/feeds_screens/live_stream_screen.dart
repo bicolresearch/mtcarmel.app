@@ -2,13 +2,14 @@
 *   Filename    :   live_stream_screen.dart
 *   Purpose     :
 *   Created     :   10/09/2019 5:01 PM by Detective Conan
-*	 Updated			:   17/09/2019 5:58 PM PM by Detective Conan
-*	 Changes			:   Placed arrow back button for every state
+*	 Updated			:   23/09/2019 11:33 AM PM by Detective Conan
+*	 Changes			:   Added message for no connection.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_event.dart';
 import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_state.dart';
 import 'package:mt_carmel_app/src/models/live_stream.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
@@ -43,11 +44,59 @@ class LiveStreamScreen extends StatelessWidget {
                 return YoutubePlayerScreen(videoId: videoId);
               }
               if (state is LiveStreamError) {
-                return ErrorMessage.errMsg(
-                    errorMessage: "Something Went wrong");
+                return Scaffold(
+                  body: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Center(child: Text("Something went wrong!")),
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        color: Colors.brown,
+                        child: Text(
+                          "Retry",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<LiveStreamBloc>(context)
+                              .dispatch(FetchLiveStream());
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
+              if (state is LiveStreamNoConnection) {
+                Scaffold(
+                  body: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Center(child: Text("No connection!")),
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        color: Colors.brown,
+                        child: Text(
+                          "Retry",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<LiveStreamBloc>(context)
+                              .dispatch(FetchLiveStream());
+                        },
+                      ),
+                    ],
+                  ),
+                );
               }
               return Container();
             }),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 20.0),
+            child: leftArrowBackButton(context: context),
           ),
         ],
       ),

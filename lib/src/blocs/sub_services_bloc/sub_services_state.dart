@@ -15,31 +15,45 @@ abstract class SubServicesState extends Equatable {
 }
 
 class SubServicesUninitialized extends SubServicesState {
-
   @override
   String toString() => 'SubServicesUninitialized';
 }
 
 class SubServicesLoading extends SubServicesState {
-
   @override
   String toString() => 'SubServicesLoading';
 }
 
 class SubServicesLoaded extends SubServicesState {
-
   @override
   String toString() => 'SubServicesLoaded';
 }
 
 class SubServicesError extends SubServicesState {
-
   final exception;
+  final ModuleReference moduleReference;
 
-  SubServicesError(this.exception) : super([exception]);
+  SubServicesError(this.exception, this.moduleReference)
+      : super([exception, moduleReference]);
 
   @override
   String toString() => 'SubServicesError';
 }
 
-//TODO: Add states
+class NoSubServicesLoaded extends SubServicesState {
+  final ModuleReference moduleReference;
+
+  NoSubServicesLoaded(this.moduleReference) : super([moduleReference]);
+
+  @override
+  String toString() => 'NoSubServicesLoaded';
+}
+
+class SubServicesNoConnection extends SubServicesState {
+  final ModuleReference moduleReference;
+
+  SubServicesNoConnection(this.moduleReference) : super([moduleReference]);
+
+  @override
+  String toString() => 'SubServicesNoConnection';
+}

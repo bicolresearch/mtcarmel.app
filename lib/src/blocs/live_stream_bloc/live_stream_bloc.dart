@@ -28,6 +28,10 @@ class LiveStreamBloc extends Bloc<LiveStreamEvent, LiveStreamState> {
         final liveStream = await _fetchData();
         yield LiveStreamLoaded(liveStream);
       } catch (e) {
+        if (e.toString().contains("No connection")) {
+          yield LiveStreamNoConnection();
+          return;
+        }
         yield LiveStreamError(Exception("$e"));
       }
     }

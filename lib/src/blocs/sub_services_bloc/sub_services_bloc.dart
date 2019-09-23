@@ -30,12 +30,17 @@ class SubServicesBloc extends Bloc<SubServicesEvent, SubServicesState> {
       yield SubServicesLoading();
       try {
         _churchModule = await locator<ChurchModuleService>()
-                  .getChurchModule(event.moduleReference);
+            .getChurchModule(event.moduleReference);
         _moduleReference = event.moduleReference;
         yield SubServicesLoaded();
       } catch (e) {
         print(e);
-        yield SubServicesError(e);
+        if (e.toString().contains("No connection")) {
+          yield SubServicesNoConnection(event.moduleReference);
+          return;
+        }
+        yield SubServicesError(e, event.moduleReference);
+        return;
       }
     }
   }

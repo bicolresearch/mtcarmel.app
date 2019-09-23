@@ -45,3 +45,9 @@ class LiveStreamError extends LiveStreamState {
   String toString() => 'LiveStreamError';
 }
 
+class LiveStreamNoConnection extends LiveStreamState {
+
+  @override
+  String toString() => 'LiveStreamNoConnection';
+}
+

@@ -30,6 +30,10 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       try{
         _moduleReferences = await locator<ModuleListService>().getData();
       }catch(e){
+        if (e.toString().contains("No connection")) {
+          yield ServicesNoConnection();
+          return;
+        }
         yield ServicesError(Exception("e"));
         return;
       }

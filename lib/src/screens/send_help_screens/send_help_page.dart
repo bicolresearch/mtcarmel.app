@@ -78,7 +78,7 @@ class SendHelpPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Center(child: Text("No connectio!")),
+                Center(child: Text("No connection!")),
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),

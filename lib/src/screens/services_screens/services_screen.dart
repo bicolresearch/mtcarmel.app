@@ -2,8 +2,8 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*	 Updated			:   19/09/2019 1:12 PM PM by Detective Conan
-*	 Changes			:   Clicking of the service will now proceed to the next page*/
+*	 Updated			:   23/09/2019 11:28 AM PM by Detective Conan
+*	 Changes			:   Removed Snackbar*/
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,8 +26,6 @@ class ServicesScreen extends StatefulWidget {
 class _ServicesScreenState extends State<ServicesScreen> {
   ScrollController _scrollController;
   MoreArrowEnum _currentMoreArrow = MoreArrowEnum.None;
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<ModuleReference> _moduleReferences = [];
 
@@ -68,7 +66,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
       child: Stack(
         children: <Widget>[
           Scaffold(
-            key: _scaffoldKey,
             body: Column(
               children: <Widget>[
                 ServiceHeader(),
@@ -106,12 +103,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
               ],
             ),
           ),
-//          //TODO Removed when Services is ready
-//          Container(
-//            height: double.infinity,
-//            width: double.infinity,
-//            color: Color.fromRGBO(0, 0, 0, 0.7),
-//          ),
         ],
       ),
     );
@@ -120,42 +111,17 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget _moduleReferenceItem(context, final ModuleReference moduleReference) {
     return InkWell(
       onTap: () async {
-//        _scaffoldKey.currentState.showSnackBar(
-//          SnackBar(
-//            content: Text(
-//              'This feature is not yet available',
-//              textAlign: TextAlign.center,
-//            ),
-//            duration: Duration(seconds: 3),
-//          ),
-//        );
-        final result = await Navigator.push(
+        await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) {
               return BlocProvider<SubServicesBloc>(
                   builder: (context) => SubServicesBloc()
-                ..dispatch(
-                    FetchSubServices(moduleReference)),
-              child: SubServicesScreen());
-//                ModuleScreen(
-//                moduleReference: moduleReference,
-//              );
+                    ..dispatch(FetchSubServices(moduleReference)),
+                  child: SubServicesScreen());
             },
           ),
         );
-        if (result.runtimeType == String) {
-          final String val = result;
-          if (val.contains("No sub-services")) {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text(
-                '$val',
-                textAlign: TextAlign.center,
-              ),
-              duration: Duration(seconds: 3),
-            ));
-          }
-        }
       },
       child: ModuleReferenceTile(
           context: context, moduleReference: moduleReference),
