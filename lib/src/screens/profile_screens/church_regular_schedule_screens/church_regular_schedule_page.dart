@@ -2,8 +2,8 @@
 *   Filename    :   church_regular_schedule_page.dart
 *   Purpose     :
 *   Created     :   13/09/2019 2:00 PM by Detective Conan
-*   Updated     :   13/09/2019 2:00 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   23/09/2019 10:09 AM PM by Detective Conan
+*	 Changes			:   Added connectivity check.
 */
 
 import 'package:flutter/material.dart';
@@ -69,6 +69,30 @@ class ChurchRegularSchedulePage extends StatelessWidget {
                           color: Colors.brown,
                           child: Text(
                             "Reload",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<ChurchRegularScheduleBloc>(context)
+                                .dispatch(FetchChurchRegularSchedule());
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                if (state is ChurchRegularScheduleNoConnection) {
+                  return Scaffold(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Center(child: Text("NO connection!")),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.brown,
+                          child: Text(
+                            "Retry",
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {

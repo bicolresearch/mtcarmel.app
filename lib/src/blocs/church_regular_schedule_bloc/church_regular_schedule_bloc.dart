@@ -55,7 +55,12 @@ class ChurchRegularScheduleBloc
         yield ChurchRegularScheduleLoaded();
       } catch (e) {
         print(e);
+        if (e.toString().contains("No connection")) {
+          yield ChurchRegularScheduleNoConnection();
+          return;
+        }
         yield ChurchRegularScheduleError(e);
+        return;
       }
     }
   }

@@ -55,6 +55,7 @@ class BranchSelectionBloc
         }
         yield BranchSelectionError(
             Exception("Error in fetching the list of branches."), event.branchLocation);
+        return;
       }
     }
 

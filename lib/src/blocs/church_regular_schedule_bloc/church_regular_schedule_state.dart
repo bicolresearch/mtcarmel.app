@@ -44,3 +44,9 @@ class NoChurchRegularSchedule extends ChurchRegularScheduleState {
   @override
   String toString() => 'NoChurchRegularSchedule';
 }
+
+class ChurchRegularScheduleNoConnection extends ChurchRegularScheduleState {
+
+  @override
+  String toString() => 'ChurchRegularScheduleNoConnection';
+}
