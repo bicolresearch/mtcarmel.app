@@ -24,7 +24,8 @@ class PriestsBloc extends Bloc<PriestsEvent, PriestsState> {
   @override
   Stream<PriestsState> mapEventToState(PriestsEvent event) async* {
     if (event is FetchPriests) {
-      if (_priests.isEmpty) yield PriestsLoading();
+//      if (_priests.isEmpty)
+        yield PriestsLoading();
       try {
         _priests = await locator<PriestsService>().getData();
         if (_priests.isNotEmpty) {

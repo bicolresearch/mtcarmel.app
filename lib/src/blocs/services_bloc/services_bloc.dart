@@ -26,7 +26,8 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
   @override
   Stream<ServicesState> mapEventToState(ServicesEvent event) async* {
     if(event is FetchServices){
-      if(_moduleReferences.isEmpty)yield ServicesLoading();
+//      if(_moduleReferences.isEmpty)
+        yield ServicesLoading();
       try{
         _moduleReferences = await locator<ModuleListService>().getData();
       }catch(e){

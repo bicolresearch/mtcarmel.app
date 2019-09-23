@@ -24,7 +24,8 @@ class SendHelpBloc extends Bloc<SendHelpEvent, SendHelpState> {
   @override
   Stream<SendHelpState> mapEventToState(SendHelpEvent event) async* {
     if (event is FetchSendHelp) {
-      if (_sendHelpDataList.isEmpty) yield SendHelpLoading();
+//      if (_sendHelpDataList.isEmpty)
+        yield SendHelpLoading();
       try {
         _sendHelpDataList = await locator<SendHelpService>().getData();
         if (_sendHelpDataList.isNotEmpty) {

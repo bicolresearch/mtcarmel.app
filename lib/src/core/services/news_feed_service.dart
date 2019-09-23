@@ -17,7 +17,6 @@ import 'package:mt_carmel_app/src/models/feed.dart';
 
 class NewsFeedService {
   Future<Feed> getFeed() async {
-
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
     if(!hasConnection)
