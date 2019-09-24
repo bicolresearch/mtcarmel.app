@@ -2,8 +2,8 @@
 *   Filename    :   live_stream_screen.dart
 *   Purpose     :
 *   Created     :   10/09/2019 5:01 PM by Detective Conan
-*	 Updated			:   23/09/2019 11:33 AM PM by Detective Conan
-*	 Changes			:   Added message for no connection.
+*	 Updated			:   24/09/2019 1:41 PM PM by Detective Conan
+*	 Changes			:   Enhanced error messages.
 */
 
 import 'package:flutter/material.dart';
@@ -38,69 +38,57 @@ class LiveStreamScreen extends StatelessWidget {
                     (liveStream.data != null && liveStream.data.isNotEmpty)
                         ? liveStream.data[0].videoId
                         : null;
+                print(videoId);
                 if (videoId == null || videoId.isEmpty)
-                  return ErrorMessage.errMsg(
-                      errorMessage: "Something Went wrong");
+                  return _errorDisplay(context);
+
                 return YoutubePlayerScreen(videoId: videoId);
               }
               if (state is LiveStreamError) {
-                return Scaffold(
-                  body: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Center(child: Text("Something went wrong!")),
-                      RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        color: Colors.brown,
-                        child: Text(
-                          "Retry",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          BlocProvider.of<LiveStreamBloc>(context)
-                              .dispatch(FetchLiveStream());
-                        },
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(bottom: 20.0),
-                        child: leftArrowBackButton(context: context),
-                      ),
-                    ],
-                  ),
-                );
+                _errorDisplay(context);
               }
               if (state is LiveStreamNoConnection) {
-                return Scaffold(
-                  body: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Center(child: Text("No connection!")),
-                      RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        color: Colors.brown,
-                        child: Text(
-                          "Retry",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          BlocProvider.of<LiveStreamBloc>(context)
-                              .dispatch(FetchLiveStream());
-                        },
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(bottom: 20.0),
-                        child: leftArrowBackButton(context: context),
-                      ),
-                    ],
-                  ),
-                );
+                return _errorDisplay(context, errorMsg: "No Connection!");
               }
               return Container();
             }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _errorDisplay(BuildContext context,
+      {String errorMsg = "Something went wrong!",
+      String buttonLabel = "Retry"}) {
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("$errorMsg")),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "$buttonLabel",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<LiveStreamBloc>(context)
+                        .dispatch(FetchLiveStream());
+                  },
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 20.0),
+            child: leftArrowBackButton(context: context),
           ),
         ],
       ),
