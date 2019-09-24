@@ -25,6 +25,9 @@ class ServicesLoading extends ServicesState {
 }
 
 class ServicesLoaded extends ServicesState {
+  final List<ModuleReference> moduleReferences;
+
+  ServicesLoaded(this.moduleReferences) : super([moduleReferences]);
 
   @override
   String toString() => 'ServicesLoaded';
@@ -40,13 +43,11 @@ class ServicesError extends ServicesState {
 }
 
 class NoServicesLoad extends ServicesState {
-
   @override
   String toString() => 'NoServicesLoad';
 }
 
 class ServicesNoConnection extends ServicesState {
-
   @override
   String toString() => 'ServicesNoConnection';
 }

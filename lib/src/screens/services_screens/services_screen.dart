@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_event.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
@@ -44,7 +45,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     print("initializing serviceScreen...");
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    _moduleReferences = BlocProvider.of<ServicesBloc>(context).moduleReferences;
+    _moduleReferences = BlocProvider.of<TabBloc>(context).moduleReferences;
     _initializeArrows();
   }
 

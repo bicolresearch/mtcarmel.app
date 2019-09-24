@@ -7,8 +7,6 @@
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_state.dart';
 import 'package:mt_carmel_app/src/core/services/news_feed_service.dart';
@@ -33,6 +31,7 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
         if (feed != null) {
           await SharedPreferencesHelper.setResetBranch(false);
           if (feed.data != null && feed.data.isNotEmpty) {
+            _hasFeedChanged(feed);
             yield FeedLoaded(feed);
           } else {
             yield FeedNoPost();
@@ -56,14 +55,12 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
         if (feed != null) {
           if (_hasFeedChanged(feed)) {
             yield FeedLoaded(feed);
-          } else {
-            if (_postIds.isEmpty) yield FeedNotChanged();
           }
         } else {
-          if (_postIds.isEmpty) yield FeedErrorLoading();
+          yield FeedErrorLoading();
         }
       } catch (e) {
-        if (_postIds.isEmpty) yield FeedErrorLoading();
+        yield FeedErrorLoading();
       }
     }
   }
