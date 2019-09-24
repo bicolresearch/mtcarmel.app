@@ -15,14 +15,11 @@ import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
+//import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
-  final branchId;
-
-  const HomeScreen({Key key, this.branchId}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -51,9 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocProvider<SendHelpBloc>(
                 builder: (context) => SendHelpBloc(),
               ),
-              BlocProvider<TransparencyBloc>(
-                builder: (context) => TransparencyBloc(),
-              ),
+//              BlocProvider<TransparencyBloc>(
+//                builder: (context) => TransparencyBloc(),
+//              ),
               BlocProvider<ProfileBloc>(
                 builder: (context) => ProfileBloc(),
               ),

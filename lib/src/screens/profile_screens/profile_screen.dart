@@ -101,26 +101,32 @@ class ProfileScreen extends StatelessWidget {
           await SharedPreferencesHelper.setBranchIdFlag(null);
           await SharedPreferencesHelper.setResetBranch(true);
           locator<BranchService>().clearBranch();
-          BlocProvider.of<TabBloc>(context).dispose();
-          BlocProvider.of<BranchBloc>(context).dispose();
-          Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) {
-              return MultiBlocProvider(
-                providers: [
-                  BlocProvider<BranchBloc>(builder: (context) => BranchBloc()),
-                  BlocProvider<TabBloc>(builder: (context) => TabBloc())
-                ],
-                child: StartPage(),
-              );
-            },
-          ));
+//          BlocProvider.of<TabBloc>(context).dispose();
+//          BlocProvider.of<BranchBloc>(context).dispose();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return StartPage();
+//                return MultiBlocProvider(
+//                  providers: [
+//                    BlocProvider<BranchBloc>(
+//                        builder: (context) => BranchBloc()),
+//                    BlocProvider<TabBloc>(builder: (context) => TabBloc())
+//                  ],
+//                  child: StartPage(),
+//                );
+              },
+            ),
+          );
           return;
         }
         Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => _navigateToDetail(context, itemText),
-            ));
+          context,
+          MaterialPageRoute(
+            builder: (context) => _navigateToDetail(context, itemText),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

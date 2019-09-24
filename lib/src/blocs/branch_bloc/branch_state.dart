@@ -26,12 +26,9 @@ class BranchLoading extends BranchState {
 }
 
 class BranchLoaded extends BranchState {
-  final Branch branch;
-
-  BranchLoaded(this.branch) : super([branch]);
 
   @override
-  String toString() => 'BranchLoaded { tabs: ${this.branch} }';
+  String toString() => 'BranchLoaded';
 }
 
 class BranchError extends BranchState {

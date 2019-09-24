@@ -2,8 +2,8 @@
 *   Filename    :   feed_list_view.dart
 *   Purpose     :
 *   Created     :   05/09/2019 10:58 AM by Detective Conan
-*	 Updated			:   23/09/2019 10:43 AM PM by Detective Conan
-*	 Changes			:   Added message for no connectivity
+*	 Updated			:   24/09/2019 10:21 AM PM by Detective Conan
+*	 Changes			:   Handled displays the previous posts when error on reloading newsfeed
 */
 
 import 'package:flutter/material.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_state.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
@@ -33,6 +34,7 @@ class _FeedListViewState extends State<FeedListView> {
 
   @override
   Widget build(BuildContext context) {
+    final tabBloc = BlocProvider.of<TabBloc>(context);
     return Scaffold(
       body: BlocBuilder<NewsFeedBloc, NewsFeedState>(
         builder: (context, state) {
@@ -40,9 +42,13 @@ class _FeedListViewState extends State<FeedListView> {
             return LoadingIndicator();
           } else if (state is FeedLoaded) {
             final feed = state.feed;
+            tabBloc.setPostData(feed.data);
             return _postsView(feed.data);
           } else if (state is FeedErrorLoading) {
             print("error loading");
+            if(tabBloc.postData != null && tabBloc.postData.isNotEmpty){
+              return _postsView(tabBloc.postData);
+            }
             return Scaffold(
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -66,6 +72,9 @@ class _FeedListViewState extends State<FeedListView> {
               ),
             );
           } else if (state is FeedNoPost) {
+            if(tabBloc.postData != null && tabBloc.postData.isNotEmpty){
+              return _postsView(tabBloc.postData);
+            }
             print("No posts at the moment!");
             return Scaffold(
               body: Column(
@@ -90,6 +99,11 @@ class _FeedListViewState extends State<FeedListView> {
               ),
             );
           } else if (state is FeedNoConnection) {
+
+            if(tabBloc.postData != null && tabBloc.postData.isNotEmpty){
+              return _postsView(tabBloc.postData);
+            }
+
             print("No connection!");
             return Scaffold(
               body: Column(

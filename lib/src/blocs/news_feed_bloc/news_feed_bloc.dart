@@ -7,6 +7,8 @@
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_state.dart';
 import 'package:mt_carmel_app/src/core/services/news_feed_service.dart';
@@ -25,26 +27,19 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
   @override
   Stream<NewsFeedState> mapEventToState(NewsFeedEvent event) async* {
     if (event is FetchFeed) {
-      bool isResetBranch = await SharedPreferencesHelper.getResetBranch();
-      if (isResetBranch) _postIds.clear();
       try {
-//        if (_postIds.isEmpty)
-          yield FeedLoading();
+        yield FeedLoading();
         final feed = await locator<NewsFeedService>().getFeed();
         if (feed != null) {
-//          if (_hasFeedChanged(feed)) {
-            await SharedPreferencesHelper.setResetBranch(false);
+          await SharedPreferencesHelper.setResetBranch(false);
+          if (feed.data != null && feed.data.isNotEmpty) {
             yield FeedLoaded(feed);
-//          }  else if (_postIds.isEmpty) {
-//            if (isResetBranch) {
-//              await SharedPreferencesHelper.setResetBranch(false);
-//              yield FeedNoPost();
-            }
-            //yield FeedNotChanged();
-//          }
-//        }
-        else
+          } else {
+            yield FeedNoPost();
+          }
+        } else {
           yield FeedErrorLoading();
+        }
       } catch (e) {
         if (e.toString().contains("No connection")) {
           yield FeedNoConnection();
@@ -53,6 +48,7 @@ class NewsFeedBloc extends Bloc<NewsFeedEvent, NewsFeedState> {
         yield FeedErrorLoading();
       }
     }
+
     if (event is RefreshFeed) {
       try {
 //        yield FeedRefreshing();

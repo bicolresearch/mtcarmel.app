@@ -2,8 +2,8 @@
 *   Filename    :   branch_bloc.dart
 *   Purpose     :
 *   Created     :   02/09/2019 12:52 PM by Detective Conan
-*	 Updated			:   23/09/2019 10:40 AM PM by Detective Conan
-*	 Changes			:   Added checking of no connectivity
+*	 Updated			:   24/09/2019 10:22 AM PM by Detective Conan
+*	 Changes			:   Fixed the state when empty posts
 */
 
 import 'dart:async';
@@ -14,10 +14,10 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
+import 'package:mt_carmel_app/src/models/feed.dart';
 
 class BranchBloc extends Bloc<BranchEvent, BranchState> {
   Branch _branch;
-
   Branch get branch => _branch;
 
   @override
@@ -29,10 +29,9 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
 //      final bool isResetBranch = await SharedPreferencesHelper.getResetBranch();
 //      if(isResetBranch)
       yield BranchLoading();
-      if (_branch == null && event.branchId != _branch?.id) {
-        var branch;
+      if (_branch == null) {
         try {
-          branch = await _fetchBranch(event.branchId);
+          _branch = await _fetchBranch(event.branchId);
         } catch (e) {
 //          if(!isResetBranch)
           if (e.toString().contains("No connection")) {
@@ -43,17 +42,16 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
           return;
         }
 
-        if (branch != null) {
-          _branch = branch;
+        if (_branch != null) {
 //          await SharedPreferencesHelper.setResetBranch(false);
-          yield BranchLoaded(branch);
+          yield BranchLoaded();
         } else {
           yield BranchError(
               Exception("Selected branch not loaded."), event.branchId);
           return;
         }
       } else {
-        yield BranchLoaded(_branch);
+        yield BranchLoaded();
       }
     }
   }

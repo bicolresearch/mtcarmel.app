@@ -9,8 +9,20 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
+import 'package:mt_carmel_app/src/models/feed.dart';
 
 class TabBloc extends Bloc<TabEvent, AppTab> {
+
+  List<PostData> _postData = [];
+
+
+  List<PostData> get postData => _postData;
+
+  setPostData(List<PostData> value) {
+    _postData = value;
+  }
+
+
   @override
   AppTab get initialState => AppTab.NewsFeed;
 

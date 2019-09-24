@@ -53,13 +53,8 @@ class BranchSelectionScreen extends StatelessWidget {
                       return InkWell(
                         onTap: () async {
                           try {
-                            final branch = await locator<BranchService>()
-                                .getBranch("${branchSelection[index].id}");
-
                             await SharedPreferencesHelper.setBranchIdFlag(
-                                branch.id);
-                            await SharedPreferencesHelper.setBranchNameFlag(
-                                branch.name);
+                                "${branchSelection[index].id}");
 
                             Navigator.pop(context, branchSelection[index].id);
                           } catch (e) {
