@@ -55,7 +55,7 @@ class AppConstants {
       "https://api.mountcarmel.ph/donation_type/";
 
   static const String DEFAULT_BRANCH_ID = "1";
-  static const String CARMELITE_MONASTERY = "Carmelite Monastery";
+  static const String CARMEL_NAME = "Carmel";
   static const String LOCATION_NAME = "Ordo Carmelitarum Discalceatorum";
   static const String NATIONAL_SHRINE_TEXT =
       'National Shrine of Our Lady of Mount Carmel';

@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
       barrierDismissible: false,
       builder: (context) => AlertDialog(
         content: ListTile(
-          title: Text("Would you like to close the app?"),
+          title: Text("Do you want to close this app?"),
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),

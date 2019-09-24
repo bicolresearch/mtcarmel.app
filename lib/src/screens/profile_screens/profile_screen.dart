@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   18/09/2019 12:57 PM PM by Detective Conan
-*	 Changes			:   Changed the border of the confirmation dialog rounded.
+*	 Updated			:   24/09/2019 3:55 PM PM by Detective Conan
+*	 Changes			:   Changed the label for changing branch
 */
 
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
   static const String _PASTORS = "Carmelite Pastors";
   static const String _CONTACT_DETAILS = "Contact Details";
   static const String _ABOUT_THE_PARISH = "About the Parish";
-  static const String _CHANGE_BRANCH = "Change Church Branch";
+  static const String _CHANGE_BRANCH = "Change branch";
 
   final List<String> _totalList = [
     _BIBLE,
@@ -170,7 +170,7 @@ class ProfileScreen extends StatelessWidget {
       barrierDismissible: false,
       builder: (context) => AlertDialog(
         content: ListTile(
-          title: Text("Do you want to change church branch?"),
+          title: Text("Do you want to change branch?"),
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),

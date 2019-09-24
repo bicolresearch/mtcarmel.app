@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   children: <Widget>[
                     Spacer(),
                     Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 160),
-                    Text(AppConstants.CARMELITE_MONASTERY,
+                    Text(AppConstants.CARMEL_NAME,
                         style: TextStyle(
                             color: Colors.brown,
                             fontSize: 20.0,

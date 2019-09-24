@@ -33,7 +33,7 @@ class BranchLocationsScreen extends StatelessWidget {
             ),
             Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 60),
             Text(
-              "${AppConstants.CARMELITE_MONASTERY} Locations",
+              "${AppConstants.CARMEL_NAME} Locations",
               style: Theme.of(context)
                   .primaryTextTheme
                   .title

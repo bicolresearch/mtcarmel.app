@@ -33,7 +33,7 @@ class BranchSelectionScreen extends StatelessWidget {
             Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 60),
             (branchSelection.isNotEmpty)
                 ? Text(
-                    "${AppConstants.CARMELITE_MONASTERY} branches for\n${branchSelection[0].locationName}",
+                    "${AppConstants.CARMEL_NAME} branches for\n${branchSelection[0].locationName}",
                     style: Theme.of(context)
                         .primaryTextTheme
                         .title

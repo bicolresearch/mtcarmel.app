@@ -13,7 +13,6 @@ import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_event.dart'
 import 'package:mt_carmel_app/src/blocs/live_stream_bloc/live_stream_state.dart';
 import 'package:mt_carmel_app/src/models/live_stream.dart';
 import 'package:mt_carmel_app/src/screens/feeds_screens/youtube_player_screen.dart';
-import 'package:mt_carmel_app/src/widgets/error_message.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
@@ -25,33 +24,34 @@ class LiveStreamScreen extends StatelessWidget {
         children: [
           Expanded(
             child: BlocBuilder<LiveStreamBloc, LiveStreamState>(
-                builder: (context, state) {
-              if (state is LiveStreamUninitialized ||
-                  state is LiveStreamLoading) {
-                return Center(
-                  child: LoadingIndicator(),
-                );
-              }
-              if (state is LiveStreamLoaded) {
-                final LiveStream liveStream = state.liveStream;
-                final String videoId =
-                    (liveStream.data != null && liveStream.data.isNotEmpty)
-                        ? liveStream.data[0].videoId
-                        : null;
-                print(videoId);
-                if (videoId == null || videoId.isEmpty)
-                  return _errorDisplay(context);
+              builder: (context, state) {
+                if (state is LiveStreamUninitialized ||
+                    state is LiveStreamLoading) {
+                  return Center(
+                    child: LoadingIndicator(),
+                  );
+                }
+                if (state is LiveStreamLoaded) {
+                  final LiveStream liveStream = state.liveStream;
+                  final String videoId =
+                      (liveStream.data != null && liveStream.data.isNotEmpty)
+                          ? liveStream.data[0].videoId
+                          : null;
+                  print(videoId);
+                  if (videoId == null || videoId.isEmpty)
+                    return _errorDisplay(context);
 
-                return YoutubePlayerScreen(videoId: videoId);
-              }
-              if (state is LiveStreamError) {
-                _errorDisplay(context);
-              }
-              if (state is LiveStreamNoConnection) {
-                return _errorDisplay(context, errorMsg: "No Connection!");
-              }
-              return Container();
-            }),
+                  return YoutubePlayerScreen(videoId: videoId);
+                }
+                if (state is LiveStreamError) {
+                  _errorDisplay(context);
+                }
+                if (state is LiveStreamNoConnection) {
+                  return _errorDisplay(context, errorMsg: "No Connection!");
+                }
+                return Container();
+              },
+            ),
           ),
         ],
       ),

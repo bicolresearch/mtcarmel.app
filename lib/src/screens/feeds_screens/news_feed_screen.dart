@@ -32,7 +32,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppConstants.CARMELITE_MONASTERY,
+          AppConstants.CARMEL_NAME,
           style: Theme.of(context)
               .primaryTextTheme
               .title
