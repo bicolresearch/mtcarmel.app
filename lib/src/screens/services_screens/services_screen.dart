@@ -2,8 +2,9 @@
 *	 Filename		  :	  services_screen.dart
 *	 Purpose		  :	  Displays the list of the services of the church
 *  Created		  :   2019-06-11 15:52:50 by Detective Conan
-*	 Updated			:   23/09/2019 11:28 AM PM by Detective Conan
-*	 Changes			:   Removed Snackbar*/
+*	 Updated			:   24/09/2019 12:49 PM PM by Detective Conan
+*	 Changes			:   Retrieving list from tabBloc
+* */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

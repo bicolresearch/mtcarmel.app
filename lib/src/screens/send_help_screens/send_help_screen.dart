@@ -2,8 +2,8 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*	 Updated			:   23/09/2019 2:35 PM PM by Detective Conan
-*	 Changes			:   Added removal of current snackbar before creation of new snackbar
+*	 Updated			:   24/09/2019 12:49 PM PM by Detective Conan
+*	 Changes			:   Retrieving list from tabBloc
 */
 
 import 'package:flutter/material.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
@@ -20,9 +21,7 @@ class SendHelpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sendHelpDataList =
-        BlocProvider.of<SendHelpBloc>(context).sendHelpDataList;
-
+    final sendHelpDataList = BlocProvider.of<TabBloc>(context).sendHelpDataList;
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(
@@ -79,7 +78,6 @@ class SendHelpScreen extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(2.0),
       child: Container(
-        color: Colors.brown[50],
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[

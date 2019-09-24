@@ -25,6 +25,9 @@ class SendHelpLoading extends SendHelpState {
 }
 
 class SendHelpLoaded extends SendHelpState {
+  final List<SendHelpData> sendHelpDataList;
+
+  SendHelpLoaded(this.sendHelpDataList) : super([sendHelpDataList]);
 
   @override
   String toString() => 'SendHelpLoaded';
@@ -40,14 +43,11 @@ class SendHelpError extends SendHelpState {
 }
 
 class NoSendHelpLoaded extends SendHelpState {
-
   @override
   String toString() => 'NoSendHelpLoaded';
 }
 
 class SendHelpNoConnection extends SendHelpState {
-
   @override
   String toString() => 'SendHelpNoConnection';
 }
-

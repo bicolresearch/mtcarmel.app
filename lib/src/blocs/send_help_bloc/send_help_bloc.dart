@@ -2,8 +2,8 @@
 *   Filename    :   send_help_bloc.dart
 *   Purpose     :
 *   Created     :   12/09/2019 12:10 PM by Detective Conan
-*   Updated     :   12/09/2019 12:10 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   24/09/2019 12:48 PM PM by Detective Conan
+*	 Changes			:   Moved the sendHelpList to TabBloc
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
@@ -14,22 +14,18 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
 
 class SendHelpBloc extends Bloc<SendHelpEvent, SendHelpState> {
-  List<SendHelpData> _sendHelpDataList = [];
-
-  List<SendHelpData> get sendHelpDataList => _sendHelpDataList;
-
   @override
   SendHelpState get initialState => SendHelpUninitialized();
 
   @override
   Stream<SendHelpState> mapEventToState(SendHelpEvent event) async* {
     if (event is FetchSendHelp) {
-//      if (_sendHelpDataList.isEmpty)
-        yield SendHelpLoading();
+      yield SendHelpLoading();
+      List<SendHelpData> sendHelpDataList;
       try {
-        _sendHelpDataList = await locator<SendHelpService>().getData();
-        if (_sendHelpDataList.isNotEmpty) {
-          yield SendHelpLoaded();
+        sendHelpDataList = await locator<SendHelpService>().getData();
+        if (sendHelpDataList.isNotEmpty) {
+          yield SendHelpLoaded(sendHelpDataList);
         } else {
           yield NoSendHelpLoaded();
         }

@@ -11,9 +11,9 @@ import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
+import 'package:mt_carmel_app/src/models/send_help.dart';
 
 class TabBloc extends Bloc<TabEvent, AppTab> {
-
   // news Feed
   List<PostData> _postData = [];
 
@@ -31,6 +31,16 @@ class TabBloc extends Bloc<TabEvent, AppTab> {
   setModuleReferences(List<ModuleReference> value) {
     _moduleReferences = value;
   }
+
+  // Send Help
+
+  List<SendHelpData> _sendHelpDataList = [];
+
+  setSendHelpDataList(List<SendHelpData> value) {
+    _sendHelpDataList = value;
+  }
+
+  List<SendHelpData> get sendHelpDataList => _sendHelpDataList;
 
   @override
   AppTab get initialState => AppTab.NewsFeed;
