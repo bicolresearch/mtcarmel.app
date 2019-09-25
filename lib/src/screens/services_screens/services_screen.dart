@@ -95,6 +95,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           controller: _scrollController,
                           itemCount: _moduleReferences.length,
                           itemBuilder: (context, index) {
+                            //TODO temporary
+                            if(_moduleReferences[index].name.contains("Join"))
+                              return Container();
+
                             return _moduleReferenceItem(
                                 context, _moduleReferences[index]);
                           }),

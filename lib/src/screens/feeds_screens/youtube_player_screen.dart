@@ -54,6 +54,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("${widget.videoId}");
     return Scaffold(
       body: Stack(
         children: [
@@ -63,11 +64,13 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
                 children: <Widget>[
                   YoutubePlayer(
                     context: context,
-                    videoId: widget.videoId,
+//                    videoId: "B7ku1M_geSw",
+                    videoId: "LtKHvOXxbV4",
+//                    videoId: "qRO96gbFtrU",
                     flags: YoutubePlayerFlags(
                       mute: _muted,
-                      autoPlay: true,
-                      forceHideAnnotation: true,
+//                      autoPlay: true,
+                      forceHideAnnotation: false,
                       showVideoProgressIndicator: true,
                       isLive: false,
                     ),

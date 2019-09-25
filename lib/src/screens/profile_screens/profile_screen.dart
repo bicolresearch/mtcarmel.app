@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   24/09/2019 3:55 PM PM by Detective Conan
-*	 Changes			:   Changed the label for changing branch
+*	 Updated			:   25/09/2019 1:57 PM PM by Detective Conan
+*	 Changes			:   Temporary disabled bible
 */
 
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
+//import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
@@ -47,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
   static const String _CHANGE_BRANCH = "Change branch";
 
   final List<String> _totalList = [
-    _BIBLE,
+//    _BIBLE,
     _REGULAR_MASS_SCHEDULE,
     _LOCATION_MAP,
     _PRIESTS,
@@ -147,8 +147,8 @@ class ProfileScreen extends StatelessWidget {
             builder: (context) => ChurchRegularScheduleBloc()
               ..dispatch(FetchChurchRegularSchedule()),
             child: ChurchRegularSchedulePage());
-      case _BIBLE:
-        return BibleScreen(context);
+//      case _BIBLE:
+//        return BibleScreen(context);
       case _LOCATION_MAP:
         return BlocProvider<LocationMapBloc>(
             builder: (context) =>

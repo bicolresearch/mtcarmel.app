@@ -43,6 +43,7 @@ dependencies:
   flutter_advanced_networkimage: ^0.5.0
 
   # permission: ^0.1.2
+  permission_handler: ^3.1.0
 
 #  bloc: ^0.15.0
   password: ^1.0.0

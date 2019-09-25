@@ -222,7 +222,8 @@ class _FeedListViewState extends State<FeedListView> {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
-                    postData.title,
+                    //TODO Remove replace method
+                    postData.title.toString().replaceAll("Coca-Cola", ""),
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context)
                         .primaryTextTheme
