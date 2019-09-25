@@ -9,12 +9,21 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
+import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/models/feed.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
 
 class TabBloc extends Bloc<TabEvent, AppTab> {
-  // news Feed
+  //Branch
+  Branch _branch;
+
+  Branch get branch => _branch;
+
+  setBranch(Branch value) {
+    _branch = value;
+
+  } // news Feed
   List<PostData> _postData = [];
 
   List<PostData> get postData => _postData;

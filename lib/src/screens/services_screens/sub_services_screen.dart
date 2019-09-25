@@ -2,8 +2,8 @@
 *   Filename    :   sub_services_screen.dart
 *   Purpose     :
 *   Created     :   11/09/2019 2:46 PM by Detective Conan
-*	 Updated			:   23/09/2019 11:26 AM PM by Detective Conan
-*	 Changes			:   Added messages for no connectivity and errors.
+*	 Updated			:   25/09/2019 3:49 PM PM by Detective Conan
+*	 Changes			:   Made Branch name dynamic
 */
 
 import 'package:flutter/material.dart';
@@ -17,6 +17,10 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class SubServicesScreen extends StatelessWidget {
+  final branchName;
+
+  SubServicesScreen(this.branchName);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +34,7 @@ class SubServicesScreen extends StatelessWidget {
                   return LoadingIndicator();
                 }
                 if (state is SubServicesLoaded) {
-                  return SubServicesList();
+                  return SubServicesList(branchName);
                 }
                 if (state is NoSubServicesLoaded) {
                   return Scaffold(

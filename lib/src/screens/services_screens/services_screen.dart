@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 //import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_event.dart';
@@ -64,13 +65,16 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final tabBloc = BlocProvider.of<TabBloc>(context);
     return SafeArea(
       child: Stack(
         children: <Widget>[
           Scaffold(
             body: Column(
               children: <Widget>[
-                ServiceHeader(),
+                ServiceHeader(
+                  branchName: tabBloc.branch.name,
+                ),
                 _arrowMoreUp,
                 Expanded(
                   child: Container(
@@ -95,8 +99,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           controller: _scrollController,
                           itemCount: _moduleReferences.length,
                           itemBuilder: (context, index) {
-                            return _moduleReferenceItem(
-                                context, _moduleReferences[index]);
+                            return _moduleReferenceItem(context,
+                                _moduleReferences[index], tabBloc.branch.name);
                           }),
                     ),
                   ),
@@ -110,7 +114,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
     );
   }
 
-  Widget _moduleReferenceItem(context, final ModuleReference moduleReference) {
+  Widget _moduleReferenceItem(
+      context, final ModuleReference moduleReference, branchName) {
     return InkWell(
       onTap: () async {
         await Navigator.push(
@@ -120,7 +125,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               return BlocProvider<SubServicesBloc>(
                   builder: (context) => SubServicesBloc()
                     ..dispatch(FetchSubServices(moduleReference)),
-                  child: SubServicesScreen());
+                  child: SubServicesScreen(branchName));
             },
           ),
         );

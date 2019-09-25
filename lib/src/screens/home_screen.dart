@@ -15,12 +15,14 @@ import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
+import 'package:mt_carmel_app/src/models/branch.dart';
+
 //import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -38,6 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else if (state is BranchLoaded) {
+            final branch = BlocProvider.of<BranchBloc>(context).branch;
+            BlocProvider.of<TabBloc>(context).setBranch(branch);
             return MultiBlocProvider(providers: [
               BlocProvider<NewsFeedBloc>(
                 builder: (context) => NewsFeedBloc(),

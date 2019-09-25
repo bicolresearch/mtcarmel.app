@@ -2,13 +2,14 @@
 *   Filename    :   sub_services_list.dart
 *   Purpose     :
 *   Created     :   11/09/2019 2:48 PM by Detective Conan
-*   Updated     :   11/09/2019 2:48 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   25/09/2019 3:49 PM PM by Detective Conan
+*	 Changes			:   Made Branch name dynamic
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_info/service_info_screen.dart';
 
@@ -18,6 +19,10 @@ import 'package:mt_carmel_app/src/widgets/service_header.dart';
 import 'package:provider/provider.dart';
 
 class SubServicesList extends StatelessWidget {
+  final branchName;
+
+  SubServicesList(this.branchName);
+
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<SubServicesBloc>(context);
@@ -28,10 +33,11 @@ class SubServicesList extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
         child: Container(
-//              height: MediaQuery.of(context).size.height - 100,
           child: Column(
             children: <Widget>[
-              ServiceHeader(),
+              ServiceHeader(
+                branchName: branchName,
+              ),
               SizedBox(
                 height: 10.0,
               ),
