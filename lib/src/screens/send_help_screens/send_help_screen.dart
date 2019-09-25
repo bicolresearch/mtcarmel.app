@@ -105,7 +105,7 @@ class SendHelpScreen extends StatelessWidget {
                     : Container(),
                 //Name of donation
                 Text(
-                  sendHelp.name,
+                  sendHelp.donationName,
                   style: Theme.of(context)
                       .primaryTextTheme
                       .subhead

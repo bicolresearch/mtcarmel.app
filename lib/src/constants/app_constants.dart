@@ -2,18 +2,14 @@
 *	 Filename		 :	 app_constants.dart
 *	 Purpose		 :	 Constants used within the app.
 *  Created		 :   2019-06-17 19:23:44
-*  Updated     :   2019-07-15 09:37 by Detective conan
-*  Changes     :   Removed constants for text fonts
+*	 Updated			:   25/09/2019 3:03 PM PM by Detective Conan
+*	 Changes			:   Updated url of sendhelp and services
 */
 
 class AppConstants {
   static const String APP_TITLE = "Mount Carmel";
   static const String FONT_FAMILY = 'Helvetica';
   static const String MT_CARMEL_LOGO_PATH = 'assets/images/mt_carmel_logo.png';
-
-  // TODO: to be replaced by actual url
-  static const String TOTAL_TRANSACTION_JSON_URL =
-      'http://192.168.254.109/api/transparency.json';
 
   // site api
   static const String API_BASE_URL = "https://api.mountcarmel.ph/";
@@ -52,7 +48,7 @@ class AppConstants {
   static const String BOUNDARIES_JSON_URL =
       'https://api.mountcarmel.ph/boundaries/';
   static const String SEND_HELP_JSON_URL =
-      "https://api.mountcarmel.ph/donation_type/";
+      "https://api.mountcarmel.ph/branch_donations/";
 
   static const String DEFAULT_BRANCH_ID = "1";
   static const String CARMEL_NAME = "Carmel";

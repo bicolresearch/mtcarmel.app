@@ -8,7 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
+//import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_event.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
@@ -95,10 +95,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           controller: _scrollController,
                           itemCount: _moduleReferences.length,
                           itemBuilder: (context, index) {
-                            //TODO temporary
-                            if(_moduleReferences[index].name.contains("Join"))
-                              return Container();
-
                             return _moduleReferenceItem(
                                 context, _moduleReferences[index]);
                           }),

@@ -151,7 +151,7 @@ class _SelectionFormFieldState extends State<SelectionFormField> {
           child: ListView.builder(
             itemCount: selection.length,
             itemBuilder: (context, index) {
-              final name = selection[index].name;
+              final name = selection[index].donationName;
               return ListTile(
                 title: Text(
                   name,
@@ -164,7 +164,7 @@ class _SelectionFormFieldState extends State<SelectionFormField> {
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                   field.didChange(selection[index]);
-                  _selected = selection[index].name;
+                  _selected = selection[index].donationName;
                   Navigator.pop(
                     context,
                   );

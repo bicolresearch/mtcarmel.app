@@ -396,7 +396,7 @@ class _CalendarPageState extends State<CalendarPage>
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
                   leading: Icon(MountCarmelIcons.events, color: Colors.brown),
-                  title: Text(event.name),
+                  title: Text(event.donationName),
                   subtitle: Text("${event.timeFrom} - ${event.timeTo}"),
                   onTap: () => print('$event tapped!'),
                 ),

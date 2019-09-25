@@ -31,7 +31,8 @@ class SendHelp {
 class SendHelpData {
   SendHelpData(
       this.id,
-      this.name,
+      this.donationId,
+      this.donationName,
       this.description,
       this.mediaId,
       this.mediaPath,
@@ -41,7 +42,10 @@ class SendHelpData {
       this.updatedBy);
 
   final id;
-  final name;
+  @JsonKey(name: "donation_id")
+  final donationId;
+  @JsonKey(name: "donation_name")
+  final donationName;
   final description;
   @JsonKey(name: "media_id")
   final mediaId;

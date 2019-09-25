@@ -28,7 +28,8 @@ Map<String, dynamic> _$SendHelpToJson(SendHelp instance) => <String, dynamic>{
 SendHelpData _$SendHelpDataFromJson(Map<String, dynamic> json) {
   return SendHelpData(
     json['id'],
-    json['name'],
+    json['donation_id'],
+    json['donation_name'],
     json['description'],
     json['media_id'],
     json['media_path'],
@@ -42,7 +43,8 @@ SendHelpData _$SendHelpDataFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$SendHelpDataToJson(SendHelpData instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
+      'donation_id': instance.donationId,
+      'donation_name': instance.donationName,
       'description': instance.description,
       'media_id': instance.mediaId,
       'media_path': instance.mediaPath,
