@@ -16,7 +16,6 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/carmelite.dart';
 
 class PriestsBloc extends Bloc<PriestsEvent, PriestsState> {
-  final String _TYPE_ID = "107";
   List<Carmelite> _priests = [];
 
   @override
@@ -28,7 +27,7 @@ class PriestsBloc extends Bloc<PriestsEvent, PriestsState> {
 //      if (_priests.isEmpty)
         yield PriestsLoading();
       try {
-        _priests = await locator<PriestsService>().getCarmeliteList(_TYPE_ID);
+        _priests = await locator<PriestsService>().getPriests();
         if (_priests.isNotEmpty) {
           print("Priests.mapEventToState $_priests");
           yield PriestsLoaded();

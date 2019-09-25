@@ -2,8 +2,8 @@
 *	 Filename		 :	 pastor_screen.dart
 *	 Purpose		 :	 Displays the list of pastors
 *  Created	 	 :   2019-06-11 15:56:33 by Detective Conan
-*	 Updated			:   19/09/2019 9:26 AM PM by Detective Conan
-*	 Changes			:   Changed the top tile from the Carmel to current church view
+*	 Updated			:   25/09/2019 4:55 PM PM by Detective Conan
+*	 Changes			:   Change the import from pastor to carmelite
 */
 
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/models/pastor.dart';
+import 'package:mt_carmel_app/src/models/carmelite.dart';
 
 class PastorsScreen extends StatelessWidget {
   @override
@@ -87,7 +87,7 @@ class PastorsScreen extends StatelessWidget {
     );
   }
 
-  Widget _pastorItem(context, Pastor pastor) {
+  Widget _pastorItem(context, Carmelite pastor) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

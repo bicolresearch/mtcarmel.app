@@ -2,8 +2,8 @@
 *   Filename    :   pastors_service.dart
 *   Purpose     :
 *   Created     :   17/09/2019 3:05 PM by Detective Conan
-*	 Updated			:   23/09/2019 9:25 AM PM by Detective Conan
-*	 Changes			:   Added connectivity check
+*	 Updated			:   25/09/2019 4:57 PM PM by Detective Conan
+*	 Changes			:   Changed the pastor type to carmelite
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
@@ -11,16 +11,16 @@ import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
-import 'package:mt_carmel_app/src/models/data_pastor.dart';
-import 'package:mt_carmel_app/src/models/pastor.dart';
+import 'package:mt_carmel_app/src/models/carmelite.dart';
+import 'package:mt_carmel_app/src/models/data_carmelite.dart';
 import 'dart:convert';
 
 class PastorsService {
   static const String _TYPE_ID = "108";
 
-  List<Pastor> _pastors = [];
+  List<Carmelite> _pastors = [];
 
-  Future<List<Pastor>> getData() async {
+  Future<List<Carmelite>> getPastors() async {
 
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
@@ -42,7 +42,7 @@ class PastorsService {
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
-      _pastors = DataPastor.fromJson(body).data.where((priest) {
+      _pastors = DataCarmelite.fromJson(body).data.where((priest) {
         return priest.typeId == _TYPE_ID;
       }).toList();
     } else {
@@ -51,5 +51,5 @@ class PastorsService {
     return _pastors;
   }
 
-  List<Pastor> get priests => _pastors;
+  List<Carmelite> get priests => _pastors;
 }

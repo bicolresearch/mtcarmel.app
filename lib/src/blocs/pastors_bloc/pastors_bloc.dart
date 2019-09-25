@@ -11,13 +11,13 @@ import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_state.dart';
 import 'package:mt_carmel_app/src/core/services/pastors_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/models/pastor.dart';
+import 'package:mt_carmel_app/src/models/carmelite.dart';
 
 class PastorsBloc extends Bloc<PastorsEvent, PastorsState> {
 
-  List<Pastor> _pastors = [];
+  List<Carmelite> _pastors = [];
 
-  List<Pastor> get pastors => _pastors;
+  List<Carmelite> get pastors => _pastors;
 
   @override
   PastorsState get initialState => PastorsUninitialized();
@@ -27,7 +27,7 @@ class PastorsBloc extends Bloc<PastorsEvent, PastorsState> {
     if(event is FetchPastors){
       yield PastorsLoading();
       try {
-        _pastors = await locator<PastorsService>().getData();
+        _pastors = await locator<PastorsService>().getPastors();
         if(_pastors.isEmpty)
           yield NoPastorsLoaded();
         else

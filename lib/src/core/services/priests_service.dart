@@ -2,8 +2,8 @@
 *   Filename    :   priests_service.dart
 *   Purpose     :
 *   Created     :   17/09/2019 3:05 PM by Detective Conan
-*	 Updated			:   23/09/2019 9:25 AM PM by Detective Conan
-*	 Changes			:   Added connectivity check
+*	 Updated			:   25/09/2019 4:57 PM PM by Detective Conan
+*	 Changes			:   Removed the parameter of getPriests. make it local instead
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
@@ -16,10 +16,11 @@ import 'package:mt_carmel_app/src/models/carmelite.dart';
 import 'dart:convert';
 
 class PriestsService {
+  static const String _TYPE_ID = "107";
 
   List<Carmelite> _priests = [];
 
-  Future<List<Carmelite>> getCarmeliteList(final String typeId) async {
+  Future<List<Carmelite>> getPriests() async {
 
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
@@ -32,7 +33,7 @@ class PriestsService {
     try {
       response = await http
               .get(
-                  "${AppConstants.PRIESTS_JSON_URL}?branch_id=$_branchId?type_id=$typeId")
+                  "${AppConstants.PRIESTS_JSON_URL}?branch_id=$_branchId?type_id=$_TYPE_ID")
               .timeout(Duration(seconds: 5));
     } catch (e) {
       print(e);
@@ -42,7 +43,7 @@ class PriestsService {
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
       _priests = DataCarmelite.fromJson(body).data.where((priest) {
-        return priest.typeId == typeId;
+        return priest.typeId == _TYPE_ID;
       }).toList();
     } else {
       throw Exception("Failure in retrieving priests");
