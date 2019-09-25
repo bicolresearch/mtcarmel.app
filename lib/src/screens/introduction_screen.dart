@@ -73,11 +73,11 @@ class _IntroScreenState extends State<IntroScreen> {
               content: AppConstants.SERVICES_OFFERED_DESCRIPTION),
         ),
         // second item
-        SlideContentItem(
-            widget: _slideContentItem(
-                iconData: MountCarmelIcons.transparency,
-                title: AppConstants.TRANSPARENCY_FEATURE,
-                content: AppConstants.TRANSPARENCY_FEATURE_DESCRIPTION)),
+//        SlideContentItem(
+//            widget: _slideContentItem(
+//                iconData: MountCarmelIcons.transparency,
+//                title: AppConstants.TRANSPARENCY_FEATURE,
+//                content: AppConstants.TRANSPARENCY_FEATURE_DESCRIPTION)),
       ],
     ));
   }
