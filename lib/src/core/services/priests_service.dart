@@ -11,16 +11,15 @@ import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
-import 'package:mt_carmel_app/src/models/data_priest.dart';
-import 'package:mt_carmel_app/src/models/priest.dart';
+import 'package:mt_carmel_app/src/models/data_carmelite.dart';
+import 'package:mt_carmel_app/src/models/carmelite.dart';
 import 'dart:convert';
 
 class PriestsService {
-  static const String _TYPE_ID = "108";
 
-  List<Priest> _priests = [];
+  List<Carmelite> _priests = [];
 
-  Future<List<Priest>> getData() async {
+  Future<List<Carmelite>> getCarmeliteList(final String typeId) async {
 
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
@@ -33,7 +32,7 @@ class PriestsService {
     try {
       response = await http
               .get(
-                  "${AppConstants.PRIESTS_JSON_URL}?branch_id=$_branchId?type_id=$_TYPE_ID")
+                  "${AppConstants.PRIESTS_JSON_URL}?branch_id=$_branchId?type_id=$typeId")
               .timeout(Duration(seconds: 5));
     } catch (e) {
       print(e);
@@ -42,8 +41,8 @@ class PriestsService {
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
-      _priests = DataPriest.fromJson(body).data.where((priest) {
-        return priest.typeId == _TYPE_ID;
+      _priests = DataCarmelite.fromJson(body).data.where((priest) {
+        return priest.typeId == typeId;
       }).toList();
     } else {
       throw Exception("Failure in retrieving priests");
@@ -51,5 +50,5 @@ class PriestsService {
     return _priests;
   }
 
-  List<Priest> get priests => _priests;
+  List<Carmelite> get priests => _priests;
 }

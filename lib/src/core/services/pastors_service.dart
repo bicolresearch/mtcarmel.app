@@ -16,7 +16,7 @@ import 'package:mt_carmel_app/src/models/pastor.dart';
 import 'dart:convert';
 
 class PastorsService {
-  static const String _TYPE_ID = "107";
+  static const String _TYPE_ID = "108";
 
   List<Pastor> _pastors = [];
 

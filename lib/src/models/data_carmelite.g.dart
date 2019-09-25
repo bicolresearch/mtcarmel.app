@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'data_priest.dart';
+part of 'data_carmelite.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-DataPriest _$DataPriestFromJson(Map<String, dynamic> json) {
-  return DataPriest(
+DataCarmelite _$DataCarmeliteFromJson(Map<String, dynamic> json) {
+  return DataCarmelite(
     json['draw'] as int,
     json['recordsTotal'] as int,
     json['recordsFiltered'] as int,
     (json['data'] as List)
         ?.map((e) =>
-            e == null ? null : Priest.fromJson(e as Map<String, dynamic>))
+            e == null ? null : Carmelite.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$DataPriestToJson(DataPriest instance) =>
+Map<String, dynamic> _$DataCarmeliteToJson(DataCarmelite instance) =>
     <String, dynamic>{
       'draw': instance.draw,
       'recordsTotal': instance.recordsTotal,

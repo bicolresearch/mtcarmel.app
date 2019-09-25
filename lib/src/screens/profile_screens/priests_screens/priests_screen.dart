@@ -14,8 +14,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/models/priest.dart';
-
+import 'package:mt_carmel_app/src/models/carmelite.dart';
 
 class PriestsScreen extends StatelessWidget {
   @override
@@ -89,7 +88,7 @@ class PriestsScreen extends StatelessWidget {
         ));
   }
 
-  Card getStructuredGridCell(context, Priest priest) {
+  Card getStructuredGridCell(context, Carmelite priest) {
     String url = AppConstants.API_BASE_URL + priest.mediaPath;
     return Card(
       elevation: 1.5,
@@ -135,6 +134,14 @@ class PriestsScreen extends StatelessWidget {
                         softWrap: true,
                       )
                     : Container(),
+//                (priest.sequence != null)
+//                    ? Text(
+//                        priest.sequence,
+//                        style: Theme.of(context).primaryTextTheme.caption,
+//                        textAlign: TextAlign.center,
+//                        softWrap: true,
+//                      )
+//                    : Container(),
               ],
             ),
           )
