@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   25/09/2019 1:57 PM PM by Detective Conan
-*	 Changes			:   Temporary disabled bible
+*  Updated     :   2019-09-26 15:38 by Detective conan
+*  Changes     :   Changed fontsize of the list item
 */
 
 import 'package:flutter/material.dart';
@@ -120,7 +120,7 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           itemText,
-          style: Theme.of(context).primaryTextTheme.subhead,
+          style: Theme.of(context).primaryTextTheme.title,
           textAlign: TextAlign.center,
         ),
       ),
