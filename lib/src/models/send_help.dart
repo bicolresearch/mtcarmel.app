@@ -33,7 +33,7 @@ class SendHelpData {
       this.id,
       this.donationId,
       this.donationName,
-      this.description,
+      this.donationDescription,
       this.mediaId,
       this.mediaPath,
       this.dtCreated,
@@ -46,7 +46,8 @@ class SendHelpData {
   final donationId;
   @JsonKey(name: "donation_name")
   final donationName;
-  final description;
+  @JsonKey(name: "donation_description")
+  final donationDescription;
   @JsonKey(name: "media_id")
   final mediaId;
   @JsonKey(name: "media_path")

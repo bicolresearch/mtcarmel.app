@@ -2,17 +2,19 @@
 *  Filename    :   send_help_screen.dart
 *  Purpose     :	 Displays the different type of donations
 *  Created     :   2019-06-02 09:10 by Detective Conan
-*	 Updated			:   24/09/2019 12:49 PM PM by Detective Conan
-*	 Changes			:   Retrieving list from tabBloc
+*	 Updated			:   27/09/2019 11:46 AM PM by Detective Conan
+*	 Changes			:   Location name retrieved from the Bloc. Adapted the decription from new api
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/models/branch.dart';
 import 'package:mt_carmel_app/src/models/send_help.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
@@ -74,6 +76,7 @@ class SendHelpScreen extends StatelessWidget {
       {BuildContext context,
       bool isPrimary = false,
       @required SendHelpData sendHelp}) {
+    final location = BlocProvider.of<BranchBloc>(context).branch.locationName;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(2.0),
@@ -116,7 +119,7 @@ class SendHelpScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: isPrimary
                       ? Text(
-                          AppConstants.LOCATION_NAME,
+                          location,
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle
@@ -126,7 +129,7 @@ class SendHelpScreen extends StatelessWidget {
                           maxLines: 1,
                         )
                       : Text(
-                          sendHelp.description,
+                          sendHelp.donationDescription,
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle

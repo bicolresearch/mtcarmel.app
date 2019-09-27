@@ -39,7 +39,7 @@ dependencies:
 #  youtube_player_flutter: ^2.0.0
   youtube_player_flutter: ^4.1.0
 
-  cached_network_image: ^1.0.0
+#  cached_network_image: ^1.0.0
   flutter_advanced_networkimage: ^0.5.0
 
   # permission: ^0.1.2

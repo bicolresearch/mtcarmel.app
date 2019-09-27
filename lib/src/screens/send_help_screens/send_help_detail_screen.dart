@@ -160,7 +160,7 @@ class _SendHelpDetailsState extends State<SendHelpDetails>
                 height: 20.0,
               ),
               Text(
-                widget.sendHelpData.description,
+                widget.sendHelpData.donationDescription,
                 style: Theme.of(context)
                     .primaryTextTheme
                     .title
