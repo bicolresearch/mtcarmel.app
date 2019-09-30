@@ -2,8 +2,8 @@
 *   Filename    :   pastors_service.dart
 *   Purpose     :
 *   Created     :   17/09/2019 3:05 PM by Detective Conan
-*	 Updated			:   25/09/2019 4:57 PM PM by Detective Conan
-*	 Changes			:   Changed the pastor type to carmelite
+*	 Updated			:   30/09/2019 6:38 PM PM by Detective Conan
+*	 Changes			:   Implemented caching of url response
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -26,25 +26,7 @@ class PastorsService {
 
     final branchId = await locator<BranchService>().branch.id;
     var response;
-//TODO change the implementation. use Dio package
-//    try {
-//      response = await http
-//              .get(
-//                  "${AppConstants.PRIESTS_JSON_URL}?branch_id=$_branchId?type_id=$_TYPE_ID")
-//              .timeout(Duration(seconds: 5));
-//    } catch (e) {
-//      print(e);
-//      throw Exception("Failure in retrieving priests");
-//    }
-//
-//    if (response.statusCode == 200) {
-//      final body = json.decode(response.body);
-//      _pastors = DataCarmelite.fromJson(body).data.where((priest) {
-//        return priest.typeId == _TYPE_ID;
-//      }).toList();
-//    } else {
-//      throw Exception("Failure in retrieving priests");
-//    }
+
     final url =
         "${AppConstants.API_BASE_URL}${AppConstants.CARMELITES_JSON_URL}contact/?branch_id=$branchId&id=$branchId?type_id=$_TYPE_ID";
 
