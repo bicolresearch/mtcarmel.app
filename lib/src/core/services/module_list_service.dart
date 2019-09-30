@@ -20,8 +20,6 @@ import 'package:mt_carmel_app/src/models/church_module.dart';
 class ModuleListService {
   List<ModuleReference> _moduleReferences = [];
 
-
-
   List<ModuleReference> get moduleReferences => _moduleReferences;
 
   Future<List<ModuleReference>> getData() async {
