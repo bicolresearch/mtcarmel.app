@@ -7,6 +7,7 @@
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:dio/dio.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 class DioService {
@@ -15,5 +16,13 @@ class DioService {
 
   DioService() {
     manager.clearExpired();
+  }
+
+  Dio getDio({header: "application/x-www-form-urlencoded", charset: "utf-8"}) {
+    return Dio(BaseOptions(
+        baseUrl: "${AppConstants.API_BASE_URL}",
+        contentType: "$header; charset=$charset"))
+      ..interceptors.add(manager.interceptor)
+      ..interceptors.add(LogInterceptor(responseBody: true));
   }
 }

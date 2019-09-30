@@ -1,43 +1,52 @@
 /*
 *   Filename    :   branch_list_service.dart
-*   Purpose     :
+*   Purpose     :   For requesting branches
 *   Created     :   16/09/2019 10:52 AM by Detective Conan
 *	 Updated			:   23/09/2019 9:27 AM PM by Detective Conan
-*	 Changes			:   Added connectivity check
+*	 Updated			:   30/09/2019 12:52 PM PM by Detective Conan
+*	 Changes			:   Implemented caching of url response
 */
 
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:mt_carmel_app/src/models/branch_location.dart';
+
+import 'service_locator.dart';
 
 class BranchListService {
   Future<List<Branch>> getLocations(String locationId) async {
     List<Branch> _branches = [];
+    final _keyword = "branches";
 
     final hasConnection = await ConnectivityChecker.hasDataConnection();
+    print("${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}");
+    var dio = locator<DioService>().getDio();
 
-    if(!hasConnection)
-      throw Exception('BranchListService.getLocations: No connection');
-
-    print(
-      "${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
-    );
-
-    final response = await http.get(
-      "${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
-    );
+    var response;
+    try {
+      response = await dio.get(
+          "${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
+          queryParameters: {'k': _keyword},
+          options: buildCacheOptions(Duration(days: 7), subKey: "page=$locationId"));
+    } catch (e) {
+      print(e);
+      if (!hasConnection)
+        throw Exception('BranchListService.getData: No connection');
+      throw Exception(
+          'BranchListService.getData:  Error requesting BranchLists: $e');
+    }
 
     if (response.statusCode == 200) {
       try {
-        final body = json.decode(response.body);
+        final body = json.decode("$response");
         _branches = DataBranch.fromJson(body).data;
       } catch (e) {
         print(e);
-        throw e;
+        throw 'BranchListService.getData:  Error requesting BranchLists: $e';
       }
     } else {
       throw Exception('Failed to load');

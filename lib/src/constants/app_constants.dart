@@ -16,7 +16,7 @@ class AppConstants {
 
   static const String BRANCH_LOCATIONS_JSON_URL = "branch_locations/";
 
-  static const String BRANCHES_JSON_URL = "https://api.mountcarmel.ph/branches/";
+  static const String BRANCHES_JSON_URL = "branches/";
 
   static const String LIVE_STREAM_URL =
       "https://api.mountcarmel.ph/live_streams/";

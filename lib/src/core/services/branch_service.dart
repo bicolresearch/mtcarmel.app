@@ -20,16 +20,15 @@ class BranchService {
   void clearBranch() => _branch = null;
 
   Future<Branch> getBranch(String branchId) async {
-
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
-    if(!hasConnection)
+    if (!hasConnection)
       throw Exception('BranchService.getBranch: No connection');
 
-    if(_branch != null)
-      return _branch;
+    if (_branch != null) return _branch;
 
-    final url = "${AppConstants.BRANCHES_JSON_URL}branch/?id=$branchId";
+    final url =
+        "${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}branch/?id=$branchId";
     print(url);
     final response = await http.get(
       url,
