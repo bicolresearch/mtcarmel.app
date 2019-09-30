@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*  Updated     :   2019-09-26 15:38 by Detective conan
-*  Changes     :   Changed fontsize of the list item
+*	 Updated			:   30/09/2019 4:48 PM PM by Detective Conan
+*	 Changes			:   Added branch name in change branch confirmation.
 */
 
 import 'package:flutter/material.dart';
@@ -25,6 +25,7 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
+
 //import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
@@ -34,6 +35,8 @@ import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastor
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
 
 import 'package:mt_carmel_app/src/screens/start_page.dart';
+
+import '../../blocs/tab_bloc/tab_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   // TODO Get the list from the API
@@ -163,12 +166,28 @@ class ProfileScreen extends StatelessWidget {
   }
 
   _confirmationDialog(context) {
+    final branchName = BlocProvider.of<TabBloc>(context).branch.name;
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        content: ListTile(
-          title: Text("Do you want to change branch?"),
+        content: Wrap(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("You are currently in "),
+                Text(
+                  "$branchName",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .title
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text("\nDo you want to change branch?"),
+              ],
+            ),
+          ],
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
