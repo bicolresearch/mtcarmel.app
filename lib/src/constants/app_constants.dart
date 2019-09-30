@@ -28,7 +28,7 @@ class AppConstants {
 
   static const String LIVE_STREAM_JSON_URL =
       "https://api.mountcarmel.ph/live_streams/";
-  static const String FEEDS_JSON_URL = "https://api.mountcarmel.ph/posts/";
+  static const String FEEDS_JSON_URL = "posts/";
   static const String ADS_JSON_URL = "https://api.mountcarmel.ph/ads/";
 
   static const String TRANSACTION_JSON_URL =
