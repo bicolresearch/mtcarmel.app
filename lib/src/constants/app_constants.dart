@@ -48,7 +48,7 @@ class AppConstants {
   static const String BOUNDARIES_JSON_URL =
       'https://api.mountcarmel.ph/boundaries/';
   static const String SEND_HELP_JSON_URL =
-      "https://api.mountcarmel.ph/branch_donations/";
+      "branch_donations/";
 
   static const String DEFAULT_BRANCH_ID = "1";
   static const String CARMEL_NAME = "Carmel";
