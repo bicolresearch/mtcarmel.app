@@ -2,8 +2,8 @@
 *   Filename    :   home_screen.dart
 *   Purpose     :
 *   Created     :   02/09/2019 10:57 AM by Detective Conan
-*	 Updated			:   23/09/2019 10:41 AM PM by Detective Conan
-*	 Changes			:   Added messages for no connectivity and error
+*	 Updated			:   30/09/2019 1:49 PM PM by Detective Conan
+*	 Changes			:   Added navigation button for going back to carmel locations on error
 */
 
 import 'package:flutter/material.dart';
@@ -16,11 +16,16 @@ import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
-import 'package:mt_carmel_app/src/models/branch.dart';
 
 //import 'package:mt_carmel_app/src/blocs/transparency_bloc/transparency_bloc.dart';
 import 'package:mt_carmel_app/src/screens/home_bottom_navigator.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
+
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
+
+import 'package:mt_carmel_app/src/screens/start_page.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -85,6 +90,32 @@ class _HomeScreenState extends State<HomeScreen> {
                           .dispatch(GetBranch(state.branchId));
                     },
                   ),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    color: Colors.brown,
+                    child: Text(
+                      "Bracnh locations",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      _navigateToStartPage(context);
+                    },
+                  ),
+                  OutlineButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    color: Colors.brown[500],
+                    child: Text(
+                      "Carmel locations",
+                      style: TextStyle(
+                          color: Colors.brown[500],
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      _navigateToStartPage(context);
+                    },
+                  ),
                 ],
               ),
             );
@@ -106,6 +137,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       BlocProvider.of<BranchBloc>(context)
                           .dispatch(GetBranch(state.branchId));
+                    },
+                  ),
+                  OutlineButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    color: Colors.brown[500],
+                    child: Text(
+                      "Carmel locations",
+                      style: TextStyle(
+                          color: Colors.brown[500],
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      _navigateToStartPage(context);
                     },
                   ),
                 ],
@@ -147,6 +192,21 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  _navigateToStartPage(context) async {
+    await SharedPreferencesHelper.setBranchNameFlag(null);
+    await SharedPreferencesHelper.setBranchIdFlag(null);
+    await SharedPreferencesHelper.setResetBranch(true);
+    locator<BranchService>().clearBranch();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return StartPage();
+        },
       ),
     );
   }
