@@ -36,9 +36,9 @@ class AboutService {
     } catch (e) {
       print(e);
       if (!hasConnection)
-        throw Exception('ModuleListService.getJsonData: No connection');
+        throw Exception('ModuleListService.getData: No connection');
       throw Exception(
-          'ModuleListService.getData:  Error requesting Modules: $e');
+          'ModuleListService.getData:  Error requesting About data: $e');
     }
 
     if (response.statusCode == 200) {
@@ -47,7 +47,7 @@ class AboutService {
         return About.fromJson(body);
       } catch (e) {
         print(e);
-        throw Exception("ModuleListService.getJsonData: $e");
+        throw Exception("ModuleListService.getData: $e");
       }
     } else {
       print(response.statusCode);
