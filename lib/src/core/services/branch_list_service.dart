@@ -30,7 +30,7 @@ class BranchListService {
       response = await dio.get(
           "${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
           queryParameters: {'k': _keyword},
-          options: buildCacheOptions(Duration(days: 7), subKey: "page=$locationId"));
+          options: buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION), subKey: "page=$locationId"));
     } catch (e) {
       print(e);
       if (!hasConnection)

@@ -2,8 +2,8 @@
 *   Filename    :   church_modules_service.dart
 *   Purpose     :
 *   Created     :   11/09/2019 1:02 PM by Detective Conan
-*	 Updated			:   30/09/2019 3:48 PM PM by Detective Conan
-*	 Changes			:   Implemented caching of url response
+*	 Updated			:   30/09/2019 3:53 PM PM by Detective Conan
+*	 Changes			:   Fixed handling of connectivity error
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -19,14 +19,13 @@ class ChurchModuleService {
   Future<ChurchModule> getChurchModule(ModuleReference moduleReference) async {
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
-    if (!hasConnection)
-      throw Exception('ChurchModuleService.getChurchModule: No connection');
-
     var churchSubModules;
     try {
       churchSubModules = await _getSubModules(moduleReference);
     } catch (e) {
       print(e);
+      if (!hasConnection)
+        throw Exception('ChurchModuleService.getChurchModule: No connection');
       throw Exception(e);
     }
 
@@ -98,7 +97,7 @@ class ChurchModuleService {
     try {
       response = await dio.get("$url",
           queryParameters: {'k': keyword},
-          options: buildCacheOptions(Duration(days: 7),
+          options: buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION),
               subKey: "page=${branchId.toString()}_$subModuleId"));
     } catch (e) {
       print(e);

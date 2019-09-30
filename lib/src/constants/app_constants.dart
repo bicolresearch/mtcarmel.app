@@ -7,6 +7,8 @@
 */
 
 class AppConstants {
+
+  static const CACHE_DURATION = 2; //days
   static const String APP_TITLE = "Mount Carmel";
   static const String FONT_FAMILY = 'Helvetica';
   static const String MT_CARMEL_LOGO_PATH = 'assets/images/mt_carmel_logo.png';

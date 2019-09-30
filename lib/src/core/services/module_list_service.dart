@@ -40,7 +40,7 @@ class ModuleListService {
       response = await dio.get("$url",
           queryParameters: {'k': keyword},
           options:
-              buildCacheOptions(Duration(days: 7), subKey: "page=$branchId"));
+              buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION), subKey: "page=$branchId"));
     } catch (e) {
       print(e);
       if (!hasConnection)

@@ -35,7 +35,7 @@ class BranchLocationsService {
       response = await dio.get(
           "${AppConstants.API_BASE_URL}${AppConstants.BRANCH_LOCATIONS_JSON_URL}",
           queryParameters: {'k': _keyword},
-          options: buildCacheOptions(Duration(days: 7)));
+          options: buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION)));
     } catch (e) {
       print(e);
       if (!hasConnection)
