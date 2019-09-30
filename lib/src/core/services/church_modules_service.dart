@@ -2,24 +2,24 @@
 *   Filename    :   church_modules_service.dart
 *   Purpose     :
 *   Created     :   11/09/2019 1:02 PM by Detective Conan
-*	 Updated			:   23/09/2019 9:26 AM PM by Detective Conan
-*	 Changes			:   Added connectivity check
+*	 Updated			:   30/09/2019 3:48 PM PM by Detective Conan
+*	 Changes			:   Implemented caching of url response
 */
 
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ChurchModuleService {
   Future<ChurchModule> getChurchModule(ModuleReference moduleReference) async {
-
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
-    if(!hasConnection)
+    if (!hasConnection)
       throw Exception('ChurchModuleService.getChurchModule: No connection');
 
     var churchSubModules;
@@ -59,8 +59,6 @@ class ChurchModuleService {
     return churchSubmodules;
   }
 
-
-
 //  Future _getSubModules(ModuleReference moduleReference) async {
 //    final List<String> subModuleIds =
 //        moduleReference.subModuleIds?.split(",") ?? [];
@@ -87,37 +85,59 @@ class ChurchModuleService {
 //  }
 
   Future<ChurchSubModule> _getChurchSubModule(String subModuleId) async {
+    final keyword = "subModule";
     final branchId = await locator<BranchService>().branch.id;
-    final response = await http
-        .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId");
-    if (response.statusCode == 200) {
-      final body = json.decode(response.body);
-      return ChurchSubModule.fromJson(body);
-    } else {
-      throw Exception("Error in SubModlueAndFormFields data gathering.");
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    var response;
+    final url =
+        "${AppConstants.API_BASE_URL}${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId";
+
+    var dio = locator<DioService>().getDio();
+
+    try {
+      response = await dio.get("$url",
+          queryParameters: {'k': keyword},
+          options: buildCacheOptions(Duration(days: 7),
+              subKey: "page=${branchId.toString()}_$subModuleId"));
+    } catch (e) {
+      print(e);
+      if (!hasConnection)
+        throw Exception(
+            'ChurchModuleService._getChurchSubModule: No connection');
+      throw Exception(
+          'ChurchModuleService._getChurchSubModule:  Error requesting ChurchModuleService: $e');
     }
-//    return ChurchSubModule(
-//        name: subModuleAndFormFields.subModule?.name,
-//        formFields: subModuleAndFormFields.formFields,
-//        acceptanceContent: subModuleAndFormFields.subModule.acceptanceContent,
-//        thankYouContent: subModuleAndFormFields.subModule.thankYouContent,
-//        url: subModuleAndFormFields.subModule.url);
+
+    if (response.statusCode == 200) {
+      try {
+        final body = json.decode("$response");
+        return ChurchSubModule.fromJson(body);
+      } catch (e) {
+        print(e);
+        throw Exception("ChurchModuleService._getChurchSubModule: $e");
+      }
+    } else {
+      print(response.statusCode);
+      throw Exception(
+          "ChurchModuleService._getChurchSubModule: statusCode ${response.statusCode}");
+    }
   }
 
 //TODO
-  Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
-      String subModuleId) async {
-    final branchId = await locator<BranchService>().branch.id;
-    final response = await http
-        .get("${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId");
-    if (response.statusCode == 200) {
-      print(response.body);
-      final body = json.decode(response.body);
-      print(body);
-      return SubModuleAndFormFields.fromJson(body);
-    } else {
-      throw Exception("Error in SubModlueAndFormFields data gathering.");
-    }
+//  Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
+//      String subModuleId) async {
+//    final branchId = await locator<BranchService>().branch.id;
+//    final response = await http.get(
+//        "${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId");
+//    if (response.statusCode == 200) {
+//      print(response.body);
+//      final body = json.decode("$response");
+//      print(body);
+//      return SubModuleAndFormFields.fromJson(body);
+//    } else {
+//      throw Exception("Error in SubModlueAndFormFields data gathering.");
+//    }
 //    if (response.statusCode == 200) {
 //      return (json.decode(response.body) as List)
 //          .map((data) => SubModuleAndFormFields.fromJson(data))
@@ -126,5 +146,5 @@ class ChurchModuleService {
 //    } else {
 //      throw Exception('Failed to load');
 //    }
-  }
+//  }
 }

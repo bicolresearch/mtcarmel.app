@@ -18,7 +18,6 @@ import 'dart:convert';
 
 class SendHelpService {
   final _keyword = "sendHelp";
-  List<SendHelpData> _sendHelps = [];
 
   Future<List<SendHelpData>> getData() async {
     final hasConnection = await ConnectivityChecker.hasDataConnection();
@@ -41,13 +40,13 @@ class SendHelpService {
       if (!hasConnection)
         throw Exception('SendHelpService.getData: No connection');
       throw Exception(
-          'SendHelpService.getData:  Error requesting NewsFeed: $e');
+          'SendHelpService.getData:  Error requesting SendHelp: $e');
     }
 
     if (response.statusCode == 200) {
       try {
         final body = json.decode("$response");
-        _sendHelps = SendHelp.fromJson(body).data;
+        return SendHelp.fromJson(body).data;
       } catch (e) {
         print(e);
         throw Exception("SendHelpService.getData: $e");
@@ -57,6 +56,5 @@ class SendHelpService {
       throw Exception(
           "SendHelpService.getData: statusCode ${response.statusCode}");
     }
-    return _sendHelps;
   }
 }

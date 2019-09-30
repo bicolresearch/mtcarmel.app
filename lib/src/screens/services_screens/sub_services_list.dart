@@ -73,7 +73,7 @@ class SubServicesList extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20.0, horizontal: 70.0),
                             child: Text(
-                              churchModule.churchSubModules[index].name,
+                              churchModule.churchSubModules[index].name??"",
                               style: Theme.of(context).primaryTextTheme.subhead,
                               textAlign: TextAlign.center,
                             ),
