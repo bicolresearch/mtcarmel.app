@@ -7,7 +7,7 @@
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/user_authentication.dart';
@@ -33,22 +33,23 @@ class UserAuthenticationApi {
 
   Future<bool> _isValid(String email, String password) async {
     var valid;
-    await http
-        .get(AppConstants.API_BASE_URL +
-            "auth/login/" +
-            "username/" +
-            email +
-            "/password/" +
-            password)
-        .then((value) async {
-      if (value.statusCode == 200) {
-        final body = json.decode(value.body);
-        _userAuthentication = UserAuthentication.fromJson(body);
-        valid = true;
-      } else {
-        print(value.statusCode);
-      }
-    }).timeout(Duration(seconds: 5));
+    //TODO change the implementation. use Dio package
+//    await http
+//        .get(AppConstants.API_BASE_URL +
+//            "auth/login/" +
+//            "username/" +
+//            email +
+//            "/password/" +
+//            password)
+//        .then((value) async {
+//      if (value.statusCode == 200) {
+//        final body = json.decode(value.body);
+//        _userAuthentication = UserAuthentication.fromJson(body);
+//        valid = true;
+//      } else {
+//        print(value.statusCode);
+//      }
+//    }).timeout(Duration(seconds: 5));
     return (valid != null && valid);
   }
 

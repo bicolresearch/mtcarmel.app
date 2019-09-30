@@ -10,7 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'dart:convert';
 
@@ -36,9 +36,10 @@ class LocationMapService {
     print("${AppConstants.MAP_JSON_URL}?branch_id=$branchId}");
     var response;
     try {
-      response = await http
-          .get("${AppConstants.MAP_JSON_URL}?branch_id=$branchId")
-          .timeout(Duration(seconds: 5));
+      //TODO change the implementation. use Dio package
+//      response = await http
+//          .get("${AppConstants.MAP_JSON_URL}?branch_id=$branchId")
+//          .timeout(Duration(seconds: 5));
     } catch (e) {
       print(e);
       throw Exception("Error in fetching location map");

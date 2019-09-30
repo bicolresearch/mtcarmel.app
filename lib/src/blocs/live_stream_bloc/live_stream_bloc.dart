@@ -14,7 +14,7 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/live_stream.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class LiveStreamBloc extends Bloc<LiveStreamEvent, LiveStreamState> {
@@ -48,28 +48,29 @@ class LiveStreamBloc extends Bloc<LiveStreamEvent, LiveStreamState> {
 
     LiveStream _liveStream;
     final branchId = await locator<BranchService>().branch.id;
-    await http
-        .get("${AppConstants.LIVE_STREAM_JSON_URL}/?branch_id=$branchId")
-        .then(
-          (value) {
-            print(value);
-            if (value.statusCode == 200) {
-              final body = json.decode(value.body);
-              _liveStream = LiveStream.fromJson(body);
-            } else {
-              print(value.statusCode);
-              throw "Data error";
-            }
-          },
-        )
-        .timeout(
-          Duration(seconds: 5),
-        )
-        .catchError(
-          (e) {
-            throw e;
-          },
-        );
+    //TODO change the implementation. use Dio package
+//    await http
+//        .get("${AppConstants.LIVE_STREAM_JSON_URL}/?branch_id=$branchId")
+//        .then(
+//          (value) {
+//            print(value);
+//            if (value.statusCode == 200) {
+//              final body = json.decode(value.body);
+//              _liveStream = LiveStream.fromJson(body);
+//            } else {
+//              print(value.statusCode);
+//              throw "Data error";
+//            }
+//          },
+//        )
+//        .timeout(
+//          Duration(seconds: 5),
+//        )
+//        .catchError(
+//          (e) {
+//            throw e;
+//          },
+//        );
     return _liveStream;
   }
 }

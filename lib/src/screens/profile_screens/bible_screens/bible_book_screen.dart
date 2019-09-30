@@ -13,7 +13,7 @@ import 'package:mt_carmel_app/src/helpers/bible_helpers/bible_book.dart';
 import 'package:mt_carmel_app/src/models/bible_reference.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
@@ -46,30 +46,31 @@ class _BibleBookScreenState extends State<BibleBookScreen> {
   }
 
   Future<BibleReference> getJsonData() async {
-    var response = await http.get(AppConstants.BIBLE_JSON_BASE_URL +
-        book.bookName +
-        _chapterSelect +
-        "?translation=kjv");
-    if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          try {
-            final body = json.decode(response.body);
-
-            _reference = BibleReference.fromJson(body);
-          } catch (e) {
-            print(e.toString() + "...");
-            print(response.body);
-          }
-          _isLoading = false;
-        } else {
-          print(response.statusCode);
-          _isJsonFailed = true;
-          _isLoading = false;
-        }
-      });
-    }
-    return _reference;
+    //TODO change the implementation. use Dio package
+//    var response = await http.get(AppConstants.BIBLE_JSON_BASE_URL +
+//        book.bookName +
+//        _chapterSelect +
+//        "?translation=kjv");
+//    if (this.mounted) {
+//      setState(() {
+//        if (response.statusCode == 200) {
+//          try {
+//            final body = json.decode(response.body);
+//
+//            _reference = BibleReference.fromJson(body);
+//          } catch (e) {
+//            print(e.toString() + "...");
+//            print(response.body);
+//          }
+//          _isLoading = false;
+//        } else {
+//          print(response.statusCode);
+//          _isJsonFailed = true;
+//          _isLoading = false;
+//        }
+//      });
+//    }
+//    return _reference;
   }
 
   @override

@@ -7,7 +7,7 @@
 */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'dart:convert';
 
@@ -20,14 +20,14 @@ class TransparencyService{
 
     if(!hasConnection)
       throw Exception('TransparencyService.getData: No connection');
-
-    var response = await http.get(AppConstants.TRANSACTION_JSON_URL);
-
-    if (response.statusCode == 200) {
-      final body = json.decode(response.body);
-      return Donations.fromJson(body);
-    } else {
-      throw Exception("Failed to load");
-    }
+//TODO change the implementation. use Dio package
+//    var response = await http.get(AppConstants.TRANSACTION_JSON_URL);
+//
+//    if (response.statusCode == 200) {
+//      final body = json.decode(response.body);
+//      return Donations.fromJson(body);
+//    } else {
+//      throw Exception("Failed to load");
+//    }
   }
 }

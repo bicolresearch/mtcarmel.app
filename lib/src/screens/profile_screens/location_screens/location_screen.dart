@@ -11,7 +11,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'dart:convert';
@@ -36,44 +36,45 @@ class _LocationScreenState extends State<LocationScreen> {
 
   Future<void> getJsonMapData() async {
     final branchId = await locator<BranchService>().branch.id;
-    await Future.delayed(Duration(milliseconds: 800));
-    var response =
-        await http.get("${AppConstants.MAP_JSON_URL}?branch_id=$branchId");
-    if (this.mounted) {
-      setState(() {
-        if (response.statusCode == 200) {
-          final body = json.decode(response.body);
-
-          LocationMap locationMap = LocationMap.fromJson(body);
-
-          List<LatLng> points = [];
-
-          if (locationMap.mapBoundaries.isNotEmpty) {
-            for (var boundary in locationMap.mapBoundaries) {
-              points.add(LatLng(
-                  double.parse(boundary.lat), double.parse(boundary.lng)));
-            }
-
-            _polygon = <Polygon>{
-              Polygon(
-                  polygonId: PolygonId("boundary"),
-                  fillColor: Color.fromARGB(65, 0x7E, 0x52, 0x32),
-                  strokeColor: Color.fromARGB(191, 0x7E, 0x52, 0x32),
-                  strokeWidth: 3,
-                  points: points)
-            };
-          }
-
-          if (locationMap.mapCenter.isNotEmpty) {
-            _location = LatLng(
-                double.parse(locationMap.mapCenter[0].lat_center),
-                double.parse(locationMap.mapCenter[0].lng_center));
-          }
-        } else {
-          print(response.statusCode);
-        }
-      });
-    }
+//    await Future.delayed(Duration(milliseconds: 800));
+    //TODO change the implementation. use Dio package
+//    var response =
+//        await http.get("${AppConstants.MAP_JSON_URL}?branch_id=$branchId");
+//    if (this.mounted) {
+//      setState(() {
+//        if (response.statusCode == 200) {
+//          final body = json.decode(response.body);
+//
+//          LocationMap locationMap = LocationMap.fromJson(body);
+//
+//          List<LatLng> points = [];
+//
+//          if (locationMap.mapBoundaries.isNotEmpty) {
+//            for (var boundary in locationMap.mapBoundaries) {
+//              points.add(LatLng(
+//                  double.parse(boundary.lat), double.parse(boundary.lng)));
+//            }
+//
+//            _polygon = <Polygon>{
+//              Polygon(
+//                  polygonId: PolygonId("boundary"),
+//                  fillColor: Color.fromARGB(65, 0x7E, 0x52, 0x32),
+//                  strokeColor: Color.fromARGB(191, 0x7E, 0x52, 0x32),
+//                  strokeWidth: 3,
+//                  points: points)
+//            };
+//          }
+//
+//          if (locationMap.mapCenter.isNotEmpty) {
+//            _location = LatLng(
+//                double.parse(locationMap.mapCenter[0].lat_center),
+//                double.parse(locationMap.mapCenter[0].lng_center));
+//          }
+//        } else {
+//          print(response.statusCode);
+//        }
+//      });
+//    }
   }
 
   BitmapDescriptor _markerIcon;

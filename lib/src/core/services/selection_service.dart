@@ -6,7 +6,7 @@
 *	 Changes			:   Added connectivity check
 */
 
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'dart:convert';
 
@@ -19,18 +19,18 @@ class SelectionService {
 
     if(!hasConnection)
       throw Exception('SelectionService.getSelection: No connection');
-
-    List<SelectionApi> _selectionApis;
-    await http.get("$url").then((response) {
-      if (response.statusCode == 200) {
-        _selectionApis = (json.decode(response.body) as List)
-              .map((data) => new SelectionApi.fromJson(data))
-              .toList();
-      } else {
-        print(response.statusCode);
-        throw Exception("No selection retrieved.");
-      }
-    }).timeout(Duration(seconds: 5));
-    return _selectionApis;
+//TODO change the implementation. use Dio package
+//    List<SelectionApi> _selectionApis;
+//    await http.get("$url").then((response) {
+//      if (response.statusCode == 200) {
+//        _selectionApis = (json.decode(response.body) as List)
+//              .map((data) => new SelectionApi.fromJson(data))
+//              .toList();
+//      } else {
+//        print(response.statusCode);
+//        throw Exception("No selection retrieved.");
+//      }
+//    }).timeout(Duration(seconds: 5));
+//    return _selectionApis;
   }
 }
