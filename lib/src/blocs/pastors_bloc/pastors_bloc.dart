@@ -2,8 +2,8 @@
 *   Filename    :   pastors_bloc.dart
 *   Purpose     :
 *   Created     :   17/09/2019 4:50 PM by Detective Conan
-*   Updated     :   17/09/2019 4:50 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   30/09/2019 6:36 PM PM by Detective Conan
+*	 Changes			:   Implemented caching of url response
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';

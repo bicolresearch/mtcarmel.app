@@ -33,7 +33,7 @@ class PriestsService {
     try {
       response = await http
               .get(
-                  "${AppConstants.PRIESTS_JSON_URL}?branch_id=$_branchId?type_id=$_TYPE_ID")
+                  "${AppConstants.CARMELITES_JSON_URL}?branch_id=$_branchId?type_id=$_TYPE_ID")
               .timeout(Duration(seconds: 5));
     } catch (e) {
       print(e);
