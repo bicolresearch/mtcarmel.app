@@ -15,6 +15,7 @@ import 'package:mt_carmel_app/src/core/services/branch_locations_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/contact_detail_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
+import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/location_map_service.dart';
 import 'package:mt_carmel_app/src/core/services/module_list_service.dart';
 import 'package:mt_carmel_app/src/core/services/news_feed_service.dart';
@@ -60,4 +61,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => AboutService());
   locator.registerLazySingleton(() => ContactDetailService());
   locator.registerLazySingleton(() => BranchLocationsService());
+  locator.registerLazySingleton(()=> DioService());
 }

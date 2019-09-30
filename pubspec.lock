@@ -190,6 +190,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0-pre.4"
+  dio:
+    dependency: transitive
+    description:
+      name: dio
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.2"
+  dio_http_cache:
+    dependency: "direct main"
+    description:
+      name: dio_http_cache
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   equatable:
     dependency: "direct main"
     description:
@@ -780,5 +794,5 @@ packages:
     source: hosted
     version: "4.1.0"
 sdks:
-  dart: ">=2.4.0 <3.0.0"
+  dart: ">2.4.0 <3.0.0"
   flutter: ">=1.6.0 <2.0.0"
