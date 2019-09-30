@@ -217,16 +217,16 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
 
   _initializeList() async {
     await _getPurposeMassTypes();
-
-    locator<MassRequestService>().getMassRequests().then(
-      ((value) {
-        if (this.mounted)
-          setState(() {
-            debugPrint(value.toString());
-            _massRequests = value;
-          });
-      }),
-    );
+// TODO implement when ready
+//    locator<MassRequestService>().getMassRequests().then(
+//      ((value) {
+//        if (this.mounted)
+//          setState(() {
+//            debugPrint(value.toString());
+//            _massRequests = value;
+//          });
+//      }),
+//    );
   }
 
   Future _getPurposeMassTypes() async {
@@ -328,17 +328,18 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
     final headers = {"Content-type": "application/x-www-form-urlencoded"};
     debugPrint("$casted");
     debugPrint(url);
-    locator<CrudService>().put(url, body: casted, headers: headers).then(
-      ((value) {
-        debugPrint("$value");
-        success = value;
-      }),
-    ).catchError(
-          (e) {
-        debugPrint("$e");
-        success = false;
-      },
-    );
+    //TODO implement when ready
+//    locator<CrudService>().put(url, body: casted, headers: headers).then(
+//      ((value) {
+//        debugPrint("$value");
+//        success = value;
+//      }),
+//    ).catchError(
+//          (e) {
+//        debugPrint("$e");
+//        success = false;
+//      },
+//    );
     return success;
   }
 }

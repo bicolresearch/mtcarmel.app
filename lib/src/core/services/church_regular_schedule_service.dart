@@ -18,6 +18,11 @@ import 'dart:convert';
 import 'package:mt_carmel_app/src/models/schedule.dart';
 
 class ChurchRegularScheduleService {
+
+  List<Schedule> _churchRegularSchedules = [];
+
+  List<Schedule> get churchRegularSchedules => _churchRegularSchedules;
+
   Future<List<Schedule>> getData() async {
     final keyword = "regularSchedule";
 
