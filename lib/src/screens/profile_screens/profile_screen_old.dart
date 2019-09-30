@@ -20,7 +20,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.da
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
+//import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_screen.dart';
@@ -644,8 +644,8 @@ class _ProfileScreenOldState extends State<ProfileScreenOld> {
         return ContactDetailScreen();
       case ProfileScreenOld.BIBLE:
         return BibleScreen(context);
-      case ProfileScreenOld.LOCATION_MAP:
-        return LocationScreen();
+//      case ProfileScreenOld.LOCATION_MAP:
+//        return LocationScreen();
       case ProfileScreenOld.PRAYER_REQUESTS:
         return PrayerRequestScreen();
       case ProfileScreenOld.MASS_REQUESTS:

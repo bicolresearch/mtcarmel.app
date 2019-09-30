@@ -2,15 +2,16 @@
 *   Filename    :   location_map_service.dart
 *   Purpose     :
 *   Created     :   17/09/2019 6:10 PM by Detective Conan
-*	 Updated			:   23/09/2019 9:26 AM PM by Detective Conan
-*	 Changes			:   Added connectivity check
+*	 Updated			:   30/09/2019 5:55 PM PM by Detective Conan
+*	 Changes			:   Implemented caching of url response
 */
 
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-//import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'dart:convert';
 
@@ -26,45 +27,56 @@ class LocationMapService {
   LatLng get centerLocation => _centerLocation;
 
   Future<void> getMapData() async {
-
+    final keyword = "locationMap";
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
-    if(!hasConnection)
-      throw Exception('LocationMapService.getMapData: No connection');
-
     final branchId = await locator<BranchService>().branch.id;
-    print("${AppConstants.MAP_JSON_URL}?branch_id=$branchId}");
     var response;
+
+    final url =
+        "${AppConstants.API_BASE_URL}${AppConstants.MAP_JSON_URL}?branch_id=$branchId";
+
+    var dio = locator<DioService>().getDio();
+
     try {
-      //TODO change the implementation. use Dio package
-//      response = await http
-//          .get("${AppConstants.MAP_JSON_URL}?branch_id=$branchId")
-//          .timeout(Duration(seconds: 5));
+      response = await dio.get("$url",
+          queryParameters: {'k': keyword},
+          options:
+          buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION), subKey: "page=$branchId"));
     } catch (e) {
       print(e);
-      throw Exception("Error in fetching location map");
+      if (!hasConnection)
+        throw Exception('LocationMapService.getJsonData: No connection');
+      throw Exception(
+          'LocationMapService.getData:  Error requesting Modules: $e');
     }
 
     if (response.statusCode == 200) {
-      final body = json.decode(response.body);
+      try {
+        final body = json.decode("$response");
+        LocationMap locationMap = LocationMap.fromJson(body);
 
-      LocationMap locationMap = LocationMap.fromJson(body);
-
-      if (locationMap.mapBoundaries.isNotEmpty) {
+              if (locationMap.mapBoundaries.isNotEmpty) {
         for (var boundary in locationMap.mapBoundaries) {
           _points.add(
               LatLng(double.parse(boundary.lat), double.parse(boundary.lng)));
         }
+
+                      if (locationMap.mapCenter.isNotEmpty) {
+                        _centerLocation = LatLng(
+                            double.parse(locationMap.mapCenter[0].lat_center),
+                            double.parse(locationMap.mapCenter[0].lng_center));
+                      }
       }
 
-      if (locationMap.mapCenter.isNotEmpty) {
-        _centerLocation = LatLng(
-            double.parse(locationMap.mapCenter[0].lat_center),
-            double.parse(locationMap.mapCenter[0].lng_center));
+      } catch (e) {
+        print(e);
+        throw Exception("LocationMapService.getJsonData: $e");
       }
     } else {
       print(response.statusCode);
-      throw Exception("Error in fetching location map");
+      throw Exception(
+          "LocationMapService.getData: statusCode ${response.statusCode}");
     }
   }
 }
