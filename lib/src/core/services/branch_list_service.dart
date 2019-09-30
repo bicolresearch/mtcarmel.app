@@ -23,7 +23,6 @@ class BranchListService {
     final _keyword = "branches";
 
     final hasConnection = await ConnectivityChecker.hasDataConnection();
-    print("${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}");
     var dio = locator<DioService>().getDio();
 
     var response;

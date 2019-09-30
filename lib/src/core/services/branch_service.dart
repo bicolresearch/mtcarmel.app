@@ -1,18 +1,23 @@
 /*
 *   Filename    :   branch_service.dart
-*   Purpose     :
+*   Purpose     :   For the requesting branch
 *   Created     :   09/09/2019 9:36 AM by Detective Conan
 *	 Updated			:   23/09/2019 9:26 AM PM by Detective Conan
-*	 Changes			:   Added connectivity check
+*	 Updated			:   30/09/2019 1:00 PM PM by Detective Conan
+*	 Changes			:   Implemented caching of url response
 */
 
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'service_locator.dart';
+
 class BranchService {
+  final _keyword = "branch";
   Branch _branch;
 
   Branch get branch => _branch;
@@ -22,21 +27,29 @@ class BranchService {
   Future<Branch> getBranch(String branchId) async {
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
-    if (!hasConnection)
-      throw Exception('BranchService.getBranch: No connection');
-
     if (_branch != null) return _branch;
 
     final url =
         "${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}branch/?id=$branchId";
-    print(url);
-    final response = await http.get(
-      url,
-    );
+
+    var dio = locator<DioService>().getDio();
+
+    var response;
+    try {
+      response = await dio.get("$url",
+          queryParameters: {'k': _keyword},
+          options:
+              buildCacheOptions(Duration(days: 7), subKey: "page=$branchId"));
+    } catch (e) {
+      print(e);
+      if (!hasConnection)
+        throw Exception('BranchService.getBranch: No connection');
+      throw Exception('BranchService.getBranch:  Error requesting Branch: $e');
+    }
 
     if (response.statusCode == 200) {
       try {
-        final body = json.decode(response.body);
+        final body = json.decode("$response");
         _branch = Branch.fromJson(body);
       } catch (e) {
         print(e);
