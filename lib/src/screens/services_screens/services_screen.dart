@@ -72,9 +72,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
           Scaffold(
             body: Column(
               children: <Widget>[
-                ServiceHeader(
-                  branchName: tabBloc.branch.name,
-                ),
+                ServiceHeader(),
                 _arrowMoreUp,
                 Expanded(
                   child: Container(
@@ -125,7 +123,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               return BlocProvider<SubServicesBloc>(
                   builder: (context) => SubServicesBloc()
                     ..dispatch(FetchSubServices(moduleReference)),
-                  child: SubServicesScreen(branchName));
+                  child: SubServicesScreen());
             },
           ),
         );

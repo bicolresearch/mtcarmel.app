@@ -8,15 +8,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
 
 class ServiceHeader extends StatelessWidget {
-  final String branchName;
-
-  const ServiceHeader({Key key, @required this.branchName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final String branchName = locator<BranchService>().branch.name;
     return Column(
       children: <Widget>[
         Container(

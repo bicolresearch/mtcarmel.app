@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_info/service_info_screen.dart';
 
@@ -19,25 +21,19 @@ import 'package:mt_carmel_app/src/widgets/service_header.dart';
 import 'package:provider/provider.dart';
 
 class SubServicesList extends StatelessWidget {
-  final branchName;
-
-  SubServicesList(this.branchName);
 
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<SubServicesBloc>(context);
     final churchModule = bloc.churchModule;
-    final moduleReference =
-        BlocProvider.of<SubServicesBloc>(context).moduleReference;
+    final moduleReference = bloc.moduleReference;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
         child: Container(
           child: Column(
             children: <Widget>[
-              ServiceHeader(
-                branchName: branchName,
-              ),
+              ServiceHeader(),
               SizedBox(
                 height: 10.0,
               ),

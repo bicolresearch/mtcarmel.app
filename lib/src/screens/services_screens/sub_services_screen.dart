@@ -17,10 +17,6 @@ import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
 class SubServicesScreen extends StatelessWidget {
-  final branchName;
-
-  SubServicesScreen(this.branchName);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +30,7 @@ class SubServicesScreen extends StatelessWidget {
                   return LoadingIndicator();
                 }
                 if (state is SubServicesLoaded) {
-                  return SubServicesList(branchName);
+                  return SubServicesList();
                 }
                 if (state is NoSubServicesLoaded) {
                   return Scaffold(
@@ -112,7 +108,17 @@ class SubServicesScreen extends StatelessWidget {
               },
             ),
           ),
-          leftArrowBackButton(context: context),
+//          leftArrowBackButton(context: context),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.keyboard_arrow_left,
+              size: 50.0,
+              color: Colors.brown,
+            ),
+          ),
           SizedBox(
             height: 20.0,
           )
