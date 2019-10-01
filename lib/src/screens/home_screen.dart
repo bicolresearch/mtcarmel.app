@@ -2,8 +2,8 @@
 *   Filename    :   home_screen.dart
 *   Purpose     :
 *   Created     :   02/09/2019 10:57 AM by Detective Conan
-*	 Updated			:   01/10/2019 2:47 PM PM by Detective Conan
-*	 Changes			:   Added method for error message display.
+*	 Updated			:   01/10/2019 2:53 PM PM by Detective Conan
+*	 Changes			:   Get the passed button label and error message.
 */
 
 import 'package:flutter/material.dart';
@@ -140,13 +140,13 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Center(child: Text("No connection!")),
+          Center(child: Text("$err")),
           RaisedButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             color: Colors.brown,
             child: Text(
-              "Retry",
+              "$buttonLabel",
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
