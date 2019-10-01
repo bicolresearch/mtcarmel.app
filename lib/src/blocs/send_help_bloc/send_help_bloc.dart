@@ -2,8 +2,8 @@
 *   Filename    :   send_help_bloc.dart
 *   Purpose     :
 *   Created     :   12/09/2019 12:10 PM by Detective Conan
-*	 Updated			:   24/09/2019 12:48 PM PM by Detective Conan
-*	 Changes			:   Moved the sendHelpList to TabBloc
+*	 Updated			:   01/10/2019 10:52 AM PM by Detective Conan
+*	 Changes			:   Checking of sendHelpDataList. If not empty request is not necessary.
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
@@ -17,15 +17,20 @@ class SendHelpBloc extends Bloc<SendHelpEvent, SendHelpState> {
   @override
   SendHelpState get initialState => SendHelpUninitialized();
 
+  List<SendHelpData> _sendHelpDataList = [];
+
   @override
   Stream<SendHelpState> mapEventToState(SendHelpEvent event) async* {
     if (event is FetchSendHelp) {
+      if (_sendHelpDataList.isNotEmpty) {
+        yield SendHelpLoaded(_sendHelpDataList);
+        return;
+      }
       yield SendHelpLoading();
-      List<SendHelpData> sendHelpDataList;
       try {
-        sendHelpDataList = await locator<SendHelpService>().getData();
-        if (sendHelpDataList.isNotEmpty) {
-          yield SendHelpLoaded(sendHelpDataList);
+        _sendHelpDataList = await locator<SendHelpService>().getData();
+        if (_sendHelpDataList.isNotEmpty) {
+          yield SendHelpLoaded(_sendHelpDataList);
         } else {
           yield NoSendHelpLoaded();
         }
