@@ -2,8 +2,8 @@
 *   Filename    :   feed_list_view.dart
 *   Purpose     :
 *   Created     :   05/09/2019 10:58 AM by Detective Conan
-*	 Updated			:   24/09/2019 10:21 AM PM by Detective Conan
-*	 Changes			:   Handled displays the previous posts when error on reloading newsfeed
+*	 Updated			:   01/10/2019 3:40 PM PM by Detective Conan
+*	 Changes			:   Added method for error message display
 */
 
 import 'package:flutter/material.dart';
@@ -45,88 +45,25 @@ class _FeedListViewState extends State<FeedListView> {
             tabBloc.setPostData(feed.data);
             return _postsView(feed.data);
           } else if (state is FeedErrorLoading) {
-            print("error loading");
-            if(tabBloc.postData != null && tabBloc.postData.isNotEmpty){
+            if (tabBloc.postData != null && tabBloc.postData.isNotEmpty) {
               return _postsView(tabBloc.postData);
             }
-            return Scaffold(
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Center(child: Text("Something went wrong!")),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Retry",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<NewsFeedBloc>(context)
-                          .dispatch(FetchFeed());
-                    },
-                  ),
-                ],
-              ),
+            return _errorMsgDisplay(
+              context: context,
             );
           } else if (state is FeedNoPost) {
-            if(tabBloc.postData != null && tabBloc.postData.isNotEmpty){
+            if (tabBloc.postData != null && tabBloc.postData.isNotEmpty) {
               return _postsView(tabBloc.postData);
             }
-            print("No posts at the moment!");
-            return Scaffold(
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Center(child: Text("No posts at the moment.")),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Reload",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<NewsFeedBloc>(context)
-                          .dispatch(FetchFeed());
-                    },
-                  ),
-                ],
-              ),
-            );
+            return _errorMsgDisplay(
+                context: context,
+                err: "No post at the moment!",
+                buttonLabel: "Reload");
           } else if (state is FeedNoConnection) {
-
-            if(tabBloc.postData != null && tabBloc.postData.isNotEmpty){
+            if (tabBloc.postData != null && tabBloc.postData.isNotEmpty) {
               return _postsView(tabBloc.postData);
             }
-
-            print("No connection!");
-            return Scaffold(
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Center(child: Text("No connection.")),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Retry",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<NewsFeedBloc>(context)
-                          .dispatch(FetchFeed());
-                    },
-                  ),
-                ],
-              ),
-            );
+            return _errorMsgDisplay(context: context, err: "No connection!");
           }
           return Container();
         },
@@ -270,5 +207,32 @@ class _FeedListViewState extends State<FeedListView> {
   Future _getFeedData() async {
     await Future.delayed(Duration(milliseconds: 300));
     BlocProvider.of<NewsFeedBloc>(context).dispatch(RefreshFeed());
+  }
+
+  _errorMsgDisplay(
+      {@required BuildContext context,
+      String err = "Something went wrong!",
+      String buttonLabel = "Retry"}) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Center(child: Text("$err")),
+          RaisedButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            color: Colors.brown,
+            child: Text(
+              "$buttonLabel",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              BlocProvider.of<NewsFeedBloc>(context).dispatch(FetchFeed());
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
