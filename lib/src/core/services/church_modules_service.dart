@@ -2,8 +2,8 @@
 *   Filename    :   church_modules_service.dart
 *   Purpose     :
 *   Created     :   11/09/2019 1:02 PM by Detective Conan
-*	 Updated			:   30/09/2019 3:53 PM PM by Detective Conan
-*	 Changes			:   Fixed handling of connectivity error
+*	 Updated			:   01/10/2019 12:15 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -97,8 +97,11 @@ class ChurchModuleService {
     try {
       response = await dio.get("$url",
           queryParameters: {'k': keyword},
-          options: buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION),
-              subKey: "page=${branchId.toString()}_$subModuleId"));
+          options: buildCacheOptions(
+            Duration(days: AppConstants.CACHE_DURATION),
+            forceRefresh: true,
+            subKey: "page=${branchId.toString()}_$subModuleId",
+          ));
     } catch (e) {
       print(e);
       if (!hasConnection)

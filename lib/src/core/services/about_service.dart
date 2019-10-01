@@ -2,8 +2,8 @@
 *   Filename    :   about_service.dart
 *   Purpose     :
 *   Created     :   18/09/2019 9:58 AM by Detective Conan
-*	 Updated			:   30/09/2019 4:14 PM PM by Detective Conan
-*	 Changes			:   Implemented caching of url response
+*	 Updated			:   01/10/2019 12:15 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -32,6 +32,7 @@ class AboutService {
           queryParameters: {'k': keyword},
           options: buildCacheOptions(
               Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
               subKey: "page=$branchId"));
     } catch (e) {
       print(e);

@@ -2,12 +2,13 @@
 *  Filename    :   module_list_service.dart
 *  Purpose     :	  Requesting of url response
 *  Created     :   2019-08-16 14:44 by Detective Conan
-*	 Updated			:   30/09/2019 2:41 PM PM by Detective Conan
-*	 Changes			:   Implemented caching og url response
+*	 Updated			:   01/10/2019 12:14 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+
 //import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/dio_service.dart';
@@ -37,8 +38,10 @@ class ModuleListService {
     try {
       response = await dio.get("$url",
           queryParameters: {'k': keyword},
-          options:
-              buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION), subKey: "page=$branchId"));
+          options: buildCacheOptions(
+              Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
+              subKey: "page=$branchId"));
     } catch (e) {
       print(e);
       if (!hasConnection)

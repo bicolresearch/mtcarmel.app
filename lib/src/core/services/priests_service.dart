@@ -2,8 +2,8 @@
 *   Filename    :   priests_service.dart
 *   Purpose     :
 *   Created     :   17/09/2019 3:05 PM by Detective Conan
-*	 Updated			:   30/09/2019 6:46 PM PM by Detective Conan
-*	 Changes			:   Implemented caching of url response
+*	 Updated			:   01/10/2019 12:13 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -28,8 +28,9 @@ class PriestsService {
 
     final url =
         "${AppConstants.API_BASE_URL}${AppConstants.CARMELITES_JSON_URL}contact/?branch_id=$branchId&id=$branchId?type_id=$_TYPE_ID";
-print(url);
-print("${AppConstants.CARMELITES_JSON_URL}?branch_id=$branchId?type_id=$_TYPE_ID");
+    print(url);
+    print(
+        "${AppConstants.CARMELITES_JSON_URL}?branch_id=$branchId?type_id=$_TYPE_ID");
     var dio = locator<DioService>().getDio();
 
     try {
@@ -37,6 +38,7 @@ print("${AppConstants.CARMELITES_JSON_URL}?branch_id=$branchId?type_id=$_TYPE_ID
           queryParameters: {'k': keyword},
           options: buildCacheOptions(
               Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
               subKey: "page=$branchId"));
     } catch (e) {
       print(e);

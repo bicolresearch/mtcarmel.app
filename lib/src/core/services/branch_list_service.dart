@@ -2,9 +2,8 @@
 *   Filename    :   branch_list_service.dart
 *   Purpose     :   For requesting branches
 *   Created     :   16/09/2019 10:52 AM by Detective Conan
-*	 Updated			:   23/09/2019 9:27 AM PM by Detective Conan
-*	 Updated			:   30/09/2019 12:52 PM PM by Detective Conan
-*	 Changes			:   Implemented caching of url response
+*	 Updated			:   01/10/2019 12:15 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -13,7 +12,6 @@ import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/branch.dart';
 import 'dart:convert';
-
 
 import 'service_locator.dart';
 
@@ -30,7 +28,10 @@ class BranchListService {
       response = await dio.get(
           "${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
           queryParameters: {'k': _keyword},
-          options: buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION), subKey: "page=$locationId"));
+          options: buildCacheOptions(
+              Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
+              subKey: "page=$locationId"));
     } catch (e) {
       print(e);
       if (!hasConnection)

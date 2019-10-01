@@ -33,8 +33,10 @@ class SendHelpService {
     try {
       response = await dio.get("$url",
           queryParameters: {'k': _keyword},
-          options:
-              buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION), subKey: "page=$branchId"));
+          options: buildCacheOptions(
+              Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
+              subKey: "page=$branchId"));
     } catch (e) {
       print(e);
       if (!hasConnection)

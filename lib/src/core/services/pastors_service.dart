@@ -2,8 +2,8 @@
 *   Filename    :   pastors_service.dart
 *   Purpose     :
 *   Created     :   17/09/2019 3:05 PM by Detective Conan
-*	 Updated			:   30/09/2019 6:38 PM PM by Detective Conan
-*	 Changes			:   Implemented caching of url response
+*	 Updated			:   01/10/2019 12:13 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -37,6 +37,7 @@ class PastorsService {
           queryParameters: {'k': keyword},
           options: buildCacheOptions(
               Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
               subKey: "page=$branchId"));
     } catch (e) {
       print(e);

@@ -2,8 +2,8 @@
 *  Filename    :   church_regular_schedule_service.dart
 *  Purpose     :	
 *  Created     :   2019-08-30 14:16 by Detective Conan
-*	 Updated			:   30/09/2019 6:23 PM PM by Detective Conan
-*	 Changes			:   Implemented caching of url response
+*	 Updated			:   01/10/2019 12:14 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -18,7 +18,6 @@ import 'dart:convert';
 import 'package:mt_carmel_app/src/models/schedule.dart';
 
 class ChurchRegularScheduleService {
-
   List<Schedule> _churchRegularSchedules = [];
 
   List<Schedule> get churchRegularSchedules => _churchRegularSchedules;
@@ -53,6 +52,7 @@ class ChurchRegularScheduleService {
           queryParameters: {'k': keyword},
           options: buildCacheOptions(
               Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
               subKey: "page=$branchId"));
     } catch (e) {
       print(e);

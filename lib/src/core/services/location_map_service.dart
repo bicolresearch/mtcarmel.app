@@ -2,8 +2,8 @@
 *   Filename    :   location_map_service.dart
 *   Purpose     :
 *   Created     :   17/09/2019 6:10 PM by Detective Conan
-*	 Updated			:   30/09/2019 5:55 PM PM by Detective Conan
-*	 Changes			:   Implemented caching of url response
+*	 Updated			:   01/10/2019 12:14 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -41,8 +41,10 @@ class LocationMapService {
     try {
       response = await dio.get("$url",
           queryParameters: {'k': keyword},
-          options:
-          buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION), subKey: "page=$branchId"));
+          options: buildCacheOptions(
+              Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
+              subKey: "page=$branchId"));
     } catch (e) {
       print(e);
       if (!hasConnection)
@@ -56,19 +58,18 @@ class LocationMapService {
         final body = json.decode("$response");
         LocationMap locationMap = LocationMap.fromJson(body);
 
-              if (locationMap.mapBoundaries.isNotEmpty) {
-        for (var boundary in locationMap.mapBoundaries) {
-          _points.add(
-              LatLng(double.parse(boundary.lat), double.parse(boundary.lng)));
+        if (locationMap.mapBoundaries.isNotEmpty) {
+          for (var boundary in locationMap.mapBoundaries) {
+            _points.add(
+                LatLng(double.parse(boundary.lat), double.parse(boundary.lng)));
+          }
+
+          if (locationMap.mapCenter.isNotEmpty) {
+            _centerLocation = LatLng(
+                double.parse(locationMap.mapCenter[0].lat_center),
+                double.parse(locationMap.mapCenter[0].lng_center));
+          }
         }
-
-                      if (locationMap.mapCenter.isNotEmpty) {
-                        _centerLocation = LatLng(
-                            double.parse(locationMap.mapCenter[0].lat_center),
-                            double.parse(locationMap.mapCenter[0].lng_center));
-                      }
-      }
-
       } catch (e) {
         print(e);
         throw Exception("LocationMapService.getJsonData: $e");

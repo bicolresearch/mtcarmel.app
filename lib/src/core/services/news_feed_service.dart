@@ -2,8 +2,8 @@
 *  Filename    :   news_feed_service.dart
 *  Purpose     :	 Service for news feeds
 *  Created     :   2019-07-12 11:12 by Detective Conan
-*	 Updated			:   30/09/2019 2:11 PM PM by Detective Conan
-*	 Changes			:   Implemented caching of url response
+*	 Updated			:   01/10/2019 12:14 PM PM by Detective Conan
+*	 Changes			:   Refresh the response when success on responses
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -34,13 +34,16 @@ class NewsFeedService {
     try {
       response = await dio.get("$url",
           queryParameters: {'k': _keyword},
-          options:
-          buildCacheOptions(Duration(days: AppConstants.CACHE_DURATION), subKey: "page=$branchId"));
+          options: buildCacheOptions(
+              Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
+              subKey: "page=$branchId"));
     } catch (e) {
       print(e);
       if (!hasConnection)
         throw Exception('NewsFeedService.getData: No connection');
-      throw Exception('NewsFeedService.getData:  Error requesting NewsFeed: $e');
+      throw Exception(
+          'NewsFeedService.getData:  Error requesting NewsFeed: $e');
     }
 
     if (response.statusCode == 200) {
@@ -53,10 +56,9 @@ class NewsFeedService {
       }
     } else {
       print(response.statusCode);
-      throw Exception("NewsFeedService.getData: statusCode ${response.statusCode}");
+      throw Exception(
+          "NewsFeedService.getData: statusCode ${response.statusCode}");
     }
-
-
 
     return _feed;
   }
