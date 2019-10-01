@@ -2,8 +2,8 @@
 *   Filename    :   home_screen.dart
 *   Purpose     :
 *   Created     :   02/09/2019 10:57 AM by Detective Conan
-*	 Updated			:   30/09/2019 1:49 PM PM by Detective Conan
-*	 Changes			:   Added navigation button for going back to carmel locations on error
+*	 Updated			:   01/10/2019 2:47 PM PM by Detective Conan
+*	 Changes			:   Added method for error message display.
 */
 
 import 'package:flutter/material.dart';
@@ -71,91 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else if (state is BranchError) {
-            return Scaffold(
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Center(child: Text("Something went wrong")),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Retry",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<BranchBloc>(context)
-                          .dispatch(GetBranch(state.branchId));
-                    },
-                  ),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Bracnh locations",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      _navigateToStartPage(context);
-                    },
-                  ),
-                  OutlineButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    color: Colors.brown[500],
-                    child: Text(
-                      "Carmel locations",
-                      style: TextStyle(
-                          color: Colors.brown[500],
-                          fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () {
-                      _navigateToStartPage(context);
-                    },
-                  ),
-                ],
-              ),
-            );
+            return _errorMsgDisplay(context: context, branchId: state.branchId);
           } else if (state is BranchNoConnection) {
-            return Scaffold(
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Center(child: Text("No connection!")),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Retry",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<BranchBloc>(context)
-                          .dispatch(GetBranch(state.branchId));
-                    },
-                  ),
-                  OutlineButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    color: Colors.brown[500],
-                    child: Text(
-                      "Carmel locations",
-                      style: TextStyle(
-                          color: Colors.brown[500],
-                          fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () {
-                      _navigateToStartPage(context);
-                    },
-                  ),
-                ],
-              ),
-            );
+            return _errorMsgDisplay(
+                context: context,
+                branchId: state.branchId,
+                err: "No connection!");
           } else
             print("Else");
           return Container();
@@ -172,9 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        content: ListTile(
-          title: Text("Do you want to close this app?"),
-        ),
+        content: Text("Do you want to close this app?"),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -207,6 +126,48 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) {
           return StartPage();
         },
+      ),
+    );
+  }
+
+  _errorMsgDisplay(
+      {@required BuildContext context,
+      @required String branchId,
+      String err = "Something went wrong!",
+      String buttonLabel = "Retry"}) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Center(child: Text("No connection!")),
+          RaisedButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            color: Colors.brown,
+            child: Text(
+              "Retry",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              BlocProvider.of<BranchBloc>(context)
+                  .dispatch(GetBranch(branchId));
+            },
+          ),
+          OutlineButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            color: Colors.brown[500],
+            child: Text(
+              "Carmel locations",
+              style: TextStyle(
+                  color: Colors.brown[500], fontWeight: FontWeight.bold),
+            ),
+            onPressed: () {
+              _navigateToStartPage(context);
+            },
+          ),
+        ],
       ),
     );
   }
