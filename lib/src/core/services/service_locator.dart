@@ -19,19 +19,18 @@ import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/location_map_service.dart';
 import 'package:mt_carmel_app/src/core/services/module_list_service.dart';
 import 'package:mt_carmel_app/src/core/services/news_feed_service.dart';
-import 'package:mt_carmel_app/src/core/services/pastors_service.dart';
-import 'package:mt_carmel_app/src/core/services/priests_service.dart';
-import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
-import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
+import 'package:mt_carmel_app/src/core/services/carmelites_service.dart';
+//import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
+//import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/church_regular_schedule_service.dart';
 import 'package:mt_carmel_app/src/core/services/repositories/address_repository.dart';
 import 'package:mt_carmel_app/src/core/services/selection_service.dart';
 import 'package:mt_carmel_app/src/core/services/church_modules_service.dart';
 import 'package:mt_carmel_app/src/core/services/send_help_service.dart';
-import 'package:mt_carmel_app/src/core/services/transaparency_service.dart';
+//import 'package:mt_carmel_app/src/core/services/transaparency_service.dart';
 import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
-import 'package:mt_carmel_app/src/models/location_map.dart';
+//import 'package:mt_carmel_app/src/models/location_map.dart';
 
 GetIt locator = GetIt();
 
@@ -54,8 +53,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => SendHelpService());
 //  locator.registerLazySingleton(() => TransparencyService());
   locator.registerLazySingleton(() => BranchListService());
-  locator.registerLazySingleton(() => PriestsService());
-  locator.registerLazySingleton(() => PastorsService());
+  locator.registerLazySingleton(() => CarmelitesService());
   locator.registerLazySingleton(() => LocationMapService());
   locator.registerLazySingleton(() => AboutService());
   locator.registerLazySingleton(() => ContactDetailService());

@@ -2,15 +2,15 @@
 *   Filename    :   priests_bloc.dart
 *   Purpose     :
 *   Created     :   17/09/2019 2:59 PM by Detective Conan
-*   Updated     :   17/09/2019 2:59 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   01/10/2019 12:42 PM PM by Detective Conan
+*	 Changes			:   Use the CarmelitesService instead of PastorsService
 */
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/abstracts/abstract_data_state.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_state.dart';
-import 'package:mt_carmel_app/src/core/services/priests_service.dart';
+import 'package:mt_carmel_app/src/core/services/carmelites_service.dart';
 import 'package:mt_carmel_app/src/core/services/send_help_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/carmelite.dart';
@@ -24,10 +24,10 @@ class PriestsBloc extends Bloc<PriestsEvent, PriestsState> {
   @override
   Stream<PriestsState> mapEventToState(PriestsEvent event) async* {
     if (event is FetchPriests) {
-//      if (_priests.isEmpty)
-        yield PriestsLoading();
+      yield PriestsLoading();
       try {
-        _priests = await locator<PriestsService>().getPriests();
+        _priests =
+            await locator<CarmelitesService>().getCarmelites(CarmeliteType.PRIEST);
         if (_priests.isNotEmpty) {
           print("Priests.mapEventToState $_priests");
           yield PriestsLoaded();
