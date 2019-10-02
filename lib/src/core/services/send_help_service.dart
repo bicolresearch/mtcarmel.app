@@ -2,8 +2,8 @@
 *   Filename    :   send_help_service.dart
 *   Purpose     :   For requesting url response
 *   Created     :   12/09/2019 12:46 PM by Detective Conan
-*	 Updated			:   30/09/2019 2:31 PM PM by Detective Conan
-*	 Changes			:   Implemented the caching of url response
+*	 Updated			:   02/10/2019 9:03 AM PM by Detective Conan
+*	 Changes			:   Added timeout on request.
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -31,12 +31,18 @@ class SendHelpService {
     var dio = locator<DioService>().getDio();
 
     try {
-      response = await dio.get("$url",
-          queryParameters: {'k': _keyword},
-          options: buildCacheOptions(
-              Duration(days: AppConstants.CACHE_DURATION),
-              forceRefresh: true,
-              subKey: "page=$branchId"));
+      response = await dio
+          .get(
+            "$url",
+            queryParameters: {'k': _keyword},
+            options: buildCacheOptions(
+                Duration(days: AppConstants.CACHE_DURATION),
+                forceRefresh: true,
+                subKey: "page=$branchId"),
+          )
+          .timeout(
+            Duration(seconds: 5),
+          );
     } catch (e) {
       print(e);
       if (!hasConnection)

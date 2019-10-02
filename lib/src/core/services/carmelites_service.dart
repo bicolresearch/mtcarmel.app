@@ -1,8 +1,8 @@
 /*
 *   Filename    :   carmelites_service.dart
 *   Purpose     :   Used for different carmelite such as priests, pastors and nun
-*   Created     :   17/09/2019 3:05 PM by Detective Conan
-*	 Updated			:   Generic requesting for priests, pastors and nun 
+*	 Updated			:   02/10/2019 9:03 AM PM by Detective Conan
+*	 Changes			:   Added timeout on request.
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -35,12 +35,18 @@ class CarmelitesService {
     var dio = locator<DioService>().getDio();
 
     try {
-      response = await dio.get("$url",
-          queryParameters: {'k': keyword},
-          options: buildCacheOptions(
-              Duration(days: AppConstants.CACHE_DURATION),
-              forceRefresh: true,
-              subKey: "page=$branchId"));
+      response = await dio
+          .get(
+            "$url",
+            queryParameters: {'k': keyword},
+            options: buildCacheOptions(
+                Duration(days: AppConstants.CACHE_DURATION),
+                forceRefresh: true,
+                subKey: "page=$branchId"),
+          )
+          .timeout(
+            Duration(seconds: 5),
+          );
     } catch (e) {
       print(e);
       if (!hasConnection)

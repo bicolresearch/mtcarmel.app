@@ -2,8 +2,8 @@
 *   Filename    :   branch_list_service.dart
 *   Purpose     :   For requesting branches
 *   Created     :   16/09/2019 10:52 AM by Detective Conan
-*	 Updated			:   01/10/2019 12:15 PM PM by Detective Conan
-*	 Changes			:   Refresh the response when success on responses
+*	 Updated			:   02/10/2019 9:03 AM PM by Detective Conan
+*	 Changes			:   Added timeout on request.
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -25,13 +25,18 @@ class BranchListService {
 
     var response;
     try {
-      response = await dio.get(
-          "${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
-          queryParameters: {'k': _keyword},
-          options: buildCacheOptions(
-              Duration(days: AppConstants.CACHE_DURATION),
-              forceRefresh: true,
-              subKey: "page=$locationId"));
+      response = await dio
+          .get(
+            "${AppConstants.API_BASE_URL}${AppConstants.BRANCHES_JSON_URL}branch_location/?location_id=$locationId",
+            queryParameters: {'k': _keyword},
+            options: buildCacheOptions(
+                Duration(days: AppConstants.CACHE_DURATION),
+                forceRefresh: true,
+                subKey: "page=$locationId"),
+          )
+          .timeout(
+            Duration(seconds: 5),
+          );
     } catch (e) {
       print(e);
       if (!hasConnection)

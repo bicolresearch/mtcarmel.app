@@ -2,8 +2,8 @@
 *   Filename    :   branch_service.dart
 *   Purpose     :   For the requesting branch
 *   Created     :   09/09/2019 9:36 AM by Detective Conan
-*	 Updated			:   01/10/2019 12:15 PM PM by Detective Conan
-*	 Changes			:   Refresh the response when success on responses
+*	 Updated			:   02/10/2019 9:03 AM PM by Detective Conan
+*	 Changes			:   Added timeout on request.
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -35,12 +35,18 @@ class BranchService {
 
     var response;
     try {
-      response = await dio.get("$url",
-          queryParameters: {'k': _keyword},
-          options: buildCacheOptions(
-              Duration(days: AppConstants.CACHE_DURATION),
-              forceRefresh: true,
-              subKey: "page=$branchId"));
+      response = await dio
+          .get(
+            "$url",
+            queryParameters: {'k': _keyword},
+            options: buildCacheOptions(
+                Duration(days: AppConstants.CACHE_DURATION),
+                forceRefresh: true,
+                subKey: "page=$branchId"),
+          )
+          .timeout(
+            Duration(seconds: 5),
+          );
     } catch (e) {
       print(e);
       if (!hasConnection)

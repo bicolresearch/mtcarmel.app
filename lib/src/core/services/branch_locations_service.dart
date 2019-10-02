@@ -2,8 +2,8 @@
 *   Filename    :   branch_locations_service.dart
 *   Purpose     :   Use for the requesting the locations.
 *   Created     :   19/09/2019 4:45 PM by Detective Conan
-*	 Updated			:   01/10/2019 12:15 PM PM by Detective Conan
-*	 Changes			:   Refresh the response when success on responses
+*	 Updated			:   02/10/2019 9:04 AM PM by Detective Conan
+*	 Changes			:   Added timeout on request.
 */
 
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -25,19 +25,22 @@ class BranchLocationsService {
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
     var response;
-    print(
-        "${AppConstants.API_BASE_URL}${AppConstants.BRANCH_LOCATIONS_JSON_URL}");
 
     var dio = locator<DioService>().getDio();
 
     try {
-      response = await dio.get(
-          "${AppConstants.API_BASE_URL}${AppConstants.BRANCH_LOCATIONS_JSON_URL}",
-          queryParameters: {'k': _keyword},
-          options: buildCacheOptions(
-            Duration(days: AppConstants.CACHE_DURATION),
-            forceRefresh: true,
-          ));
+      response = await dio
+          .get(
+            "${AppConstants.API_BASE_URL}${AppConstants.BRANCH_LOCATIONS_JSON_URL}",
+            queryParameters: {'k': _keyword},
+            options: buildCacheOptions(
+              Duration(days: AppConstants.CACHE_DURATION),
+              forceRefresh: true,
+            ),
+          )
+          .timeout(
+            Duration(seconds: 5),
+          );
     } catch (e) {
       print(e);
       if (!hasConnection)
