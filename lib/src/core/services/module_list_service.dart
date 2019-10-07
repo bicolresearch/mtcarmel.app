@@ -47,7 +47,7 @@ class ModuleListService {
             Duration(seconds: 5),
           );
     } catch (e) {
-      print(e);
+      print('ModuleListService.getJsonData:  $e');
       if (!hasConnection)
         throw Exception('ModuleListService.getJsonData: No connection');
       throw Exception(

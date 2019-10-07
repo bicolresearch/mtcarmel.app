@@ -21,13 +21,14 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences:  any # ^0.5.2+1
 #  http: ^0.12.0+2
+#  dio: ^3.0.3
   dio_http_cache: ^0.2.0
   json_annotation: ^3.0.0
   transformer_page_view: ^0.1.6
 
   share: ^0.6.1
   table_calendar: ^1.2.2
-  rxdart: ^0.22.0
+#  rxdart: ^0.22.0
 
   google_maps_flutter: ^0.5.21
 
@@ -79,8 +80,6 @@ flutter_icons:
 flutter:
   assets:
     - assets/images/mt_carmel_logo.png
-    - assets/images/sample_user.png
-    - assets/images/fr_alan_rieger.png
   
   fonts:
   - family: Helvetica
