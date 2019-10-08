@@ -2,9 +2,10 @@
 *	 Filename		 :	 about_screen.dart
 *	 Purpose		 :	 Show the details about the church.
 *  Created		 :   2019-06-13 12:37:11 by Detective Conan
-*	 Updated			:   19/09/2019 10:25 AM PM by Detective Conan
-*	 Changes			:   Expanded the title.
+*	 Updated			:   08/10/2019 8:41 AM PM by Detective Conan
+*	 Changes			:   About items will hide if empty.
 */
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -136,11 +137,15 @@ class AboutScreen extends StatelessWidget {
     List<_AboutItem> aboutItems = [];
 
     if (about != null) {
-      aboutItems
-          .add(_AboutItem(about, _AboutItem._DATE_OF_ESTABLISHMENT_LABEL));
-      aboutItems.add(_AboutItem(about, _AboutItem._FEAST_DAY_LABEL));
-      aboutItems.add(_AboutItem(about, _AboutItem._TITULAR_LABEL));
-      aboutItems.add(_AboutItem(about, _AboutItem._DIOCESE_LABEL));
+      if (about.dateOfEstablishment != null && about.dateOfEstablishment != "")
+        aboutItems
+            .add(_AboutItem(about, _AboutItem._DATE_OF_ESTABLISHMENT_LABEL));
+      if (about.feastDay != null && about.feastDay != "")
+        aboutItems.add(_AboutItem(about, _AboutItem._FEAST_DAY_LABEL));
+      if (about.titular != null && about.titular != "")
+        aboutItems.add(_AboutItem(about, _AboutItem._TITULAR_LABEL));
+      if (about.diocese != null && about.diocese != "")
+        aboutItems.add(_AboutItem(about, _AboutItem._DIOCESE_LABEL));
     }
     return Column(
       children: <Widget>[
