@@ -12,7 +12,7 @@ import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_state.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
@@ -60,8 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
 //              BlocProvider<TransparencyBloc>(
 //                builder: (context) => TransparencyBloc(),
 //              ),
-              BlocProvider<ProfileBloc>(
-                builder: (context) => ProfileBloc(),
+              BlocProvider<ProfileFeatureBloc>(
+                builder: (context) => ProfileFeatureBloc(),
               ),
             ], child: HomeBottomNavigator());
           } else if (state is BranchLoading) {

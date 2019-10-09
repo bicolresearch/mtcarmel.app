@@ -23,6 +23,7 @@ import 'package:mt_carmel_app/src/core/services/carmelites_service.dart';
 //import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
 //import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/church_regular_schedule_service.dart';
+import 'package:mt_carmel_app/src/core/services/profile_feature_service.dart';
 import 'package:mt_carmel_app/src/core/services/repositories/address_repository.dart';
 import 'package:mt_carmel_app/src/core/services/selection_service.dart';
 import 'package:mt_carmel_app/src/core/services/church_modules_service.dart';
@@ -30,6 +31,7 @@ import 'package:mt_carmel_app/src/core/services/send_help_service.dart';
 //import 'package:mt_carmel_app/src/core/services/transaparency_service.dart';
 import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
+import 'package:mt_carmel_app/src/models/profile_feature.dart';
 //import 'package:mt_carmel_app/src/models/location_map.dart';
 
 GetIt locator = GetIt();
@@ -59,4 +61,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => ContactDetailService());
   locator.registerLazySingleton(() => BranchLocationsService());
   locator.registerLazySingleton(()=> DioService());
+  locator.registerLazySingleton(()=> ProfileFeatureService());
 }

@@ -20,7 +20,9 @@ import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
+import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/constants/profile_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
@@ -40,28 +42,30 @@ import '../../blocs/tab_bloc/tab_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   // TODO Get the list from the API
-  static const String _BIBLE = "Holy Bible";
-  static const String _REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
-  static const String _LOCATION_MAP = "Location Map";
-  static const String _PRIESTS = "Carmelite Priests";
-  static const String _PASTORS = "Carmelite Pastors";
-  static const String _CONTACT_DETAILS = "Contact Details";
-  static const String _ABOUT_THE_PARISH = "About the Parish";
-  static const String _CHANGE_BRANCH = "Change branch";
+//  static const String _BIBLE = "Holy Bible";
+//  static const String _REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
+//  static const String _LOCATION_MAP = "Location Map";
+//  static const String _PRIESTS = "Carmelite Priests";
+//  static const String _PASTORS = "Carmelite Pastors";
+//  static const String _CONTACT_DETAILS = "Contact Details";
+//  static const String _ABOUT_THE_PARISH = "About the Parish";
+//  static const String _CHANGE_BRANCH = "Change branch";
 
-  final List<String> _totalList = [
+  List<String> _features = [
 //    _BIBLE,
-    _REGULAR_MASS_SCHEDULE,
-    _LOCATION_MAP,
-    _PRIESTS,
-    _PASTORS,
-    _CONTACT_DETAILS,
-    _ABOUT_THE_PARISH,
-    _CHANGE_BRANCH,
+//    _REGULAR_MASS_SCHEDULE,
+//    _LOCATION_MAP,
+//    _PRIESTS,
+//    _PASTORS,
+//    _CONTACT_DETAILS,
+//    _ABOUT_THE_PARISH,
+//    _CHANGE_BRANCH,
   ];
 
   @override
   Widget build(BuildContext context) {
+    _features = BlocProvider.of<ProfileFeatureBloc>(context).features;
+    _features.add(ProfileFeatureConstants.CHANGE_BRANCH);
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -74,11 +78,11 @@ class ProfileScreen extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   child: ListView.builder(
-                    itemCount: _totalList.length,
+                    itemCount: _features.length,
                     itemBuilder: (context, index) {
                       return Container(
                         margin: EdgeInsets.symmetric(horizontal: 40.0),
-                        child: _aboutItem(context, _totalList[index]),
+                        child: _aboutItem(context, _features[index]),
                       );
                     },
                   ),
@@ -94,7 +98,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _aboutItem(context, String itemText) {
     return InkWell(
       onTap: () async {
-        if (itemText == _CHANGE_BRANCH) {
+        if (itemText == ProfileFeatureConstants.CHANGE_BRANCH) {
           final bool confirmed = await _confirmationDialog(context);
           if (!confirmed) return;
 
@@ -132,32 +136,32 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _navigateToDetail(BuildContext context, String itemText) {
     switch (itemText) {
-      case _PRIESTS:
+      case ProfileFeatureConstants.PRIESTS:
         return BlocProvider<PriestsBloc>(
             builder: (context) => PriestsBloc()..dispatch(FetchPriests()),
             child: PriestsPage());
-      case _PASTORS:
+      case ProfileFeatureConstants.PASTORS:
         return BlocProvider<PastorsBloc>(
             builder: (context) => PastorsBloc()..dispatch(FetchPastors()),
             child: PastorsPage());
-      case _CONTACT_DETAILS:
+      case ProfileFeatureConstants.CONTACT_DETAILS:
         return BlocProvider<ContactDetailBloc>(
             builder: (context) =>
                 ContactDetailBloc()..dispatch(FetchContactDetail()),
             child: ContactDetailPage());
-      case _REGULAR_MASS_SCHEDULE:
+      case ProfileFeatureConstants.REGULAR_MASS_SCHEDULE:
         return BlocProvider<ChurchRegularScheduleBloc>(
             builder: (context) => ChurchRegularScheduleBloc()
               ..dispatch(FetchChurchRegularSchedule()),
             child: ChurchRegularSchedulePage());
 //      case _BIBLE:
 //        return BibleScreen(context);
-      case _LOCATION_MAP:
+      case ProfileFeatureConstants.LOCATION_MAP:
         return BlocProvider<LocationMapBloc>(
             builder: (context) =>
                 LocationMapBloc()..dispatch(FetchLocationMap()),
             child: LocationMapPage());
-      case _ABOUT_THE_PARISH:
+      case ProfileFeatureConstants.ABOUT_THE_PARISH:
       default: //  _ABOUT_THE_PARISH:
         return BlocProvider<AboutBloc>(
             builder: (context) => AboutBloc()..dispatch(FetchAbout()),

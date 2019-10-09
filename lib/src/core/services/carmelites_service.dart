@@ -7,6 +7,7 @@
 
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/constants/profile_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
@@ -22,6 +23,56 @@ enum CarmeliteType {
 }
 
 class CarmelitesService {
+  // For all types
+  Future<List<Carmelite>> getAllCarmelites() async {
+    final keyword = "carmelites";
+    final hasConnection = await ConnectivityChecker.hasDataConnection();
+
+    final branchId = await locator<BranchService>().branch.id;
+    var response;
+
+    final url =
+        "${AppConstants.API_BASE_URL}${AppConstants.CARMELITES_JSON_URL}contact/?branch_id=$branchId&id=$branchId";
+    var dio = locator<DioService>().getDio();
+
+    try {
+      response = await dio
+          .get(
+        "$url",
+        queryParameters: {'k': keyword},
+        options: buildCacheOptions(
+            Duration(days: AppConstants.CACHE_DURATION),
+            forceRefresh: true,
+            subKey: "page=$branchId"),
+      )
+          .timeout(
+        Duration(seconds: 5),
+      );
+    } catch (e) {
+      print(e);
+      if (!hasConnection)
+        throw Exception('CarmelitesService.getAllCarmelites: No connection');
+      throw Exception(
+          'CarmelitesService.getAllCarmelites:  Error requesting CarmelitesService: $e');
+    }
+
+    if (response.statusCode == 200) {
+      try {
+        final body = json.decode("$response");
+        return DataCarmelite.fromJson(body).data;
+      } catch (e) {
+        print(e);
+        throw Exception("CarmelitesService.getAllCarmelites: $e");
+      }
+    } else {
+      print(response.statusCode);
+      throw Exception(
+          "CarmelitesService.getAllCarmelites: statusCode ${response.statusCode}");
+    }
+  }
+
+
+  //For type of carmelite
   Future<List<Carmelite>> getCarmelites(CarmeliteType carmeliteType) async {
     final typeId = _getTypeId(carmeliteType);
     final keyword = _getKeyword(carmeliteType);
@@ -75,9 +126,9 @@ class CarmelitesService {
   String _getTypeId(CarmeliteType carmeliteType) {
     switch (carmeliteType) {
       case CarmeliteType.PRIEST:
-        return "107";
+        return ProfileFeatureConstants.CARMELITE_PRIEST_TYPE;
       case CarmeliteType.PASTOR:
-        return "108";
+        return ProfileFeatureConstants.CARMELITE_PASTOR_TYPE;
       case CarmeliteType.NUN:
       // TODO fallthrough add implementation when Nun is ready
       default:

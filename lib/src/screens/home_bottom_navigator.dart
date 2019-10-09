@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/news_feed_bloc/news_feed_event.dart';
-import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/profile_bloc/profile_event.dart';
+import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_event.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/send_help_bloc/send_help_event.dart';
 import 'package:mt_carmel_app/src/blocs/services_bloc/services_bloc.dart';
@@ -62,8 +62,8 @@ class HomeBottomNavigator extends StatelessWidget {
 //        bloc.dispatch(FetchTransparency());
 //        return TransparencyPage();
       case AppTab.Profile:
-        final bloc = BlocProvider.of<ProfileBloc>(context);
-        bloc.dispatch(FetchProfile());
+        final bloc = BlocProvider.of<ProfileFeatureBloc>(context);
+        bloc.dispatch(FetchProfileFeature());
         return ProfilePage();
     }
   }
