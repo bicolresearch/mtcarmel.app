@@ -25,6 +25,8 @@ class LocationMapBloc extends Bloc<LocationMapEvent, LocationMapState> {
   @override
   Stream<LocationMapState> mapEventToState(LocationMapEvent event) async* {
     if (event is FetchLocationMap) {
+      _centerLocation = null;
+      _points = [];
       yield LocationMapLoading();
       try {
         final locationMapService = locator<LocationMapService>();

@@ -27,6 +27,8 @@ class LocationMapService {
   LatLng get centerLocation => _centerLocation;
 
   Future<void> getMapData() async {
+    _centerLocation = null;
+    _points = [];
     final keyword = "locationMap";
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
@@ -35,7 +37,7 @@ class LocationMapService {
 
     final url =
         "${AppConstants.API_BASE_URL}${AppConstants.MAP_JSON_URL}?branch_id=$branchId";
-
+print(url);
     var dio = locator<DioService>().getDio();
 
     try {
@@ -64,7 +66,7 @@ class LocationMapService {
         final body = json.decode("$response");
         LocationMap locationMap = LocationMap.fromJson(body);
 
-        if (locationMap.mapBoundaries.isNotEmpty) {
+
           for (var boundary in locationMap.mapBoundaries) {
             _points.add(
                 LatLng(double.parse(boundary.lat), double.parse(boundary.lng)));
@@ -75,7 +77,7 @@ class LocationMapService {
                 double.parse(locationMap.mapCenter[0].lat_center),
                 double.parse(locationMap.mapCenter[0].lng_center));
           }
-        }
+
       } catch (e) {
         print(e);
         throw Exception("LocationMapService.getJsonData: $e");
