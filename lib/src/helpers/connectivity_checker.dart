@@ -8,16 +8,15 @@
 
 //import 'package:connectivity/connectivity.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:mt_carmel_app/src/core/services/prod_dev_manager_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class ConnectivityChecker {
   static Future<bool> hasDataConnection() async {
-//    bool connected = false;
-//    final connectivity = await (Connectivity().checkConnectivity())
-//        .timeout(Duration(seconds: 10));
-//    if (connectivity == ConnectivityResult.mobile ||
-//        connectivity == ConnectivityResult.wifi) {
-//      connected = true;
-//    }
+
+    if(locator<ProdDevManagerService>().prodDevEnum == ProdDevEnum.Development)
+      return true;
+
     bool connected = await DataConnectionChecker().hasConnection;
     return connected;
   }

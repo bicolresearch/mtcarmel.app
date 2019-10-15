@@ -37,6 +37,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastor
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
 
 import 'package:mt_carmel_app/src/screens/start_page.dart';
+import 'package:share/share.dart';
 
 import '../../blocs/tab_bloc/tab_bloc.dart';
 
@@ -65,6 +66,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _features = BlocProvider.of<ProfileFeatureBloc>(context).features;
+    _features.add(ProfileFeatureConstants.SHARE_APP);
     _features.add(ProfileFeatureConstants.CHANGE_BRANCH);
     return SafeArea(
       child: Scaffold(
@@ -114,6 +116,12 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
           );
+          return;
+        }
+        if (itemText == ProfileFeatureConstants.SHARE_APP) {
+          Share.share("https://play.google.com/store/apps/details?id=ph.mountcarmel.mountcarmelsystem",
+              subject:
+                  "Share this app");
           return;
         }
         Navigator.push(

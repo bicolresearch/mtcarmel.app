@@ -15,6 +15,7 @@ class ProfileFeatureConstants {
   static const String NUNS = "Carmelite Nuns";
   static const String CONTACT_DETAILS = "Contact Details";
   static const String ABOUT_THE_PARISH = "History";
+  static const String SHARE_APP = "Share app";
   static const String CHANGE_BRANCH = "Change branch";
 
   static const List<String> ProfileFeatureCommonList = [
