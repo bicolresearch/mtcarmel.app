@@ -2,14 +2,14 @@
 # *	Filename		:	pubspec.yaml
 # *	Purpose			:	
 # * Created			: 2019-06-04 16:35:03 by Detective Conan
-# *	Updated			:	2019-06-04 16:35:03 by Detective Conan 
-# *	Changes			:
+# *	Updated			:	2019-10-28 09:25:03 by Detective Conan
+# *	Changes			:   Changed the version
 # */
 
 name: mt_carmel_app
 description: Mobile App for Mount Carmel Basilica
 
-version: 1.0.0
+version: 1.0.1+3
 
 environment:
   sdk: ">=2.2.2 <3.0.0"

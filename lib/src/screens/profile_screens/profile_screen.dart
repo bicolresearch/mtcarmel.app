@@ -42,30 +42,10 @@ import 'package:share/share.dart';
 import '../../blocs/tab_bloc/tab_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
-  // TODO Get the list from the API
-//  static const String _BIBLE = "Holy Bible";
-//  static const String _REGULAR_MASS_SCHEDULE = "Regular Mass Schedule";
-//  static const String _LOCATION_MAP = "Location Map";
-//  static const String _PRIESTS = "Carmelite Priests";
-//  static const String _PASTORS = "Carmelite Pastors";
-//  static const String _CONTACT_DETAILS = "Contact Details";
-//  static const String _ABOUT_THE_PARISH = "About the Parish";
-//  static const String _CHANGE_BRANCH = "Change branch";
-
-  List<String> _features = [
-//    _BIBLE,
-//    _REGULAR_MASS_SCHEDULE,
-//    _LOCATION_MAP,
-//    _PRIESTS,
-//    _PASTORS,
-//    _CONTACT_DETAILS,
-//    _ABOUT_THE_PARISH,
-//    _CHANGE_BRANCH,
-  ];
 
   @override
   Widget build(BuildContext context) {
-    _features = BlocProvider.of<ProfileFeatureBloc>(context).features;
+    List<String> _features = BlocProvider.of<ProfileFeatureBloc>(context).features;
     _features.add(ProfileFeatureConstants.SHARE_APP);
     _features.add(ProfileFeatureConstants.CHANGE_BRANCH);
     return SafeArea(

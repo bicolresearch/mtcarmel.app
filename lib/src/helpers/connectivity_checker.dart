@@ -14,8 +14,8 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 class ConnectivityChecker {
   static Future<bool> hasDataConnection() async {
 
-    if(locator<ProdDevManagerService>().prodDevEnum == ProdDevEnum.Development)
-      return true;
+//    if(locator<ProdDevManagerService>().prodDevEnum == ProdDevEnum.Development)
+//      return true;
 
     bool connected = await DataConnectionChecker().hasConnection;
     return connected;

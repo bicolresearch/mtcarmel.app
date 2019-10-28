@@ -9,37 +9,25 @@
 class AppConstants {
 
   static const CACHE_DURATION = 2; //days
-  static const String APP_TITLE = "Mount Carmel";
+  static const String APP_TITLE = "Carmel";
   static const String FONT_FAMILY = 'Helvetica';
   static const String MT_CARMEL_LOGO_PATH = 'assets/images/mt_carmel_logo.png';
 
   // site api
-  static const String API_BASE_URL = "https://api.mountcarmel.ph/";
+  static const String API_BASE_URL = "https://carmel.ph/api/";
 
   static const String BRANCH_LOCATIONS_JSON_URL = "branch_locations/";
 
   static const String BRANCHES_JSON_URL = "branches/";
 
-  static const String LIVE_STREAM_URL =
-      "https://api.mountcarmel.ph/live_streams/";
-  static const String USER_PROFILE_JSON =
-      "https://api.mountcarmel.ph/users/user/id/";
-
   static const String BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
   static const String KJV_TRANSLATION_PATH = 'tranlation=kjv';
 
-  static const String LIVE_STREAM_JSON_URL =
-      "https://api.mountcarmel.ph/live_streams/";
   static const String FEEDS_JSON_URL = "posts/";
-  static const String ADS_JSON_URL = "https://api.mountcarmel.ph/ads/";
-
-  static const String TRANSACTION_JSON_URL =
-      'https://api.mountcarmel.ph/donations';
 
   static const String PROFILE_FEATURE_JSON_URL = "modules/module_all/";
   static const String CARMELITES_JSON_URL =
       'carmelites/';
-  static const String PASTORS_JSON_URL = 'https://api.mountcarmel.ph/pastors/';
   static const String ABOUT_JSON_URL = 'histories/';
   static const String CONTACT_DETAILS_JSON_URL =
       'contacts/';
@@ -49,8 +37,6 @@ class AppConstants {
   static const String SUB_SERVICES_BASE_JSON_URL =
       "sub_modules/";
   static const String MAP_JSON_URL = 'maps/';
-  static const String BOUNDARIES_JSON_URL =
-      'https://api.mountcarmel.ph/boundaries/';
   static const String SEND_HELP_JSON_URL =
       "branch_donations/";
 
