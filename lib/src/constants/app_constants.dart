@@ -7,7 +7,6 @@
 */
 
 class AppConstants {
-
   static const CACHE_DURATION = 2; //days
   static const String APP_TITLE = "Carmel";
   static const String FONT_FAMILY = 'Helvetica';
@@ -20,25 +19,24 @@ class AppConstants {
 
   static const String BRANCHES_JSON_URL = "branches/";
 
+  static const String USER_JSON_URL = "users/";
+
   static const String BIBLE_JSON_BASE_URL = 'http://bible-api.com/';
   static const String KJV_TRANSLATION_PATH = 'tranlation=kjv';
 
   static const String FEEDS_JSON_URL = "posts/";
 
   static const String PROFILE_FEATURE_JSON_URL = "modules/module_all/";
-  static const String CARMELITES_JSON_URL =
-      'carmelites/';
+  static const String CARMELITES_JSON_URL = 'carmelites/';
   static const String ABOUT_JSON_URL = 'histories/';
-  static const String CONTACT_DETAILS_JSON_URL =
-      'contacts/';
-  static const String CHURCH_SCHEDULE_JSON_URL =
-      'schedules/';
+  static const String CONTACT_DETAILS_JSON_URL = 'contacts/';
+  static const String CHURCH_SCHEDULE_JSON_URL = 'schedules/';
   static const String SERVICES_JSON_URL = 'modules/';
-  static const String SUB_SERVICES_BASE_JSON_URL =
-      "sub_modules/";
+  static const String SUB_SERVICES_BASE_JSON_URL = "sub_modules/";
   static const String MAP_JSON_URL = 'maps/';
-  static const String SEND_HELP_JSON_URL =
-      "branch_donations/";
+  static const String SEND_HELP_JSON_URL = "branch_donations/";
+
+  static const String PRAYER_REQUEST_JSON_URL = "prayer_requests/";
 
   static const String DEFAULT_BRANCH_ID = "1";
   static const String CARMEL_NAME = "Carmel";
