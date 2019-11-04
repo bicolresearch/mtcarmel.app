@@ -2,8 +2,8 @@
 *   Filename    :   profile_login_screen.dart
 *   Purpose     :
 *   Created     :   04/11/2019 10:44 AM by Detective Conan
-*   Updated     :   04/11/2019 10:44 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   04/11/2019 3:45 PM PM by Detective Conan
+*	 Changes			:   Implemented the change branch button.
 */
 
 import 'package:flutter/material.dart';
@@ -15,6 +15,7 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
+import 'package:mt_carmel_app/src/screens/start_page.dart';
 
 class ProfileLoginScreen extends StatefulWidget {
   @override
@@ -176,8 +177,24 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                               .subtitle
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
-                        onPressed: () {
-                          print("Change branch pressed.");
+                        onPressed: () async {
+                          final bool confirmed =
+                              await _confirmationDialog(context, branch.name);
+                          if (!confirmed) return;
+
+                          await SharedPreferencesHelper.setBranchNameFlag(null);
+                          await SharedPreferencesHelper.setBranchIdFlag(null);
+                          await SharedPreferencesHelper.setResetBranch(true);
+                          locator<BranchService>().clearBranch();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return StartPage();
+                              },
+                            ),
+                          );
+                          return;
                         },
                       ),
                     ],
@@ -187,6 +204,50 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _confirmationDialog(context, branchName) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: Wrap(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("You are currently in "),
+                Text(
+                  "$branchName",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .title
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text("\nDo you want to change branch?"),
+              ],
+            ),
+          ],
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Yes'),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+          FlatButton(
+            child: Text('No'),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+        ],
       ),
     );
   }
