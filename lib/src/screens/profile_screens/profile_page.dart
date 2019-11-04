@@ -15,6 +15,7 @@ import 'package:mt_carmel_app/src/blocs/tab_bloc/tab_bloc.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/profile_login_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/start_page.dart';
 import 'package:mt_carmel_app/src/widgets/error_message.dart';
@@ -54,6 +55,9 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           );
+        }
+        if(state is ProfileLoginScreenLoaded){
+          return ProfileLoginScreen();
         }
         return Container();
       },

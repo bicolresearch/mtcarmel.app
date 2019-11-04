@@ -46,3 +46,15 @@ class NoProfileLoaded extends ProfileFeatureState{
   @override
   String toString() => 'NoProfileLoaded';
 }
+
+class ProfileLoginScreenLoaded extends ProfileFeatureState {
+
+  @override
+  String toString() => 'ProfileLoginScreenLoaded';
+}
+
+class ProfileGuestScreenLoaded extends ProfileFeatureState {
+
+  @override
+  String toString() => 'ProfileGuestScreenLoaded';
+}

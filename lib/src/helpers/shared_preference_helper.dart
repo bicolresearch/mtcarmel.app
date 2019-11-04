@@ -2,12 +2,11 @@
 *  Filename    :   shared_preference_helper.dart
 *  Purpose     :   Sets and gets the stored app's preferences
 *  Created     :   2019-07-11 11:42 by Detective Conan
-*  Updated     :   2019-07-11 12:32 by Detective conan
-*  Changes     :   Changed the constants access type to private
+*	 Updated			:   04/11/2019 1:03 PM PM by Detective Conan
+*	 Changes			:   Added flag for profile login screen
 */
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mt_carmel_app/src/constants/app_constants.dart';
 
 class SharedPreferencesHelper {
   //Shared preferences constants
@@ -21,6 +20,7 @@ class SharedPreferencesHelper {
   static const String _BRANCH_NAME_KEY = "branch_name_key";
   static const String _ID_BRANCH_KEY = "id_branch";
   static const String _RESET_BRANCH_KEY = "reset_banrch_key";
+  static const String _PROFILE_SKIPPED_LOGIN_KEY = "profileSkippedLoginKey";
 
   // first usage
   static Future<bool> getFirstUsageFlag() async {
@@ -148,4 +148,18 @@ class SharedPreferencesHelper {
 
     return prefs.getBool(_RESET_BRANCH_KEY)??true;
   }
+
+  // profile skipped login
+  static Future<bool> getProfileSkippedLogin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getBool(_PROFILE_SKIPPED_LOGIN_KEY) ?? false;
+  }
+
+  static Future<void> setProfileSkippedLogin(bool isProfileLoginSkipped) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.setBool(_PROFILE_SKIPPED_LOGIN_KEY, isProfileLoginSkipped);
+  }
+
 }

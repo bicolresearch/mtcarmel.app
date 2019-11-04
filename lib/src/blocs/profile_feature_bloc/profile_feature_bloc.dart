@@ -11,16 +11,22 @@ import 'package:bloc/bloc.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_event.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_state.dart';
 import 'package:mt_carmel_app/src/constants/profile_constants.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/carmelites_service.dart';
 import 'package:mt_carmel_app/src/core/services/profile_feature_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/models/carmelite.dart';
 import 'package:mt_carmel_app/src/models/profile_feature.dart';
+import 'package:mt_carmel_app/src/models/user_profile.dart';
 
 class ProfileFeatureBloc
     extends Bloc<ProfileFeatureEvent, ProfileFeatureState> {
   List<String> _features = [];
   static const String _CARMELITE = "Carmelite";
+  bool _isLoggedIn = false;
+  UserProfile _userProfile;
 
   @override
   ProfileFeatureState get initialState => ProfileFeatureUninitialized();
@@ -33,6 +39,25 @@ class ProfileFeatureBloc
     if (event is FetchProfileFeature) {
       _features = [];
       yield ProfileFeatureLoading();
+      // check if loggin status
+      try {
+        await _checkLoginStatus();
+      } catch (e) {
+        print(e);
+        ProfileFeatureError(e);
+      }
+      // Check if logged in
+      if(!_isLoggedIn) {
+        // check if skipped login screen
+        final isSkippedProfileLoggedIn = await SharedPreferencesHelper
+            .getProfileSkippedLogin();
+        if (!isSkippedProfileLoggedIn) {
+          yield ProfileLoginScreenLoaded();
+          return;
+        }
+      }
+
+      //TODO modify for user profile
       try {
         final List<ProfileFeature> profileFeatures =
             await locator<ProfileFeatureService>().getData();
@@ -92,5 +117,23 @@ class ProfileFeatureBloc
         return value.name == feature;
       })) _features.add(feature);
     }
+  }
+
+  Future _checkLoginStatus() async {
+    await locator<AuthenticationService>()
+        .isLoggedIn()
+        .then((isLoggedIn) async {
+      _isLoggedIn = isLoggedIn;
+      if (isLoggedIn) {
+        await locator<AuthenticationService>().getUserId().then((id) async {
+          await locator<UserProfileService>().getUserProfile(id).then((user) {
+            _userProfile = user;
+          });
+        });
+      }
+    }).catchError((error) {
+      print(error);
+      throw Exception("ProfileFeatureBloc._checjLoginStatus: $error");
+    });
   }
 }
