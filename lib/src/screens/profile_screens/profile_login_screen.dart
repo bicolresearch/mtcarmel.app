@@ -2,8 +2,8 @@
 *   Filename    :   profile_login_screen.dart
 *   Purpose     :
 *   Created     :   04/11/2019 10:44 AM by Detective Conan
-*	 Updated			:   04/11/2019 3:45 PM PM by Detective Conan
-*	 Changes			:   Implemented the change branch button.
+*	 Updated			:   04/11/2019 4:23 PM PM by Detective Conan
+*	 Changes			:   Added padding for sign-up, forgot password and skip button.
 */
 
 import 'package:flutter/material.dart';
@@ -105,45 +105,61 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                               onTap: () {
                                 print("Forgot password pressed");
                               },
-                              child: Text(
-                                "Forgot password",
-                                style: TextStyle(color: Colors.brown),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  "Forgot password",
+                                  style: TextStyle(color: Colors.brown),
+                                ),
                               )),
                         ],
                       ),
                       SizedBox(
                         height: 10.0,
                       ),
-                      InkWell(
-                        onTap: () async {
-                          print("Sign-up pressed");
-//                          final result = await Navigator.push(
-//                            context,
-//                            MaterialPageRoute(
-//                              builder: (context) => SignUpScreen(),
-//                            ),
-//                          );
-//                          if (result) print("Signup successful");
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Row(children: <Widget>[
-                            Text(
-                              "Sign-up",
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontWeight: FontWeight.bold),
+//                      InkWell(
+//                        onTap: () async {
+//                          print("Sign-up pressed");
+////                          final result = await Navigator.push(
+////                            context,
+////                            MaterialPageRoute(
+////                              builder: (context) => SignUpScreen(),
+////                            ),
+////                          );
+////                          if (result) print("Signup successful");
+//                        },
+//                        child:
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(children: <Widget>[
+                          InkWell(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Text(
+                                "Sign-up",
+                                style: TextStyle(
+                                    color: Colors.brown,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                            Spacer(),
-                            InkWell(
-                              onTap: () async {
-                                final bloc =
-                                    BlocProvider.of<ProfileFeatureBloc>(
-                                        context);
-                                await SharedPreferencesHelper
-                                    .setProfileSkippedLogin(true);
-                                bloc.dispatch(FetchProfileFeature());
-                              },
+                            onTap: () {
+                              print("Sign-up pressed");
+                            },
+                          ),
+                          Spacer(),
+                          InkWell(
+                            onTap: () async {
+                              final bloc =
+                                  BlocProvider.of<ProfileFeatureBloc>(context);
+                              await SharedPreferencesHelper
+                                  .setProfileSkippedLogin(true);
+                              bloc.dispatch(FetchProfileFeature());
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Row(
                                 children: <Widget>[
                                   Text(
@@ -159,8 +175,8 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                                 ],
                               ),
                             ),
-                          ]),
-                        ),
+                          ),
+                        ]),
                       ),
                       SizedBox(
                         height: 10.0,
