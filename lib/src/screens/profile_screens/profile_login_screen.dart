@@ -2,9 +2,10 @@
 *   Filename    :   profile_login_screen.dart
 *   Purpose     :
 *   Created     :   04/11/2019 10:44 AM by Detective Conan
-*	 Updated			:   04/11/2019 4:23 PM PM by Detective Conan
-*	 Changes			:   Added padding for sign-up, forgot password and skip button.
-*/
+*	 Updated			:   04/11/2019 6:10 PM PM by Detective Conan
+*	 Changes			:   Added visibility icon for password.
+*                   Added validation method for the email and password.
+* */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +13,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_event.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/models/login_model.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/screens/start_page.dart';
 
@@ -23,7 +26,10 @@ class ProfileLoginScreen extends StatefulWidget {
 }
 
 class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
-  GlobalKey _fbKey = GlobalKey();
+  static final GlobalKey<FormBuilderState> _fbKey =
+      GlobalKey<FormBuilderState>();
+
+  bool _isPasswordHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -59,27 +65,47 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                             labelText: "Email",
                             helperStyle:
                                 Theme.of(context).primaryTextTheme.subtitle),
-                        keyboardType: TextInputType.multiline,
+                        keyboardType: TextInputType.emailAddress,
                         validators: [
                           FormBuilderValidators.required(),
+                          FormBuilderValidators.email(),
                         ],
                         style: Theme.of(context).primaryTextTheme.title,
                         textAlign: TextAlign.center,
                         cursorColor: Colors.brown,
                       ),
-                      FormBuilderTextField(
-                        attribute: "password",
-                        decoration: InputDecoration(
-                            labelText: "Password",
-                            helperStyle:
-                                Theme.of(context).primaryTextTheme.subtitle),
-                        keyboardType: TextInputType.multiline,
-                        validators: [
-                          FormBuilderValidators.required(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: FormBuilderTextField(
+                              attribute: "password",
+                              obscureText: _isPasswordHidden,
+                              decoration: InputDecoration(
+                                labelText: "Password",
+                                helperStyle:
+                                    Theme.of(context).primaryTextTheme.subtitle,
+                              ),
+                              keyboardType: TextInputType.visiblePassword,
+                              validators: [
+                                FormBuilderValidators.required(),
+                              ],
+                              style: Theme.of(context).primaryTextTheme.title,
+                              textAlign: TextAlign.center,
+                              cursorColor: Colors.brown,
+                            ),
+                          ),
+                          IconButton(
+                            icon: _isPasswordHidden
+                                ? Icon(Icons.visibility_off)
+                                : Icon(Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordHidden = !_isPasswordHidden;
+                              });
+                            },
+                          ),
                         ],
-                        style: Theme.of(context).primaryTextTheme.title,
-                        textAlign: TextAlign.center,
-                        cursorColor: Colors.brown,
                       ),
                       SizedBox(
                         height: 10.0,
@@ -94,10 +120,20 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                               "Login",
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               print("Login pressed");
-//                          validate(_textControllerEmail.value.text,
-//                              _textControllerPassword.value.text);
+
+                              _fbKey.currentState.save();
+                              if (_fbKey.currentState.validate()) {
+                                try {
+                                  final success = await validate(
+                                      _fbKey.currentState.value["email"],
+                                      _fbKey.currentState.value["password"]);
+                                  print("success: $success");
+                                } catch (e) {
+                                  print(e);
+                                }
+                              }
                             },
                           ),
                           Spacer(),
@@ -266,5 +302,27 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
         ],
       ),
     );
+  }
+
+  String _encrypted(String text) {
+    final crypto = PasswordCrypto();
+    return crypto.sha512(text);
+  }
+
+  Future<bool> validate(String email, String password) async {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        !email.contains("@") ||
+        email.contains(" ")) {
+      return false;
+    }
+
+    try {
+      //TODO add service for this
+      return await locator<LoginModel>().login(email, _encrypted(password));
+    } catch (e) {
+      print(e);
+      throw Exception("Login error $e");
+    }
   }
 }

@@ -11,14 +11,20 @@ import 'package:mt_carmel_app/src/core/view_models/view_state.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
-
 class LoginModel extends BaseModel {
-  final AuthenticationService _authenticationService = locator<AuthenticationService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
 
   Future<bool> login(String filename, String password) async {
     setState(ViewState.Busy);
 
-    var success =  await _authenticationService.login(filename, password);
+    var success;
+    try {
+      success = await _authenticationService.login(filename, password);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
 
     setState(ViewState.Idle);
     return success;

@@ -38,7 +38,13 @@ class AuthenticationService {
   UserAuthenticationApi _api = locator<UserAuthenticationApi>();
 
   Future<bool> login(String email, String password) async {
-    var success = await _api.validateEmailPassword(email, password);
+    var success;
+    try {
+      success = await _api.validateEmailPassword(email, password);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
 
     if (success) {
       await SharedPreferencesHelper.setUserId(_api.userAuthentication.id);
