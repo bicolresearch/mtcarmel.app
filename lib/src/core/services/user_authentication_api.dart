@@ -26,7 +26,8 @@ class UserAuthenticationApi {
         return false;
       }
     }).catchError((e) {
-      throw e;
+      print(e);
+      throw Exception("UserAuthenticationApi.validateEmailPassword: error in validation");
     });
     return isValid != null;
   }
@@ -49,6 +50,7 @@ class UserAuthenticationApi {
         valid = true;
       } else {
         print(value.statusCode);
+        throw Exception("UserAuthenticationApi._isValid: response ${value.statusCode}.");
       }
     }).timeout(Duration(seconds: 5)).catchError((error){
       throw Exception("UserAuthenticationApi._isValid: $error");

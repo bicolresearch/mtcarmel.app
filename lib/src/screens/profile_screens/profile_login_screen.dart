@@ -28,6 +28,7 @@ class ProfileLoginScreen extends StatefulWidget {
 class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
   static final GlobalKey<FormBuilderState> _fbKey =
       GlobalKey<FormBuilderState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool _isPasswordHidden = true;
 
@@ -35,6 +36,7 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
   Widget build(BuildContext context) {
     final branch = locator<BranchService>().branch;
     return Scaffold(
+      key: _scaffoldKey,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -122,16 +124,29 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                             ),
                             onPressed: () async {
                               print("Login pressed");
-
+                              bool success;
                               _fbKey.currentState.save();
                               if (_fbKey.currentState.validate()) {
                                 try {
-                                  final success = await validate(
+                                  success = await validate(
                                       _fbKey.currentState.value["email"],
                                       _fbKey.currentState.value["password"]);
-                                  print("success: $success");
                                 } catch (e) {
                                   print(e);
+                                }
+                                if (success == null || !success) {
+                                  _scaffoldKey.currentState
+                                      .removeCurrentSnackBar();
+
+                                  _scaffoldKey.currentState.showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Email or password did not match.',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      duration: Duration(seconds: 3),
+                                    ),
+                                  );
                                 }
                               }
                             },
@@ -322,7 +337,7 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
       return await locator<LoginModel>().login(email, _encrypted(password));
     } catch (e) {
       print(e);
-      throw Exception("Login error $e");
+      throw Exception("ProfileLoginScreen.validate: login error");
     }
   }
 }

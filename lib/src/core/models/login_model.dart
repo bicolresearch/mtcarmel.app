@@ -23,7 +23,7 @@ class LoginModel extends BaseModel {
       success = await _authenticationService.login(filename, password);
     } catch (e) {
       print(e);
-      throw e;
+      throw Exception("LoginModel.login: error in login");
     }
 
     setState(ViewState.Idle);

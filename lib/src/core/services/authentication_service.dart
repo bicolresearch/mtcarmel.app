@@ -43,7 +43,7 @@ class AuthenticationService {
       success = await _api.validateEmailPassword(email, password);
     } catch (e) {
       print(e);
-      throw e;
+      throw Exception("AuthenticationService.login: error in login");
     }
 
     if (success) {
