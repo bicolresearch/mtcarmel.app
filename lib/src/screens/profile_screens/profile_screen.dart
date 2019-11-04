@@ -2,9 +2,9 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   30/09/2019 4:48 PM PM by Detective Conan
-*	 Changes			:   Added branch name in change branch confirmation.
-*/
+*	 Updated			:   04/11/2019 3:36 PM PM by Detective Conan
+*	 Changes			:   Implemented switching between profile login screen and profile guest view
+* */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +21,7 @@ import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_event.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/constants/profile_constants.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
@@ -42,10 +43,10 @@ import 'package:share/share.dart';
 import '../../blocs/tab_bloc/tab_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    List<String> _features = BlocProvider.of<ProfileFeatureBloc>(context).features;
+    List<String> _features =
+        BlocProvider.of<ProfileFeatureBloc>(context).features;
     _features.add(ProfileFeatureConstants.SHARE_APP);
     _features.add(ProfileFeatureConstants.CHANGE_BRANCH);
     return SafeArea(
@@ -55,6 +56,24 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onTap: () async {
+                    final bloc = BlocProvider.of<ProfileFeatureBloc>(context);
+                    await SharedPreferencesHelper.setProfileSkippedLogin(false);
+                    bloc.dispatch(FetchProfileFeature());
+                  },
+                  title: Text(
+                    "Login",
+                    style: Theme.of(context).primaryTextTheme.subtitle,
+                  ),
+                ),
+              ),
               Image.asset(AppConstants.MT_CARMEL_LOGO_PATH, height: 100),
               Expanded(
                 child: Container(
@@ -99,9 +118,9 @@ class ProfileScreen extends StatelessWidget {
           return;
         }
         if (itemText == ProfileFeatureConstants.SHARE_APP) {
-          Share.share("https://play.google.com/store/apps/details?id=ph.mountcarmel.mountcarmelsystem",
-              subject:
-                  "Share this app");
+          Share.share(
+              "https://play.google.com/store/apps/details?id=ph.mountcarmel.mountcarmelsystem",
+              subject: "Share this app");
           return;
         }
         Navigator.push(
