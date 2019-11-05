@@ -2,14 +2,16 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   05/11/2019 1:07 PM PM by Detective Conan
-*	 Changes			:   Added user header.
+*	 Updated			:   05/11/2019 3:07 PM PM by Detective Conan
+*	 Changes			:   Implemented logout user.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_event.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
@@ -22,6 +24,8 @@ import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_event.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/app_tab.dart';
+import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/constants/profile_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
@@ -29,6 +33,7 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
 
 //import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
@@ -39,6 +44,8 @@ import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/locat
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/profile_login_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/profile_page.dart';
 
 import 'package:mt_carmel_app/src/screens/start_page.dart';
 import 'package:share/share.dart';
@@ -298,7 +305,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await showModalBottomSheet(
+                        final result = await showModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.transparent,
                           builder: (builder) {
@@ -340,7 +347,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       onTap: () {
                                         locator<AuthenticationService>()
                                             .logout();
-                                        Navigator.pop(context);
+                                        Navigator.pop(context, true);
                                       },
                                       child: ListTile(
                                         title: Text(
@@ -378,6 +385,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             );
                           },
                         );
+                        if (result.runtimeType == bool && result == true) {
+                          locator<AuthenticationService>().logout();
+                          final branchId = locator<BranchService>().branch.id;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return MultiBlocProvider(
+                                  providers: [
+                                    BlocProvider<BranchBloc>(
+                                      builder: (context) => BranchBloc()
+                                        ..dispatch(GetBranch(branchId)),
+                                    ),
+                                    BlocProvider<TabBloc>(
+                                      builder: (context) => TabBloc()..dispatch(UpdateTab(AppTab.Profile)),
+                                    )
+                                  ],
+                                  child: HomeScreen(
+                                  ));
+                            }),
+                          );
+                        }
                       },
                       child: Icon(
                         MountCarmelIcons.settings,

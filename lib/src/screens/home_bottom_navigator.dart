@@ -2,8 +2,8 @@
 *   Filename    :   home_bottom_navigator.dart
 *   Purpose     :
 *   Created     :   04/09/2019 2:36 PM by Detective Conan
-*   Updated     :   04/09/2019 2:36 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   05/11/2019 3:06 PM PM by Detective Conan
+*	 Changes			:   Updates the Apptab each selectec apptab.
 */
 
 import 'package:flutter/material.dart';
@@ -44,6 +44,9 @@ class HomeBottomNavigator extends StatelessWidget {
   }
 
   _activeTab(context, AppTab activeTab) {
+
+    final tabBloc = BlocProvider.of<TabBloc>(context);
+    tabBloc.dispatch(UpdateTab(activeTab));
     switch (activeTab) {
       case AppTab.NewsFeed:
         final bloc = BlocProvider.of<NewsFeedBloc>(context);
