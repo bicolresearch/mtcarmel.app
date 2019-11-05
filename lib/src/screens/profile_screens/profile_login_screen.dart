@@ -3,8 +3,8 @@
 *   Purpose     :
 *   Created     :   04/11/2019 10:44 AM by Detective Conan
 *	 Updated			:   04/11/2019 6:10 PM PM by Detective Conan
-*	 Changes			:   Added visibility icon for password.
-*                   Added validation method for the email and password.
+*	 Updated			:   05/11/2019 10:29 AM PM by Detective Conan
+*	 Changes			:   Implemented user login
 * */
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_blo
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_event.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/models/login_model.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
@@ -123,7 +124,6 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () async {
-                              print("Login pressed");
                               bool success;
                               _fbKey.currentState.save();
                               if (_fbKey.currentState.validate()) {
@@ -147,7 +147,11 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                                       duration: Duration(seconds: 3),
                                     ),
                                   );
+                                }else{
+                                  final bloc = BlocProvider.of<ProfileFeatureBloc>(context);
+                                  bloc.dispatch(FetchProfileFeature());
                                 }
+
                               }
                             },
                           ),
@@ -248,7 +252,7 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                           final bool confirmed =
                               await _confirmationDialog(context, branch.name);
                           if (!confirmed) return;
-
+                          locator<AuthenticationService>().logout();
                           await SharedPreferencesHelper.setBranchNameFlag(null);
                           await SharedPreferencesHelper.setBranchIdFlag(null);
                           await SharedPreferencesHelper.setResetBranch(true);

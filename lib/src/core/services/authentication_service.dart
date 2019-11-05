@@ -58,6 +58,7 @@ class AuthenticationService {
   }
 
   void logout() async {
+    await SharedPreferencesHelper.setProfileSkippedLogin(false);
     await SharedPreferencesHelper.setUserId("");
     await SharedPreferencesHelper.setRoleId("");
     await SharedPreferencesHelper.setAuthenticationTime("");

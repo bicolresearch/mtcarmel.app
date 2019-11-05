@@ -12,36 +12,24 @@ part 'user_authentication.g.dart';
 
 @JsonSerializable()
 class UserAuthentication {
-  UserAuthentication(
-      this.id,
-//      this.branchId,
-      this.roleId,
-      this.username,
-      this.password,
-//      this.createdBy,
-//      this.dtCreated,
-//      this.updatedBy,
-//      this.dtUpdated,
-//      this.isDeleted
-      );
+  UserAuthentication(this.id, this.username, this.firstName, this.middleName,
+      this.email, this.roleId, this.roleName, this.mediaId, this.mediaPath);
 
   final String id;
-//  @JsonKey(name: "branch_id")
-//  final String branchId;
+  final String username;
+  @JsonKey(name: "first_name")
+  final firstName;
+  @JsonKey(name: "middle_name")
+  final middleName;
+  final email;
   @JsonKey(name: "role_id")
   final String roleId;
-  final String username;
-  final String password;
-//  @JsonKey(name: "created_by")
-//  final String createdBy;
-//  @JsonKey(name: "dt_created")
-//  final String dtCreated;
-//  @JsonKey(name: "updated_by")
-//  final String updatedBy;
-//  @JsonKey(name: "dt_updated")
-//  final String dtUpdated;
-//  @JsonKey(name: "is_deleted")
-//  final String isDeleted;
+  @JsonKey(name: "role_name")
+  final roleName;
+  @JsonKey(name: "media_id")
+  final mediaId;
+  @JsonKey(name: "media_path")
+  final mediaPath;
 
   factory UserAuthentication.fromJson(Map<String, dynamic> json) =>
       _$UserAuthenticationFromJson(json);

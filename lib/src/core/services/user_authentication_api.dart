@@ -2,12 +2,14 @@
 *  Filename    :   user_authentication_api.dart
 *  Purpose     :	 validates user authentication
 *  Created     :   2019-07-11 12:13 by Detective Conan
-*	 Updated			:   04/11/2019 6:02 PM PM by Detective Conan
-*	 Changes			:   Uncommented the code. No need for dio. http is enough.
-*/
+*	 Updated			:   05/11/2019 10:18 AM PM by Detective Conan
+*	 Changes			:   Modified the base url. and added branch_id to the url.
+* */
 
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/user_authentication.dart';
@@ -20,29 +22,33 @@ class UserAuthenticationApi {
     await _isValid(email, password).then((value) {
       isValid = value;
       if (_userAuthentication != null) {
-        return ((_userAuthentication.username + _userAuthentication.password) ==
+        return ((_userAuthentication.username + password) ==
             (email + password));
       } else {
         return false;
       }
     }).catchError((e) {
       print(e);
-      throw Exception("UserAuthenticationApi.validateEmailPassword: error in validation");
+      throw Exception(
+          "UserAuthenticationApi.validateEmailPassword: error in validation");
     });
     return isValid != null;
   }
 
   Future<bool> _isValid(String email, String password) async {
     var valid;
-    await http
-    //TODO change to new base url when ready
-//        .get(AppConstants.API_BASE_URL +
-    .get("https://api.mountcarmel.ph/"+
-            "auth/login/" +
-            "username/" +
-            email +
-            "/password/" +
-            password)
+    final branchId = locator<BranchService>().branch.id;
+    print("branchId = $branchId");
+    final headers = {"Content-type": "application/x-www-form-urlencoded"};
+    final url = AppConstants.API_BASE_URL +
+        "auth/login/" +
+        "username/" +
+        email +
+        "/password/" +
+        password +
+        "/branch_id/" +
+        branchId;
+    await http.get(url, headers: headers)
         .then((value) async {
       if (value.statusCode == 200) {
         final body = json.decode(value.body);
@@ -50,9 +56,10 @@ class UserAuthenticationApi {
         valid = true;
       } else {
         print(value.statusCode);
-        throw Exception("UserAuthenticationApi._isValid: response ${value.statusCode}.");
+        throw Exception(
+            "UserAuthenticationApi._isValid: response ${value.statusCode}.");
       }
-    }).timeout(Duration(seconds: 5)).catchError((error){
+    }).timeout(Duration(seconds: 5)).catchError((error) {
       throw Exception("UserAuthenticationApi._isValid: $error");
     });
     return (valid != null && valid);

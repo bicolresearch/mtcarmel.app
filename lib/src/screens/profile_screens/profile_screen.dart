@@ -24,6 +24,7 @@ import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_blo
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_event.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/constants/profile_constants.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
@@ -102,7 +103,7 @@ class ProfileScreen extends StatelessWidget {
         if (itemText == ProfileFeatureConstants.CHANGE_BRANCH) {
           final bool confirmed = await _confirmationDialog(context);
           if (!confirmed) return;
-
+          locator<AuthenticationService>().logout();
           await SharedPreferencesHelper.setBranchNameFlag(null);
           await SharedPreferencesHelper.setBranchIdFlag(null);
           await SharedPreferencesHelper.setResetBranch(true);
