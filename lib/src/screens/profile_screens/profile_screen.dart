@@ -2,9 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   05/11/2019 3:37 PM PM by Detective Conan
-*	 Changes			:   Added text that the user will automatically logout when
-*                   changing branches.
+*	 Updated			:   05/11/2019 3:52 PM PM by Detective Conan
+*	 Changes			:   Hides the logout warning message if not logged in
 *
 */
 
@@ -220,10 +219,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       .title
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
-                Text(
+                isLoggedIn?Text(
                   """\nYou are logged in to this branch.\nThis will automatically logout when changing branches.""",
                   style: TextStyle(color: Colors.red),
-                ),
+                ):Container(),
                 Text("\nDo you want to change branch?"),
               ],
             ),
