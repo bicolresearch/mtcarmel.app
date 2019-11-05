@@ -2,8 +2,10 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   05/11/2019 3:07 PM PM by Detective Conan
-*	 Changes			:   Implemented logout user.
+*	 Updated			:   05/11/2019 3:37 PM PM by Detective Conan
+*	 Changes			:   Added text that the user will automatically logout when
+*                   changing branches.
+*
 */
 
 import 'package:flutter/material.dart';
@@ -200,6 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _confirmationDialog(context) {
     final branchName = BlocProvider.of<TabBloc>(context).branch.name;
+    final isLoggedIn = BlocProvider.of<ProfileFeatureBloc>(context).isLoggedIn;
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -216,6 +219,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       .primaryTextTheme
                       .title
                       .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  """\nYou are logged in to this branch.\nThis will automatically logout when changing branches.""",
+                  style: TextStyle(color: Colors.red),
                 ),
                 Text("\nDo you want to change branch?"),
               ],
@@ -391,18 +398,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) {
-                              return MultiBlocProvider(
-                                  providers: [
-                                    BlocProvider<BranchBloc>(
-                                      builder: (context) => BranchBloc()
-                                        ..dispatch(GetBranch(branchId)),
-                                    ),
-                                    BlocProvider<TabBloc>(
-                                      builder: (context) => TabBloc()..dispatch(UpdateTab(AppTab.Profile)),
-                                    )
-                                  ],
-                                  child: HomeScreen(
-                                  ));
+                              return MultiBlocProvider(providers: [
+                                BlocProvider<BranchBloc>(
+                                  builder: (context) => BranchBloc()
+                                    ..dispatch(GetBranch(branchId)),
+                                ),
+                                BlocProvider<TabBloc>(
+                                  builder: (context) => TabBloc()
+                                    ..dispatch(UpdateTab(AppTab.Profile)),
+                                )
+                              ], child: HomeScreen());
                             }),
                           );
                         }
