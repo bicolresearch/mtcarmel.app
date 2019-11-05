@@ -19,6 +19,7 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
+import 'package:mt_carmel_app/src/screens/sign_up_screen.dart';
 import 'package:mt_carmel_app/src/screens/start_page.dart';
 
 class ProfileLoginScreen extends StatefulWidget {
@@ -147,11 +148,12 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                                       duration: Duration(seconds: 3),
                                     ),
                                   );
-                                }else{
-                                  final bloc = BlocProvider.of<ProfileFeatureBloc>(context);
+                                } else {
+                                  final bloc =
+                                      BlocProvider.of<ProfileFeatureBloc>(
+                                          context);
                                   bloc.dispatch(FetchProfileFeature());
                                 }
-
                               }
                             },
                           ),
@@ -175,7 +177,6 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                       ),
 //                      InkWell(
 //                        onTap: () async {
-//                          print("Sign-up pressed");
 ////                          final result = await Navigator.push(
 ////                            context,
 ////                            MaterialPageRoute(
@@ -199,8 +200,14 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
-                            onTap: () {
-                              print("Sign-up pressed");
+                            onTap: () async {
+                              final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUpScreen(),
+                                ),
+                              );
+                              if (result) print("Signup successful");
                             },
                           ),
                           Spacer(),
