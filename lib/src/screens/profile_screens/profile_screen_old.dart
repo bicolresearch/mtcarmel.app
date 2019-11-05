@@ -432,13 +432,13 @@ class _ProfileScreenOldState extends State<ProfileScreenOld> {
   }
 
   Widget _userHeader() {
-    final userPhotoSuffix = _userProfile?.avatar ?? "";
+    final userPhotoSuffix = _userProfile?.mediaPath ?? "";
 
     var imageUrl;
     if (userPhotoSuffix == null || userPhotoSuffix == "")
       imageUrl = "";
     else
-      imageUrl = AppConstants.API_BASE_URL + _userProfile.avatar;
+      imageUrl = AppConstants.API_BASE_URL + _userProfile.mediaPath;
 
     return Container(
       height: 100,

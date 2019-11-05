@@ -2,15 +2,15 @@
 *  Filename    :   user_profile_service.dart
 *  Purpose     :
 *  Created     :   2019-07-11 16:37 by Detective Conan
-*	 Updated			:   29/10/2019 8:57 PM PM by Detective Conan
-*	 Changes			:   Implemented with dio package
+*	 Updated			:   05/11/2019 1:06 PM PM by Detective Conan
+*	 Changes			:   Changed the decoding data.
 */
 
 import 'dart:convert';
 
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-//import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
+
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
@@ -52,7 +52,9 @@ class UserProfileService {
     if (response.statusCode == 200) {
       try {
         final body = json.decode("$response");
-        return UserProfile.fromJson(body);
+        return (body["data"])
+            .map((data) => new UserProfile.fromJson(data))
+            .firstWhere((user) => user.id == id);
       } catch (e) {
         print(e);
         throw Exception("UserProfileService.getData: $e");

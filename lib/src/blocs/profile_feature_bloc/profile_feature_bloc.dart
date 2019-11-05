@@ -26,7 +26,11 @@ class ProfileFeatureBloc
   List<String> _features = [];
   static const String _CARMELITE = "Carmelite";
   bool _isLoggedIn = false;
+
+  bool get isLoggedIn => _isLoggedIn;
   UserProfile _userProfile;
+
+  UserProfile get userProfile => _userProfile;
 
   @override
   ProfileFeatureState get initialState => ProfileFeatureUninitialized();
@@ -47,17 +51,23 @@ class ProfileFeatureBloc
         ProfileFeatureError(e);
       }
       // Check if logged in
-      if(!_isLoggedIn) {
+      if (!_isLoggedIn) {
+        _userProfile = null;
         // check if skipped login screen
-        final isSkippedProfileLoggedIn = await SharedPreferencesHelper
-            .getProfileSkippedLogin();
+        final isSkippedProfileLoggedIn =
+            await SharedPreferencesHelper.getProfileSkippedLogin();
         if (!isSkippedProfileLoggedIn) {
           yield ProfileLoginScreenLoaded();
           return;
         }
+      } else {
+        await locator<AuthenticationService>().getUserId().then((id) async {
+          await locator<UserProfileService>().getUserProfile(id).then((user) {
+            _userProfile = user;
+          });
+        });
       }
 
-      //TODO modify for user profile
       try {
         final List<ProfileFeature> profileFeatures =
             await locator<ProfileFeatureService>().getData();

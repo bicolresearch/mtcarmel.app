@@ -14,9 +14,6 @@ part 'user_profile.g.dart';
 class UserProfile {
   UserProfile(
       this.id,
-      this.branchId,
-      this.roleId,
-      this.roleName,
       this.username,
       this.firstName,
       this.middleName,
@@ -28,36 +25,38 @@ class UserProfile {
       this.province,
       this.country,
       this.mobile,
-      this.landLine,
-      this.avatar);
+      this.landline,
+      this.roleId,
+      this.roleName,
+      this.mediaId,
+      this.mediaPath);
 
-  final String id;
-  @JsonKey(name: "branch_id")
-  final String branchId;
-  @JsonKey(name: "role_id")
-  final String roleId;
-  @JsonKey(name: "role_name")
-  final String roleName;
-  final String username;
+  final id;
+  final username;
   @JsonKey(name: "first_name")
-  final String firstName;
+  final firstName;
   @JsonKey(name: "middle_name")
-  final String middleName;
+  final middleName;
   @JsonKey(name: "last_name")
-  final String lastName;
-  final String email;
+  final lastName;
+  final email;
   @JsonKey(name: "address_1")
-  final String address1;
+  final address1;
   @JsonKey(name: "address_2")
-  final String address2;
-  final String city;
-  final String province;
-  final String country;
-  final String mobile;
-  @JsonKey(name: "landline")
-  final String landLine;
-  @JsonKey(name: "avatar")
-  final String avatar;
+  final address2;
+  final city;
+  final province;
+  final country;
+  final mobile;
+  final landline;
+  @JsonKey(name: "role_id")
+  final roleId;
+  @JsonKey(name: "role_name")
+  final roleName;
+  @JsonKey(name: "media_id")
+  final mediaId;
+  @JsonKey(name: "media_path")
+  final mediaPath;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
       _$UserProfileFromJson(json);
