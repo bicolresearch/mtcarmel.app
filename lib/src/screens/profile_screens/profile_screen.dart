@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   05/11/2019 5:35 PM PM by Detective Conan
-*	 Changes			:   Added logout confirmation dialog.
+*	 Updated			:   06/11/2019 10:59 AM PM by Detective Conan
+*	 Changes			:   Added Logout to the feature list when logged in.
 *
 */
 
@@ -45,8 +45,6 @@ import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/locat
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/profile_login_screen.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/profile_page.dart';
 
 import 'package:mt_carmel_app/src/screens/start_page.dart';
 import 'package:share/share.dart';
@@ -68,6 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         BlocProvider.of<ProfileFeatureBloc>(context).features;
     _features.add(ProfileFeatureConstants.SHARE_APP);
     _features.add(ProfileFeatureConstants.CHANGE_BRANCH);
+    if (isLoggedIn) _features.add(ProfileFeatureConstants.LOGOUT);
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -144,6 +143,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Share.share(
               "https://play.google.com/store/apps/details?id=ph.mountcarmel.mountcarmelsystem",
               subject: "Share this app");
+          return;
+        }
+        if (itemText == ProfileFeatureConstants.LOGOUT) {
+          final result = await _logoutConfirmationDialog(context);
+          if (result == null || result == false) return;
+          locator<AuthenticationService>().logout();
+          BlocProvider.of<ProfileFeatureBloc>(context)
+              .dispatch(LogoutProfileFeature());
           return;
         }
         Navigator.push(
@@ -353,109 +360,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        final result = await showModalBottomSheet(
-                          context: context,
-                          backgroundColor: Colors.transparent,
-                          builder: (builder) {
-                            return Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20.0),
-                                  ),
-                                  color: Colors.white),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditProfileScreen()),
-                                        );
-//                                        Navigator.pop(context);
-                                      },
-                                      child: ListTile(
-                                        title: Text(
-                                          "Edit profile",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .subhead,
-                                        ),
-                                        leading: Icon(
-                                          Icons.build,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        final result =
-                                            await _logoutConfirmationDialog(
-                                                context);
-                                        if (result) {
-                                          Navigator.pop(context, true);
-                                        } else {}
-                                        Navigator.pop(context, false);
-                                      },
-                                      child: ListTile(
-                                        title: Text(
-                                          "Logout",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .subhead,
-                                        ),
-                                        leading: Icon(
-                                          Icons.exit_to_app,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: ListTile(
-                                        title: Text(
-                                          "Cancel",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .subhead,
-                                        ),
-                                        leading: Icon(
-                                          Icons.cancel,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                        if (result.runtimeType == bool && result == true) {
-                          locator<AuthenticationService>().logout();
-                          final branchId = locator<BranchService>().branch.id;
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return MultiBlocProvider(providers: [
-                                BlocProvider<BranchBloc>(
-                                  builder: (context) => BranchBloc()
-                                    ..dispatch(GetBranch(branchId)),
-                                ),
-                                BlocProvider<TabBloc>(
-                                  builder: (context) => TabBloc()
-                                    ..dispatch(UpdateTab(AppTab.Profile)),
-                                )
-                              ], child: HomeScreen());
-                            }),
-                          );
-                        }
+                        _showSetting(context);
                       },
                       child: Icon(
                         MountCarmelIcons.settings,
@@ -469,6 +374,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  _showSetting(BuildContext context) async {
+    return await showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (builder) {
+        return Container(
+          height: 200,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.0),
+              ),
+              color: Colors.white),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditProfileScreen()),
+                    );
+                  },
+                  child: ListTile(
+                    title: Text(
+                      "Edit profile",
+                      style: Theme.of(context).primaryTextTheme.subhead,
+                    ),
+                    leading: Icon(
+                      Icons.build,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: ListTile(
+                    title: Text(
+                      "Cancel",
+                      style: Theme.of(context).primaryTextTheme.subhead,
+                    ),
+                    leading: Icon(
+                      Icons.cancel,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

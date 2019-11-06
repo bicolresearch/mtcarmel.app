@@ -25,4 +25,8 @@ class RefreshProfileFeature extends ProfileFeatureEvent {
   String toString() => 'RefreshProfileFeature';
 }
 
-//TODO: Add events
+class LogoutProfileFeature extends ProfileFeatureEvent {
+
+  @override
+  String toString() => 'LogoutProfileFeature';
+}

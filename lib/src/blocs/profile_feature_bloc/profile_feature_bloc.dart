@@ -85,6 +85,10 @@ class ProfileFeatureBloc
         return;
       }
     }
+
+    if (event is LogoutProfileFeature) {
+      yield ProfileLoginScreenLoaded();
+    }
   }
 
   Future _sortFeatures(List<ProfileFeature> profileFeatures) async {

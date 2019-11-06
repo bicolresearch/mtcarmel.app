@@ -17,6 +17,7 @@ class ProfileFeatureConstants {
   static const String ABOUT_THE_PARISH = "History";
   static const String SHARE_APP = "Share app";
   static const String CHANGE_BRANCH = "Change branch";
+  static const String LOGOUT = "Logout";
 
   static const List<String> ProfileFeatureCommonList = [
 //    BIBLE,
