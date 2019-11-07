@@ -2,8 +2,8 @@
 *   Filename    :   sub_services_list.dart
 *   Purpose     :
 *   Created     :   11/09/2019 2:48 PM by Detective Conan
-*	 Updated			:   25/09/2019 3:49 PM PM by Detective Conan
-*	 Changes			:   Made Branch name dynamic
+*	 Updated			:   07/11/2019 11:28 AM PM by Detective Conan
+*	 Changes			:   Modified to adapt new model for submodule and formfields
 */
 
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class SubServicesList extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: churchModule.churchSubModules.length,
+                  itemCount: churchModule.subModuleAndFormFieldsList.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () async {
@@ -54,8 +54,8 @@ class SubServicesList extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return Provider<ChurchSubModule>.value(
-                                value: churchModule.churchSubModules[index],
+                              return Provider<SubModuleAndFormFields>.value(
+                                value: churchModule.subModuleAndFormFieldsList[index],
                                 child: ServiceInfoScreen(),
                               );
                             },
@@ -69,7 +69,7 @@ class SubServicesList extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20.0, horizontal: 70.0),
                             child: Text(
-                              churchModule.churchSubModules[index].name??"",
+                              churchModule.subModuleAndFormFieldsList[index].subModule.name??"",
                               style: Theme.of(context).primaryTextTheme.subhead,
                               textAlign: TextAlign.center,
                             ),

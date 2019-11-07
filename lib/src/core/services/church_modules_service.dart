@@ -19,9 +19,9 @@ class ChurchModuleService {
   Future<ChurchModule> getChurchModule(ModuleReference moduleReference) async {
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
-    var churchSubModules;
+    var subModuleAndFormFields;
     try {
-      churchSubModules = await _getSubModules(moduleReference);
+      subModuleAndFormFields = await _getSubModuleAndFormFieldsList(moduleReference);
     } catch (e) {
       print(e);
       if (!hasConnection)
@@ -30,67 +30,45 @@ class ChurchModuleService {
     }
 
     return ChurchModule(
-        moduleReference: moduleReference, churchSubModules: churchSubModules);
+        moduleReference: moduleReference, subModuleAndFormFieldsList: subModuleAndFormFields);
   }
 
-  Future _getSubModules(ModuleReference moduleReference) async {
+  Future _getSubModuleAndFormFieldsList(ModuleReference moduleReference) async {
     final List<String> subModuleIds =
         moduleReference.subModuleIds?.split(",") ?? [];
 
     if (subModuleIds.isEmpty)
       throw Exception("No sub module for ${moduleReference?.name}");
 
-    List<ChurchSubModule> churchSubmodules = [];
+    List<SubModuleAndFormFields> subModuleAndFormFields = [];
 
     for (var id in subModuleIds) {
       try {
         final subModuleId = "$id";
-//        SubModuleAndFormFields subModuleAndFormFields =
-//        await _getSubModuleAndFormFields(subModuleId);
-        churchSubmodules.add(await _getChurchSubModule(subModuleId));
+        subModuleAndFormFields.add(await _getSubModuleAndFormFields(subModuleId));
       } catch (e) {
-        print("ChurchModulesService._getSubModules: $e");
+        print("ChurchModulesService._getSubModuleAndFormFieldsList: $e");
       }
     }
 
-    if (churchSubmodules.isEmpty) throw Exception("No SubModule retrieved");
+    if (subModuleAndFormFields.isEmpty) throw Exception("No SubModule retrieved");
 
-    return churchSubmodules;
+    return subModuleAndFormFields;
   }
 
-//  Future _getSubModules(ModuleReference moduleReference) async {
-//    final List<String> subModuleIds =
-//        moduleReference.subModuleIds?.split(",") ?? [];
-//
-//    if (subModuleIds.isEmpty)
-//      throw Exception("No sub module for ${moduleReference?.name}");
-//
-//    List<ChurchSubModule> churchSubmodules = [];
-//
-//    for (var id in subModuleIds) {
-//      try {
-//        final subModuleId = "$id";
-//        SubModuleAndFormFields subModuleAndFormFields =
-//            await _getSubModuleAndFormFields(subModuleId);
-//        churchSubmodules.add(_getChurchSubModule(subModuleAndFormFields));
-//      } catch (e) {
-//        print("ChurchModulesService._getSubModules: $e");
-//      }
-//    }
-//
-//    if (churchSubmodules.isEmpty) throw Exception("No SubModule retrieved");
-//
-//    return churchSubmodules;
-//  }
-
-  Future<ChurchSubModule> _getChurchSubModule(String subModuleId) async {
-    final keyword = "subModule";
+  Future<SubModuleAndFormFields> _getSubModuleAndFormFields(String subModuleId) async {
+    final keyword = "subModuleAndFormFields";
     final branchId = await locator<BranchService>().branch.id;
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
     var response;
+    //TODO uncomment when ready
+//    final url =
+//        "${AppConstants.API_BASE_URL}${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId";
+    //TODO temporary
     final url =
-        "${AppConstants.API_BASE_URL}${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId";
+        "${AppConstants.OLD_API_BASE_URL}${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId";
+
 
     var dio = locator<DioService>().getDio();
 
@@ -112,47 +90,24 @@ class ChurchModuleService {
       print(e);
       if (!hasConnection)
         throw Exception(
-            'ChurchModuleService._getChurchSubModule: No connection');
+            'ChurchModuleService._getSubModuleAndFormFields: No connection');
       throw Exception(
-          'ChurchModuleService._getChurchSubModule:  Error requesting ChurchModuleService: $e');
+          'ChurchModuleService._getSubModuleAndFormFields:  Error requesting SubModuleAndFormFields: $e');
     }
 
     if (response.statusCode == 200) {
       try {
         final body = json.decode("$response");
-        return ChurchSubModule.fromJson(body);
+        return SubModuleAndFormFields.fromJson(body);
+
       } catch (e) {
         print(e);
-        throw Exception("ChurchModuleService._getChurchSubModule: $e");
+        throw Exception("ChurchModuleService._getSubModuleAndFormFields: $e");
       }
     } else {
       print(response.statusCode);
       throw Exception(
-          "ChurchModuleService._getChurchSubModule: statusCode ${response.statusCode}");
+          "ChurchModuleService._getSubModuleAndFormFields: statusCode ${response.statusCode}");
     }
   }
-
-//TODO
-//  Future<SubModuleAndFormFields> _getSubModuleAndFormFields(
-//      String subModuleId) async {
-//    final branchId = await locator<BranchService>().branch.id;
-//    final response = await http.get(
-//        "${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId");
-//    if (response.statusCode == 200) {
-//      print(response.body);
-//      final body = json.decode("$response");
-//      print(body);
-//      return SubModuleAndFormFields.fromJson(body);
-//    } else {
-//      throw Exception("Error in SubModlueAndFormFields data gathering.");
-//    }
-//    if (response.statusCode == 200) {
-//      return (json.decode(response.body) as List)
-//          .map((data) => SubModuleAndFormFields.fromJson(data))
-//          .toList()
-//          .firstWhere((value) => value.subModule.id == subModuleId);
-//    } else {
-//      throw Exception('Failed to load');
-//    }
-//  }
 }

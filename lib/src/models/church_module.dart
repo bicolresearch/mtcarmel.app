@@ -15,13 +15,14 @@ class ChurchModule {
   final ModuleReference moduleReference;
   final String typeName;
   final String description;
-  final List<ChurchSubModule> churchSubModules;
+  final List<SubModuleAndFormFields> subModuleAndFormFieldsList;
 
-  ChurchModule(
-      {this.moduleReference,
-      this.churchSubModules,
-      this.typeName,
-      this.description});
+  ChurchModule({
+    this.moduleReference,
+    this.typeName,
+    this.description,
+    this.subModuleAndFormFieldsList,
+  });
 
   factory ChurchModule.fromJson(Map<String, dynamic> json) =>
       _$ChurchModuleFromJson(json);

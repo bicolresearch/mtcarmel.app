@@ -15,6 +15,9 @@ class AppConstants {
   // site api
   static const String API_BASE_URL = "https://carmel.ph/api/";
 
+  //old api
+  static const String OLD_API_BASE_URL = "https://api.mountcarmel.ph/";
+
   static const String BRANCH_LOCATIONS_JSON_URL = "branch_locations/";
 
   static const String BRANCHES_JSON_URL = "branches/";

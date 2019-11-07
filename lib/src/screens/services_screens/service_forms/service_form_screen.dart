@@ -2,8 +2,8 @@
 *  Filename    :   service_form_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-15 14:12 by Detective Conan
-*  Updated     :   2019-08-29 11:16 by Detective conan
-*  Changes     :   Set auto-validation to false
+*	 Updated			:   07/11/2019 11:27 AM PM by Detective Conan
+*	 Changes			:   Modified to adapt new model for submodule and formfields
 */
 
 import 'package:flutter/material.dart';
@@ -20,10 +20,10 @@ import 'package:mt_carmel_app/src/widgets/line.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 
 class ServiceFormScreen extends StatefulWidget {
-  ServiceFormScreen({this.subModule});
+  ServiceFormScreen({this.subModuleAndFormFields});
 
   @required
-  final ChurchSubModule subModule;
+  final SubModuleAndFormFields subModuleAndFormFields;
 
   @override
   _ServiceFormScreenState createState() => _ServiceFormScreenState();
@@ -99,7 +99,7 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 30.0),
                         child: Text(
-                          widget.subModule.name,
+                          widget.subModuleAndFormFields.subModule.name,
                           style: Theme.of(context)
                               .primaryTextTheme
                               .headline
@@ -115,7 +115,9 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                           autovalidate: false,
                           child: Column(
                             children: <Widget>[
-                              for (var formField in widget.subModule.formFields)
+                              for (var formField in widget
+                                      .subModuleAndFormFields?.formFields ??
+                                  [])
                                 ServiceFormField(churchFormField: formField),
                             ],
                           ),
@@ -141,16 +143,16 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
 
                       await _submit().then(
                         (success) async {
-                          print(
-                              "ServiceFormScreen._submit.then success=$success");
                           if (!success) {
-                            _scaffoldKey.currentState.showSnackBar(SnackBar(
-                              content: Text(
-                                'Did not saved. Please input necessary fields.',
-                                textAlign: TextAlign.center,
+                            _scaffoldKey.currentState.showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Did not saved. Please input necessary fields.',
+                                  textAlign: TextAlign.center,
+                                ),
+                                duration: Duration(seconds: 3),
                               ),
-                              duration: Duration(seconds: 3),
-                            ),);
+                            );
                             return;
                           }
 
@@ -158,8 +160,8 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ThankYouScreen(
-                                  thankYouText:
-                                      widget.subModule.thankYouContent),
+                                  thankYouText: widget.subModuleAndFormFields
+                                      .subModule.thankYouContent),
                             ),
                           );
                           if (result) Navigator.pop(context, true);
@@ -269,14 +271,17 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
   }
 
   Future _submit() async {
-    if (widget.subModule.url == null || widget.subModule.url.isEmpty)
+    print("widget.subModuleAndFormFields.subModule.url");
+    print(widget.subModuleAndFormFields.subModule.url);
+    if (widget.subModuleAndFormFields.subModule.url == null ||
+        widget.subModuleAndFormFields.subModule.url.isEmpty)
       throw Exception("No assigned api url.");
 
     _fbKey.currentState.save();
     if (_fbKey.currentState.validate()) {
       print(_fbKey.currentState.value);
-      final url = widget.subModule.url;
-      print(widget.subModule.url);
+      final url = widget.subModuleAndFormFields.subModule.url;
+      print(widget.subModuleAndFormFields.subModule.url);
       Map<String, String> headers = {
         "Content-type": "application/x-www-form-urlencoded"
       };
@@ -305,7 +310,8 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
           )
           .catchError((e) => {
                 print(e),
-                throw Exception("Error in submitting ${widget.subModule.name}")
+                throw Exception(
+                    "Error in submitting ${widget.subModuleAndFormFields.subModule.name}")
               });
       print(response.body);
       if (response == null) return false;

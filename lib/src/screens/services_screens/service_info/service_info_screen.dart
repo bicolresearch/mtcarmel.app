@@ -3,14 +3,12 @@
 *  Purpose     :   Displays the service info
 *  Created     :   2019-07-22 09:21 by Detective Conan
 *	 Updated			:   19/09/2019 1:09 PM PM by Detective Conan
-*	 Changes			:   Inherits the ChurchSubModule instead of passing the value to the constructor.
-*                   Temporary proceeding to the next page when clicking the accept button
+*	 Updated			:   07/11/2019 11:28 AM PM by Detective Conan
+*	 Changes			:   Modified to adapt new model for submodule and formfields
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html_textview_render/html_text_view.dart';
-import 'package:mt_carmel_app/src/blocs/sub_services_bloc/sub_services_bloc.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/visibility_helper.dart';
@@ -22,11 +20,6 @@ import 'package:mt_carmel_app/src/widgets/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class ServiceInfoScreen extends StatefulWidget {
-//  @required
-//  final ChurchSubModule churchServiceSubtype;
-//
-//  const ServiceInfoScreen({Key key, this.churchServiceSubtype})
-//      : super(key: key);
 
   @override
   _ServiceInfoScreenState createState() => _ServiceInfoScreenState();
@@ -76,7 +69,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final churchSubType = Provider.of<ChurchSubModule>(context);
+    final subModuleAndFormFields = Provider.of<SubModuleAndFormFields>(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(
@@ -89,7 +82,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Text(
-                    churchSubType.name,
+                    subModuleAndFormFields.subModule.name,
                     style: Theme.of(context)
                         .primaryTextTheme
                         .headline
@@ -118,7 +111,7 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                         margin: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: HtmlTextView(
                           data:
-                              "<div style='color: #5d4037'>${churchSubType.acceptanceContent}</div>",
+                              "<div style='color: #5d4037'>${subModuleAndFormFields.subModule.acceptanceContent}</div>",
                         ),
                         key: _htmlKey,
                       ),
@@ -139,35 +132,48 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
                         ),
                         onPressed: _isScrolledToTheLast
                             ? () async {
-                                _scaffoldKey.currentState.showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Online applications are not yet available.',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    duration: Duration(seconds: 3),
-                                  ),
-                                );
-
-                                //TODO uncomment when ready
-//                                if (!_isLoggedIn) {
-//                                  _isLoggedIn = await Navigator.push(
-//                                    context,
-//                                    MaterialPageRoute(
-//                                      builder: (context) => LoginScreen(),
+//                                _scaffoldKey.currentState.showSnackBar(
+//                                  SnackBar(
+//                                    content: Text(
+//                                      'Online applications are not yet available.',
+//                                      textAlign: TextAlign.center,
 //                                    ),
-//                                  );
-//                                }
-//
-//                                if (_isLoggedIn) {
-//                                  final result = await Navigator.push(
-//                                      context,
-//                                      MaterialPageRoute(
-//                                          builder: (context) => ServiceFormScreen(
-//                                              subModule:
-//                                                  widget.churchServiceSubtype)));
-//                                  if (result) Navigator.pop(context, true);
-//                                }
+//                                    duration: Duration(seconds: 3),
+//                                  ),
+//                                );
+
+                                if (subModuleAndFormFields.formFields == null ||
+                                    subModuleAndFormFields.formFields.isEmpty) {
+                                  _scaffoldKey.currentState.showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Online application for this service is not yet available',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      duration: Duration(seconds: 3),
+                                    ),
+                                  );
+                                  return;
+                                }
+
+                                if (!_isLoggedIn) {
+                                  _isLoggedIn = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginScreen(),
+                                    ),
+                                  );
+                                }
+
+                                if (_isLoggedIn) {
+                                  final result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ServiceFormScreen(
+                                                  subModuleAndFormFields: subModuleAndFormFields)));
+                                  if (result) Navigator.pop(context, true);
+                                }
                               }
                             : null,
                       ),
@@ -178,13 +184,6 @@ class _ServiceInfoScreenState extends State<ServiceInfoScreen> {
               ],
             ),
           ),
-          //TODO Removed when Services is ready
-//          Container(
-//              margin: EdgeInsets.only(bottom: 60.0),
-//              height: double.infinity,
-//              width: double.infinity,
-//              color: Color.fromRGBO(0, 0, 0, 0.7)
-//          ),
         ],
       ),
     );

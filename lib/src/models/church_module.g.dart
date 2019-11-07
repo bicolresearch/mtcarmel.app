@@ -12,13 +12,13 @@ ChurchModule _$ChurchModuleFromJson(Map<String, dynamic> json) {
         ? null
         : ModuleReference.fromJson(
             json['moduleReference'] as Map<String, dynamic>),
-    churchSubModules: (json['churchSubModules'] as List)
-        ?.map((e) => e == null
-            ? null
-            : ChurchSubModule.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
     typeName: json['typeName'] as String,
     description: json['description'] as String,
+    subModuleAndFormFieldsList: (json['subModuleAndFormFields'] as List)
+        ?.map((e) => e == null
+            ? null
+            : SubModuleAndFormFields.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
@@ -27,7 +27,7 @@ Map<String, dynamic> _$ChurchModuleToJson(ChurchModule instance) =>
       'moduleReference': instance.moduleReference,
       'typeName': instance.typeName,
       'description': instance.description,
-      'churchSubModules': instance.churchSubModules,
+      'subModuleAndFormFields': instance.subModuleAndFormFieldsList,
     };
 
 ChurchSubModule _$ChurchSubModuleFromJson(Map<String, dynamic> json) {
