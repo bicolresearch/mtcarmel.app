@@ -63,13 +63,13 @@ class ChurchModuleService {
 
     var response;
     //TODO uncomment when ready
-//    final url =
-//        "${AppConstants.API_BASE_URL}${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId";
-    //TODO temporary
     final url =
-        "${AppConstants.OLD_API_BASE_URL}${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId";
+        "${AppConstants.API_BASE_URL}${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId";
+//    //TODO temporary
+//    final url =
+//        "${AppConstants.OLD_API_BASE_URL}${AppConstants.SUB_SERVICES_BASE_JSON_URL}sub_module/?branch_id=$branchId&id=$subModuleId";
 
-
+    print(url);
     var dio = locator<DioService>().getDio();
 
     try {

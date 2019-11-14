@@ -12,21 +12,24 @@ part 'prayer_request.g.dart';
 
 @JsonSerializable()
 class PrayerRequest {
-  PrayerRequest(this.id, this.prayer, this.status, this.postedOn,
-      this.updatedOn, this.author);
+  PrayerRequest(this.id, this.prayer, this.statusId, this.statusName,
+      this.dtCreated, this.dtUpdated, this.createdBy, this.updatedBy);
 
   @JsonKey(name: "id")
   final String id;
-  @JsonKey(name: "prayer")
   final String prayer;
-  @JsonKey(name: "status")
-  final String status;
-  @JsonKey(name: "posted_on")
-  final String postedOn;
-  @JsonKey(name: "updated_on")
-  final String updatedOn;
-  @JsonKey(name: "author")
-  final String author;
+  @JsonKey(name: "status_id")
+  final statusId;
+  @JsonKey(name: "status_name")
+  final statusName;
+  @JsonKey(name: "dt_created")
+  final dtCreated;
+  @JsonKey(name: "dt_updated")
+  final dtUpdated;
+  @JsonKey(name: "created_by")
+  final createdBy;
+  @JsonKey(name: "updated_by")
+  final updatedBy;
 
   factory PrayerRequest.fromJson(Map<String, dynamic> json) =>
       _$PrayerRequestFromJson(json);

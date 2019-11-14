@@ -61,11 +61,18 @@ class ProfileFeatureBloc
           return;
         }
       } else {
+        bool userProfileFetchingError = false;
         await locator<AuthenticationService>().getUserId().then((id) async {
           await locator<UserProfileService>().getUserProfile(id).then((user) {
             _userProfile = user;
           });
+        }).catchError((e){
+          userProfileFetchingError = true;
         });
+        if(userProfileFetchingError){
+          locator<AuthenticationService>().logout();
+          yield ProfileLoginScreenLoaded();
+        }
       }
 
       try {

@@ -6,29 +6,29 @@
 *   Changes     :   
 */
 
-
 import 'dart:convert';
 
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/profile_feature.dart';
 
-class ProfileFeatureService{
-
+class ProfileFeatureService {
   Future<List<ProfileFeature>> getData() async {
     final _keyword = "profileFeature";
     final hasConnection = await ConnectivityChecker.hasDataConnection();
 
     List<ProfileFeature> _profileFeatures = [];
     final branchId = await locator<BranchService>().branch.id;
+    final roleId = await locator<AuthenticationService>().getRoleId();
 
     final url =
-        "${AppConstants.API_BASE_URL}${AppConstants.PROFILE_FEATURE_JSON_URL}?branch_id=$branchId";
-print("profile feature url $url");
+        "${AppConstants.API_BASE_URL}${AppConstants.PROFILE_FEATURE_JSON_URL}?branch_id=$branchId&role_id=$roleId";
+    print("profile feature url $url");
     var dio = locator<DioService>().getDio();
 
     var response;
@@ -36,16 +36,16 @@ print("profile feature url $url");
     try {
       response = await dio
           .get(
-        "$url",
-        queryParameters: {'k': _keyword},
-        options: buildCacheOptions(
-            Duration(days: AppConstants.CACHE_DURATION),
-            forceRefresh: true,
-            subKey: "page=$branchId"),
-      )
+            "$url",
+            queryParameters: {'k': _keyword},
+            options: buildCacheOptions(
+                Duration(days: AppConstants.CACHE_DURATION),
+                forceRefresh: true,
+                subKey: "page=$branchId"),
+          )
           .timeout(
-        Duration(seconds: 5),
-      );
+            Duration(seconds: 5),
+          );
     } catch (e) {
       print(e);
       if (!hasConnection)
@@ -70,5 +70,4 @@ print("profile feature url $url");
 
     return _profileFeatures;
   }
-
 }

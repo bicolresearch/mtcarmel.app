@@ -297,6 +297,11 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
       final branchId = await locator<BranchService>().branch.id;
       fieldsValue.putIfAbsent("user_id", () => userId);
       fieldsValue.putIfAbsent("branch_id", () => branchId);
+      fieldsValue.putIfAbsent(
+          "sub_module_id", () => widget.subModuleAndFormFields.subModule.id);
+      fieldsValue.putIfAbsent(
+          "module_id", () => widget.subModuleAndFormFields.subModule.moduleId);
+//      fieldsValue.putIfAbsent("status_id", () => "1");
       debugPrint(fieldsValue.toString());
       print(headers);
       Map<String, String> casted = fieldsValue.cast();

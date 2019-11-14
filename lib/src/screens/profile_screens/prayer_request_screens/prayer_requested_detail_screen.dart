@@ -20,7 +20,8 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime datePosted = DateTime.parse("${prayerRequest.postedOn??"01-01-2019"}");
+    DateTime datePosted =
+        DateTime.parse("${prayerRequest.dtCreated ?? "01-01-2019"}");
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -52,7 +53,7 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                          "Requested by: ${prayerRequest.author}",
+                          "Requested by: ${prayerRequest.createdBy}",
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle
@@ -85,6 +86,5 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

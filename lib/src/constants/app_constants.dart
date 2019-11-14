@@ -12,11 +12,12 @@ class AppConstants {
   static const String FONT_FAMILY = 'Helvetica';
   static const String MT_CARMEL_LOGO_PATH = 'assets/images/mt_carmel_logo.png';
 
-  // site api
-  static const String API_BASE_URL = "https://carmel.ph/api/";
-
   //old api
   static const String OLD_API_BASE_URL = "https://api.mountcarmel.ph/";
+
+  // site api
+  //static const String API_BASE_URL = "https://carmel.ph/api/";
+  static const String API_BASE_URL = OLD_API_BASE_URL;
 
   static const String BRANCH_LOCATIONS_JSON_URL = "branch_locations/";
 
@@ -42,7 +43,7 @@ class AppConstants {
   static const String PRAYER_REQUEST_JSON_URL = "prayer_requests/";
 
   static const String DEFAULT_BRANCH_ID = "1";
-  static const String CARMEL_NAME = "Carmel";
+  static const String CARMEL_NAME = "Carmel Philippines";
   static const String LOCATION_NAME = "Ordo Carmelitarum Discalceatorum";
   static const String NATIONAL_SHRINE_TEXT =
       'National Shrine of Our Lady of Mount Carmel';

@@ -18,9 +18,11 @@ class ProfileFeatureConstants {
   static const String SHARE_APP = "Share app";
   static const String CHANGE_BRANCH = "Change branch";
   static const String LOGOUT = "Logout";
+  static const String PRAYER_REQUEST = "Prayer Requests Approval";
 
   static const List<String> ProfileFeatureCommonList = [
 //    BIBLE,
+    PRAYER_REQUEST,
     REGULAR_MASS_SCHEDULE,
     LOCATION_MAP,
     PRIESTS,

@@ -33,6 +33,7 @@ import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
+import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
@@ -43,6 +44,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
 
@@ -173,6 +175,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _navigateToDetail(BuildContext context, String itemText) {
     switch (itemText) {
+      case ProfileFeatureConstants.PRAYER_REQUEST:
+        return PrayerRequestScreen();
       case ProfileFeatureConstants.PRIESTS:
         return BlocProvider<PriestsBloc>(
             builder: (context) => PriestsBloc()..dispatch(FetchPriests()),

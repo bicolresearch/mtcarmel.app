@@ -8,6 +8,7 @@
 
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
@@ -22,25 +23,28 @@ class PrayerRequestService {
     final keyword = "prayerRequests";
     final hasConnection = await ConnectivityChecker.hasDataConnection();
     final branchId = await locator<BranchService>().branch.id;
+    final roleId = await locator<AuthenticationService>().getRoleId();
 
     var response;
-    final url = "${AppConstants.API_BASE_URL}${AppConstants.PRAYER_REQUEST_JSON_URL}?branch_id=$branchId";
+    final url =
+        "${AppConstants.API_BASE_URL}${AppConstants.PRAYER_REQUEST_JSON_URL}?branch_id=$branchId&role_id=$roleId";
+    print(url);
     List<PrayerRequest> _prayerRequests;
 
     var dio = locator<DioService>().getDio();
     try {
       response = await dio
           .get(
-        "$url",
-        queryParameters: {'k': keyword},
-        options: buildCacheOptions(
-            Duration(days: AppConstants.CACHE_DURATION),
-            forceRefresh: true,
-            subKey: "page=$branchId"),
-      )
+            "$url",
+            queryParameters: {'k': keyword},
+            options: buildCacheOptions(
+                Duration(days: AppConstants.CACHE_DURATION),
+                forceRefresh: true,
+                subKey: "page=$branchId"),
+          )
           .timeout(
-        Duration(seconds: 5),
-      );
+            Duration(seconds: 5),
+          );
     } catch (e) {
       print(e);
       if (!hasConnection)
