@@ -21,6 +21,8 @@ import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
+import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_event.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
@@ -44,6 +46,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
@@ -176,7 +179,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _navigateToDetail(BuildContext context, String itemText) {
     switch (itemText) {
       case ProfileFeatureConstants.PRAYER_REQUEST:
-        return PrayerRequestScreen();
+        return BlocProvider<PrayerRequestBloc>(
+            builder: (context) =>
+                PrayerRequestBloc()..dispatch(FetchPrayerRequest()),
+            child: PrayerRequestPage());
       case ProfileFeatureConstants.PRIESTS:
         return BlocProvider<PriestsBloc>(
             builder: (context) => PriestsBloc()..dispatch(FetchPriests()),

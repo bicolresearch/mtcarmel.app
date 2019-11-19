@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class CrudService {
-// TODO implement using dio
   Future<bool> post(url,
       {Map<String, String> headers, body, Encoding encoding}) async {
     if (url == null || url.isEmpty) throw Exception("No assigned api url.");
@@ -67,7 +66,7 @@ class CrudService {
       body: body,
     )
         .timeout(
-      Duration(seconds: 3),
+      Duration(seconds: 5),
     )
         .catchError((e) => {throw e});
     print(response.body);

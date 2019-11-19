@@ -17,20 +17,21 @@ import 'package:mt_carmel_app/src/models/data_prayer_request.dart';
 import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'dart:convert';
 
+enum PrayerRequestsStatus { OnGoing, Approved, Rejected, Deleted, All }
+
 class PrayerRequestService {
   //TODO implement request per priest and admin account
-  Future<List<PrayerRequest>> getPrayerRequests() async {
+  Future<DataActionPrayerRequest> getPrayerRequests() async {
     final keyword = "prayerRequests";
     final hasConnection = await ConnectivityChecker.hasDataConnection();
     final branchId = await locator<BranchService>().branch.id;
     final roleId = await locator<AuthenticationService>().getRoleId();
+    final userId = await locator<AuthenticationService>().getUserId();
 
     var response;
     final url =
-        "${AppConstants.API_BASE_URL}${AppConstants.PRAYER_REQUEST_JSON_URL}?branch_id=$branchId&role_id=$roleId";
-    print(url);
-    List<PrayerRequest> _prayerRequests;
-
+        "${AppConstants.API_BASE_URL}${AppConstants.PRAYER_REQUEST_JSON_URL}?branch_id=$branchId&role_id=$roleId&user_id=$userId";
+print(".........$url");
     var dio = locator<DioService>().getDio();
     try {
       response = await dio
@@ -56,7 +57,7 @@ class PrayerRequestService {
     if (response.statusCode == 200) {
       try {
         final body = json.decode("$response");
-        return DataPrayerRequest.fromJson(body).data;
+        return DataActionPrayerRequest.fromJson(body);
       } catch (e) {
         print(e);
         throw Exception("PrayerRequestService.getData: $e");
