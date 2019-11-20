@@ -11,10 +11,10 @@ import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class PrayerRequestedDetailScreen extends StatelessWidget {
-  @required
+
   final PrayerRequest prayerRequest;
 
-  const PrayerRequestedDetailScreen({Key key, this.prayerRequest})
+  const PrayerRequestedDetailScreen({Key key, @required this.prayerRequest})
       : assert(prayerRequest != null),
         super(key: key);
 

@@ -7,25 +7,51 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
+import 'package:mt_carmel_app/src/constants/action_constants.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
-import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/models/prayer_request.dart';
+import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_requested_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
-class PrayerRequestScreen extends StatelessWidget {
+enum _SwipedEnum { LeftSwiped, RightSwiped, NotSwiped }
+
+class PrayerRequestScreen extends StatefulWidget {
+  @override
+  _PrayerRequestScreenState createState() => _PrayerRequestScreenState();
+}
+
+class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
+  List<PrayerRequest> _prayerRequests = [];
+  bool _isDeleteEnable = false;
+  bool _isApprovalEnable = false;
+  bool _isReviewEnable = false;
+  bool _isOfferEnable = false;
+  String _newStatusId = "";
+  Icon _leftSwipeActionIcon;
+  Icon _rightSwipeActionIcon;
+  String _leftSwipeActionText = "";
+  String _rightSwipeActionText = "";
+  _SwipedEnum _swipedEnum = _SwipedEnum.NotSwiped;
+
+  static GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<PrayerRequestBloc>(context);
-    List<PrayerRequest> _prayerRequests =
-        bloc.dataActionPrayerRequest.data.data;
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -35,7 +61,7 @@ class PrayerRequestScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: Text(
-              "Prayer Request",
+              "Prayer Requests",
               style: Theme.of(context)
                   .primaryTextTheme
                   .headline
@@ -53,8 +79,7 @@ class PrayerRequestScreen extends StatelessWidget {
                       )
                     : ListView.builder(
                         itemBuilder: (context, index) {
-                          return _prayerRequestItem(
-                              context, _prayerRequests[index], index);
+                          return _prayerRequestItem(context, index);
                         },
                         itemCount: _prayerRequests.length,
                       ),
@@ -67,111 +92,71 @@ class PrayerRequestScreen extends StatelessWidget {
     );
   }
 
-  Widget _prayerRequestItem(
-      BuildContext context, PrayerRequest prayerRequest, int index) {
+  Widget _prayerRequestItem(BuildContext context, int index) {
     return Dismissible(
-      key: Key(prayerRequest.id),
-      child: Container(
-        width: double.infinity,
-        child: Card(
-
-//        child: ListTile(
-//          title: Text(
-//            prayerRequest.createdBy,
-//            style: Theme.of(context)
-//                .primaryTextTheme
-//                .title
-//                .copyWith(fontWeight: FontWeight.bold),
-//          ),
-//          subtitle: Text(
-//            prayerRequest.prayer,
-//            overflow: TextOverflow.ellipsis,
-//            style: Theme.of(context).primaryTextTheme.title,
-//            maxLines: 1,
-//          ),
-//          onTap: () {
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                builder: (context) =>
-//                    PrayerRequestedDetailScreen(prayerRequest: prayerRequest),
-//              ),
-//            );
-//          },
-//        ),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  prayerRequest.createdBy,
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .title
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  prayerRequest.prayer,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).primaryTextTheme.title,
-                  maxLines: 1,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        prayerRequest.statusName,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).primaryTextTheme.caption,
-                        maxLines: 1,
-                      ),
-                    ],
+      key: Key(_prayerRequests[index].id),
+      child: InkWell(
+        child: Container(
+          width: double.infinity,
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    _prayerRequests[index].createdBy,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .title
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
+                  Text(
+                    _prayerRequests[index].prayer,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).primaryTextTheme.title,
+                    maxLines: 1,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          _prayerRequests[index].statusName,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).primaryTextTheme.caption,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PrayerRequestedDetailScreen(
+                  prayerRequest: _prayerRequests[index]),
+            ),
+          );
+        },
       ),
-      background: slideHorizontalBackground(DismissDirection.startToEnd),
-      secondaryBackground:
-          slideHorizontalBackground(DismissDirection.endToStart),
+      background: _slideRightBackground(),
+      secondaryBackground: _slideLeftBackground(),
       confirmDismiss: (direction) async {
+        direction == DismissDirection.startToEnd
+            ? _swipedEnum = _SwipedEnum.RightSwiped
+            : _swipedEnum = _SwipedEnum.LeftSwiped;
         if (direction == DismissDirection.startToEnd ||
             direction == DismissDirection.endToStart) {
           final bool res = await showDialog(
               context: context,
               builder: (BuildContext context) {
-                return AlertDialog(
-                  content: Text(
-                      "Are you sure you want to delete this ${prayerRequest.prayer ?? ""} request?"),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text(
-                        "Cancel",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    FlatButton(
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      onPressed: () async {
-                        final result = await _updateRequest(prayerRequest);
-                        if (result) print(result);
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
+                return _showDialog(context, index);
               });
           return res;
         } else {
@@ -182,53 +167,62 @@ class PrayerRequestScreen extends StatelessWidget {
     );
   }
 
-  Widget slideHorizontalBackground(DismissDirection direction) {
-    return Container(
-      color: Colors.red,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          mainAxisAlignment: (direction == DismissDirection.endToStart)
-              ? MainAxisAlignment.end
-              : MainAxisAlignment.start,
-          children: <Widget>[
-            Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-            Text(
-              " Delete",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.right,
-            ),
-          ],
-        ),
-        alignment: Alignment.center,
-      ),
-    );
-  }
-
-  Widget slideLeftBackground() {
+  Widget _slideLeftBackground() {
     return Container(
       color: Colors.red,
       child: Align(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Icon(
-              Icons.delete,
-              color: Colors.white,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                _leftSwipeActionIcon,
+                Text(
+                  "$_leftSwipeActionText",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
             ),
-            Text(
-              " Delete",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.right,
+            SizedBox(
+              width: 20,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerRight,
+      ),
+    );
+  }
+
+  Widget _slideRightBackground() {
+    return Container(
+      color: Colors.green,
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 10.0,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                _rightSwipeActionIcon,
+                Text(
+                  "$_rightSwipeActionText",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
             ),
             SizedBox(
               width: 20,
@@ -257,16 +251,16 @@ class PrayerRequestScreen extends StatelessWidget {
 
     var success = false;
     Map<String, String> fieldsValue = {
-      "id": "${prayerRequest.id}",
+//      "id": "${prayerRequest.id}",
       "remarks": "",
-      "status_id": "9",
+      "status_id": "$_newStatusId",
     };
 
 //    id, status_id, remarks, user_id
     fieldsValue.putIfAbsent("user_id", () => userId);
     Map<String, String> casted = fieldsValue.cast();
     final url =
-        "https://api.mountcarmel.ph/prayer_requests/update/id/${prayerRequest.id}/role_id/$roleId";
+        "${AppConstants.API_BASE_URL}/prayer_requests/update/id/${prayerRequest.id}/role_id/$roleId";
 
     final headers = {"Content-type": "application/x-www-form-urlencoded"};
     debugPrint("$casted");
@@ -283,5 +277,145 @@ class PrayerRequestScreen extends StatelessWidget {
       },
     );
     return success;
+  }
+
+  _showDialog(BuildContext context, int index) {
+    return AlertDialog(
+      title: Text("Prayer request"),
+      content: FormBuilder(
+        key: _fbKey,
+        child: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "${_prayerRequests[index].prayer}",
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+                textAlign: TextAlign.start,
+              ),
+              FormBuilderTextField(
+                attribute: "remarks",
+                decoration: InputDecoration(labelText: "Remarks"),
+//                onChanged: (_){},
+                validators: [FormBuilderValidators.required()],
+              ),
+            ],
+          ),
+        ),
+        ),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(
+            "Cancel",
+            style: TextStyle(color: Colors.black),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(
+          child: Text(
+            _swipedEnum == _SwipedEnum.LeftSwiped
+                ? _leftSwipeActionText
+                : _rightSwipeActionText,
+            style: TextStyle(
+                color: _swipedEnum == _SwipedEnum.LeftSwiped
+                    ? Colors.red
+                    : Colors.green),
+          ),
+          onPressed: () async {
+            final result = await _updateRequest(_prayerRequests[index]);
+            if (result) print(result);
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+//
+//    return AlertDialog(
+//      title: Text("Prayer request"),
+//      content: Text(
+//        "${_prayerRequests[index].prayer}",
+//        overflow: TextOverflow.ellipsis,
+//        maxLines: 3,
+//      ),
+//      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+//      actions: <Widget>[
+//        FlatButton(
+//          child: Text(
+//            "Cancel",
+//            style: TextStyle(color: Colors.black),
+//          ),
+//          onPressed: () {
+//            Navigator.of(context).pop();
+//          },
+//        ),
+//        FlatButton(
+//          child: Text(
+//            _swipedEnum == _SwipedEnum.LeftSwiped
+//                ? _leftSwipeActionText
+//                : _rightSwipeActionText,
+//            style: TextStyle(
+//                color: _swipedEnum == _SwipedEnum.LeftSwiped
+//                    ? Colors.red
+//                    : Colors.green),
+//          ),
+//          onPressed: () async {
+//            final result = await _updateRequest(_prayerRequests[index]);
+//            if (result) print(result);
+//            Navigator.of(context).pop();
+//          },
+//        ),
+//      ],
+//    );
+  }
+
+  void _initialize() {
+    final bloc = BlocProvider.of<PrayerRequestBloc>(context);
+    _prayerRequests = bloc.dataActionPrayerRequest.data.data;
+    final actions = bloc.dataActionPrayerRequest.actions;
+    _isDeleteEnable = actions.keys.contains(ActionConstants.DELETE_ID);
+    _isApprovalEnable = actions.keys.contains(ActionConstants.APPROVAL_ID);
+    _isReviewEnable = actions.keys.contains(ActionConstants.REVIEW_ID);
+    _isOfferEnable = actions.keys.contains(ActionConstants.OFFER_ID);
+    _leftSwipeActionIcon = _isDeleteEnable
+        ? Icon(
+            Icons.delete,
+            color: Colors.white,
+          )
+        : Icon(
+            Icons.thumb_down,
+            color: Colors.white,
+          );
+    _rightSwipeActionIcon = _isApprovalEnable
+        ? Icon(
+            Icons.thumb_up,
+            color: Colors.white,
+          )
+        : _isOfferEnable
+            ? Icon(
+                MountCarmelIcons.makearequest,
+                color: Colors.white,
+              )
+            : Container();
+    _leftSwipeActionText =
+        _isDeleteEnable ? "Delete" : _isApprovalEnable ? "Reject" : "Decline";
+    _rightSwipeActionText =
+        _isApprovalEnable ? "Reject" : _isOfferEnable ? "Offered" : "";
+  }
+
+  _content(String prayer) {
+    switch (_swipedEnum) {
+      case _SwipedEnum.LeftSwiped:
+        return "Are you sure you want to $_leftSwipeActionText this prayer\n$prayer";
+      case _SwipedEnum.RightSwiped:
+        return "Are you sure you want to $_rightSwipeActionText this prayer\n$prayer";
+      case _SwipedEnum.NotSwiped:
+        return "";
+    }
   }
 }

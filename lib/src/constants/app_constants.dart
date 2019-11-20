@@ -16,6 +16,7 @@ class AppConstants {
   static const String OLD_API_BASE_URL = "https://api.mountcarmel.ph/";
 
   // site api
+  // TODO use the new base api
   //static const String API_BASE_URL = "https://carmel.ph/api/";
   static const String API_BASE_URL = OLD_API_BASE_URL;
 
