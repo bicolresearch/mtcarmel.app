@@ -25,6 +25,7 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -73,7 +74,7 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        prayerRequest.prayer,
+                        prayerRequest.prayer??"",
                         style: Theme.of(context).primaryTextTheme.title,
                       ),
                     ],

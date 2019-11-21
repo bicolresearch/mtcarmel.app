@@ -19,6 +19,8 @@ import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_event.dart';
+import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
@@ -45,6 +47,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedul
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_screen.dart';
@@ -178,11 +181,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _navigateToDetail(BuildContext context, String itemText) {
     switch (itemText) {
+      case ProfileFeatureConstants.PRAYER_REQUEST_APPROVAL:
       case ProfileFeatureConstants.PRAYER_REQUEST:
         return BlocProvider<PrayerRequestBloc>(
             builder: (context) =>
                 PrayerRequestBloc()..dispatch(FetchPrayerRequest()),
             child: PrayerRequestPage());
+      case ProfileFeatureConstants.MASS_REQUEST:
+        return BlocProvider<MassRequestBloc>(
+            builder: (context) =>
+                MassRequestBloc()..dispatch(FetchMassRequest()),
+            child: MassRequestPage());
       case ProfileFeatureConstants.PRIESTS:
         return BlocProvider<PriestsBloc>(
             builder: (context) => PriestsBloc()..dispatch(FetchPriests()),

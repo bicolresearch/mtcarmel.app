@@ -31,7 +31,7 @@ class PrayerRequestService {
     var response;
     final url =
         "${AppConstants.API_BASE_URL}${AppConstants.PRAYER_REQUEST_JSON_URL}?branch_id=$branchId&role_id=$roleId&user_id=$userId";
-print(".........$url");
+
     var dio = locator<DioService>().getDio();
     try {
       response = await dio

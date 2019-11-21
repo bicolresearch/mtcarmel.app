@@ -218,15 +218,15 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
   _initializeList() async {
     await _getPurposeMassTypes();
 // TODO implement when ready
-//    locator<MassRequestService>().getMassRequests().then(
-//      ((value) {
-//        if (this.mounted)
-//          setState(() {
-//            debugPrint(value.toString());
-//            _massRequests = value;
-//          });
-//      }),
-//    );
+    locator<MassRequestService>().getMassRequests().then(
+      ((value) {
+        if (this.mounted)
+          setState(() {
+            debugPrint(value.toString());
+            _massRequests = value;
+          });
+      }),
+    );
   }
 
   Future _getPurposeMassTypes() async {
