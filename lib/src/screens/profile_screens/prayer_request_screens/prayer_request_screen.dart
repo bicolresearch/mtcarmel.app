@@ -13,6 +13,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
 import 'package:mt_carmel_app/src/constants/action_constants.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/constants/status_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
@@ -35,7 +36,6 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
   bool _isApprovalEnable = false;
   bool _isReviewEnable = false;
   bool _isOfferEnable = false;
-  String _newStatusId = "";
   Icon _leftSwipeActionIcon;
   Icon _rightSwipeActionIcon;
   String _leftSwipeActionText = "";
@@ -43,6 +43,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
   _SwipedEnum _swipedEnum = _SwipedEnum.NotSwiped;
 
   static GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -53,6 +54,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Column(
         children: <Widget>[
           SizedBox(
@@ -159,8 +161,6 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
                 return _showDialog(context, index);
               });
           return res;
-        } else {
-          // TODO: Navigate to edit page;
         }
         return false;
       },
@@ -234,11 +234,11 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
     );
   }
 
-  _updateRequest(PrayerRequest prayerRequest) async {
+  _updateRequest(PrayerRequest prayerRequest, remarks) async {
     final userId =
         await locator<AuthenticationService>().getUserId().catchError((e) {
-//      throw Exception("Retrieving user id error. $e");
       debugPrint("Retrieving user id error. $e");
+      throw Exception("Retrieving user id error. $e");
     });
 
     if (userId == null || userId == "") {
@@ -247,13 +247,13 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
     }
 
     final roleId = await locator<AuthenticationService>().getRoleId();
-    final branchId = await locator<BranchService>().branch.id;
+//    final branchId = await locator<BranchService>().branch.id;
 
     var success = false;
     Map<String, String> fieldsValue = {
 //      "id": "${prayerRequest.id}",
-      "remarks": "",
-      "status_id": "$_newStatusId",
+      "remarks": remarks,
+      "status_id": "${_getNewStatusId()}",
     };
 
 //    id, status_id, remarks, user_id
@@ -273,7 +273,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
     ).catchError(
       (e) {
         debugPrint("$e");
-        success = false;
+        throw e;
       },
     );
     return success;
@@ -285,25 +285,27 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
       content: FormBuilder(
         key: _fbKey,
         child: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "${_prayerRequests[index].prayer}",
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-                textAlign: TextAlign.start,
-              ),
-              FormBuilderTextField(
-                attribute: "remarks",
-                decoration: InputDecoration(labelText: "Remarks"),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "${_prayerRequests[index].prayer}",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  textAlign: TextAlign.start,
+                ),
+                _swipedEnum == _SwipedEnum.LeftSwiped
+                    ? FormBuilderTextField(
+                        attribute: "remarks",
+                        decoration: InputDecoration(labelText: "Remarks"),
 //                onChanged: (_){},
-                validators: [FormBuilderValidators.required()],
-              ),
-            ],
+                        validators: [FormBuilderValidators.required()],
+                      )
+                    : Container(),
+              ],
+            ),
           ),
-        ),
         ),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
@@ -314,7 +316,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
             style: TextStyle(color: Colors.black),
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(false);
           },
         ),
         FlatButton(
@@ -328,50 +330,23 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
                     : Colors.green),
           ),
           onPressed: () async {
-            final result = await _updateRequest(_prayerRequests[index]);
-            if (result) print(result);
-            Navigator.of(context).pop();
+            _fbKey.currentState.save();
+            if (_fbKey.currentState.validate()) {
+              try {
+                final result = await _updateRequest(_prayerRequests[index],
+                    _fbKey.currentState.value["remarks"]);
+                _showSnackBar();
+                Navigator.of(context).pop(result);
+              } catch (e) {
+                print(e);
+                _showSnackBar(msg: "Problem updating request.");
+                Navigator.of(context).pop();
+              }
+            }
           },
         ),
       ],
     );
-//
-//    return AlertDialog(
-//      title: Text("Prayer request"),
-//      content: Text(
-//        "${_prayerRequests[index].prayer}",
-//        overflow: TextOverflow.ellipsis,
-//        maxLines: 3,
-//      ),
-//      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-//      actions: <Widget>[
-//        FlatButton(
-//          child: Text(
-//            "Cancel",
-//            style: TextStyle(color: Colors.black),
-//          ),
-//          onPressed: () {
-//            Navigator.of(context).pop();
-//          },
-//        ),
-//        FlatButton(
-//          child: Text(
-//            _swipedEnum == _SwipedEnum.LeftSwiped
-//                ? _leftSwipeActionText
-//                : _rightSwipeActionText,
-//            style: TextStyle(
-//                color: _swipedEnum == _SwipedEnum.LeftSwiped
-//                    ? Colors.red
-//                    : Colors.green),
-//          ),
-//          onPressed: () async {
-//            final result = await _updateRequest(_prayerRequests[index]);
-//            if (result) print(result);
-//            Navigator.of(context).pop();
-//          },
-//        ),
-//      ],
-//    );
   }
 
   void _initialize() {
@@ -408,14 +383,55 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
         _isApprovalEnable ? "Reject" : _isOfferEnable ? "Offered" : "";
   }
 
-  _content(String prayer) {
-    switch (_swipedEnum) {
-      case _SwipedEnum.LeftSwiped:
-        return "Are you sure you want to $_leftSwipeActionText this prayer\n$prayer";
-      case _SwipedEnum.RightSwiped:
-        return "Are you sure you want to $_rightSwipeActionText this prayer\n$prayer";
-      case _SwipedEnum.NotSwiped:
-        return "";
+  String _getNewStatusId() {
+    if (_swipedEnum == _SwipedEnum.RightSwiped) {
+      if (_isApprovalEnable) {
+        return StatusConstants.APPROVED_ID;
+      } else if (_isOfferEnable) {
+        return StatusConstants.OFFERED_ID;
+      } else // Reviewed
+      {
+        return StatusConstants.REVIEWED_ID;
+      }
+    } else {
+      if (_isApprovalEnable) {
+        return StatusConstants.DENIED_ID;
+      } else if (_isOfferEnable) {
+        return StatusConstants.DECLINED_ID;
+      } else // Reviewed
+      {
+        return StatusConstants.DELETED_ID;
+      }
     }
+  }
+
+  _showSnackBar({String msg}) {
+    if (msg == null || msg == "") {
+      if (_swipedEnum == _SwipedEnum.RightSwiped) {
+        if (_isApprovalEnable)
+          msg = "Request has been approved.";
+        else if (_isOfferEnable)
+          msg = "Prayer has been offered.";
+        else
+          msg = "Request has been reviewed.";
+      } else {
+        if (_isApprovalEnable)
+          msg = "Request has been denied.";
+        else if (_isOfferEnable)
+          msg = "Prayer has been declined.";
+        else
+          msg = "Request has been deleted.";
+      }
+    }
+    _scaffoldKey.currentState.removeCurrentSnackBar();
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(
+          "$msg",
+          textAlign: TextAlign.center,
+        ),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 }
