@@ -207,7 +207,17 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
             ),
           ),
         ),
-      ));
+      ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PrayerRequestedDetailScreen(
+                  prayerRequest: _prayerRequests[index]),
+            ),
+          );
+        },
+      );
     }
   }
 
@@ -424,10 +434,13 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
                 color: Colors.white,
               )
             : null;
+
     _leftSwipeActionText =
         _isApprovalEnable ? "Deny" : _isOfferEnable ? "Decline" : "Delete";
     _rightSwipeActionText =
         _isApprovalEnable ? "Approve" : _isOfferEnable ? "Offer" : "";
+    setState(() {
+    });
   }
 
   String _getNewStatusId() {
