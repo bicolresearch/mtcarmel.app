@@ -47,23 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is BranchLoaded) {
             final branch = BlocProvider.of<BranchBloc>(context).branch;
             BlocProvider.of<TabBloc>(context).setBranch(branch);
-            return MultiBlocProvider(providers: [
-              BlocProvider<NewsFeedBloc>(
-                builder: (context) => NewsFeedBloc(),
-              ),
-              BlocProvider<ServicesBloc>(
-                builder: (context) => ServicesBloc(),
-              ),
-              BlocProvider<SendHelpBloc>(
-                builder: (context) => SendHelpBloc(),
-              ),
-//              BlocProvider<TransparencyBloc>(
-//                builder: (context) => TransparencyBloc(),
-//              ),
-              BlocProvider<ProfileFeatureBloc>(
-                builder: (context) => ProfileFeatureBloc(),
-              ),
-            ], child: HomeBottomNavigator());
+
+            return HomeBottomNavigator();
           } else if (state is BranchLoading) {
             return Scaffold(
               body: Center(

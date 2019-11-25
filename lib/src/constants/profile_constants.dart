@@ -21,11 +21,15 @@ class ProfileFeatureConstants {
   static const String PRAYER_REQUEST_APPROVAL = "Prayer Requests Approval";
   static const String PRAYER_REQUEST = "Prayer Requests";
   static const String MASS_REQUEST = "Mass Requests";
+  static const String MASS_REQUESTS_APPROVAL = "Mass Requests Approval";
+
 
   static const List<String> ProfileFeatureCommonList = [
 //    BIBLE,
     PRAYER_REQUEST,
     PRAYER_REQUEST_APPROVAL,
+    MASS_REQUEST,
+    MASS_REQUESTS_APPROVAL,
     REGULAR_MASS_SCHEDULE,
     LOCATION_MAP,
     PRIESTS,

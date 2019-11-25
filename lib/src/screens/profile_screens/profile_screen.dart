@@ -187,6 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             builder: (context) =>
                 PrayerRequestBloc()..dispatch(FetchPrayerRequest()),
             child: PrayerRequestPage());
+      case ProfileFeatureConstants.MASS_REQUESTS_APPROVAL:
       case ProfileFeatureConstants.MASS_REQUEST:
         return BlocProvider<MassRequestBloc>(
             builder: (context) =>

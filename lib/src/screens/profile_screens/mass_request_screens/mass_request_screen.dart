@@ -7,6 +7,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
@@ -44,9 +45,8 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
-              "Mass Request",
-              style: Theme
-                  .of(context)
+              "Mass Requests",
+              style: Theme.of(context)
                   .primaryTextTheme
                   .headline
                   .copyWith(fontWeight: FontWeight.bold),
@@ -55,9 +55,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 20.0),
-              child: _massRequests.isEmpty
-                  ? LoadingIndicator()
-                  : ListView.builder(
+              child: ListView.builder(
                 itemBuilder: (context, index) {
                   return Dismissible(
                     key: Key(_massRequests[index].id),
@@ -66,22 +64,20 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                MassRequestedDetailScreen(
-                                  massRequest: _massRequests[index],
-                                  massPurpose: _purposeMassValue(
-                                      _massRequests[index].purposeMass ?? ""),
-                                ),
+                            builder: (context) => MassRequestedDetailScreen(
+                              massRequest: _massRequests[index],
+                              massPurpose: _purposeMassValue(
+                                  _massRequests[index].purposeMass ?? ""),
+                            ),
                           ),
                         );
                       },
-                      child:
-                      _massRequestItem(context, _massRequests[index]),
+                      child: _massRequestItem(context, _massRequests[index]),
                     ),
-                    background: slideHorizontalBackground(
-                        DismissDirection.startToEnd),
-                    secondaryBackground: slideHorizontalBackground(
-                        DismissDirection.endToStart),
+                    background:
+                        slideHorizontalBackground(DismissDirection.startToEnd),
+                    secondaryBackground:
+                        slideHorizontalBackground(DismissDirection.endToStart),
                     confirmDismiss: (direction) async {
                       if (direction == DismissDirection.startToEnd ||
                           direction == DismissDirection.endToStart) {
@@ -90,18 +86,14 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 content: Text(
-                                    "Are you sure you want to delete this ${_purposeMassValue(
-                                        _massRequests[index].purposeMass ??
-                                            "")} request?"),
+                                    "Are you sure you want to delete this ${_purposeMassValue(_massRequests[index].purposeMass ?? "")} request?"),
                                 shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(20.0)),
+                                    borderRadius: BorderRadius.circular(20.0)),
                                 actions: <Widget>[
                                   FlatButton(
                                     child: Text(
                                       "Cancel",
-                                      style:
-                                      TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
@@ -133,7 +125,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
                     },
                   );
                 },
-                itemCount: _massRequests.length,
+                itemCount: (_massRequests != null) ? _massRequests.length : 0,
               ),
             ),
           ),
@@ -222,6 +214,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
       ((value) {
         if (this.mounted)
           setState(() {
+            debugPrint(".,.,.,.,");
             debugPrint(value.toString());
             _massRequests = value;
           });
@@ -261,16 +254,14 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
             children: <Widget>[
               Text(
                 "Status request: ${massRequest.status}",
-                style: Theme
-                    .of(context)
+                style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 "Requested by: ${massRequest.author}",
-                style: Theme
-                    .of(context)
+                style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle
                     .copyWith(fontWeight: FontWeight.bold),
@@ -278,19 +269,13 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
               Text(
                 _purposeMassValue(massRequest.purposeMass ?? ""),
                 overflow: TextOverflow.ellipsis,
-                style: Theme
-                    .of(context)
-                    .primaryTextTheme
-                    .title,
+                style: Theme.of(context).primaryTextTheme.title,
                 maxLines: 1,
               ),
               Text(
                 massRequest.name ?? "",
                 overflow: TextOverflow.ellipsis,
-                style: Theme
-                    .of(context)
-                    .primaryTextTheme
-                    .title,
+                style: Theme.of(context).primaryTextTheme.title,
                 maxLines: 1,
               ),
             ],
@@ -302,7 +287,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
 
   _updateRequest(MassRequest massRequest) async {
     final userId =
-    await locator<AuthenticationService>().getUserId().catchError((e) {
+        await locator<AuthenticationService>().getUserId().catchError((e) {
 //      throw Exception("Retrieving user id error. $e");
       debugPrint("Retrieving user id error. $e");
     });
@@ -329,17 +314,17 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
     debugPrint("$casted");
     debugPrint(url);
     //TODO implement when ready
-//    locator<CrudService>().put(url, body: casted, headers: headers).then(
-//      ((value) {
-//        debugPrint("$value");
-//        success = value;
-//      }),
-//    ).catchError(
-//          (e) {
-//        debugPrint("$e");
-//        success = false;
-//      },
-//    );
+    locator<CrudService>().put(url, body: casted, headers: headers).then(
+      ((value) {
+        debugPrint("$value");
+        success = value;
+      }),
+    ).catchError(
+      (e) {
+        debugPrint("$e");
+        success = false;
+      },
+    );
     return success;
   }
 }
