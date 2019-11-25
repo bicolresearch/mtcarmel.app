@@ -47,3 +47,4 @@ class MassRequest {
 
   Map<String, dynamic> toJson() => _$MassRequestToJson(this);
 }
+

@@ -14,17 +14,11 @@ part 'data_mass_request.g.dart';
 
 @JsonSerializable()
 class DataMassRequest{
-  DataMassRequest(
-      this.draw,
-      this.recordsTotal,
-      this.recordsFiltered,
-      this.data,
+  DataMassRequest(this.data, this.actions
       );
 
-  final int draw;
-  final int recordsTotal;
-  final int recordsFiltered;
   final List<MassRequest> data;
+  final Map<String, String> actions;
 
   factory DataMassRequest.fromJson(Map<String, dynamic> json) => _$DataMassRequestFromJson(json);
 
