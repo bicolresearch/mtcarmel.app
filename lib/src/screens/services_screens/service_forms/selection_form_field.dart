@@ -2,8 +2,8 @@
 *  Filename    :   selection_form_field.dart
 *  Purpose     :	
 *  Created     :   2019-08-22 12:16 by Detective Conan
-*  Updated     :   2019-08-22 12:16 by Detective Conan 
-*  Changes     :
+*	 Updated			:   25/11/2019 1:16 PM PM by Detective Conan
+*	 Changes			:   Changed the descriptionName to name.
 */
 
 import 'package:flutter/material.dart';
@@ -135,7 +135,7 @@ class _SelectionFormFieldState extends State<SelectionFormField> {
   }
 
   void _showModalBottomSheet(context,
-      selection,
+      List<SelectionApi> selection,
       FormFieldState<dynamic> field,) {
     showModalBottomSheet(
       context: context,
@@ -151,7 +151,7 @@ class _SelectionFormFieldState extends State<SelectionFormField> {
           child: ListView.builder(
             itemCount: selection.length,
             itemBuilder: (context, index) {
-              final name = selection[index].donationName;
+              final name = selection[index].name;
               return ListTile(
                 title: Text(
                   name,
@@ -164,7 +164,7 @@ class _SelectionFormFieldState extends State<SelectionFormField> {
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                   field.didChange(selection[index]);
-                  _selected = selection[index].donationName;
+                  _selected = selection[index].name;
                   Navigator.pop(
                     context,
                   );
