@@ -2,9 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   06/11/2019 10:59 AM PM by Detective Conan
-*	 Changes			:   Added Logout to the feature list when logged in.
-*
+*	 Updated			:   26/11/2019 8:25 AM PM by Detective Conan
+*	 Changes			:   Fixed the share app, change branch and logout buttons
 */
 
 import 'package:flutter/material.dart';
@@ -29,7 +28,7 @@ import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_event.dart';
-import 'package:mt_carmel_app/src/blocs/tab_bloc/app_tab.dart';
+
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/constants/profile_constants.dart';
@@ -37,12 +36,9 @@ import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
-import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/screens/home_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
 
-//import 'package:mt_carmel_app/src/screens/profile_screens/bible_screens/bible_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
@@ -50,7 +46,6 @@ import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/locat
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_screen.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
 
@@ -72,9 +67,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     List<String> _features =
         BlocProvider.of<ProfileFeatureBloc>(context).features;
-    _features.add(ProfileFeatureConstants.SHARE_APP);
-    _features.add(ProfileFeatureConstants.CHANGE_BRANCH);
-    if (isLoggedIn) _features.add(ProfileFeatureConstants.LOGOUT);
+    if (!_features.contains(ProfileFeatureConstants.SHARE_APP))
+      _features.add(ProfileFeatureConstants.SHARE_APP);
+
+    if (!_features.contains(ProfileFeatureConstants.CHANGE_BRANCH))
+      _features.add(ProfileFeatureConstants.CHANGE_BRANCH);
+
+    if (!_features.contains(ProfileFeatureConstants.LOGOUT)) {
+      if (isLoggedIn) _features.add(ProfileFeatureConstants.LOGOUT);
+    }
     return SafeArea(
       child: Scaffold(
         body: Center(
