@@ -8,6 +8,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
@@ -32,10 +34,10 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
   List<MassRequest> _massRequests = [];
   List<SelectionApi> _purposeMassTypes = [];
 
-  bool _isLoading = true;
-
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<MassRequestBloc>(context);
+    _massRequests = bloc.massRequest;
     return Scaffold(
       body: Column(
         children: <Widget>[

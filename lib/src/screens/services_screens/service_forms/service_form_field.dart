@@ -3,15 +3,16 @@
 *  Purpose     :	 Responsible for the calling of which type of form field
 *                  to be used.
 *  Created     :   2019-07-15 17:02 by Detective Conan
-*	 Updated			:   05/09/2019 4:01 PM PM by Detective Conan
-*	 Changes			:   Added call for country_province_city form.
-*/
+*	 Updated			:   27/11/2019 3:19 PM PM by Detective Conan
+*	 Changes			:   Added DateTimeForm call
+* */
 
 import 'package:flutter/material.dart';
 import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/civil_status_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/country_and_related_form_fields.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/date_form_field.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/date_time_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/selection_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_multiline_text_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_numeric_form_field.dart';
@@ -45,6 +46,8 @@ class ServiceFormField extends StatelessWidget {
       return DateFormField(churchFormField: churchFormField);
     else if (churchFormField.textFieldType == "time")
       return TimeFormField(churchFormField: churchFormField);
+    else if (churchFormField.textFieldType == "date_time")
+      return DateTimeFormField(churchFormField: churchFormField);
     else if (churchFormField.textFieldType == "numeric")
       return ServiceNumericFormField(churchFormField: churchFormField);
     else if (churchFormField.textFieldType == "country_province_city_barangay")

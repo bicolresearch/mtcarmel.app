@@ -23,14 +23,13 @@ class MassRequestService {
     List<MassRequest> _massRequests = [];
     String url =
         "${AppConstants.API_BASE_URL}mass_requests/?branch_id=$branchId&role_id=$roleId&user_id=$userId";
-    print("..,,..,,");
-    print(url);
     await http
         .get(url)
         .then((result) {
           if (result.statusCode == 200) {
             final body = json.decode(result.body);
-            _massRequests = DataMassRequest.fromJson(body).data;
+            print(body);
+            _massRequests = DataActionMassRequest.fromJson(body).data.data;
           } else {
             print(result.statusCode);
           }
@@ -40,3 +39,5 @@ class MassRequestService {
     return _massRequests;
   }
 }
+
+
