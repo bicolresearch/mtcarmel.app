@@ -14,25 +14,21 @@ abstract class AdultBaptismState extends Equatable {
 }
 
 class AdultBaptismUninitialized extends AdultBaptismState {
-
   @override
   String toString() => 'AdultBaptismUninitialized';
 }
 
 class AdultBaptismLoading extends AdultBaptismState {
-
   @override
   String toString() => 'AdultBaptismLoading';
 }
 
 class AdultBaptismLoaded extends AdultBaptismState {
-
   @override
   String toString() => 'AdultBaptismLoaded';
 }
 
 class AdultBaptismError extends AdultBaptismState {
-
   final exception;
 
   AdultBaptismError(this.exception) : super([exception]);
@@ -42,9 +38,13 @@ class AdultBaptismError extends AdultBaptismState {
 }
 
 class NoAdultBaptismLoaded extends AdultBaptismState {
-
   @override
   String toString() => 'No AdultBaptism Loaded';
+}
+
+class AdultBaptismNoConnection extends AdultBaptismState {
+  @override
+  String toString() => 'No Connection';
 }
 
 //TODO: Add states

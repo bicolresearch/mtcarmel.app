@@ -20,30 +20,26 @@ class PastorsPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Expanded(
-            child: BlocBuilder<PastorsBloc, PastorsState>(
-          builder: (context, state) {
-            if(state is PastorsLoading || state is PastorsUninitialized)
-              return Scaffold(body: LoadingIndicator());
-            if(state is PastorsLoaded){
-              return PastorsScreen();
-            }
-            if(state is PastorsError)
-              {
+          Expanded(child: BlocBuilder<PastorsBloc, PastorsState>(
+            builder: (context, state) {
+              if (state is PastorsLoading || state is PastorsUninitialized)
+                return Scaffold(body: LoadingIndicator());
+              if (state is PastorsLoaded) {
+                return PastorsScreen();
+              }
+              if (state is PastorsError) {
                 return _errorDisplay(context);
               }
-            if(state is NoPastorsLoaded)
-              {
-                return _errorDisplay(context, errorMsg: "No Pastors Loaded");
+              if (state is NoPastorsLoaded) {
+                return _errorDisplay(context,
+                    errorMsg: "No Pastors Loaded", buttonLabel: "Reload");
               }
-            if(state is PastorsNoConnection)
-              {
+              if (state is PastorsNoConnection) {
                 return _errorDisplay(context, errorMsg: "No Connection");
               }
-            return Container();
-          },
-      )
-    ),
+              return Container();
+            },
+          )),
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: leftArrowBackButton(context: context),

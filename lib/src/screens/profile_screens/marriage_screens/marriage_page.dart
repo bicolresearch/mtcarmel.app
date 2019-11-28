@@ -31,7 +31,8 @@ class MarriagePage extends StatelessWidget {
                 return _errorDisplay(context);
               }
               if (state is NoMarriageLoaded) {
-                return _errorDisplay(context, errorMsg: "No Marriage Loaded");
+                return _errorDisplay(context,
+                    errorMsg: "No Marriage Loaded", buttonLabel: "Reload");
               }
               if (state is MarriageNoConnection) {
                 return _errorDisplay(context, errorMsg: "No Connection");

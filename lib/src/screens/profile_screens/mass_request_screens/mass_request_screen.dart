@@ -131,10 +131,10 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
               ),
             ),
           ),
-          leftArrowBackButton(context: context),
-          SizedBox(
-            height: 20.0,
-          ),
+//          leftArrowBackButton(context: context),
+//          SizedBox(
+//            height: 20.0,
+//          ),
         ],
       ),
     );
