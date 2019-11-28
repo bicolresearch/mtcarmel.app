@@ -2,8 +2,8 @@
 *  Filename    :   time_form_field.dart
 *  Purpose     :	
 *  Created     :   2019-07-23 16:40 by Detective Conan
-*  Updated     :   2019-08-16 08:49 by Detective conan
-*  Changes     :   Added validators
+*	 Updated			:   28/11/2019 11:00 AM PM by Detective Conan
+*	 Changes			:   Added padding for hours and minutes
 */
 
 import 'package:flutter/material.dart';
@@ -82,7 +82,7 @@ class _TimeFormFieldState extends State<TimeFormField> {
                     DatePicker.showTimePicker(context, showTitleActions: true,
                         onConfirm: (time) {
                       _time =
-                          "${time.hour}:${time.minute}:${time.second.toString().padLeft(2, "0")}";
+                          "${time.hour.toString().padLeft(2, "0")}:${time.minute.toString().padLeft(2, "0")}:${time.second.toString().padLeft(2, "0")}";
                       _formState.value[widget.churchFormField.attribute] =
                           _time;
                       FocusScope.of(context).requestFocus(FocusNode());

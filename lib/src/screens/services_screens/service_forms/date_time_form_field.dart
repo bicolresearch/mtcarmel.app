@@ -1,9 +1,9 @@
 /*
-*  Filename    :   date_form_field.dart
+*  Filename    :   date_time_form_field.dart
 *  Purpose     :	 Date form field
 *  Created     :   2019-07-23 16:11 by Detective Conan
-*  Updated     :   2019-08-16 08:49 by Detective conan
-*  Changes     :   Added validators
+*	 Updated			:   28/11/2019 10:59 AM PM by Detective Conan
+*	 Changes			:   Added padding for hours and minutes
 */
 
 import 'package:flutter/material.dart';
@@ -41,8 +41,7 @@ class _DateTimeFormFieldState extends State<DateTimeFormField> {
         children: <Widget>[
           Text(
             widget.churchFormField.labelText,
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .primaryTextTheme
                 .subhead
                 .copyWith(fontWeight: FontWeight.bold),
@@ -53,8 +52,7 @@ class _DateTimeFormFieldState extends State<DateTimeFormField> {
             validator: (val) {
               final validators = _validators();
               for (int i = 0; i < validators.length; i++) {
-                if (validators[i](val) != null)
-                  return validators[i](val);
+                if (validators[i](val) != null) return validators[i](val);
               }
               return null;
             },
@@ -73,10 +71,7 @@ class _DateTimeFormFieldState extends State<DateTimeFormField> {
                   title: Text(
                     _date,
                     textAlign: TextAlign.center,
-                    style: Theme
-                        .of(context)
-                        .primaryTextTheme
-                        .subhead,
+                    style: Theme.of(context).primaryTextTheme.subhead,
                   ),
                   subtitle: Divider(),
                   onTap: () {
@@ -90,20 +85,15 @@ class _DateTimeFormFieldState extends State<DateTimeFormField> {
 //                            ? DateTime.now().add(Duration(days: 365))
 //                            : DateTime.parse(
 //                            widget.churchFormField.validatorMaxDate),
-                        onChanged: (dateTime) {},
-                        onConfirm: (dateTime) {
-                          _formState.value[widget.churchFormField.attribute] =
-                          "${dateTime.year}-${dateTime.month.toString().padLeft(
-                              2, "0")}-${dateTime.day.toString().padLeft(2, "0")}";
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          field.didChange("${dateTime.year}-${dateTime.month.toString()
-                              .padLeft(2, "0")}-${dateTime.day.toString().padLeft(
-                              2, "0")}");
-                          _date = "${dateToString(dateTime)} ${dateTime.day}, ${dateTime
-                              .year} ${dateTime.hour}:${dateTime.minute}:${dateTime.second.toString().padLeft(2, "0")}";
-                        },
-                        currentTime: DateTime.now(),
-                        locale: LocaleType.en);
+                        onChanged: (dateTime) {}, onConfirm: (dateTime) {
+                      _formState.value[widget.churchFormField.attribute] =
+                          "${dateTime.year}-${dateTime.month.toString().padLeft(2, "0")}-${dateTime.day.toString().padLeft(2, "0")}";
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      field.didChange(
+                          "${dateTime.year}-${dateTime.month.toString().padLeft(2, "0")}-${dateTime.day.toString().padLeft(2, "0")}");
+                      _date =
+                          "${dateToString(dateTime)} ${dateTime.day}, ${dateTime.year} ${dateTime.hour.toString().padLeft(2, "0")}:${dateTime.minute.toString().padLeft(2, "0")}:${dateTime.second.toString().padLeft(2, "0")}";
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                 ),
               );
