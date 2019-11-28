@@ -2,8 +2,8 @@
 *   Filename    :   individual_baptism_state.dart
 *   Purpose     :
 *   Created     :   22/11/2019 9:17 AM by Detective Conan
-*   Updated     :   22/11/2019 9:17 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   28/11/2019 9:43 AM PM by Detective Conan
+*	 Changes			:   Added no connection state
 */
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -14,25 +14,21 @@ abstract class IndividualBaptismState extends Equatable {
 }
 
 class IndividualBaptismUninitialized extends IndividualBaptismState {
-
   @override
   String toString() => 'IndividualBaptismUninitialized';
 }
 
 class IndividualBaptismLoading extends IndividualBaptismState {
-
   @override
   String toString() => 'IndividualBaptismLoading';
 }
 
 class IndividualBaptismLoaded extends IndividualBaptismState {
-
   @override
   String toString() => 'IndividualBaptismLoaded';
 }
 
 class IndividualBaptismError extends IndividualBaptismState {
-
   final exception;
 
   IndividualBaptismError(this.exception) : super([exception]);
@@ -42,9 +38,13 @@ class IndividualBaptismError extends IndividualBaptismState {
 }
 
 class NoIndividualBaptismLoaded extends IndividualBaptismState {
-
   @override
   String toString() => 'No IndividualBaptism Loaded';
+}
+
+class IndividualBaptismNoConnection extends IndividualBaptismState {
+  @override
+  String toString() => 'No Connection';
 }
 
 //TODO: Add states

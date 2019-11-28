@@ -2,8 +2,8 @@
 *   Filename    :   liturgical_state.dart
 *   Purpose     :
 *   Created     :   22/11/2019 8:59 AM by Detective Conan
-*   Updated     :   22/11/2019 8:59 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   28/11/2019 9:43 AM PM by Detective Conan
+*	 Changes			:   Added no connection state
 */
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +45,12 @@ class NoLiturgicalLoaded extends LiturgicalState {
 
   @override
   String toString() => 'No Liturgical Loaded';
+}
+
+class LiturgicalNoConnection extends LiturgicalState {
+
+  @override
+  String toString() => 'No Connection';
 }
 
 //TODO: Add states

@@ -2,8 +2,8 @@
 *   Filename    :   mass_request_state.dart
 *   Purpose     :
 *   Created     :   21/11/2019 10:02 AM by Detective Conan
-*   Updated     :   21/11/2019 10:02 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   28/11/2019 9:43 AM PM by Detective Conan
+*	 Changes			:   Added no connection state
 */
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +45,12 @@ class NoMassRequestLoaded extends MassRequestState {
 
   @override
   String toString() => 'No MassRequest Loaded';
+}
+
+class MassRequestNoConnection extends MassRequestState {
+
+  @override
+  String toString() => 'No Connection';
 }
 
 //TODO: Add states

@@ -2,8 +2,8 @@
 *   Filename    :   prayer_request_state.dart
 *   Purpose     :
 *   Created     :   19/11/2019 1:52 PM by Detective Conan
-*   Updated     :   19/11/2019 1:52 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   28/11/2019 9:43 AM PM by Detective Conan
+*	 Changes			:   Added no connection state
 */
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +45,12 @@ class NoPrayerRequestLoaded extends PrayerRequestState {
 
   @override
   String toString() => 'No PrayerRequest Loaded';
+}
+
+class PrayerRequestNoConnection extends PrayerRequestState {
+
+  @override
+  String toString() => 'No Connection';
 }
 
 //TODO: Add states
