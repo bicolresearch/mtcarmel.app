@@ -239,7 +239,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Status request: ${massRequest.status}",
+                "Status request: ${massRequest.statusName}",
                 style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle

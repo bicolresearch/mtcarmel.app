@@ -2,8 +2,8 @@
 *  Filename    :   mass_request.dart
 *  Purpose     :	
 *  Created     :   2019-08-20 15:59 by Detective Conan
-*  Updated     :   2019-08-20 15:59 by Detective Conan 
-*  Changes     :
+*	 Updated			:   28/11/2019 12:30 PM PM by Detective Conan
+*	 Changes			:   Renamed status to statusName
 */
 
 import 'package:json_annotation/json_annotation.dart';
@@ -18,7 +18,7 @@ class MassRequest {
       this.purposeMass,
       this.dtOffered,
       this.timeOffered,
-      this.status,
+      this.statusName,
       this.postedOn,
       this.updatedOn,
       this.author);
@@ -33,8 +33,8 @@ class MassRequest {
   final String dtOffered;
   @JsonKey(name: "time_offered")
   final String timeOffered;
-  @JsonKey(name: "status")
-  final String status;
+  @JsonKey(name: "status_name")
+  final String statusName;
   @JsonKey(name: "posted_on")
   final String postedOn;
   @JsonKey(name: "updated_on")
@@ -47,4 +47,3 @@ class MassRequest {
 
   Map<String, dynamic> toJson() => _$MassRequestToJson(this);
 }
-
