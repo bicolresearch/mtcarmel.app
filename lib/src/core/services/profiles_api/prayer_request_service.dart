@@ -13,7 +13,6 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
-import 'package:mt_carmel_app/src/models/data_prayer_request.dart';
 import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'dart:convert';
 

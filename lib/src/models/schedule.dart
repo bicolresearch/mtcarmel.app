@@ -47,3 +47,22 @@ class Schedule{
   Map<String, dynamic> toJson() => _$ScheduleToJson(this);
 }
 
+@JsonSerializable()
+class DataSchedule{
+  DataSchedule(
+      this.draw,
+      this.recordsTotal,
+      this.recordsFiltered,
+      this.data,
+      );
+
+  final int draw;
+  final int recordsTotal;
+  final int recordsFiltered;
+  final List<Schedule> data;
+
+  factory DataSchedule.fromJson(Map<String, dynamic> json) => _$DataScheduleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataScheduleToJson(this);
+}
+

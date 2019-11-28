@@ -11,7 +11,7 @@ import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_event
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_state.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/models/data_prayer_request.dart';
+import 'package:mt_carmel_app/src/models/prayer_request.dart';
 
 class PrayerRequestBloc extends Bloc<PrayerRequestEvent, PrayerRequestState> {
   @override

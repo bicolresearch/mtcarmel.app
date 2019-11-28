@@ -12,7 +12,6 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/dio_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
-import 'package:mt_carmel_app/src/models/data_schedule.dart';
 import 'dart:convert';
 
 import 'package:mt_carmel_app/src/models/schedule.dart';

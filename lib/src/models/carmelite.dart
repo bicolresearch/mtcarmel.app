@@ -58,3 +58,22 @@ class Carmelite {
 
   Map<String, dynamic> toJson() => _$CarmeliteToJson(this);
 }
+
+@JsonSerializable()
+class DataCarmelite{
+  DataCarmelite(
+      this.draw,
+      this.recordsTotal,
+      this.recordsFiltered,
+      this.data,
+      );
+
+  final int draw;
+  final int recordsTotal;
+  final int recordsFiltered;
+  final List<Carmelite> data;
+
+  factory DataCarmelite.fromJson(Map<String, dynamic> json) => _$DataCarmeliteFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataCarmeliteToJson(this);
+}

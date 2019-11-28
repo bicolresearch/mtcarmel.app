@@ -46,3 +46,22 @@ class About {
 
   Map<String, dynamic> toJson() => _$AboutToJson(this);
 }
+
+@JsonSerializable()
+class DataAbout{
+  DataAbout(
+      this.draw,
+      this.recordsTotal,
+      this.recordsFiltered,
+      this.data,
+      );
+
+  final int draw;
+  final int recordsTotal;
+  final int recordsFiltered;
+  final List<About> data;
+
+  factory DataAbout.fromJson(Map<String, dynamic> json) => _$DataAboutFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataAboutToJson(this);
+}

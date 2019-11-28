@@ -36,3 +36,36 @@ class PrayerRequest {
 
   Map<String, dynamic> toJson() => _$PrayerRequestToJson(this);
 }
+
+@JsonSerializable()
+class DataActionPrayerRequest {
+  DataActionPrayerRequest(this.data, this.actions);
+
+  final DataPrayerRequest data;
+  final Map<String, String> actions;
+
+  factory DataActionPrayerRequest.fromJson(Map<String, dynamic> json) =>
+      _$DataActionPrayerRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataActionPrayerRequestToJson(this);
+}
+
+@JsonSerializable()
+class DataPrayerRequest {
+  DataPrayerRequest(
+      this.draw,
+      this.recordsTotal,
+      this.recordsFiltered,
+      this.data,
+      );
+
+  final int draw;
+  final int recordsTotal;
+  final int recordsFiltered;
+  final List<PrayerRequest> data;
+
+  factory DataPrayerRequest.fromJson(Map<String, dynamic> json) =>
+      _$DataPrayerRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataPrayerRequestToJson(this);
+}

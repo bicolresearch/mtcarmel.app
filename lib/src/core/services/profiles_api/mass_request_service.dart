@@ -10,7 +10,6 @@ import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/models/data_mass_request.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
