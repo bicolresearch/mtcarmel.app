@@ -1,49 +1,44 @@
 /*
-*   Filename    :   priests_page.dart
+*   Filename    :   marriage_page.dart
 *   Purpose     :
-*	 Updated			:   28/11/2019 9:29 AM PM by Detective Conan
-*	 Changes			:   Added errorDisplay method.
+*   Created     :   28/11/2019 8:35 AM by Detective Conan
+*   Updated     :   28/11/2019 8:35 AM by Detective Conan
+*   Changes     :   
 */
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
-import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_state.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_screen.dart';
+import 'package:mt_carmel_app/src/blocs/marriage_bloc/marriage_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/marriage_bloc/marriage_event.dart';
+import 'package:mt_carmel_app/src/blocs/marriage_bloc/marriage_state.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/marriage_screens/marriage_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 
-class PastorsPage extends StatelessWidget {
+class MarriagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Expanded(
-            child: BlocBuilder<PastorsBloc, PastorsState>(
-          builder: (context, state) {
-            if(state is PastorsLoading || state is PastorsUninitialized)
-              return Scaffold(body: LoadingIndicator());
-            if(state is PastorsLoaded){
-              return PastorsScreen();
-            }
-            if(state is PastorsError)
-              {
+          Expanded(child: BlocBuilder<MarriageBloc, MarriageState>(
+            builder: (context, state) {
+              if (state is MarriageLoading || state is MarriageUninitialized)
+                return Scaffold(body: LoadingIndicator());
+              if (state is MarriageLoaded) {
+                return MarriageScreen();
+              }
+              if (state is MarriageError) {
                 return _errorDisplay(context);
               }
-            if(state is NoPastorsLoaded)
-              {
-                return _errorDisplay(context, errorMsg: "No Pastors Loaded");
+              if (state is NoMarriageLoaded) {
+                return _errorDisplay(context, errorMsg: "No Marriage Loaded");
               }
-            if(state is PastorsNoConnection)
-              {
+              if (state is MarriageNoConnection) {
                 return _errorDisplay(context, errorMsg: "No Connection");
               }
-            return Container();
-          },
-      )
-    ),
+              return Container();
+            },
+          )),
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: leftArrowBackButton(context: context),
@@ -74,8 +69,8 @@ class PastorsPage extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    BlocProvider.of<PastorsBloc>(context)
-                        .dispatch(FetchPastors());
+                    BlocProvider.of<MarriageBloc>(context)
+                        .dispatch(FetchMarriage());
                   },
                 ),
               ],
