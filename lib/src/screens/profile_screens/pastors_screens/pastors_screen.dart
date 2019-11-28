@@ -2,8 +2,8 @@
 *	 Filename		 :	 pastor_screen.dart
 *	 Purpose		 :	 Displays the list of pastors
 *  Created	 	 :   2019-06-11 15:56:33 by Detective Conan
-*	 Updated			:   25/09/2019 4:55 PM PM by Detective Conan
-*	 Changes			:   Change the import from pastor to carmelite
+*	 Updated			:   28/11/2019 10:13 AM PM by Detective Conan
+*	 Changes			:   Changed the order of the list. Starts with the recent.
 */
 
 import 'package:flutter/material.dart';
@@ -70,10 +70,10 @@ class PastorsScreen extends StatelessWidget {
                         child: ListView.builder(
                             physics: ScrollPhysics(parent: ScrollPhysics()),
                             shrinkWrap: true,
-                            reverse: true,
                             itemCount: pastors.length,
                             itemBuilder: (context, index) {
-                              return _pastorItem(context, pastors[index]);
+                              return _pastorItem(
+                                  context, pastors[index]);
                             }),
                       ),
                     ),
