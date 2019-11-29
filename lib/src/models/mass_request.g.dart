@@ -16,7 +16,7 @@ MassRequest _$MassRequestFromJson(Map<String, dynamic> json) {
     json['status_name'] as String,
     json['posted_on'] as String,
     json['updated_on'] as String,
-    json['author'] as String,
+    json['created_by'] as String,
   );
 }
 
@@ -30,7 +30,7 @@ Map<String, dynamic> _$MassRequestToJson(MassRequest instance) =>
       'status_name': instance.statusName,
       'posted_on': instance.postedOn,
       'updated_on': instance.updatedOn,
-      'author': instance.author,
+      'created_by': instance.createdBy,
     };
 
 DataActionMassRequest _$DataActionMassRequestFromJson(

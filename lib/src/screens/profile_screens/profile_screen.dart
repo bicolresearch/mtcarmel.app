@@ -12,10 +12,18 @@ import 'package:mt_carmel_app/src/blocs/about_bloc/about_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
+import 'package:mt_carmel_app/src/blocs/certificate_bloc/certificate_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/certificate_bloc/certificate_event.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
+import 'package:mt_carmel_app/src/blocs/communion_of_the_sick_bloc/communion_of_the_sick_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/communion_of_the_sick_bloc/communion_of_the_sick_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
+import 'package:mt_carmel_app/src/blocs/first_communion_bloc/first_communion_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/first_communion_bloc/first_communion_event.dart';
+import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_event.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_event.dart';
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
@@ -38,10 +46,14 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/certificate_screens/certificate_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/communion_of_the_sick_screen/communion_of_the_sick_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/first_communion_screens/first_communion_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/liturgical_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
@@ -194,6 +206,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
             builder: (context) =>
                 MassRequestBloc()..dispatch(FetchMassRequest()),
             child: MassRequestPage());
+      case ProfileFeatureConstants.LITURGICAL_SERVICE:
+      case ProfileFeatureConstants.LITURGICAL_SERVICE_APPROVAL:
+        return BlocProvider<LiturgicalBloc>(
+            builder: (context) => LiturgicalBloc()..dispatch(FetchLiturgical()),
+            child: LiturgicalPage());
+      case ProfileFeatureConstants.CERTIFICATE_REQUESTS:
+        return BlocProvider<CertificateBloc>(
+            builder: (context) =>
+                CertificateBloc()..dispatch(FetchCertificate()),
+            child: CertificatePage());
+
+      case ProfileFeatureConstants.FIRST_COMMUNION:
+        return BlocProvider<FirstCommunionBloc>(
+            builder: (context) =>
+                FirstCommunionBloc()..dispatch(FetchFirstCommunion()),
+            child: FirstCommunionPage());
+
+      case ProfileFeatureConstants.COMMUNION_OF_THE_SICK:
+        return BlocProvider<CommunionOfTheSickBloc>(
+            builder: (context) =>
+                CommunionOfTheSickBloc()..dispatch(FetchCommunionOfTheSick()),
+            child: CommunionOfTheSickPage());
+
       case ProfileFeatureConstants.PRIESTS:
         return BlocProvider<PriestsBloc>(
             builder: (context) => PriestsBloc()..dispatch(FetchPriests()),

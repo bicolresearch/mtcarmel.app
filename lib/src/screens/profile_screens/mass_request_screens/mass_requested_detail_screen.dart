@@ -56,7 +56,7 @@ class MassRequestedDetailScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                          "Requested by: ${massRequest.author}",
+                          "Requested by: ${massRequest.createdBy}",
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle
@@ -96,7 +96,9 @@ class MassRequestedDetailScreen extends StatelessWidget {
               ),
             ),
             leftArrowBackButton(context: context),
-            SizedBox(height: 20.0,)
+            SizedBox(
+              height: 20.0,
+            )
           ],
         ),
       ),

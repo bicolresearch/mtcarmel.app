@@ -22,7 +22,12 @@ class ProfileFeatureConstants {
   static const String PRAYER_REQUEST = "Prayer Requests";
   static const String MASS_REQUEST = "Mass Requests";
   static const String MASS_REQUESTS_APPROVAL = "Mass Requests Approval";
-
+  static const String LITURGICAL_SERVICE_APPROVAL =
+      "Liturgical Service Approval";
+  static const String LITURGICAL_SERVICE = "Liturgical Service";
+  static const String CERTIFICATE_REQUESTS = "Certification Requests";
+  static const String FIRST_COMMUNION = "First Communion";
+  static const String COMMUNION_OF_THE_SICK = "Communion of the Sick";
 
   static const List<String> ProfileFeatureCommonList = [
 //    BIBLE,
@@ -30,6 +35,11 @@ class ProfileFeatureConstants {
     PRAYER_REQUEST_APPROVAL,
     MASS_REQUEST,
     MASS_REQUESTS_APPROVAL,
+    LITURGICAL_SERVICE_APPROVAL,
+    LITURGICAL_SERVICE,
+    CERTIFICATE_REQUESTS,
+    FIRST_COMMUNION,
+    COMMUNION_OF_THE_SICK,
     REGULAR_MASS_SCHEDULE,
     LOCATION_MAP,
     PRIESTS,

@@ -246,7 +246,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                "Requested by: ${massRequest.author}",
+                "Requested by: ${massRequest.createdBy}",
                 style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle

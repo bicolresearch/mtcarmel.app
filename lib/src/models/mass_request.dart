@@ -21,7 +21,8 @@ class MassRequest {
       this.statusName,
       this.postedOn,
       this.updatedOn,
-      this.author);
+      this.createdBy);
+
 
   @JsonKey(name: "id")
   final String id;
@@ -39,8 +40,8 @@ class MassRequest {
   final String postedOn;
   @JsonKey(name: "updated_on")
   final String updatedOn;
-  @JsonKey(name: "author")
-  final String author;
+  @JsonKey(name: "created_by")
+  final String createdBy;
 
   factory MassRequest.fromJson(Map<String, dynamic> json) =>
       _$MassRequestFromJson(json);
