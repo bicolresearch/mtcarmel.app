@@ -141,13 +141,26 @@ class _ServiceFormScreenState extends State<ServiceFormScreen> {
                   ? () async {
                       //TODO implement validations and updating database
 
+                      _fbKey.currentState.save();
+                      if (!_fbKey.currentState.validate()) {
+                        _scaffoldKey.currentState.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Did not saved. Please input necessary fields.',
+                              textAlign: TextAlign.center,
+                            ),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                        return;
+                      }
                       await _submit().then(
                         (success) async {
                           if (!success) {
                             _scaffoldKey.currentState.showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Did not saved. Please input necessary fields.',
+                                  'Something went wrong.',
                                   textAlign: TextAlign.center,
                                 ),
                                 duration: Duration(seconds: 3),

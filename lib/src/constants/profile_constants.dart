@@ -26,8 +26,18 @@ class ProfileFeatureConstants {
       "Liturgical Service Approval";
   static const String LITURGICAL_SERVICE = "Liturgical Service";
   static const String CERTIFICATE_REQUESTS = "Certification Requests";
+  static const String INDIVIDUAL_BAPTISM = "Individual Baptism";
+  static const String COMMUNITY_BAPTISM = "Community Baptism";
+  static const String ADULT_BAPTISM = "Adult Baptism";
   static const String FIRST_COMMUNION = "First Communion";
   static const String COMMUNION_OF_THE_SICK = "Communion of the Sick";
+  static const String CONFIRMATION = "Confirmation";
+  static const String MARRIAGE = "Marriage";
+  static const String FUNERAL_SERVICE = "Funeral Service";
+  static const String FUNERAL_CHAPEL = "Funeral Chapel";
+  static const String CRYPT_LOBBY = "Crypt Lobby";
+  static const String NOVEMBER_MASS_FOR_THE_DEAD = "November Mass for the Dead";
+  static const String FATHER_MARK_HORAN_HALL = "Father Mark Horan Hall - Venue";
 
   static const List<String> ProfileFeatureCommonList = [
 //    BIBLE,
@@ -38,8 +48,16 @@ class ProfileFeatureConstants {
     LITURGICAL_SERVICE_APPROVAL,
     LITURGICAL_SERVICE,
     CERTIFICATE_REQUESTS,
+    INDIVIDUAL_BAPTISM,
+    COMMUNITY_BAPTISM,
+    ADULT_BAPTISM,
     FIRST_COMMUNION,
     COMMUNION_OF_THE_SICK,
+    MARRIAGE,
+    FUNERAL_SERVICE,
+    FUNERAL_CHAPEL,
+    CRYPT_LOBBY,
+    NOVEMBER_MASS_FOR_THE_DEAD,
     REGULAR_MASS_SCHEDULE,
     LOCATION_MAP,
     PRIESTS,
@@ -47,7 +65,6 @@ class ProfileFeatureConstants {
     NUNS,
     CONTACT_DETAILS,
     ABOUT_THE_PARISH,
-//    CHANGE_BRANCH,
   ];
 
   static const CARMELITE_PRIEST_TYPE = "107";

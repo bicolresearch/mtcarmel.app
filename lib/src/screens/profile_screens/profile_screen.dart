@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_event.dart';
+import 'package:mt_carmel_app/src/blocs/adult_baptism_bloc/adult_baptism_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/adult_baptism_bloc/adult_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/branch_bloc/branch_event.dart';
 import 'package:mt_carmel_app/src/blocs/certificate_bloc/certificate_bloc.dart';
@@ -18,16 +20,30 @@ import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regu
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
 import 'package:mt_carmel_app/src/blocs/communion_of_the_sick_bloc/communion_of_the_sick_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/communion_of_the_sick_bloc/communion_of_the_sick_event.dart';
+import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
+import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_event.dart';
 import 'package:mt_carmel_app/src/blocs/first_communion_bloc/first_communion_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/first_communion_bloc/first_communion_event.dart';
+import 'package:mt_carmel_app/src/blocs/funeral_chapel_bloc/funeral_chapel_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/funeral_chapel_bloc/funeral_chapel_event.dart';
+import 'package:mt_carmel_app/src/blocs/funeral_service_bloc/funeral_service_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/funeral_service_bloc/funeral_service_event.dart';
+import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_event.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_event.dart';
+import 'package:mt_carmel_app/src/blocs/marriage_bloc/marriage_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/marriage_bloc/marriage_event.dart';
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_event.dart';
+import 'package:mt_carmel_app/src/blocs/november_mass_bloc/november_mass_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/november_mass_bloc/november_mass_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
@@ -46,16 +62,24 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/adult_baptism_screens/adult_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/certificate_screens/certificate_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/communion_of_the_sick_screen/communion_of_the_sick_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/crypt_lobby_srceens/crypt_lobby_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/first_communion_screens/first_communion_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/funeral_chapel_screens/funeral_chapel_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/funeral_service_screens/funeral_service_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/liturgical_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/marriage_screens/marriage_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/november_mass_screens/november_mass_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
 
@@ -216,6 +240,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
             builder: (context) =>
                 CertificateBloc()..dispatch(FetchCertificate()),
             child: CertificatePage());
+
+//        INDIVIDUAL_BAPTISM,
+      case ProfileFeatureConstants.INDIVIDUAL_BAPTISM:
+        return BlocProvider<IndividualBaptismBloc>(
+            builder: (context) =>
+                IndividualBaptismBloc()..dispatch(FetchIndividualBaptism()),
+            child: IndividualBaptismPage());
+//    COMMUNITY_BAPTISM,
+      case ProfileFeatureConstants.COMMUNITY_BAPTISM:
+        return BlocProvider<CommunityBaptismBloc>(
+            builder: (context) =>
+                CommunityBaptismBloc()..dispatch(FetchCommunityBaptism()),
+            child: CommunityBaptismPage());
+//    ADULT_BAPTISM,
+      case ProfileFeatureConstants.ADULT_BAPTISM:
+        return BlocProvider<AdultBaptismBloc>(
+            builder: (context) =>
+                AdultBaptismBloc()..dispatch(FetchAdultBaptism()),
+            child: AdultBaptismPage());
+
+//    MARRIAGE,
+      case ProfileFeatureConstants.MARRIAGE:
+        return BlocProvider<MarriageBloc>(
+            builder: (context) => MarriageBloc()..dispatch(FetchMarriage()),
+            child: MarriagePage());
+//    FUNERAL_SERVICE,
+      case ProfileFeatureConstants.FUNERAL_SERVICE:
+        return BlocProvider<FuneralServiceBloc>(
+            builder: (context) =>
+                FuneralServiceBloc()..dispatch(FetchFuneralService()),
+            child: FuneralServicePage());
+//    FUNERAL_CHAPEL,
+      case ProfileFeatureConstants.FUNERAL_CHAPEL:
+        return BlocProvider<FuneralChapelBloc>(
+            builder: (context) =>
+                FuneralChapelBloc()..dispatch(FetchFuneralChapel()),
+            child: FuneralChapelPage());
+//    CRYPT_LOBBY,
+      case ProfileFeatureConstants.CRYPT_LOBBY:
+        return BlocProvider<CryptLobbyBloc>(
+            builder: (context) => CryptLobbyBloc()..dispatch(FetchCryptLobby()),
+            child: CryptLobbyPage());
+//    NOVEMBER_MASS_FOR_THE_DEAD,
+      case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD:
+        return BlocProvider<NovemberMassBloc>(
+            builder: (context) =>
+                NovemberMassBloc()..dispatch(FetchNovemberMass()),
+            child: NovemberMassPage());
 
       case ProfileFeatureConstants.FIRST_COMMUNION:
         return BlocProvider<FirstCommunionBloc>(

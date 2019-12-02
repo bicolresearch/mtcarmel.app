@@ -632,7 +632,7 @@ class _CountryAndRelatedFormFieldsState
           child: ListView.builder(
             itemCount: selection.length,
             itemBuilder: (context, index) {
-              final name = selection[index].donationName;
+              final name = selection[index].name;
               return ListTile(
                 title: Text(
                   name,
