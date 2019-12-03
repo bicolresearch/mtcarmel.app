@@ -22,6 +22,7 @@ class SelectionService {
       throw Exception('SelectionService.getSelection: No connection');
 
     List<SelectionApi> _selectionApis;
+    print(url);
     await http.get("$url").then((response) {
       if (response.statusCode == 200) {
         _selectionApis = (json.decode(response.body) as List)

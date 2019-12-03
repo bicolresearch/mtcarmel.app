@@ -3,7 +3,7 @@
 *  Purpose     :	
 *  Created     :   2019-07-31 14:24 by Detective Conan
 *  Updated     :   2019-07-31 14:24 by Detective Conan 
-*  Changes     :
+*  Changes     :   Added setting of keyboardType as numeric
 */
 
 import 'package:flutter/material.dart';
@@ -41,6 +41,7 @@ class ServiceNumericFormField extends ServiceFormCommon
             style: Theme.of(context).primaryTextTheme.title,
             textAlign: TextAlign.center,
             cursorColor: Colors.brown,
+            keyboardType: TextInputType.number,
           ),
         ],
       ),
