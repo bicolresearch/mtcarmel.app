@@ -2,8 +2,8 @@
 *	 Filename	   :	 profile_screen.dart
 *	 Purpose		 :   Display the list of the users access and other details of the church
 *  Created		 :   2019-06-11 15:44:56 by Detective Conan
-*	 Updated			:   26/11/2019 8:25 AM PM by Detective Conan
-*	 Changes			:   Fixed the share app, change branch and logout buttons
+*	 Updated			:   03/12/2019 2:29 PM PM by Detective Conan
+*	 Changes			:   Added call for approval and requests services
 */
 
 import 'package:flutter/material.dart';
@@ -236,66 +236,77 @@ class _ProfileScreenState extends State<ProfileScreen> {
             builder: (context) => LiturgicalBloc()..dispatch(FetchLiturgical()),
             child: LiturgicalPage());
       case ProfileFeatureConstants.CERTIFICATE_REQUESTS:
+      case ProfileFeatureConstants.CERTIFICATE_APPROVAL:
         return BlocProvider<CertificateBloc>(
             builder: (context) =>
                 CertificateBloc()..dispatch(FetchCertificate()),
             child: CertificatePage());
 
 //        INDIVIDUAL_BAPTISM,
-      case ProfileFeatureConstants.INDIVIDUAL_BAPTISM:
+      case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_REQUEST:
+      case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_APPROVAL:
         return BlocProvider<IndividualBaptismBloc>(
             builder: (context) =>
                 IndividualBaptismBloc()..dispatch(FetchIndividualBaptism()),
             child: IndividualBaptismPage());
 //    COMMUNITY_BAPTISM,
-      case ProfileFeatureConstants.COMMUNITY_BAPTISM:
+      case ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST:
+      case ProfileFeatureConstants.COMMUNITY_BAPTISM_APPROVAL:
         return BlocProvider<CommunityBaptismBloc>(
             builder: (context) =>
                 CommunityBaptismBloc()..dispatch(FetchCommunityBaptism()),
             child: CommunityBaptismPage());
 //    ADULT_BAPTISM,
-      case ProfileFeatureConstants.ADULT_BAPTISM:
+      case ProfileFeatureConstants.ADULT_BAPTISM_REQUEST:
+      case ProfileFeatureConstants.ADULT_BAPTISM_APPROVAL:
         return BlocProvider<AdultBaptismBloc>(
             builder: (context) =>
                 AdultBaptismBloc()..dispatch(FetchAdultBaptism()),
             child: AdultBaptismPage());
 
 //    MARRIAGE,
-      case ProfileFeatureConstants.MARRIAGE:
+      case ProfileFeatureConstants.MARRIAGE_APPROVAL:
+      case ProfileFeatureConstants.MARRIAGE_REQUEST:
         return BlocProvider<MarriageBloc>(
             builder: (context) => MarriageBloc()..dispatch(FetchMarriage()),
             child: MarriagePage());
 //    FUNERAL_SERVICE,
-      case ProfileFeatureConstants.FUNERAL_SERVICE:
+      case ProfileFeatureConstants.FUNERAL_SERVICE_REQUEST:
+      case ProfileFeatureConstants.FUNERAL_SERVICE_APPROVAL:
         return BlocProvider<FuneralServiceBloc>(
             builder: (context) =>
                 FuneralServiceBloc()..dispatch(FetchFuneralService()),
             child: FuneralServicePage());
 //    FUNERAL_CHAPEL,
-      case ProfileFeatureConstants.FUNERAL_CHAPEL:
+      case ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST:
+      case ProfileFeatureConstants.FUNERAL_CHAPEL_APPROVAL:
         return BlocProvider<FuneralChapelBloc>(
             builder: (context) =>
                 FuneralChapelBloc()..dispatch(FetchFuneralChapel()),
             child: FuneralChapelPage());
 //    CRYPT_LOBBY,
-      case ProfileFeatureConstants.CRYPT_LOBBY:
+      case ProfileFeatureConstants.CRYPT_LOBBY_REQUEST:
+      case ProfileFeatureConstants.CRYPT_LOBBY_APPROVAL:
         return BlocProvider<CryptLobbyBloc>(
             builder: (context) => CryptLobbyBloc()..dispatch(FetchCryptLobby()),
             child: CryptLobbyPage());
 //    NOVEMBER_MASS_FOR_THE_DEAD,
-      case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD:
+      case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_REQUEST:
+      case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL:
         return BlocProvider<NovemberMassBloc>(
             builder: (context) =>
                 NovemberMassBloc()..dispatch(FetchNovemberMass()),
             child: NovemberMassPage());
 
-      case ProfileFeatureConstants.FIRST_COMMUNION:
+      case ProfileFeatureConstants.FIRST_COMMUNION_REQUEST:
+      case ProfileFeatureConstants.FIRST_COMMUNION_APPROVAL:
         return BlocProvider<FirstCommunionBloc>(
             builder: (context) =>
                 FirstCommunionBloc()..dispatch(FetchFirstCommunion()),
             child: FirstCommunionPage());
 
-      case ProfileFeatureConstants.COMMUNION_OF_THE_SICK:
+      case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST:
+      case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_APPROVAL:
         return BlocProvider<CommunionOfTheSickBloc>(
             builder: (context) =>
                 CommunionOfTheSickBloc()..dispatch(FetchCommunionOfTheSick()),

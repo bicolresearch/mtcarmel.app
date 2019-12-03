@@ -25,19 +25,42 @@ class ProfileFeatureConstants {
   static const String LITURGICAL_SERVICE_APPROVAL =
       "Liturgical Service Approval";
   static const String LITURGICAL_SERVICE = "Liturgical Service";
-  static const String CERTIFICATE_REQUESTS = "Certification Requests";
-  static const String INDIVIDUAL_BAPTISM = "Individual Baptism";
-  static const String COMMUNITY_BAPTISM = "Community Baptism";
-  static const String ADULT_BAPTISM = "Adult Baptism";
-  static const String FIRST_COMMUNION = "First Communion";
-  static const String COMMUNION_OF_THE_SICK = "Communion of the Sick";
-  static const String CONFIRMATION = "Confirmation";
-  static const String MARRIAGE = "Marriage";
-  static const String FUNERAL_SERVICE = "Funeral Service";
-  static const String FUNERAL_CHAPEL = "Funeral Chapel";
-  static const String CRYPT_LOBBY = "Crypt Lobby";
-  static const String NOVEMBER_MASS_FOR_THE_DEAD = "November Mass for the Dead";
-  static const String FATHER_MARK_HORAN_HALL = "Father Mark Horan Hall - Venue";
+  static const String CERTIFICATE_REQUESTS = "Certificate Requests";
+  static const String CERTIFICATE_APPROVAL = "Certificate Approval";
+  static const String INDIVIDUAL_BAPTISM_APPROVAL =
+      "Individual Baptism Approval";
+  static const String INDIVIDUAL_BAPTISM_REQUEST =
+      "Individual Baptism Requests";
+  static const String COMMUNITY_BAPTISM_APPROVAL = "Community Baptism Approval";
+  static const String COMMUNITY_BAPTISM_REQUEST = "Community Baptism Requests";
+  static const String ADULT_BAPTISM_APPROVAL = "Adult Baptism Approval";
+  static const String ADULT_BAPTISM_REQUEST = "Adult Baptism Requests";
+  static const String FIRST_COMMUNION_APPROVAL = "First Communion Approval";
+  static const String FIRST_COMMUNION_REQUEST = "First Communion Requests";
+  static const String COMMUNION_OF_THE_SICK_APPROVAL =
+      "Communion of the Sick Approval";
+  static const String COMMUNION_OF_THE_SICK_REQUEST =
+      "Communion of the Sick Requests";
+  static const String CONFIRMATION_APPROVAL = "Confirmation Approval";
+  static const String CONFIRMATION_REQUEST = "Confirmation Requests";
+  static const String MARRIAGE_APPROVAL = "Marriage Approval";
+  static const String MARRIAGE_REQUEST = "Marriage Reqeuests";
+  static const String FUNERAL_SERVICE_APPROVAL = "Funeral Service Approval";
+  static const String FUNERAL_SERVICE_REQUEST = "Funeral Service Requests";
+  static const String FUNERAL_CHAPEL_APPROVAL = "Funeral Chapel Approval";
+  static const String FUNERAL_CHAPEL_REQUEST = "Funeral Chapel Requests";
+  static const String CRYPT_LOBBY_APPROVAL =
+      "Crypt Lobby – Mass for the Dead Approval";
+  static const String CRYPT_LOBBY_REQUEST =
+      "Crypt Lobby – Mass for the Dead Approval";
+  static const String NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL =
+      "November Mass for the Dead Approval";
+  static const String NOVEMBER_MASS_FOR_THE_DEAD_REQUEST =
+      "November Mass for the Dead Approval Requests";
+  static const String FATHER_MARK_HORAN_HALL_APPROVAL =
+      "Father Mark Horan Hall - Venue Approval";
+  static const String FATHER_MARK_HORAN_HALL_REQUEST =
+      "Father Mark Horan Hall - Venue Requests";
 
   static const List<String> ProfileFeatureCommonList = [
 //    BIBLE,
@@ -48,16 +71,27 @@ class ProfileFeatureConstants {
     LITURGICAL_SERVICE_APPROVAL,
     LITURGICAL_SERVICE,
     CERTIFICATE_REQUESTS,
-    INDIVIDUAL_BAPTISM,
-    COMMUNITY_BAPTISM,
-    ADULT_BAPTISM,
-    FIRST_COMMUNION,
-    COMMUNION_OF_THE_SICK,
-    MARRIAGE,
-    FUNERAL_SERVICE,
-    FUNERAL_CHAPEL,
-    CRYPT_LOBBY,
-    NOVEMBER_MASS_FOR_THE_DEAD,
+    CERTIFICATE_APPROVAL,
+    INDIVIDUAL_BAPTISM_REQUEST,
+    INDIVIDUAL_BAPTISM_APPROVAL,
+    COMMUNITY_BAPTISM_REQUEST,
+    COMMUNITY_BAPTISM_APPROVAL,
+    ADULT_BAPTISM_REQUEST,
+    ADULT_BAPTISM_APPROVAL,
+    FIRST_COMMUNION_REQUEST,
+    FIRST_COMMUNION_APPROVAL,
+    COMMUNION_OF_THE_SICK_APPROVAL,
+    COMMUNION_OF_THE_SICK_REQUEST,
+    MARRIAGE_REQUEST,
+    MARRIAGE_APPROVAL,
+    FUNERAL_SERVICE_REQUEST,
+    FUNERAL_SERVICE_APPROVAL,
+    FUNERAL_CHAPEL_REQUEST,
+    FUNERAL_CHAPEL_APPROVAL,
+    CRYPT_LOBBY_REQUEST,
+    CRYPT_LOBBY_APPROVAL,
+    NOVEMBER_MASS_FOR_THE_DEAD_REQUEST,
+    NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL,
     REGULAR_MASS_SCHEDULE,
     LOCATION_MAP,
     PRIESTS,
