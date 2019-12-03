@@ -2,8 +2,8 @@
 *  Filename    :   country_and_related_form_fields.dart
 *  Purpose     :	
 *  Created     :   2019-08-06 14:34 by Detective Conan
-*  Updated     :   2019-08-29 10:26 by Detective conan
-*  Changes     :   Handled null object.
+*	 Updated			:   03/12/2019 9:42 AM PM by Detective Conan
+*	 Changes			:   Enhanced diposing form keys.
 */
 
 import 'package:flutter/material.dart';
@@ -113,9 +113,7 @@ class _CountryAndRelatedFormFieldsState
 
   @override
   void dispose() {
-    final keys = _labelAndKeyMap.keys;
-
-    for (String key in keys) {
+    for (String key in _labelAndKeyMap.keys) {
       _formState?.unregisterFieldKey(
         "${key.toLowerCase()}_code",
       );
@@ -149,7 +147,7 @@ class _CountryAndRelatedFormFieldsState
                   onSaved: (val) {
                     final Country country = val;
                     _formState?.setAttributeValue(
-                        "country_code", country?.countryCode??null);
+                        "country_code", country?.countryCode ?? null);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -205,7 +203,7 @@ class _CountryAndRelatedFormFieldsState
                     if (val == null) return;
                     final Province province = val;
                     _formState?.setAttributeValue(
-                        "province_code", province?.provinceCode??null);
+                        "province_code", province?.provinceCode ?? null);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -319,7 +317,8 @@ class _CountryAndRelatedFormFieldsState
                   onSaved: (val) {
                     if (val == null) return;
                     final City city = val;
-                    _formState?.setAttributeValue("city_code", city?.cityCode??null);
+                    _formState?.setAttributeValue(
+                        "city_code", city?.cityCode ?? null);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -380,7 +379,7 @@ class _CountryAndRelatedFormFieldsState
 
                     final Barangay barangay = val;
                     _formState?.setAttributeValue(
-                        "barangay_code", barangay?.brgyCode??null);
+                        "barangay_code", barangay?.brgyCode ?? null);
                   },
                   builder: (FormFieldState<dynamic> field) {
                     return InputDecorator(
@@ -558,7 +557,7 @@ class _CountryAndRelatedFormFieldsState
       _selectedProvince = "Choose...";
       _provinces = [];
       _provinces = await _repository
-          .getProvinceByCountryCode(country?.countryCode??null)
+          .getProvinceByCountryCode(country?.countryCode ?? null)
           .catchError(
         (e) {
           print(e);
@@ -591,7 +590,7 @@ class _CountryAndRelatedFormFieldsState
     if (_fieldKeyCity.currentState != null) {
       _selectedCity = "Choose...";
       _cities = await _repository
-          .getCityByProvinceCode(province?.provinceCode??null)
+          .getCityByProvinceCode(province?.provinceCode ?? null)
           .catchError(
         (e) {
           print(e);
