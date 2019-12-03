@@ -22,6 +22,7 @@ import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_requested_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:provider/provider.dart';
 
 enum _SwipedEnum { LeftSwiped, RightSwiped, NotSwiped }
 
@@ -53,6 +54,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final serviceName = Provider.of<String>(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Column(
@@ -63,7 +65,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: Text(
-              "Prayer Requests",
+              "$serviceName",
               style: Theme.of(context)
                   .primaryTextTheme
                   .headline
@@ -148,7 +150,9 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
             );
           },
         ),
-        direction: (_rightSwipeActionText == "")?DismissDirection.endToStart: DismissDirection.horizontal,
+        direction: (_rightSwipeActionText == "")
+            ? DismissDirection.endToStart
+            : DismissDirection.horizontal,
         background: _slideRightBackground(),
         secondaryBackground: _slideLeftBackground(),
         confirmDismiss: (direction) async {
@@ -169,45 +173,45 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
       );
     } else {
       return InkWell(
-          child: Container(
-        width: double.infinity,
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  _prayerRequests[index].createdBy,
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .title
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  _prayerRequests[index].prayer ?? "",
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).primaryTextTheme.title,
-                  maxLines: 1,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        _prayerRequests[index].statusName ?? "",
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).primaryTextTheme.caption,
-                        maxLines: 1,
-                      ),
-                    ],
+        child: Container(
+          width: double.infinity,
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    _prayerRequests[index].createdBy,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .title
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
+                  Text(
+                    _prayerRequests[index].prayer ?? "",
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).primaryTextTheme.title,
+                    maxLines: 1,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          _prayerRequests[index].statusName ?? "",
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).primaryTextTheme.caption,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
         onTap: () {
           Navigator.push(
             context,
@@ -439,8 +443,7 @@ class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
         _isApprovalEnable ? "Deny" : _isOfferEnable ? "Decline" : "Delete";
     _rightSwipeActionText =
         _isApprovalEnable ? "Approve" : _isOfferEnable ? "Offer" : "";
-    setState(() {
-    });
+    setState(() {});
   }
 
   String _getNewStatusId() {

@@ -86,6 +86,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
 
 import 'package:mt_carmel_app/src/screens/start_page.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
 import '../../blocs/tab_bloc/tab_bloc.dart';
@@ -220,97 +221,137 @@ class _ProfileScreenState extends State<ProfileScreen> {
     switch (itemText) {
       case ProfileFeatureConstants.PRAYER_REQUEST_APPROVAL:
       case ProfileFeatureConstants.PRAYER_REQUEST:
-        return BlocProvider<PrayerRequestBloc>(
+        return MultiProvider(providers: [
+          BlocProvider<PrayerRequestBloc>(
             builder: (context) =>
                 PrayerRequestBloc()..dispatch(FetchPrayerRequest()),
-            child: PrayerRequestPage());
+          ),
+          Provider<String>.value(value: itemText),
+        ], child: PrayerRequestPage());
       case ProfileFeatureConstants.MASS_REQUESTS_APPROVAL:
       case ProfileFeatureConstants.MASS_REQUEST:
-        return BlocProvider<MassRequestBloc>(
+        return MultiProvider(providers: [
+          BlocProvider<MassRequestBloc>(
             builder: (context) =>
                 MassRequestBloc()..dispatch(FetchMassRequest()),
-            child: MassRequestPage());
+          ),
+          Provider<String>.value(value: itemText),
+        ], child: MassRequestPage());
       case ProfileFeatureConstants.LITURGICAL_SERVICE:
       case ProfileFeatureConstants.LITURGICAL_SERVICE_APPROVAL:
-        return BlocProvider<LiturgicalBloc>(
+        return MultiProvider(providers: [
+          BlocProvider<LiturgicalBloc>(
             builder: (context) => LiturgicalBloc()..dispatch(FetchLiturgical()),
-            child: LiturgicalPage());
+          ),
+          Provider<String>.value(value: itemText),
+        ], child: LiturgicalPage());
+
       case ProfileFeatureConstants.CERTIFICATE_REQUESTS:
       case ProfileFeatureConstants.CERTIFICATE_APPROVAL:
-        return BlocProvider<CertificateBloc>(
-            builder: (context) =>
-                CertificateBloc()..dispatch(FetchCertificate()),
-            child: CertificatePage());
+      return MultiProvider(providers: [
+        BlocProvider<CertificateBloc>(
+          builder: (context) => CertificateBloc()..dispatch(FetchCertificate()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: CertificatePage());
 
 //        INDIVIDUAL_BAPTISM,
       case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_REQUEST:
       case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_APPROVAL:
-        return BlocProvider<IndividualBaptismBloc>(
+        return MultiProvider(providers: [
+          BlocProvider<IndividualBaptismBloc>(
             builder: (context) =>
                 IndividualBaptismBloc()..dispatch(FetchIndividualBaptism()),
-            child: IndividualBaptismPage());
+          ),
+          Provider<String>.value(value: itemText),
+        ], child: IndividualBaptismPage());
 //    COMMUNITY_BAPTISM,
       case ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST:
       case ProfileFeatureConstants.COMMUNITY_BAPTISM_APPROVAL:
-        return BlocProvider<CommunityBaptismBloc>(
-            builder: (context) =>
-                CommunityBaptismBloc()..dispatch(FetchCommunityBaptism()),
-            child: CommunityBaptismPage());
+      return MultiProvider(providers: [
+        BlocProvider<CommunityBaptismBloc>(
+          builder: (context) => CommunityBaptismBloc()..dispatch(FetchCommunityBaptism()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: CommunityBaptismPage());
 //    ADULT_BAPTISM,
       case ProfileFeatureConstants.ADULT_BAPTISM_REQUEST:
       case ProfileFeatureConstants.ADULT_BAPTISM_APPROVAL:
-        return BlocProvider<AdultBaptismBloc>(
-            builder: (context) =>
-                AdultBaptismBloc()..dispatch(FetchAdultBaptism()),
-            child: AdultBaptismPage());
+      return MultiProvider(providers: [
+        BlocProvider<AdultBaptismBloc>(
+          builder: (context) => AdultBaptismBloc()..dispatch(FetchAdultBaptism()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: AdultBaptismPage());
 
 //    MARRIAGE,
       case ProfileFeatureConstants.MARRIAGE_APPROVAL:
       case ProfileFeatureConstants.MARRIAGE_REQUEST:
-        return BlocProvider<MarriageBloc>(
-            builder: (context) => MarriageBloc()..dispatch(FetchMarriage()),
-            child: MarriagePage());
+      return MultiProvider(providers: [
+        BlocProvider<MarriageBloc>(
+          builder: (context) => MarriageBloc()..dispatch(FetchMarriage()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: MarriagePage());
 //    FUNERAL_SERVICE,
       case ProfileFeatureConstants.FUNERAL_SERVICE_REQUEST:
       case ProfileFeatureConstants.FUNERAL_SERVICE_APPROVAL:
-        return BlocProvider<FuneralServiceBloc>(
-            builder: (context) =>
-                FuneralServiceBloc()..dispatch(FetchFuneralService()),
-            child: FuneralServicePage());
+      return MultiProvider(providers: [
+        BlocProvider<FuneralServiceBloc>(
+          builder: (context) => FuneralServiceBloc()..dispatch(FetchFuneralService()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: FuneralServicePage());
+
 //    FUNERAL_CHAPEL,
       case ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST:
       case ProfileFeatureConstants.FUNERAL_CHAPEL_APPROVAL:
-        return BlocProvider<FuneralChapelBloc>(
-            builder: (context) =>
-                FuneralChapelBloc()..dispatch(FetchFuneralChapel()),
-            child: FuneralChapelPage());
+      return MultiProvider(providers: [
+        BlocProvider<FuneralChapelBloc>(
+          builder: (context) => FuneralChapelBloc()..dispatch(FetchFuneralChapel()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: FuneralChapelPage());
+
 //    CRYPT_LOBBY,
       case ProfileFeatureConstants.CRYPT_LOBBY_REQUEST:
       case ProfileFeatureConstants.CRYPT_LOBBY_APPROVAL:
-        return BlocProvider<CryptLobbyBloc>(
-            builder: (context) => CryptLobbyBloc()..dispatch(FetchCryptLobby()),
-            child: CryptLobbyPage());
+      return MultiProvider(providers: [
+        BlocProvider<CryptLobbyBloc>(
+          builder: (context) => CryptLobbyBloc()..dispatch(FetchCryptLobby()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: CryptLobbyPage());
 //    NOVEMBER_MASS_FOR_THE_DEAD,
       case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_REQUEST:
       case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL:
-        return BlocProvider<NovemberMassBloc>(
-            builder: (context) =>
-                NovemberMassBloc()..dispatch(FetchNovemberMass()),
-            child: NovemberMassPage());
+      return MultiProvider(providers: [
+        BlocProvider<NovemberMassBloc>(
+          builder: (context) => NovemberMassBloc()..dispatch(FetchNovemberMass()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: NovemberMassPage());
 
       case ProfileFeatureConstants.FIRST_COMMUNION_REQUEST:
       case ProfileFeatureConstants.FIRST_COMMUNION_APPROVAL:
-        return BlocProvider<FirstCommunionBloc>(
-            builder: (context) =>
-                FirstCommunionBloc()..dispatch(FetchFirstCommunion()),
-            child: FirstCommunionPage());
+      return MultiProvider(providers: [
+        BlocProvider<FirstCommunionBloc>(
+          builder: (context) => FirstCommunionBloc()..dispatch(FetchFirstCommunion()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: FirstCommunionPage());
+
 
       case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST:
       case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_APPROVAL:
-        return BlocProvider<CommunionOfTheSickBloc>(
-            builder: (context) =>
-                CommunionOfTheSickBloc()..dispatch(FetchCommunionOfTheSick()),
-            child: CommunionOfTheSickPage());
+      return MultiProvider(providers: [
+        BlocProvider<CommunionOfTheSickBloc>(
+          builder: (context) =>
+          CommunionOfTheSickBloc()
+            ..dispatch(FetchCommunionOfTheSick()),
+        ),
+        Provider<String>.value(value: itemText),
+      ], child: CommunionOfTheSickPage());
 
       case ProfileFeatureConstants.PRIESTS:
         return BlocProvider<PriestsBloc>(

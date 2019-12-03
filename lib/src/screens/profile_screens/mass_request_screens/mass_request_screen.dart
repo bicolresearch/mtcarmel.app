@@ -21,6 +21,7 @@ import 'package:mt_carmel_app/src/models/selection_api.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_requested_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
+import 'package:provider/provider.dart';
 
 class MassRequestScreen extends StatefulWidget {
   @override
@@ -37,6 +38,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<MassRequestBloc>(context);
+    final serviceName = Provider.of<String>(context);
     _massRequests = bloc.massRequest;
     return Scaffold(
       body: Column(
@@ -47,7 +49,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
-              "Mass Requests",
+              "$serviceName",
               style: Theme.of(context)
                   .primaryTextTheme
                   .headline

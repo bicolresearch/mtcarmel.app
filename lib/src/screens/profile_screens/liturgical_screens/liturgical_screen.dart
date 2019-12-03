@@ -2,14 +2,15 @@
 *   Filename    :   liturgical_screen.dart
 *   Purpose     :
 *   Created     :   22/11/2019 9:01 AM by Detective Conan
-*   Updated     :   22/11/2019 9:01 AM by Detective Conan
-*   Changes     :   
+*	 Updated			:   03/12/2019 3:23 PM PM by Detective Conan
+*	 Changes			:   The service name gets from provider.
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_bloc.dart';
 import 'package:mt_carmel_app/src/models/liturgical.dart';
+import 'package:provider/provider.dart';
 
 class LiturgicalScreen extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _LiturgicalScreenState extends State<LiturgicalScreen> {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<LiturgicalBloc>(context);
+    final serviceName = Provider.of<String>(context);
     var _liturgicalList = bloc.liturgicalList;
     return Scaffold(
       body: Column(
@@ -30,7 +32,7 @@ class _LiturgicalScreenState extends State<LiturgicalScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
-              "Mass Requests",
+              "$serviceName",
               style: Theme.of(context)
                   .primaryTextTheme
                   .headline
@@ -57,7 +59,7 @@ class _LiturgicalScreenState extends State<LiturgicalScreen> {
 //                          ),
 //                        );
                       },
-                      child: _massRequestItem(context, _liturgicalList[index]),
+                      child: _liturgicalRequestItem(context, _liturgicalList[index]),
                     ),
                     background:
                         slideHorizontalBackground(DismissDirection.startToEnd),
@@ -120,7 +122,7 @@ class _LiturgicalScreenState extends State<LiturgicalScreen> {
     );
   }
 
-  Widget _massRequestItem(BuildContext context, Liturgical liturgical) {
+  Widget _liturgicalRequestItem(BuildContext context, Liturgical liturgical) {
     return Card(
       child: Container(
         width: double.infinity,
