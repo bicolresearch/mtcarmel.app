@@ -20,10 +20,12 @@ import 'package:mt_carmel_app/src/core/services/location_map_service.dart';
 import 'package:mt_carmel_app/src/core/services/module_list_service.dart';
 import 'package:mt_carmel_app/src/core/services/news_feed_service.dart';
 import 'package:mt_carmel_app/src/core/services/carmelites_service.dart';
+
 //import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
 //import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/church_regular_schedule_service.dart';
 import 'package:mt_carmel_app/src/core/services/profile_feature_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/individual_baptism_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/liturgical_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
@@ -31,6 +33,7 @@ import 'package:mt_carmel_app/src/core/services/repositories/address_repository.
 import 'package:mt_carmel_app/src/core/services/selection_service.dart';
 import 'package:mt_carmel_app/src/core/services/church_modules_service.dart';
 import 'package:mt_carmel_app/src/core/services/send_help_service.dart';
+
 //import 'package:mt_carmel_app/src/core/services/transaparency_service.dart';
 import 'package:mt_carmel_app/src/core/services/user_authentication_api.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
@@ -63,7 +66,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => AboutService());
   locator.registerLazySingleton(() => ContactDetailService());
   locator.registerLazySingleton(() => BranchLocationsService());
-  locator.registerLazySingleton(()=> DioService());
-  locator.registerLazySingleton(()=> ProfileFeatureService());
-  locator.registerLazySingleton(()=> LiturgicalService());
+  locator.registerLazySingleton(() => DioService());
+  locator.registerLazySingleton(() => ProfileFeatureService());
+  locator.registerLazySingleton(() => LiturgicalService());
+  locator.registerLazySingleton(() => IndividualBaptismService());
 }
