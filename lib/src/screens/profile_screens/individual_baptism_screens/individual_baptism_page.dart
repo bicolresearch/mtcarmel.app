@@ -14,10 +14,12 @@ import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_bapti
 import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
+import 'package:provider/provider.dart';
 
 class IndividualBaptismPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final serviceName = Provider.of<String>(context);
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -35,7 +37,7 @@ class IndividualBaptismPage extends StatelessWidget {
               }
               if (state is NoIndividualBaptismLoaded) {
                 return _errorDisplay(context,
-                    errorMsg: "No IndividualBaptism Loaded",
+                    errorMsg: "No $serviceName",
                     buttonLabel: "Reload");
               }
               if (state is IndividualBaptismNoConnection) {

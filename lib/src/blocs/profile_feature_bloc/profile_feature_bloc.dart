@@ -66,10 +66,10 @@ class ProfileFeatureBloc
           await locator<UserProfileService>().getUserProfile(id).then((user) {
             _userProfile = user;
           });
-        }).catchError((e){
+        }).catchError((e) {
           userProfileFetchingError = true;
         });
-        if(userProfileFetchingError){
+        if (userProfileFetchingError) {
           locator<AuthenticationService>().logout();
           yield ProfileLoginScreenLoaded();
         }
@@ -123,6 +123,17 @@ class ProfileFeatureBloc
           value.typeId == ProfileFeatureConstants.CARMELITE_NUN_TYPE))
         carmeliteTypes.add(ProfileFeatureConstants.NUNS);
     }
+    if (_isLoggedIn) {
+      //Iterates the branch and user feature
+      for (var feature in ProfileFeatureConstants.ProfileFeatureList) {
+        // Check if the feature is available to the branch
+        if (profileFeatures.any(
+          (value) {
+            return value.name == feature;
+          },
+        )) _features.add(feature);
+      }
+    }
     // Iterates the features in order
     for (var feature in ProfileFeatureConstants.ProfileFeatureCommonList) {
       // Add the carmelites to the list
@@ -134,9 +145,11 @@ class ProfileFeatureBloc
         continue;
       }
       // Check if the feature is available to the branch
-      if (profileFeatures.any((value) {
-        return value.name == feature;
-      })) _features.add(feature);
+      if (profileFeatures.any(
+        (value) {
+          return value.name == feature;
+        },
+      )) _features.add(feature);
     }
   }
 

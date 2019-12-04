@@ -52,7 +52,7 @@ class ProfileFeatureConstants {
   static const String CRYPT_LOBBY_APPROVAL =
       "Crypt Lobby – Mass for the Dead Approval";
   static const String CRYPT_LOBBY_REQUEST =
-      "Crypt Lobby – Mass for the Dead Approval";
+      "Crypt Lobby – Mass for the Dead Requests";
   static const String NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL =
       "November Mass for the Dead Approval";
   static const String NOVEMBER_MASS_FOR_THE_DEAD_REQUEST =
@@ -63,7 +63,17 @@ class ProfileFeatureConstants {
       "Father Mark Horan Hall - Venue Requests";
 
   static const List<String> ProfileFeatureCommonList = [
-//    BIBLE,
+    //    BIBLE,
+    REGULAR_MASS_SCHEDULE,
+    LOCATION_MAP,
+    PRIESTS,
+    PASTORS,
+    NUNS,
+    CONTACT_DETAILS,
+    ABOUT_THE_PARISH,
+  ];
+
+  static const List<String> ProfileFeatureList = [
     PRAYER_REQUEST,
     PRAYER_REQUEST_APPROVAL,
     MASS_REQUEST,
@@ -92,13 +102,6 @@ class ProfileFeatureConstants {
     CRYPT_LOBBY_APPROVAL,
     NOVEMBER_MASS_FOR_THE_DEAD_REQUEST,
     NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL,
-    REGULAR_MASS_SCHEDULE,
-    LOCATION_MAP,
-    PRIESTS,
-    PASTORS,
-    NUNS,
-    CONTACT_DETAILS,
-    ABOUT_THE_PARISH,
   ];
 
   static const CARMELITE_PRIEST_TYPE = "107";
