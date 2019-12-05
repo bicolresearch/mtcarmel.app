@@ -45,6 +45,9 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
   String _leftSwipeActionText = "";
   String _rightSwipeActionText = "";
   _SwipedEnum _swipedEnum = _SwipedEnum.NotSwiped;
+  ModuleModelReference _moduleModelReference;
+
+  String _serviceName;
 
   static GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -57,9 +60,9 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ModuleModelReference moduleModelReference =
-        Provider.of<ModuleModelReference>(context);
-    final serviceName = moduleModelReference.serviceName;
+    _moduleModelReference = Provider.of<ModuleModelReference>(context);
+    _serviceName = _moduleModelReference.serviceName;
+
     return Scaffold(
       key: _scaffoldKey,
       body: Column(
@@ -70,7 +73,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: Text(
-              "$serviceName",
+              "$_serviceName",
               style: Theme.of(context)
                   .primaryTextTheme
                   .headline
@@ -311,7 +314,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
     fieldsValue.putIfAbsent("user_id", () => userId);
     Map<String, String> casted = fieldsValue.cast();
     final url =
-        "${AppConstants.API_BASE_URL}prayer_requests/update/id/${moduleModel.id}/role_id/$roleId";
+        "${AppConstants.API_BASE_URL}${_moduleModelReference.moduleGetAllDir}/update/id/${moduleModel.id}/role_id/$roleId";
 
     final headers = {"Content-type": "application/x-www-form-urlencoded"};
     debugPrint("$casted");
@@ -332,7 +335,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
 
   _showDialog(BuildContext context, int index) {
     return AlertDialog(
-      title: Text("Prayer request"),
+      title: Text("$_serviceName"),
       content: FormBuilder(
         key: _fbKey,
         child: Container(

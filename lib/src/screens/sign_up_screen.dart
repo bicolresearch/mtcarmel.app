@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:http/http.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
@@ -19,218 +20,193 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool _isPasswordVisible = false;
-  bool _isSignupDone = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      resizeToAvoidBottomInset: false,
       body: Container(
-        margin: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
-              child: Text(
-                "Sign-up",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .headline
-                    .copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Divider(),
-            SizedBox(
-              height: 10.0,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    FormBuilder(
-                      key: SignUpScreen._fbKey,
-//                      autovalidate: true,
-                      child: Column(
-                        children: <Widget>[
-                          FormBuilderTextField(
-                            attribute: "first_name",
-                            decoration: InputDecoration(
-                                labelText: "First name",
-                                helperStyle: Theme.of(context)
-                                    .primaryTextTheme
-                                    .subtitle),
-                            keyboardType: TextInputType.text,
-                            validators: [
-                              FormBuilderValidators.required(),
-                            ],
-                            style: Theme.of(context).primaryTextTheme.title,
-                            textAlign: TextAlign.center,
-                            cursorColor: Colors.brown,
-                          ),
-                          FormBuilderTextField(
-                            attribute: "last_name",
-                            decoration: InputDecoration(
-                                labelText: "Last name",
-                                helperStyle: Theme.of(context)
-                                    .primaryTextTheme
-                                    .subtitle),
-                            keyboardType: TextInputType.text,
-                            validators: [
-                              FormBuilderValidators.required(),
-                            ],
-                            style: Theme.of(context).primaryTextTheme.title,
-                            textAlign: TextAlign.center,
-                            cursorColor: Colors.brown,
-                          ),
-                          FormBuilderTextField(
-                            attribute: "email",
-                            decoration: InputDecoration(
-                                labelText: "Email",
-                                helperStyle: Theme.of(context)
-                                    .primaryTextTheme
-                                    .subtitle),
-                            keyboardType: TextInputType.emailAddress,
-                            validators: [
-                              FormBuilderValidators.required(),
-                              FormBuilderValidators.email()
-                            ],
-                            style: Theme.of(context).primaryTextTheme.title,
-                            textAlign: TextAlign.center,
-                            cursorColor: Colors.brown,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                child: FormBuilderTextField(
-                                  attribute: "password",
-                                  obscureText: _isPasswordVisible,
-                                  decoration: InputDecoration(
-                                      labelText: "Password",
-                                      helperStyle: Theme.of(context)
-                                          .primaryTextTheme
-                                          .subtitle),
-                                  keyboardType: TextInputType.multiline,
-                                  validators: [
-                                    FormBuilderValidators.required(),
-                                  ],
-                                  style:
-                                      Theme.of(context).primaryTextTheme.title,
-                                  textAlign: TextAlign.center,
-                                  cursorColor: Colors.brown,
-                                ),
-                              ),
-                              IconButton(
-                                icon: _isPasswordVisible
-                                    ? Icon(Icons.visibility)
-                                    : Icon(Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isPasswordVisible = !_isPasswordVisible;
-                                  });
-                                },
-                              )
-                            ],
-                          ),
-                        ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[Column(
+                    children: <Widget>[
+                      SizedBox(height: 60.0,),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 30.0),
+                        child: Text(
+                          "Sign-up",
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline
+                              .copyWith(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            !_isSignupDone
-                ? RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      //TODO implement validations and updating database
-                      SignUpScreen._fbKey.currentState.save();
-                      if (SignUpScreen._fbKey.currentState.validate()) {
-                        print(SignUpScreen._fbKey.currentState.value);
-                        final url = "${AppConstants.API_BASE_URL}users/create";
-                        Map<String, String> headers = {
-                          "Content-type": "application/x-www-form-urlencoded"
-                        };
-                        final branchId = locator<BranchService>().branch.id;
-                        var fieldsValue =
-                            SignUpScreen._fbKey.currentState.value;
-
-                        String encrypted = _encrypted(fieldsValue["password"]);
-
-                        fieldsValue["password"] = encrypted;
-                        fieldsValue.putIfAbsent("branch_id", () => "$branchId");
-                        fieldsValue.putIfAbsent("role_id", () => "2");
-                        fieldsValue.putIfAbsent("user_id", () => "2");
-                        fieldsValue.putIfAbsent("media_id", () => "14");
-                        print(encrypted);
-                        print(fieldsValue);
-                        print(headers);
-                        Map<String, String> casted = fieldsValue.cast();
-                        Response response = await create(
-                          url,
-                          headers,
-                          casted,
-                        ).catchError((e) => print(e));
-
-                        if (response == null) return;
-                        print(response.body);
-                        setState(() {
-                          _isSignupDone = true;
-                        });
-                        _scaffoldKey.currentState.removeCurrentSnackBar();
-
-                        _scaffoldKey.currentState.showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Sign-up successfully.',
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      FormBuilder(
+                        key: SignUpScreen._fbKey,
+//                      autovalidate: true,
+                        child: Column(
+                          children: <Widget>[
+                            FormBuilderTextField(
+                              attribute: "first_name",
+                              decoration: InputDecoration(
+                                  labelText: "First name",
+                                  helperStyle: Theme.of(context)
+                                      .primaryTextTheme
+                                      .subtitle),
+                              keyboardType: TextInputType.text,
+                              validators: [
+                                FormBuilderValidators.required(),
+                              ],
+                              style: Theme.of(context).primaryTextTheme.title,
                               textAlign: TextAlign.center,
+                              cursorColor: Colors.brown,
                             ),
-                            duration: Duration(seconds: 3),
-                          ),
-                        );
-//                        Navigator.pop(context, true);
-                      } else {
-                        _scaffoldKey.currentState.removeCurrentSnackBar();
-
-                        _scaffoldKey.currentState.showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Sign-up failed.',
+                            FormBuilderTextField(
+                              attribute: "last_name",
+                              decoration: InputDecoration(
+                                  labelText: "Last name",
+                                  helperStyle: Theme.of(context)
+                                      .primaryTextTheme
+                                      .subtitle),
+                              keyboardType: TextInputType.text,
+                              validators: [
+                                FormBuilderValidators.required(),
+                              ],
+                              style: Theme.of(context).primaryTextTheme.title,
                               textAlign: TextAlign.center,
+                              cursorColor: Colors.brown,
                             ),
-                            duration: Duration(seconds: 3),
-                          ),
-                        );
-                        print("validation failed");
-                      }
-                    },
-                  )
-                : Container(),
-            !_isSignupDone
-                ? leftArrowBackButton(context: context)
-                : RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.brown,
-                    child: Text(
-                      "Close",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                            FormBuilderTextField(
+                              attribute: "email",
+                              decoration: InputDecoration(
+                                  labelText: "Email",
+                                  helperStyle: Theme.of(context)
+                                      .primaryTextTheme
+                                      .subtitle),
+                              keyboardType: TextInputType.emailAddress,
+                              validators: [
+                                FormBuilderValidators.required(),
+                                FormBuilderValidators.email()
+                              ],
+                              style: Theme.of(context).primaryTextTheme.title,
+                              textAlign: TextAlign.center,
+                              cursorColor: Colors.brown,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Expanded(
+                                  child: FormBuilderTextField(
+                                    attribute: "password",
+                                    obscureText: !_isPasswordVisible,
+                                    decoration: InputDecoration(
+                                        labelText: "Password",
+                                        helperStyle: Theme.of(context)
+                                            .primaryTextTheme
+                                            .subtitle),
+                                    keyboardType: TextInputType.multiline,
+                                    validators: [
+                                      FormBuilderValidators.required(),
+                                    ],
+                                    style:
+                                        Theme.of(context).primaryTextTheme.title,
+                                    textAlign: TextAlign.center,
+                                    cursorColor: Colors.brown,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: _isPasswordVisible
+                                      ? Icon(Icons.visibility)
+                                      : Icon(Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordVisible = !_isPasswordVisible;
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-          ],
+                Spacer(),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: Colors.brown,
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    //TODO implement validations and updating database
+                    SignUpScreen._fbKey.currentState.save();
+                    if (SignUpScreen._fbKey.currentState.validate()) {
+                      print(SignUpScreen._fbKey.currentState.value);
+                      final url = "${AppConstants.API_BASE_URL}users/create";
+                      Map<String, String> headers = {
+                        "Content-type": "application/x-www-form-urlencoded"
+                      };
+                      final branchId = locator<BranchService>().branch.id;
+                      var fieldsValue = SignUpScreen._fbKey.currentState.value;
+
+                      String encrypted = _encrypted(fieldsValue["password"]);
+                      final roleId =
+                          await locator<AuthenticationService>().getRoleId();
+                      final userId =
+                          await locator<AuthenticationService>().getUserId();
+
+                      fieldsValue["password"] = encrypted;
+                      fieldsValue.putIfAbsent("branch_id", () => "$branchId");
+                      fieldsValue.putIfAbsent("role_id", () => "$roleId");
+                      fieldsValue.putIfAbsent("user_id", () => "$userId");
+                      fieldsValue.putIfAbsent("media_id", () => "14");
+                      print(encrypted);
+                      print(fieldsValue);
+                      print(headers);
+                      Map<String, String> casted = fieldsValue.cast();
+                      Response response = await create(
+                        url,
+                        headers,
+                        casted,
+                      ).catchError((e) => print(e));
+
+                      if (response == null) return;
+                      print(response.body);
+                      setState(() {
+                      });
+                      Navigator.pop(context, true);
+                    } else {
+                      _scaffoldKey.currentState.removeCurrentSnackBar();
+
+                      _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Sign-up failed.',
+                            textAlign: TextAlign.center,
+                          ),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                      print("validation failed");
+                    }
+                  },
+                ),
+                leftArrowBackButton(context: context),
+              ],
+            ),
+          ),
         ),
-      ),
     );
   }
 

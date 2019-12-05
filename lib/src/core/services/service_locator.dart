@@ -51,7 +51,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => UserProfileService());
   locator.registerLazySingleton(() => AddressRepository());
   locator.registerLazySingleton(() => ModuleListService());
-  locator.registerLazySingleton(() => MassRequestService());
+//  locator.registerLazySingleton(() => MassRequestService());
 //  locator.registerLazySingleton(() => PrayerRequestService());
   locator.registerLazySingleton(() => SelectionService());
   locator.registerLazySingleton(() => CrudService());
@@ -69,7 +69,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => BranchLocationsService());
   locator.registerLazySingleton(() => DioService());
   locator.registerLazySingleton(() => ProfileFeatureService());
-  locator.registerLazySingleton(() => LiturgicalService());
-  locator.registerLazySingleton(() => IndividualBaptismService());
+//  locator.registerLazySingleton(() => LiturgicalService());
+//  locator.registerLazySingleton(() => IndividualBaptismService());
   locator.registerLazySingleton(() => ModuleModelService());
 }
