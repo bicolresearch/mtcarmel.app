@@ -2,9 +2,8 @@
 *   Filename    :   profile_login_screen.dart
 *   Purpose     :
 *   Created     :   04/11/2019 10:44 AM by Detective Conan
-*	 Updated			:   04/11/2019 6:10 PM PM by Detective Conan
-*	 Updated			:   05/11/2019 10:29 AM PM by Detective Conan
-*	 Changes			:   Implemented user login
+*	 Updated			:   05/12/2019 3:53 PM PM by Detective Conan
+*	 Changes			:   Added snackbar message when successfully signed-up
 * */
 
 import 'package:flutter/material.dart';
@@ -175,17 +174,6 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                       SizedBox(
                         height: 10.0,
                       ),
-//                      InkWell(
-//                        onTap: () async {
-////                          final result = await Navigator.push(
-////                            context,
-////                            MaterialPageRoute(
-////                              builder: (context) => SignUpScreen(),
-////                            ),
-////                          );
-////                          if (result) print("Signup successful");
-//                        },
-//                        child:
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Row(children: <Widget>[
@@ -207,7 +195,20 @@ class _ProfileLoginScreenState extends State<ProfileLoginScreen> {
                                   builder: (context) => SignUpScreen(),
                                 ),
                               );
-                              if (result) print("Signup successful");
+                              if (result) {
+                                print("Signup successful");
+                                _scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    content: SingleChildScrollView(
+                                      child: Text(
+                                        'Signup successful.',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    duration: Duration(seconds: 3),
+                                  ),
+                                );
+                              }
                             },
                           ),
                           Spacer(),
