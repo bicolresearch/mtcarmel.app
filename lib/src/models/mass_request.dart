@@ -15,33 +15,36 @@ class MassRequest {
   MassRequest(
       this.id,
       this.name,
-      this.purposeMass,
+      this.purposeId,
+      this.purposeName,
       this.dtOffered,
-      this.timeOffered,
+      this.statusId,
       this.statusName,
-      this.postedOn,
-      this.updatedOn,
-      this.createdBy);
+      this.dtCreated,
+      this.dtUpdated,
+      this.createdBy,
+      this.updatedBy);
 
-
-  @JsonKey(name: "id")
   final String id;
-  @JsonKey(name: "name")
   final String name;
-  @JsonKey(name: "purpose_mass")
-  final String purposeMass;
+  @JsonKey(name: "purpose_id")
+  final purposeId;
+  @JsonKey(name: "purpose_name")
+  final String purposeName;
   @JsonKey(name: "dt_offered")
   final String dtOffered;
-  @JsonKey(name: "time_offered")
-  final String timeOffered;
+  @JsonKey(name: "status_id")
+  final statusId;
   @JsonKey(name: "status_name")
   final String statusName;
-  @JsonKey(name: "posted_on")
-  final String postedOn;
-  @JsonKey(name: "updated_on")
-  final String updatedOn;
+  @JsonKey(name: "dt_created")
+  final dtCreated;
+  @JsonKey(name: "dt_updated")
+  final dtUpdated;
   @JsonKey(name: "created_by")
   final String createdBy;
+  @JsonKey(name: "updated_by")
+  final updatedBy;
 
   factory MassRequest.fromJson(Map<String, dynamic> json) =>
       _$MassRequestFromJson(json);
@@ -49,35 +52,35 @@ class MassRequest {
   Map<String, dynamic> toJson() => _$MassRequestToJson(this);
 }
 
-@JsonSerializable()
-class DataActionMassRequest {
-  DataActionMassRequest(this.data, this.actions);
-
-  final DataMassRequest data;
-  final Map<String, String> actions;
-
-  factory DataActionMassRequest.fromJson(Map<String, dynamic> json) =>
-      _$DataActionMassRequestFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DataActionMassRequestToJson(this);
-}
-
-@JsonSerializable()
-class DataMassRequest {
-  DataMassRequest(
-      this.draw,
-      this.recordsTotal,
-      this.recordsFiltered,
-      this.data,
-      );
-
-  final int draw;
-  final int recordsTotal;
-  final int recordsFiltered;
-  final List<MassRequest> data;
-
-  factory DataMassRequest.fromJson(Map<String, dynamic> json) =>
-      _$DataMassRequestFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DataMassRequestToJson(this);
-}
+//@JsonSerializable()
+//class DataActionMassRequest {
+//  DataActionMassRequest(this.data, this.actions);
+//
+//  final DataMassRequest data;
+//  final Map<String, String> actions;
+//
+//  factory DataActionMassRequest.fromJson(Map<String, dynamic> json) =>
+//      _$DataActionMassRequestFromJson(json);
+//
+//  Map<String, dynamic> toJson() => _$DataActionMassRequestToJson(this);
+//}
+//
+//@JsonSerializable()
+//class DataMassRequest {
+//  DataMassRequest(
+//    this.draw,
+//    this.recordsTotal,
+//    this.recordsFiltered,
+//    this.data,
+//  );
+//
+//  final int draw;
+//  final int recordsTotal;
+//  final int recordsFiltered;
+//  final List<MassRequest> data;
+//
+//  factory DataMassRequest.fromJson(Map<String, dynamic> json) =>
+//      _$DataMassRequestFromJson(json);
+//
+//  Map<String, dynamic> toJson() => _$DataMassRequestToJson(this);
+//}

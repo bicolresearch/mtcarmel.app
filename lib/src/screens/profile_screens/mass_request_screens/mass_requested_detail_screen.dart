@@ -8,23 +8,20 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:provider/provider.dart';
 
 class MassRequestedDetailScreen extends StatelessWidget {
-  @required
-  final MassRequest massRequest;
-  @required
-  final String massPurpose;
-
-  const MassRequestedDetailScreen({Key key, this.massRequest, this.massPurpose})
-      : assert(massRequest != null),
-        super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    //TODO
+    final massRequest = Provider.of<MassRequest>(context);
+    final serviceName = Provider.of<String>(context);
     DateTime datePosted =
-        DateTime.parse("${massRequest.postedOn ?? "01-01-2019"}");
+        DateTime.parse("${massRequest.dtCreated??"01-01-2019"}");
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -37,7 +34,7 @@ class MassRequestedDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Text(
-                "Mass Request",
+                "$serviceName",
                 style: Theme.of(context)
                     .primaryTextTheme
                     .headline
@@ -78,7 +75,7 @@ class MassRequestedDetailScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
-                          "Purpose Mass: $massPurpose",
+                          "Purpose Mass: ${massRequest.purposeName}",
                           style: Theme.of(context)
                               .primaryTextTheme
                               .subtitle
@@ -95,10 +92,6 @@ class MassRequestedDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            leftArrowBackButton(context: context),
-            SizedBox(
-              height: 20.0,
-            )
           ],
         ),
       ),

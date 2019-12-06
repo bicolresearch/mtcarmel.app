@@ -54,6 +54,7 @@ class MassRequestPage extends StatelessWidget {
   Widget _errorDisplay(BuildContext context,
       {String errorMsg = "Something went wrong!",
       String buttonLabel = "Retry"}) {
+//    final String id = Provider.of<String>(context);
     return Scaffold(
       body: Column(
         children: <Widget>[

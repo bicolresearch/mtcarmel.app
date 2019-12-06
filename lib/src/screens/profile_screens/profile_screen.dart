@@ -17,6 +17,8 @@ import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_event.dart';
+import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_event.dart';
 import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
@@ -41,6 +43,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedul
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_screens/module_model_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
@@ -196,18 +199,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ], child: ModuleModelPage());
       case ProfileFeatureConstants.MASS_REQUESTS_APPROVAL:
       case ProfileFeatureConstants.MASS_REQUEST:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.MASS_REQUEST_DIR.split("/")[0],
-            ModuleDirectories.MASS_REQUEST_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+//        final ModuleModelReference moduleModelReference = ModuleModelReference(
+//            itemText,
+//            ModuleDirectories.MASS_REQUEST_DIR.split("/")[0],
+//            ModuleDirectories.MASS_REQUEST_DIR);
+//        return MultiProvider(providers: [
+//          BlocProvider<ModuleModelBloc>(
+//            builder: (context) => ModuleModelBloc()
+//              ..dispatch(
+//                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
+//          ),
+//          Provider<ModuleModelReference>.value(value: moduleModelReference),
+//        ], child: ModuleModelPage());
+        return MultiProvider(
+          providers: [
+            BlocProvider<MassRequestBloc>(
+              builder: (context) =>
+                  MassRequestBloc()..dispatch(FetchMassRequest()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: MassRequestPage(),
+        );
       case ProfileFeatureConstants.LITURGICAL_SERVICE:
       case ProfileFeatureConstants.LITURGICAL_SERVICE_APPROVAL:
         final ModuleModelReference moduleModelReference = ModuleModelReference(

@@ -1,28 +1,31 @@
 /*
-*  Filename    :   prayer_request_screen.dart
-*  Purpose     :	
-*  Created     :   2019-08-20 16:42 by Detective Conan
-*  Updated     :   2019-08-23 10:35 by Detective conan
-*  Changes     :   Added confirmation alert dialog upon confirmation.
+*   Filename    :   mass_request_screen.dart
+*   Purpose     :
+*   Created     :   06/12/2019 4:07 PM by Detective Conan
+*   Updated     :   06/12/2019 4:07 PM by Detective Conan
+*   Changes     :   
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
+import 'package:mt_carmel_app/src/constants/action_constants.dart';
 import 'package:mt_carmel_app/src/constants/api_constants.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/constants/module_directories.dart';
+import 'package:mt_carmel_app/src/constants/status_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
-import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
-import 'package:mt_carmel_app/src/core/services/selection_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
-import 'package:mt_carmel_app/src/models/selection_api.dart';
+import 'package:mt_carmel_app/src/models/module_model.dart';
+import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_requested_detail_screen.dart';
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
-import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
+
+enum _SwipedEnum { LeftSwiped, RightSwiped, NotSwiped }
 
 class MassRequestScreen extends StatefulWidget {
   @override
@@ -30,137 +33,237 @@ class MassRequestScreen extends StatefulWidget {
 }
 
 class _MassRequestScreenState extends State<MassRequestScreen> {
-  static const String _MASS_REQUEST_SELECTION_API =
-      "${AppConstants.API_BASE_URL}purpose_mass/";
+  List<MassRequest> _moduleModels = [];
+  bool _isDeleteEnable = false;
+  bool _isApprovalEnable = false;
+  bool _isReviewEnable = false;
+  bool _isOfferEnable = false;
+  Icon _leftSwipeActionIcon;
+  Icon _rightSwipeActionIcon;
+  String _leftSwipeActionText = "";
+  String _rightSwipeActionText = "";
+  _SwipedEnum _swipedEnum = _SwipedEnum.NotSwiped;
+  ModuleAndDataActions _moduleAndDataActions;
 
-  List<MassRequest> _massRequests = [];
-  List<SelectionApi> _purposeMassTypes = [];
+  String _serviceName;
+
+  static GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<MassRequestBloc>(context);
-    final serviceName = Provider.of<String>(context);
-    _massRequests = bloc.massRequest;
+    _serviceName = Provider.of<String>(context);
     return Scaffold(
+      key: _scaffoldKey,
       body: Column(
         children: <Widget>[
           SizedBox(
-            height: 30.0,
+            height: 20.0,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
             child: Text(
-              "$serviceName",
+              "$_serviceName",
               style: Theme.of(context)
                   .primaryTextTheme
                   .headline
                   .copyWith(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 20.0),
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Dismissible(
-                    key: Key(_massRequests[index].id),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MassRequestedDetailScreen(
-                              massRequest: _massRequests[index],
-                              massPurpose: _purposeMassValue(
-                                  _massRequests[index].purposeMass ?? ""),
-                            ),
-                          ),
-                        );
-                      },
-                      child: _massRequestItem(context, _massRequests[index]),
-                    ),
-                    background:
-                        slideHorizontalBackground(DismissDirection.startToEnd),
-                    secondaryBackground:
-                        slideHorizontalBackground(DismissDirection.endToStart),
-                    confirmDismiss: (direction) async {
-                      if (direction == DismissDirection.startToEnd ||
-                          direction == DismissDirection.endToStart) {
-                        final bool res = await showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                content: Text(
-                                    "Are you sure you want to delete this ${_purposeMassValue(_massRequests[index].purposeMass ?? "")} request?"),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text(
-                                      "Cancel",
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Text(
-                                      "Delete",
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                    onPressed: () async {
-                                      final result = await _updateRequest(
-                                          _massRequests[index]);
-                                      if (result)
-                                        setState(() {
-                                          _massRequests.removeAt(index);
-                                        });
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            });
-                        return res;
-                      } else {
-                        // TODO: Navigate to edit page;
-                      }
-                      return false;
-                    },
-                  );
-                },
-                itemCount: (_massRequests != null) ? _massRequests.length : 0,
+              child: Center(
+                child: _moduleModels.isEmpty
+                    ? Text(
+                        "No prayer requests",
+                        style: Theme.of(context).primaryTextTheme.title,
+                      )
+                    : ListView.builder(
+                        itemBuilder: (context, index) {
+                          return _moduleModelItem(context, index);
+                        },
+                        itemCount: _moduleModels.length,
+                      ),
               ),
             ),
           ),
-//          leftArrowBackButton(context: context),
-//          SizedBox(
-//            height: 20.0,
-//          ),
         ],
       ),
     );
   }
 
-  Widget slideLeftBackground() {
+  Widget _moduleModelItem(BuildContext context, int index) {
+    final MassRequest massRequest = _moduleAndDataActions.modules[index];
+    if (massRequest.statusName == "On-going") {
+      return Dismissible(
+        key: Key(massRequest.id),
+        child: InkWell(
+          child: Container(
+            width: double.infinity,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      _moduleModels[index].createdBy,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      massRequest.purposeName ?? "",
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).primaryTextTheme.title,
+                      maxLines: 1,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            massRequest.statusName ?? "",
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).primaryTextTheme.caption,
+                            maxLines: 1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MultiProvider(
+                  providers: [
+                    Provider.value(
+                      value: massRequest,
+                    ),
+                    Provider<String>.value(value: _serviceName),
+                  ],
+                  child: MassRequestedDetailScreen(),
+                ),
+              ),
+            );
+          },
+        ),
+        direction: (_rightSwipeActionText == "")
+            ? DismissDirection.endToStart
+            : DismissDirection.horizontal,
+        background: _slideRightBackground(),
+        secondaryBackground: _slideLeftBackground(),
+        confirmDismiss: (direction) async {
+          direction == DismissDirection.startToEnd
+              ? _swipedEnum = _SwipedEnum.RightSwiped
+              : _swipedEnum = _SwipedEnum.LeftSwiped;
+          if (direction == DismissDirection.startToEnd ||
+              direction == DismissDirection.endToStart) {
+            final bool res = await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return _showDialog(context, index);
+                });
+            return res;
+          }
+          return false;
+        },
+      );
+    } else {
+      return InkWell(
+        child: Container(
+          width: double.infinity,
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    _moduleModels[index].createdBy,
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .title
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    massRequest.purposeName ?? "",
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).primaryTextTheme.title,
+                    maxLines: 1,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          _moduleModels[index].statusName ?? "",
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).primaryTextTheme.caption,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        onTap: () {
+          // TODO implement navigation to detail screen
+//          MultiProvider(
+//            providers: [
+//              BlocProvider(
+//                builder: (context) => PrayerRequestBloc()
+//                  ..dispatch(
+//                      FetchPrayerRequest(_moduleModelReference.moduleByIdDir)),
+//              ),
+//              Provider<String>.value(value: _moduleModels[index].id)
+//            ],
+//            child: PrayerRequestPage(),
+//          );
+        },
+      );
+    }
+  }
+
+  Widget _slideLeftBackground() {
     return Container(
       color: Colors.red,
       child: Align(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-            Text(
-              " Delete",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.right,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                _leftSwipeActionIcon,
+                Text(
+                  "$_leftSwipeActionText",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
             ),
             SizedBox(
               width: 20,
@@ -172,113 +275,46 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
     );
   }
 
-  Widget slideHorizontalBackground(DismissDirection direction) {
+  Widget _slideRightBackground() {
     return Container(
-      color: Colors.red,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+      color: Colors.green,
+      child: Align(
         child: Row(
-          mainAxisAlignment: (direction == DismissDirection.endToStart)
-              ? MainAxisAlignment.end
-              : MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Icon(
-              Icons.delete,
-              color: Colors.white,
+            SizedBox(
+              width: 10.0,
             ),
-            Text(
-              " Delete",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.right,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                _rightSwipeActionIcon ?? Container(),
+                Text(
+                  "$_rightSwipeActionText",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 20,
             ),
           ],
         ),
-        alignment: Alignment.center,
+        alignment: Alignment.centerRight,
       ),
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Future _getPurposeMassTypes() async {
-    try {
-      _purposeMassTypes = await locator<SelectionService>()
-          .getSelection(_MASS_REQUEST_SELECTION_API);
-    } catch (e) {
-      debugPrint(e);
-    }
-  }
-
-  String _purposeMassValue(String purposeMassId) {
-    String purposeMassValue = "";
-    for (var item in _purposeMassTypes) {
-      if (item.id == purposeMassId) {
-        purposeMassValue = item.name;
-        break;
-      }
-    }
-    return purposeMassValue;
-  }
-
-  Widget _massRequestItem(BuildContext context, MassRequest massRequest) {
-    return Card(
-      child: Container(
-//        margin: EdgeInsets.symmetric(vertical: 8.0),
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Status request: ${massRequest.statusName}",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Requested by: ${massRequest.createdBy}",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                _purposeMassValue(massRequest.purposeMass ?? ""),
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).primaryTextTheme.title,
-                maxLines: 1,
-              ),
-              Text(
-                massRequest.name ?? "",
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).primaryTextTheme.title,
-                maxLines: 1,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  _updateRequest(MassRequest massRequest) async {
+  _updateRequest(MassRequest massRequest, remarks) async {
     final userId =
         await locator<AuthenticationService>().getUserId().catchError((e) {
-//      throw Exception("Retrieving user id error. $e");
       debugPrint("Retrieving user id error. $e");
+      throw Exception("Retrieving user id error. $e");
     });
 
     if (userId == null || userId == "") {
@@ -286,23 +322,25 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
       return false;
     }
 
+    final roleId = await locator<AuthenticationService>().getRoleId();
+//    final branchId = await locator<BranchService>().branch.id;
+
     var success = false;
     Map<String, String> fieldsValue = {
-      "id": "${massRequest.id}",
-      "name": "${massRequest.name}",
-      "purpose_mass": "${massRequest.purposeMass}",
-      "dt_offered": "${massRequest.dtOffered}",
-      "time_offered": massRequest.timeOffered,
-      "status": "3",
+//      "id": "${moduleModel.id}",
+      "remarks": remarks,
+      "status_id": "${_getNewStatusId()}",
     };
+
+//    id, status_id, remarks, user_id
     fieldsValue.putIfAbsent("user_id", () => userId);
     Map<String, String> casted = fieldsValue.cast();
     final url =
-        "https://api.mountcarmel.ph/mass_request/update/id/${massRequest.id}";
+        "${AppConstants.API_BASE_URL}${ModuleDirectories.MASS_REQUEST_DIR.split("/")[0]}/update/id/${massRequest.id}/role_id/$roleId";
+
     final headers = APIConstants.HEADERS;
     debugPrint("$casted");
     debugPrint(url);
-    //TODO implement when ready
     locator<CrudService>().put(url, body: casted, headers: headers).then(
       ((value) {
         debugPrint("$value");
@@ -311,9 +349,172 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
     ).catchError(
       (e) {
         debugPrint("$e");
-        success = false;
+        throw e;
       },
     );
     return success;
+  }
+
+  _showDialog(BuildContext context, int index) {
+    return AlertDialog(
+      title: Text("$_serviceName"),
+      content: FormBuilder(
+        key: _fbKey,
+        child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "${_moduleAndDataActions.modules[index].purposeName ?? ""}",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  textAlign: TextAlign.start,
+                ),
+                _swipedEnum == _SwipedEnum.LeftSwiped
+                    ? FormBuilderTextField(
+                        attribute: "remarks",
+                        decoration: InputDecoration(labelText: "Remarks"),
+//                onChanged: (_){},
+                        validators: [FormBuilderValidators.required()],
+                      )
+                    : Container(),
+              ],
+            ),
+          ),
+        ),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(
+            "Cancel",
+            style: TextStyle(color: Colors.black),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
+        FlatButton(
+          child: Text(
+            _swipedEnum == _SwipedEnum.LeftSwiped
+                ? _leftSwipeActionText
+                : _rightSwipeActionText,
+            style: TextStyle(
+                color: _swipedEnum == _SwipedEnum.LeftSwiped
+                    ? Colors.red
+                    : Colors.green),
+          ),
+          onPressed: () async {
+            _fbKey.currentState.save();
+            if (_fbKey.currentState.validate()) {
+              try {
+                final result = await _updateRequest(
+                    _moduleAndDataActions.modules[index],
+                    _fbKey.currentState.value["remarks"] ?? "");
+                setState(() {
+                  _moduleModels.removeAt(index);
+                });
+                _showSnackBar();
+                Navigator.of(context).pop(result);
+              } catch (e) {
+                print(e);
+                _showSnackBar(msg: "Problem updating request.");
+                Navigator.of(context).pop();
+              }
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  void _initialize() {
+    _moduleAndDataActions =
+        BlocProvider.of<MassRequestBloc>(context).moduleAndDataActions;
+    _moduleModels = _moduleAndDataActions.modules;
+    final actions = _moduleAndDataActions.dataActionModuleModel.actions;
+    _isDeleteEnable = actions.keys.contains(ActionConstants.DELETE_ID);
+    _isApprovalEnable = actions.keys.contains(ActionConstants.APPROVAL_ID);
+    _isReviewEnable = actions.keys.contains(ActionConstants.REVIEW_ID);
+    _isOfferEnable = actions.keys.contains(ActionConstants.OFFER_ID);
+    _leftSwipeActionIcon = _isApprovalEnable
+        ? Icon(
+            Icons.thumb_down,
+            color: Colors.white,
+          )
+        : Icon(
+            Icons.delete,
+            color: Colors.white,
+          );
+    _rightSwipeActionIcon = _isApprovalEnable
+        ? Icon(
+            Icons.thumb_up,
+            color: Colors.white,
+          )
+        : _isOfferEnable
+            ? Icon(
+                MountCarmelIcons.makearequest,
+                color: Colors.white,
+              )
+            : null;
+
+    _leftSwipeActionText =
+        _isApprovalEnable ? "Deny" : _isOfferEnable ? "Decline" : "Delete";
+    _rightSwipeActionText =
+        _isApprovalEnable ? "Approve" : _isOfferEnable ? "Offer" : "";
+    setState(() {});
+  }
+
+  String _getNewStatusId() {
+    if (_swipedEnum == _SwipedEnum.RightSwiped) {
+      if (_isApprovalEnable) {
+        return StatusConstants.APPROVED_ID;
+      } else if (_isOfferEnable) {
+        return StatusConstants.OFFERED_ID;
+      } else // Reviewed
+      {
+        return StatusConstants.REVIEWED_ID;
+      }
+    } else {
+      if (_isApprovalEnable) {
+        return StatusConstants.DENIED_ID;
+      } else if (_isOfferEnable) {
+        return StatusConstants.DECLINED_ID;
+      } else // Reviewed
+      {
+        return StatusConstants.DELETED_ID;
+      }
+    }
+  }
+
+  _showSnackBar({String msg}) {
+    if (msg == null || msg == "") {
+      if (_swipedEnum == _SwipedEnum.RightSwiped) {
+        if (_isApprovalEnable)
+          msg = "Request has been approved.";
+        else if (_isOfferEnable)
+          msg = "Prayer has been offered.";
+        else
+          msg = "Request has been reviewed.";
+      } else {
+        if (_isApprovalEnable)
+          msg = "Request has been denied.";
+        else if (_isOfferEnable)
+          msg = "Prayer has been declined.";
+        else
+          msg = "Request has been deleted.";
+      }
+    }
+    _scaffoldKey.currentState.removeCurrentSnackBar();
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(
+          "$msg",
+          textAlign: TextAlign.center,
+        ),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 }

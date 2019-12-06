@@ -11,21 +11,28 @@ import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_event.dar
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_state.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/mass_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
 
 class MassRequestBloc extends Bloc<MassRequestEvent, MassRequestState> {
   @override
   MassRequestState get initialState => MassRequestUninitialized();
 
-  List<MassRequest> get massRequest => _massRequest;
-  List<MassRequest> _massRequest = [];
+//  MassRequest get massRequest => _massRequest;
+//  MassRequest _massRequest;
+  ModuleAndDataActions _moduleAndDataActions;
+
+  ModuleAndDataActions get moduleAndDataActions => _moduleAndDataActions;
 
   @override
   Stream<MassRequestState> mapEventToState(MassRequestEvent event) async* {
     if (event is FetchMassRequest) {
       yield MassRequestLoading();
       try {
-        _massRequest = await locator<MassRequestService>().getMassRequests();
+//        _massRequest =
+//            await locator<MassRequestService>().getMassRequest(event.id);
+        _moduleAndDataActions =
+            await locator<MassRequestService>().getMassRequests();
         yield MassRequestLoaded();
       } catch (e) {
         print(e);

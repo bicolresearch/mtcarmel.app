@@ -10,18 +10,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_event.dart';
 import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_event.dart';
 import 'package:mt_carmel_app/src/constants/action_constants.dart';
 import 'package:mt_carmel_app/src/constants/api_constants.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
+import 'package:mt_carmel_app/src/constants/profile_constants.dart';
 import 'package:mt_carmel_app/src/constants/status_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/module_model.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
 import 'package:provider/provider.dart';
@@ -150,22 +154,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
             ),
           ),
           onTap: () {
-            // TODO implement navigation to detail screen
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MultiProvider(
-                  providers: [
-                    BlocProvider(
-                      builder: (context) => PrayerRequestBloc()
-                        ..dispatch(FetchPrayerRequest(_moduleModels[index].id)),
-                    ),
-                    Provider<String>.value(value: _moduleModels[index].id)
-                  ],
-                  child: PrayerRequestPage(),
-                ),
-              ),
-            );
+            _navigateToDetailScreen(context, index);
           },
         ),
         direction: (_rightSwipeActionText == "")
@@ -519,5 +508,96 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
         duration: Duration(seconds: 3),
       ),
     );
+  }
+
+  _navigateToDetailScreen(BuildContext context, int index) {
+    final serviceName = Provider.of<ModuleModelReference>(context).serviceName;
+    switch (serviceName) {
+      case ProfileFeatureConstants.PRAYER_REQUEST_APPROVAL:
+      case ProfileFeatureConstants.PRAYER_REQUEST:
+        return Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MultiProvider(
+              providers: [
+                BlocProvider(
+                  builder: (context) => PrayerRequestBloc()
+                    ..dispatch(FetchPrayerRequest(_moduleModels[index].id)),
+                ),
+                Provider<String>.value(value: _moduleModels[index].id)
+              ],
+              child: PrayerRequestPage(),
+            ),
+          ),
+        );
+      case ProfileFeatureConstants.MASS_REQUESTS_APPROVAL:
+      case ProfileFeatureConstants.MASS_REQUEST:
+        return Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MultiProvider(
+              providers: [
+                BlocProvider(
+                  builder: (context) => MassRequestBloc()
+                    ..dispatch(FetchMassRequest()),
+                ),
+                Provider<String>.value(value: _moduleModels[index].id)
+              ],
+              child: MassRequestPage(),
+            ),
+          ),
+        );
+      case ProfileFeatureConstants.LITURGICAL_SERVICE:
+      case ProfileFeatureConstants.LITURGICAL_SERVICE_APPROVAL:
+      // TODO
+      case ProfileFeatureConstants.CERTIFICATE_REQUESTS:
+      case ProfileFeatureConstants.CERTIFICATE_APPROVAL:
+      // TODO
+//        INDIVIDUAL_BAPTISM,
+      case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_REQUEST:
+      case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_APPROVAL:
+      // TODO
+
+//    COMMUNITY_BAPTISM,
+      case ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST:
+      case ProfileFeatureConstants.COMMUNITY_BAPTISM_APPROVAL:
+      // TODO
+
+//    ADULT_BAPTISM,
+      case ProfileFeatureConstants.ADULT_BAPTISM_REQUEST:
+      case ProfileFeatureConstants.ADULT_BAPTISM_APPROVAL:
+      // TODO
+
+//    MARRIAGE,
+      case ProfileFeatureConstants.MARRIAGE_APPROVAL:
+      case ProfileFeatureConstants.MARRIAGE_REQUEST:
+      // TODO
+//    FUNERAL_SERVICE,
+      case ProfileFeatureConstants.FUNERAL_SERVICE_REQUEST:
+      case ProfileFeatureConstants.FUNERAL_SERVICE_APPROVAL:
+      // TODO
+
+//    FUNERAL_CHAPEL,
+      case ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST:
+      case ProfileFeatureConstants.FUNERAL_CHAPEL_APPROVAL:
+      // TODO
+
+//    CRYPT_LOBBY,
+      case ProfileFeatureConstants.CRYPT_LOBBY_REQUEST:
+      case ProfileFeatureConstants.CRYPT_LOBBY_APPROVAL:
+      // TODO
+//    NOVEMBER_MASS_FOR_THE_DEAD,
+      case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_REQUEST:
+      case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL:
+      // TODO
+
+      case ProfileFeatureConstants.FIRST_COMMUNION_REQUEST:
+      case ProfileFeatureConstants.FIRST_COMMUNION_APPROVAL:
+      // TODO
+
+      case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST:
+      case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_APPROVAL:
+      // TODO
+    }
   }
 }

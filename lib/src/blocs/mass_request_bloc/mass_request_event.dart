@@ -14,13 +14,15 @@ abstract class MassRequestEvent extends Equatable {
 }
 
 class FetchMassRequest extends MassRequestEvent {
+//  final id;
+//
+//  FetchMassRequest(this.id) : super([id]);
 
   @override
   String toString() => 'FetchMassRequest';
 }
 
 class RefreshMassRequest extends MassRequestEvent {
-
   @override
   String toString() => 'RefreshMassRequest';
 }
