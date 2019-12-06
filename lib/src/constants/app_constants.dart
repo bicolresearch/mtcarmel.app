@@ -68,13 +68,6 @@ class AppConstants {
   static const String sample_message =
       "lorem ipsum dolor sit amet. conse ctetur adipiscing elit. Integer necodio, Praesent libero. Sed cursus.";
 
-  // services
-  static const String JOIN_US = 'Join us';
-  static const String MAKE_REQUEST = 'Make a request';
-  static const String BAPTISM = 'Baptism';
-  static const String COMMUNION = 'Communion';
-  static const String CONFIRMATION = 'Confirmation';
-  static const String WEDDING = 'Wedding';
-  static const String PASSING = 'Passing';
-  static const String EVENTS = 'Events';
+  static const ANDROID_PLAY_STORE_LINK = "https://play.google.com/store/apps/details?id=ph.mountcarmel.mountcarmelsystem";
+
 }

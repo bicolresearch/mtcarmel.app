@@ -148,8 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return;
         }
         if (itemText == ProfileFeatureConstants.SHARE_APP) {
-          Share.share(
-              "https://play.google.com/store/apps/details?id=ph.mountcarmel.mountcarmelsystem",
+          Share.share(AppConstants.ANDROID_PLAY_STORE_LINK,
               subject: "Share this app");
           return;
         }
