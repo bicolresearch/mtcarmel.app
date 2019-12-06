@@ -6,7 +6,6 @@
 *	 Changes			:   Implemented dio package instead of http
 */
 
-import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
@@ -15,56 +14,31 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/connectivity_checker.dart';
 import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 enum PrayerRequestsStatus { OnGoing, Approved, Rejected, Deleted, All }
 
 class PrayerRequestService {
-  //TODO implement request per priest and admin account
-  Future<DataActionPrayerRequest> getPrayerRequests() async {
-    final keyword = "prayerRequests";
-    final hasConnection = await ConnectivityChecker.hasDataConnection();
-    final branchId = await locator<BranchService>().branch.id;
+  Future<PrayerRequest> getPrayerRequestById(String id) async {
+    final branchId = locator<BranchService>().branch.id;
     final roleId = await locator<AuthenticationService>().getRoleId();
-    final userId = await locator<AuthenticationService>().getUserId();
-
-    var response;
-    final url =
-        "${AppConstants.API_BASE_URL}${AppConstants.PRAYER_REQUEST_JSON_URL}?branch_id=$branchId&role_id=$roleId&user_id=$userId";
-
-    var dio = locator<DioService>().getDio();
-    try {
-      response = await dio
-          .get(
-            "$url",
-            queryParameters: {'k': keyword},
-            options: buildCacheOptions(
-                Duration(days: AppConstants.CACHE_DURATION),
-                forceRefresh: true,
-                subKey: "page=$branchId"),
-          )
-          .timeout(
-            Duration(seconds: 5),
-          );
-    } catch (e) {
-      print(e);
-      if (!hasConnection)
-        throw Exception('PrayerRequestService.getData: No connection');
-      throw Exception(
-          'PrayerRequestService.getData:  Error requesting UserProfile data: $e');
-    }
-
-    if (response.statusCode == 200) {
-      try {
-        final body = json.decode("$response");
-        return DataActionPrayerRequest.fromJson(body);
-      } catch (e) {
-        print(e);
-        throw Exception("PrayerRequestService.getData: $e");
-      }
-    } else {
-      print(response.statusCode);
-      throw Exception(
-          "PrayerRequestService.getData: statusCode ${response.statusCode}");
-    }
+    PrayerRequest _prayerRequest;
+    String url =
+        "${AppConstants.API_BASE_URL}prayer_requests/prayer_request/?branch_id=$branchId&role_id=$roleId&id=$id";
+    await http
+        .get(url)
+        .then((result) {
+          if (result.statusCode == 200) {
+            final body = json.decode(result.body);
+            print(body);
+            _prayerRequest = PrayerRequest.fromJson(body);
+          } else {
+            print(result.statusCode);
+            throw Exception("No prayer request.");
+          }
+        })
+        .timeout(Duration(seconds: 5))
+        .catchError((error) => throw error);
+    return _prayerRequest;
   }
 }

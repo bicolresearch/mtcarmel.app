@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
+import 'package:mt_carmel_app/src/constants/api_constants.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
@@ -298,7 +299,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
     Map<String, String> casted = fieldsValue.cast();
     final url =
         "https://api.mountcarmel.ph/mass_request/update/id/${massRequest.id}";
-    final headers = {"Content-type": "application/x-www-form-urlencoded"};
+    final headers = APIConstants.HEADERS;
     debugPrint("$casted");
     debugPrint(url);
     //TODO implement when ready

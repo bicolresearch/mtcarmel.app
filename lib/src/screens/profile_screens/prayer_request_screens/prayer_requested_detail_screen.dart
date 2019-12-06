@@ -7,19 +7,16 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
 import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 
 class PrayerRequestedDetailScreen extends StatelessWidget {
-
-  final PrayerRequest prayerRequest;
-
-  const PrayerRequestedDetailScreen({Key key, @required this.prayerRequest})
-      : assert(prayerRequest != null),
-        super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final PrayerRequest prayerRequest =
+        BlocProvider.of<PrayerRequestBloc>(context).prayerRequest;
     DateTime datePosted =
         DateTime.parse("${prayerRequest.dtCreated ?? "01-01-2019"}");
     return Scaffold(
@@ -73,8 +70,26 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
                           textAlign: TextAlign.start,
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          "Status: ${prayerRequest.statusName}",
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .subtitle
+                              .copyWith(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
                       Text(
-                        prayerRequest.prayer??"",
+                        "Content:",
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .subtitle
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        prayerRequest.prayer ?? "",
                         style: Theme.of(context).primaryTextTheme.title,
                       ),
                     ],
@@ -82,7 +97,6 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            leftArrowBackButton(context: context),
           ],
         ),
       ),

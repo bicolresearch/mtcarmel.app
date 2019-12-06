@@ -162,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fieldsValue["password"] = encrypted;
                     fieldsValue.putIfAbsent("branch_id", () => "$branchId");
                     fieldsValue.putIfAbsent("role_id", () => "2");
-                    fieldsValue.putIfAbsent("user_id", () => "2");
+                    fieldsValue.putIfAbsent("user_id", () => "01");
                     fieldsValue.putIfAbsent("media_id", () => "14");
                     print(encrypted);
                     print(fieldsValue);

@@ -52,7 +52,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => AddressRepository());
   locator.registerLazySingleton(() => ModuleListService());
 //  locator.registerLazySingleton(() => MassRequestService());
-//  locator.registerLazySingleton(() => PrayerRequestService());
+  locator.registerLazySingleton(() => PrayerRequestService());
   locator.registerLazySingleton(() => SelectionService());
   locator.registerLazySingleton(() => CrudService());
   locator.registerLazySingleton(() => ChurchRegularScheduleService());

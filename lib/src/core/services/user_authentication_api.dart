@@ -6,6 +6,7 @@
 *	 Changes			:   Modified the base url. and added branch_id to the url.
 * */
 
+import 'package:mt_carmel_app/src/constants/api_constants.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
@@ -39,7 +40,7 @@ class UserAuthenticationApi {
     var valid;
     final branchId = locator<BranchService>().branch.id;
     print("branchId = $branchId");
-    final headers = {"Content-type": "application/x-www-form-urlencoded"};
+    final headers = APIConstants.HEADERS;
     final url = AppConstants.API_BASE_URL +
         "auth/login/" +
         "username/" +

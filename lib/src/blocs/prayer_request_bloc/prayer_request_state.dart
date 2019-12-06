@@ -14,41 +14,36 @@ abstract class PrayerRequestState extends Equatable {
 }
 
 class PrayerRequestUninitialized extends PrayerRequestState {
-
   @override
   String toString() => 'PrayerRequestUninitialized';
 }
 
 class PrayerRequestLoading extends PrayerRequestState {
-
   @override
   String toString() => 'PrayerRequestLoading';
 }
 
 class PrayerRequestLoaded extends PrayerRequestState {
-
   @override
   String toString() => 'PrayerRequestLoaded';
 }
 
 class PrayerRequestError extends PrayerRequestState {
-
   final exception;
+  final id;
 
-  PrayerRequestError(this.exception) : super([exception]);
+  PrayerRequestError(this.exception, this.id) : super([exception, id]);
 
   @override
   String toString() => 'PrayerRequestError';
 }
 
 class NoPrayerRequestLoaded extends PrayerRequestState {
-
   @override
   String toString() => 'No PrayerRequest Loaded';
 }
 
 class PrayerRequestNoConnection extends PrayerRequestState {
-
   @override
   String toString() => 'No Connection';
 }

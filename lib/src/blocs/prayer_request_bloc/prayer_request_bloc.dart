@@ -17,22 +17,21 @@ class PrayerRequestBloc extends Bloc<PrayerRequestEvent, PrayerRequestState> {
   @override
   PrayerRequestState get initialState => PrayerRequestUninitialized();
 
-  DataActionPrayerRequest _dataActionPrayerRequest;
+  PrayerRequest _prayerRequest;
 
-  DataActionPrayerRequest get dataActionPrayerRequest =>
-      _dataActionPrayerRequest;
+  PrayerRequest get prayerRequest => _prayerRequest;
 
   @override
   Stream<PrayerRequestState> mapEventToState(PrayerRequestEvent event) async* {
     if (event is FetchPrayerRequest) {
       yield PrayerRequestLoading();
       try {
-        _dataActionPrayerRequest =
-            await locator<PrayerRequestService>().getPrayerRequests();
+        _prayerRequest = await locator<PrayerRequestService>()
+            .getPrayerRequestById(event.id);
         yield PrayerRequestLoaded();
       } catch (e) {
         print(e);
-        yield PrayerRequestError(Exception("$e"));
+        yield PrayerRequestError(Exception("$e"), event.id);
       }
     }
   }

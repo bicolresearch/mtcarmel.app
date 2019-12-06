@@ -12,19 +12,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_event.dart';
 import 'package:mt_carmel_app/src/constants/action_constants.dart';
+import 'package:mt_carmel_app/src/constants/api_constants.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/constants/status_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
-import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/models/module_model.dart';
-import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_requested_detail_screen.dart';
-import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
 import 'package:provider/provider.dart';
 
 enum _SwipedEnum { LeftSwiped, RightSwiped, NotSwiped }
@@ -150,6 +149,21 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
           ),
           onTap: () {
             // TODO implement navigation to detail screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MultiProvider(
+                  providers: [
+                    BlocProvider(
+                      builder: (context) => PrayerRequestBloc()
+                        ..dispatch(FetchPrayerRequest(_moduleModels[index].id)),
+                    ),
+                    Provider<String>.value(value: _moduleModels[index].id)
+                  ],
+                  child: PrayerRequestPage(),
+                ),
+              ),
+            );
           },
         ),
         direction: (_rightSwipeActionText == "")
@@ -216,6 +230,17 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
         ),
         onTap: () {
           // TODO implement navigation to detail screen
+//          MultiProvider(
+//            providers: [
+//              BlocProvider(
+//                builder: (context) => PrayerRequestBloc()
+//                  ..dispatch(
+//                      FetchPrayerRequest(_moduleModelReference.moduleByIdDir)),
+//              ),
+//              Provider<String>.value(value: _moduleModels[index].id)
+//            ],
+//            child: PrayerRequestPage(),
+//          );
         },
       );
     }
@@ -316,7 +341,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
     final url =
         "${AppConstants.API_BASE_URL}${_moduleModelReference.moduleGetAllDir}/update/id/${moduleModel.id}/role_id/$roleId";
 
-    final headers = {"Content-type": "application/x-www-form-urlencoded"};
+    final headers = APIConstants.HEADERS;
     debugPrint("$casted");
     debugPrint(url);
     locator<CrudService>().put(url, body: casted, headers: headers).then(

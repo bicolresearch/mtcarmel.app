@@ -11,13 +11,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_event.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_state.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_requested_detail_screen.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
+import 'package:provider/provider.dart';
 
 class PrayerRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final id = Provider.of<String>(context);
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -27,7 +30,7 @@ class PrayerRequestPage extends StatelessWidget {
                   state is PrayerRequestUninitialized)
                 return Scaffold(body: LoadingIndicator());
               if (state is PrayerRequestLoaded) {
-                return PrayerRequestScreen();
+                return PrayerRequestedDetailScreen();
               }
               if (state is PrayerRequestError) {
                 return _errorDisplay(context);
@@ -73,7 +76,7 @@ class PrayerRequestPage extends StatelessWidget {
                   ),
                   onPressed: () {
                     BlocProvider.of<PrayerRequestBloc>(context)
-                        .dispatch(FetchPrayerRequest());
+                        .dispatch(FetchPrayerRequest(""));
                   },
                 ),
               ],
