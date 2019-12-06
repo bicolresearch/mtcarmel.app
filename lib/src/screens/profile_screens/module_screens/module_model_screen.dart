@@ -70,13 +70,15 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
             height: 20.0,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
             child: Text(
               "$_serviceName",
               style: Theme.of(context)
                   .primaryTextTheme
                   .headline
                   .copyWith(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
           ),
           Expanded(

@@ -18,11 +18,10 @@ class ModuleDirectories {
   static const COMMUNION_OF_THE_SICK_DIR = "communion_of_the_sick/communion";
   static const EVENT_FMHH_VENUE_DIR = "events_fmhh_venue/fmhh_venue";
   static const CONFIRMATION_DIR = "certifications/certification";
-  // TODO
-  // MARRIAGE_DIR
-  // FUNERAL_SERVICE_DIR
-  // FUNERAL_CHANEL_DIR
-  // CRYPT_LOBBY_DIR
-  // NOVEMBER_MASS
 
+  static const MARRIAGE_DIR = "marriages/marriage";
+  static const FUNERAL_SERVICE_DIR = "funeral_services/funeral_service";
+  static const FUNERAL_CHAPEL_DIR = "funeral_chapels/funeral_chapel";
+  static const CRYPT_LOBBY = "crypt_lobbies/crypt_lobby";
+  static const NOVEMBER_MASS = "november_masses/november_mass";
 }

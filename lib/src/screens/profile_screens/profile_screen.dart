@@ -289,55 +289,80 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    MARRIAGE,
       case ProfileFeatureConstants.MARRIAGE_APPROVAL:
       case ProfileFeatureConstants.MARRIAGE_REQUEST:
-        // TODO Implement code
-        return Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        final ModuleModelReference moduleModelReference = ModuleModelReference(
+            itemText,
+            ModuleDirectories.MARRIAGE_DIR.split("/")[0],
+            ModuleDirectories.MARRIAGE_DIR);
+        return MultiProvider(providers: [
+          BlocProvider<ModuleModelBloc>(
+            builder: (context) => ModuleModelBloc()
+              ..dispatch(
+                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
           ),
-          body: Center(child: Text("Not yet implemented")),
-        );
+          Provider<ModuleModelReference>.value(value: moduleModelReference),
+        ], child: ModuleModelPage());
 //    FUNERAL_SERVICE,
       case ProfileFeatureConstants.FUNERAL_SERVICE_REQUEST:
       case ProfileFeatureConstants.FUNERAL_SERVICE_APPROVAL:
-        // TODO Implement code
-        return Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        final ModuleModelReference moduleModelReference = ModuleModelReference(
+            itemText,
+            ModuleDirectories.FUNERAL_SERVICE_DIR.split("/")[0],
+            ModuleDirectories.FUNERAL_SERVICE_DIR);
+        return MultiProvider(providers: [
+          BlocProvider<ModuleModelBloc>(
+            builder: (context) => ModuleModelBloc()
+              ..dispatch(
+                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
           ),
-          body: Center(child: Text("Not yet implemented")),
-        );
+          Provider<ModuleModelReference>.value(value: moduleModelReference),
+        ], child: ModuleModelPage());
 
 //    FUNERAL_CHAPEL,
       case ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST:
       case ProfileFeatureConstants.FUNERAL_CHAPEL_APPROVAL:
-        // TODO Implement code
-        return Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        final ModuleModelReference moduleModelReference = ModuleModelReference(
+            itemText,
+            ModuleDirectories.FUNERAL_CHAPEL_DIR.split("/")[0],
+            ModuleDirectories.FUNERAL_CHAPEL_DIR);
+        return MultiProvider(providers: [
+          BlocProvider<ModuleModelBloc>(
+            builder: (context) => ModuleModelBloc()
+              ..dispatch(
+                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
           ),
-          body: Center(child: Text("Not yet implemented")),
-        );
+          Provider<ModuleModelReference>.value(value: moduleModelReference),
+        ], child: ModuleModelPage());
 
 //    CRYPT_LOBBY,
       case ProfileFeatureConstants.CRYPT_LOBBY_REQUEST:
       case ProfileFeatureConstants.CRYPT_LOBBY_APPROVAL:
-        // TODO Implement code
-        return Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        final ModuleModelReference moduleModelReference = ModuleModelReference(
+            itemText,
+            ModuleDirectories.CRYPT_LOBBY.split("/")[0],
+            ModuleDirectories.CRYPT_LOBBY);
+        return MultiProvider(providers: [
+          BlocProvider<ModuleModelBloc>(
+            builder: (context) => ModuleModelBloc()
+              ..dispatch(
+                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
           ),
-          body: Center(child: Text("Not yet implemented")),
-        );
+          Provider<ModuleModelReference>.value(value: moduleModelReference),
+        ], child: ModuleModelPage());
 //    NOVEMBER_MASS_FOR_THE_DEAD,
       case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_REQUEST:
       case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL:
-        // TODO Implement code
-        return Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        final ModuleModelReference moduleModelReference = ModuleModelReference(
+            itemText,
+            ModuleDirectories.NOVEMBER_MASS.split("/")[0],
+            ModuleDirectories.NOVEMBER_MASS);
+        return MultiProvider(providers: [
+          BlocProvider<ModuleModelBloc>(
+            builder: (context) => ModuleModelBloc()
+              ..dispatch(
+                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
           ),
-          body: Center(child: Text("Not yet implemented")),
-        );
+          Provider<ModuleModelReference>.value(value: moduleModelReference),
+        ], child: ModuleModelPage());
 
       case ProfileFeatureConstants.FIRST_COMMUNION_REQUEST:
       case ProfileFeatureConstants.FIRST_COMMUNION_APPROVAL:
