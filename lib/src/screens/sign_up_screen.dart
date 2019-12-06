@@ -7,6 +7,7 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/password_crypto.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'dart:convert';
 
 class SignUpScreen extends StatefulWidget {
   static final GlobalKey<FormBuilderState> _fbKey =
@@ -177,12 +178,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (response == null) return;
                     print(response.body);
                     if(response.body.contains("\"status\":false")){
+                      Map<String, dynamic> body = json.decode(response.body);
                       _scaffoldKey.currentState.removeCurrentSnackBar();
 
                       _scaffoldKey.currentState.showSnackBar(
                         SnackBar(
                           content: Text(
-                            'Sign-up configuration failure',
+                            'Sign-up failure. ${body["message"]}',
                             textAlign: TextAlign.center,
                           ),
                           duration: Duration(seconds: 3),
