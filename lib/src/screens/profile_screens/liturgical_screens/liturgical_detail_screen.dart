@@ -114,7 +114,7 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Officiating priest: ${liturgical.occasionName}",
+                      "Officiating priest: ${liturgical.officiatingPriestName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title

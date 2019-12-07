@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_bloc.dart';
 import 'package:mt_carmel_app/src/models/individual_baptism.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class IndividualBaptismScreen extends StatefulWidget {
@@ -43,7 +44,20 @@ class _IndividualBaptismScreenState extends State<IndividualBaptismScreen> {
                     key: Key(_individualBaptismList[index].id),
                     child: InkWell(
                       onTap: () {
-                        // TODO implement navigation to the detail screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MultiProvider(
+                              providers: [
+                                Provider.value(
+                                  value: _individualBaptismList[index],
+                                ),
+                                Provider<String>.value(value: serviceName),
+                              ],
+                              child: IndividualBaptismDetailScreen(),
+                            ),
+                          ),
+                        );
                       },
                       // TODO  change the method name
                       child: _individualBaptismItem(
