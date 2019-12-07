@@ -15,7 +15,8 @@ class _IndividualBaptismScreenState extends State<IndividualBaptismScreen> {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<IndividualBaptismBloc>(context);
     final serviceName = Provider.of<String>(context);
-    List<IndividualBaptism> _individualBaptismList = bloc.individualBaptismList;
+    List<IndividualBaptism> _individualBaptismList =
+        bloc.moduleAndDataActions.modules;
 
     return Scaffold(
       body: Column(
@@ -121,14 +122,7 @@ class _IndividualBaptismScreenState extends State<IndividualBaptismScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Status request: ${item.statusName}",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Requested by:${item.createdBy}",
+                "Submitted by:${item.createdBy}",
                 style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle
@@ -139,6 +133,13 @@ class _IndividualBaptismScreenState extends State<IndividualBaptismScreen> {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).primaryTextTheme.title,
                 maxLines: 1,
+              ),
+              Text(
+                "Status: ${item.statusName}",
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subtitle
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),

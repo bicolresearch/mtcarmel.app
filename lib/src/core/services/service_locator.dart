@@ -70,6 +70,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => DioService());
   locator.registerLazySingleton(() => ProfileFeatureService());
   locator.registerLazySingleton(() => LiturgicalService());
-//  locator.registerLazySingleton(() => IndividualBaptismService());
+  locator.registerLazySingleton(() => IndividualBaptismService());
   locator.registerLazySingleton(() => ModuleModelService());
 }

@@ -11,6 +11,7 @@ import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_bapti
 import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_state.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/individual_baptism_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
 import 'package:mt_carmel_app/src/models/individual_baptism.dart';
 
 class IndividualBaptismBloc
@@ -18,9 +19,9 @@ class IndividualBaptismBloc
   @override
   IndividualBaptismState get initialState => IndividualBaptismUninitialized();
 
-  List<IndividualBaptism> _individualBaptismList = [];
+  ModuleAndDataActions _moduleAndDataActions;
 
-  List<IndividualBaptism> get individualBaptismList => _individualBaptismList;
+  ModuleAndDataActions get moduleAndDataActions => _moduleAndDataActions;
 
   @override
   Stream<IndividualBaptismState> mapEventToState(
@@ -28,9 +29,9 @@ class IndividualBaptismBloc
     if (event is FetchIndividualBaptism) {
       yield IndividualBaptismLoading();
       try {
-        _individualBaptismList = await locator<IndividualBaptismService>()
-            .getIndividualBaptismList();
-        if (_individualBaptismList.length == 0) {
+        _moduleAndDataActions =
+            await locator<IndividualBaptismService>().getModuleAndDataActions();
+        if (_moduleAndDataActions.modules.length == 0) {
           yield NoIndividualBaptismLoaded();
           return;
         }

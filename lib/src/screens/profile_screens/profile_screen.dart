@@ -15,6 +15,8 @@ import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regu
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
+import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_event.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
@@ -46,6 +48,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_pa
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/liturgical_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
@@ -280,18 +283,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //        INDIVIDUAL_BAPTISM,
       case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_REQUEST:
       case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.INDIVIDUAL_BAPTISM_DIR.split("/")[0],
-            ModuleDirectories.INDIVIDUAL_BAPTISM_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+//        final ModuleModelReference moduleModelReference = ModuleModelReference(
+//            itemText,
+//            ModuleDirectories.INDIVIDUAL_BAPTISM_DIR.split("/")[0],
+//            ModuleDirectories.INDIVIDUAL_BAPTISM_DIR);
+//        return MultiProvider(providers: [
+//          BlocProvider<ModuleModelBloc>(
+//            builder: (context) => ModuleModelBloc()
+//              ..dispatch(
+//                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
+//          ),
+//          Provider<ModuleModelReference>.value(value: moduleModelReference),
+//        ], child: ModuleModelPage());
+        return MultiProvider(
+          providers: [
+            BlocProvider<IndividualBaptismBloc>(
+              builder: (context) =>
+                  IndividualBaptismBloc()..dispatch(FetchIndividualBaptism()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: IndividualBaptismPage(),
+        );
 
 //    COMMUNITY_BAPTISM,
       case ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST:

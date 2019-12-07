@@ -99,6 +99,10 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
+            leftArrowBackButton(context: context),
+            SizedBox(
+              height: 30.0,
+            )
           ],
         ),
       ),
