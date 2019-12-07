@@ -91,11 +91,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (isLoggedIn) _features.add(ProfileFeatureConstants.LOGOUT);
     }
 
-    // TODO remove
-    if (!_features.contains(ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST)) {
-      if (isLoggedIn) _features.add(ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST);
-    }
-
     return SafeArea(
       child: Scaffold(
         body: Center(

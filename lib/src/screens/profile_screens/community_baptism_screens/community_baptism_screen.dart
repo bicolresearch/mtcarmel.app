@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_bloc.dart';
 import 'package:mt_carmel_app/src/models/community_baptism.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/communit_baptism_detail_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class CommunityBaptismScreen extends StatefulWidget {
