@@ -12,15 +12,52 @@ part 'liturgical.g.dart';
 
 @JsonSerializable()
 class Liturgical {
-  Liturgical(this.id, this.name, this.statusId, this.statusName, this.dtUpdated,
-      this.createdBy, this.updatedBy);
+  Liturgical(
+      this.id,
+      this.dtService,
+      this.timeService,
+      this.addressVenue,
+      this.occasionId,
+      this.occasionName,
+      this.nameContactPerson,
+      this.landlineContactPerson,
+      this.mobileContactPerson,
+      this.officiatingPriestId,
+      this.officiatingPriestName,
+      this.statusId,
+      this.statusName,
+      this.dtCreated,
+      this.dtUpdated,
+      this.createdBy,
+      this.updatedBy);
 
   final id;
-  final name;
+  @JsonKey(name: "dt_service")
+  final dtService;
+  @JsonKey(name: "time_service")
+  final timeService;
+  @JsonKey(name: "address_venue")
+  final addressVenue;
+  @JsonKey(name: "occasion_id")
+  final occasionId;
+  @JsonKey(name: "occasion_name")
+  final occasionName;
+  @JsonKey(name: "name_contact_person")
+  final nameContactPerson;
+  @JsonKey(name: "landline_contact_person")
+  final landlineContactPerson;
+  @JsonKey(name: "mobile_contact_person")
+  final mobileContactPerson;
+  @JsonKey(name: "officiating_priest_id")
+  final officiatingPriestId;
+  @JsonKey(name: "officiating_priest_name")
+  final officiatingPriestName;
   @JsonKey(name: "status_id")
   final statusId;
   @JsonKey(name: "status_name")
   final statusName;
+  @JsonKey(name: "dt_created")
+  final dtCreated;
   @JsonKey(name: "dt_updated")
   final dtUpdated;
   @JsonKey(name: "created_by")
@@ -50,11 +87,11 @@ class DataActionLiturgical {
 @JsonSerializable()
 class DataLiturgical {
   DataLiturgical(
-      this.draw,
-      this.recordsTotal,
-      this.recordsFiltered,
-      this.data,
-      );
+    this.draw,
+    this.recordsTotal,
+    this.recordsFiltered,
+    this.data,
+  );
 
   final int draw;
   final int recordsTotal;
@@ -66,4 +103,3 @@ class DataLiturgical {
 
   Map<String, dynamic> toJson() => _$DataLiturgicalToJson(this);
 }
-
