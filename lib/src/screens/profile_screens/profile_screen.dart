@@ -13,6 +13,8 @@ import 'package:mt_carmel_app/src/blocs/about_bloc/about_event.dart';
 
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
+import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
 import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_bloc.dart';
@@ -46,6 +48,7 @@ import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_page.dart';
@@ -87,6 +90,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (!_features.contains(ProfileFeatureConstants.LOGOUT)) {
       if (isLoggedIn) _features.add(ProfileFeatureConstants.LOGOUT);
     }
+
+    // TODO remove
+    if (!_features.contains(ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST)) {
+      if (isLoggedIn) _features.add(ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST);
+    }
+
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -194,18 +203,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     switch (itemText) {
       case ProfileFeatureConstants.PRAYER_REQUEST_APPROVAL:
       case ProfileFeatureConstants.PRAYER_REQUEST:
-//        final ModuleModelReference moduleModelReference = ModuleModelReference(
-//            itemText,
-//            ModuleDirectories.PRAYER_REQUEST_DIR.split("/")[0],
-//            ModuleDirectories.PRAYER_REQUEST_DIR);
-//        return MultiProvider(providers: [
-//          BlocProvider<ModuleModelBloc>(
-//            builder: (context) => ModuleModelBloc()
-//              ..dispatch(
-//                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-//          ),
-//          Provider<ModuleModelReference>.value(value: moduleModelReference),
-//        ], child: ModuleModelPage());
         return MultiProvider(
           providers: [
             BlocProvider<PrayerRequestBloc>(
@@ -218,18 +215,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       case ProfileFeatureConstants.MASS_REQUESTS_APPROVAL:
       case ProfileFeatureConstants.MASS_REQUEST:
-//        final ModuleModelReference moduleModelReference = ModuleModelReference(
-//            itemText,
-//            ModuleDirectories.MASS_REQUEST_DIR.split("/")[0],
-//            ModuleDirectories.MASS_REQUEST_DIR);
-//        return MultiProvider(providers: [
-//          BlocProvider<ModuleModelBloc>(
-//            builder: (context) => ModuleModelBloc()
-//              ..dispatch(
-//                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-//          ),
-//          Provider<ModuleModelReference>.value(value: moduleModelReference),
-//        ], child: ModuleModelPage());
         return MultiProvider(
           providers: [
             BlocProvider<MassRequestBloc>(
@@ -242,18 +227,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       case ProfileFeatureConstants.LITURGICAL_SERVICE:
       case ProfileFeatureConstants.LITURGICAL_SERVICE_APPROVAL:
-//        final ModuleModelReference moduleModelReference = ModuleModelReference(
-//            itemText,
-//            ModuleDirectories.LITURGICAL_DIR.split("/")[0],
-//            ModuleDirectories.LITURGICAL_DIR);
-//        return MultiProvider(providers: [
-//          BlocProvider<ModuleModelBloc>(
-//            builder: (context) => ModuleModelBloc()
-//              ..dispatch(
-//                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-//          ),
-//          Provider<ModuleModelReference>.value(value: moduleModelReference),
-//        ], child: ModuleModelPage());
 
         return MultiProvider(
           providers: [
@@ -283,18 +256,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //        INDIVIDUAL_BAPTISM,
       case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_REQUEST:
       case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_APPROVAL:
-//        final ModuleModelReference moduleModelReference = ModuleModelReference(
-//            itemText,
-//            ModuleDirectories.INDIVIDUAL_BAPTISM_DIR.split("/")[0],
-//            ModuleDirectories.INDIVIDUAL_BAPTISM_DIR);
-//        return MultiProvider(providers: [
-//          BlocProvider<ModuleModelBloc>(
-//            builder: (context) => ModuleModelBloc()
-//              ..dispatch(
-//                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-//          ),
-//          Provider<ModuleModelReference>.value(value: moduleModelReference),
-//        ], child: ModuleModelPage());
         return MultiProvider(
           providers: [
             BlocProvider<IndividualBaptismBloc>(
@@ -309,19 +270,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    COMMUNITY_BAPTISM,
       case ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST:
       case ProfileFeatureConstants.COMMUNITY_BAPTISM_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.COMMUNITY_BAPTISM_DIR.split("/")[0],
-            ModuleDirectories.COMMUNITY_BAPTISM_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
-
+        return MultiProvider(
+          providers: [
+            BlocProvider<CommunityBaptismBloc>(
+              builder: (context) =>
+                  CommunityBaptismBloc()..dispatch(FetchCommunityBaptism()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: CommunityBaptismPage(),
+        );
 //    ADULT_BAPTISM,
       case ProfileFeatureConstants.ADULT_BAPTISM_REQUEST:
       case ProfileFeatureConstants.ADULT_BAPTISM_APPROVAL:
