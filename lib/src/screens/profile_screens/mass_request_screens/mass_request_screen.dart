@@ -20,7 +20,6 @@ import 'package:mt_carmel_app/src/core/services/crud_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
 import 'package:mt_carmel_app/src/models/mass_request.dart';
-import 'package:mt_carmel_app/src/models/module_model.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_requested_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -226,18 +225,20 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
           ),
         ),
         onTap: () {
-          // TODO implement navigation to detail screen
-//          MultiProvider(
-//            providers: [
-//              BlocProvider(
-//                builder: (context) => PrayerRequestBloc()
-//                  ..dispatch(
-//                      FetchPrayerRequest(_moduleModelReference.moduleByIdDir)),
-//              ),
-//              Provider<String>.value(value: _moduleModels[index].id)
-//            ],
-//            child: PrayerRequestPage(),
-//          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MultiProvider(
+                providers: [
+                  Provider.value(
+                    value: massRequest,
+                  ),
+                  Provider<String>.value(value: _serviceName),
+                ],
+                child: MassRequestedDetailScreen(),
+              ),
+            ),
+          );
         },
       );
     }

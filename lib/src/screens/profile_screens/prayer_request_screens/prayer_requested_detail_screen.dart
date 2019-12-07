@@ -9,14 +9,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
+import 'package:mt_carmel_app/src/models/mass_request.dart';
 import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
+import 'package:provider/provider.dart';
 
 class PrayerRequestedDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final PrayerRequest prayerRequest =
-        BlocProvider.of<PrayerRequestBloc>(context).prayerRequest;
+    final prayerRequest = Provider.of<PrayerRequest>(context);
+    final serviceName = Provider.of<String>(context);
     DateTime datePosted =
         DateTime.parse("${prayerRequest.dtCreated ?? "01-01-2019"}");
     return Scaffold(
@@ -32,7 +34,7 @@ class PrayerRequestedDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Text(
-                "Prayer Request",
+                "$serviceName",
                 style: Theme.of(context)
                     .primaryTextTheme
                     .headline

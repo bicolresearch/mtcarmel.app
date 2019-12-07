@@ -30,9 +30,8 @@ class PrayerRequestLoaded extends PrayerRequestState {
 
 class PrayerRequestError extends PrayerRequestState {
   final exception;
-  final id;
 
-  PrayerRequestError(this.exception, this.id) : super([exception, id]);
+  PrayerRequestError(this.exception) : super([exception]);
 
   @override
   String toString() => 'PrayerRequestError';

@@ -1,44 +1,41 @@
 /*
-*   Filename    :   module_model_screen.dart
+*   Filename    :   mass_request_screen.dart
 *   Purpose     :
-*   Created     :   04/12/2019 3:24 PM by Detective Conan
-*   Updated     :   04/12/2019 3:24 PM by Detective Conan
+*   Created     :   06/12/2019 4:07 PM by Detective Conan
+*   Updated     :   06/12/2019 4:07 PM by Detective Conan
 *   Changes     :   
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_event.dart';
-import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_event.dart';
 import 'package:mt_carmel_app/src/constants/action_constants.dart';
 import 'package:mt_carmel_app/src/constants/api_constants.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/constants/profile_constants.dart';
+import 'package:mt_carmel_app/src/constants/module_directories.dart';
 import 'package:mt_carmel_app/src/constants/status_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
-import 'package:mt_carmel_app/src/models/module_model.dart';
+import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
+import 'package:mt_carmel_app/src/models/mass_request.dart';
+import 'package:mt_carmel_app/src/models/prayer_request.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_requested_detail_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_requested_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 enum _SwipedEnum { LeftSwiped, RightSwiped, NotSwiped }
 
-class ModuleModelScreen extends StatefulWidget {
+class PrayerRequestScreen extends StatefulWidget {
   @override
-  _ModuleModelScreenState createState() => _ModuleModelScreenState();
+  _PrayerRequestScreenState createState() => _PrayerRequestScreenState();
 }
 
-class _ModuleModelScreenState extends State<ModuleModelScreen> {
-  List<ModuleModel> _moduleModels = [];
+class _PrayerRequestScreenState extends State<PrayerRequestScreen> {
+  List<PrayerRequest> _moduleModels = [];
   bool _isDeleteEnable = false;
   bool _isApprovalEnable = false;
   bool _isReviewEnable = false;
@@ -48,7 +45,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
   String _leftSwipeActionText = "";
   String _rightSwipeActionText = "";
   _SwipedEnum _swipedEnum = _SwipedEnum.NotSwiped;
-  ModuleModelReference _moduleModelReference;
+  ModuleAndDataActions _moduleAndDataActions;
 
   String _serviceName;
 
@@ -63,9 +60,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _moduleModelReference = Provider.of<ModuleModelReference>(context);
-    _serviceName = _moduleModelReference.serviceName;
-
+    _serviceName = Provider.of<String>(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Column(
@@ -103,16 +98,16 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
               ),
             ),
           ),
-//          leftArrowBackButton(context: context),
         ],
       ),
     );
   }
 
   Widget _moduleModelItem(BuildContext context, int index) {
-    if (_moduleModels[index].statusName == "On-going") {
+    final PrayerRequest prayerRequest = _moduleAndDataActions.modules[index];
+    if (prayerRequest.statusName == "On-going") {
       return Dismissible(
-        key: Key(_moduleModels[index].id),
+        key: Key(prayerRequest.id),
         child: InkWell(
           child: Container(
             width: double.infinity,
@@ -130,7 +125,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      _moduleModels[index].prayer ?? "",
+                      prayerRequest.prayer ?? "",
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).primaryTextTheme.title,
                       maxLines: 1,
@@ -140,7 +135,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
                       child: Row(
                         children: <Widget>[
                           Text(
-                            _moduleModels[index].statusName ?? "",
+                            prayerRequest.statusName ?? "",
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).primaryTextTheme.caption,
                             maxLines: 1,
@@ -154,7 +149,20 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
             ),
           ),
           onTap: () {
-            _navigateToDetailScreen(context, index);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MultiProvider(
+                  providers: [
+                    Provider.value(
+                      value: prayerRequest,
+                    ),
+                    Provider<String>.value(value: _serviceName),
+                  ],
+                  child: PrayerRequestedDetailScreen(),
+                ),
+              ),
+            );
           },
         ),
         direction: (_rightSwipeActionText == "")
@@ -196,7 +204,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    _moduleModels[index].prayer ?? "",
+                    prayerRequest.prayer ?? "",
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).primaryTextTheme.title,
                     maxLines: 1,
@@ -220,18 +228,20 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
           ),
         ),
         onTap: () {
-          // TODO implement navigation to detail screen
-//          MultiProvider(
-//            providers: [
-//              BlocProvider(
-//                builder: (context) => PrayerRequestBloc()
-//                  ..dispatch(
-//                      FetchPrayerRequest(_moduleModelReference.moduleByIdDir)),
-//              ),
-//              Provider<String>.value(value: _moduleModels[index].id)
-//            ],
-//            child: PrayerRequestPage(),
-//          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MultiProvider(
+                providers: [
+                  Provider.value(
+                    value: prayerRequest,
+                  ),
+                  Provider<String>.value(value: _serviceName),
+                ],
+                child: PrayerRequestedDetailScreen(),
+              ),
+            ),
+          );
         },
       );
     }
@@ -304,7 +314,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
     );
   }
 
-  _updateRequest(ModuleModel moduleModel, remarks) async {
+  _updateRequest(PrayerRequest prayerRequest, remarks) async {
     final userId =
         await locator<AuthenticationService>().getUserId().catchError((e) {
       debugPrint("Retrieving user id error. $e");
@@ -317,20 +327,17 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
     }
 
     final roleId = await locator<AuthenticationService>().getRoleId();
-//    final branchId = await locator<BranchService>().branch.id;
 
     var success = false;
     Map<String, String> fieldsValue = {
-//      "id": "${moduleModel.id}",
       "remarks": remarks,
       "status_id": "${_getNewStatusId()}",
     };
 
-//    id, status_id, remarks, user_id
     fieldsValue.putIfAbsent("user_id", () => userId);
     Map<String, String> casted = fieldsValue.cast();
     final url =
-        "${AppConstants.API_BASE_URL}${_moduleModelReference.moduleGetAllDir}/update/id/${moduleModel.id}/role_id/$roleId";
+        "${AppConstants.API_BASE_URL}${ModuleDirectories.MASS_REQUEST_DIR.split("/")[0]}/update/id/${prayerRequest.id}/role_id/$roleId";
 
     final headers = APIConstants.HEADERS;
     debugPrint("$casted");
@@ -360,7 +367,7 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "${_moduleModels[index].prayer ?? ""}",
+                  "${_moduleAndDataActions.modules[index].prayer ?? ""}",
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   textAlign: TextAlign.start,
@@ -403,7 +410,8 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
             _fbKey.currentState.save();
             if (_fbKey.currentState.validate()) {
               try {
-                final result = await _updateRequest(_moduleModels[index],
+                final result = await _updateRequest(
+                    _moduleAndDataActions.modules[index],
                     _fbKey.currentState.value["remarks"] ?? "");
                 setState(() {
                   _moduleModels.removeAt(index);
@@ -423,9 +431,10 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
   }
 
   void _initialize() {
-    final bloc = BlocProvider.of<ModuleModelBloc>(context);
-    _moduleModels = bloc.dataActionModuleModel.data.data;
-    final actions = bloc.dataActionModuleModel.actions;
+    _moduleAndDataActions =
+        BlocProvider.of<PrayerRequestBloc>(context).moduleAndDataActions;
+    _moduleModels = _moduleAndDataActions.modules;
+    final actions = _moduleAndDataActions.dataActionModuleModel.actions;
     _isDeleteEnable = actions.keys.contains(ActionConstants.DELETE_ID);
     _isApprovalEnable = actions.keys.contains(ActionConstants.APPROVAL_ID);
     _isReviewEnable = actions.keys.contains(ActionConstants.REVIEW_ID);
@@ -508,96 +517,5 @@ class _ModuleModelScreenState extends State<ModuleModelScreen> {
         duration: Duration(seconds: 3),
       ),
     );
-  }
-
-  _navigateToDetailScreen(BuildContext context, int index) {
-    final serviceName = Provider.of<ModuleModelReference>(context).serviceName;
-    switch (serviceName) {
-      case ProfileFeatureConstants.PRAYER_REQUEST_APPROVAL:
-      case ProfileFeatureConstants.PRAYER_REQUEST:
-        return Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MultiProvider(
-              providers: [
-                BlocProvider(
-                  builder: (context) => PrayerRequestBloc()
-                    ..dispatch(FetchPrayerRequest()),
-                ),
-                Provider<String>.value(value: _moduleModels[index].id)
-              ],
-              child: PrayerRequestPage(),
-            ),
-          ),
-        );
-      case ProfileFeatureConstants.MASS_REQUESTS_APPROVAL:
-      case ProfileFeatureConstants.MASS_REQUEST:
-        return Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MultiProvider(
-              providers: [
-                BlocProvider(
-                  builder: (context) => MassRequestBloc()
-                    ..dispatch(FetchMassRequest()),
-                ),
-                Provider<String>.value(value: _moduleModels[index].id)
-              ],
-              child: MassRequestPage(),
-            ),
-          ),
-        );
-      case ProfileFeatureConstants.LITURGICAL_SERVICE:
-      case ProfileFeatureConstants.LITURGICAL_SERVICE_APPROVAL:
-      // TODO
-      case ProfileFeatureConstants.CERTIFICATE_REQUESTS:
-      case ProfileFeatureConstants.CERTIFICATE_APPROVAL:
-      // TODO
-//        INDIVIDUAL_BAPTISM,
-      case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_REQUEST:
-      case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_APPROVAL:
-      // TODO
-
-//    COMMUNITY_BAPTISM,
-      case ProfileFeatureConstants.COMMUNITY_BAPTISM_REQUEST:
-      case ProfileFeatureConstants.COMMUNITY_BAPTISM_APPROVAL:
-      // TODO
-
-//    ADULT_BAPTISM,
-      case ProfileFeatureConstants.ADULT_BAPTISM_REQUEST:
-      case ProfileFeatureConstants.ADULT_BAPTISM_APPROVAL:
-      // TODO
-
-//    MARRIAGE,
-      case ProfileFeatureConstants.MARRIAGE_APPROVAL:
-      case ProfileFeatureConstants.MARRIAGE_REQUEST:
-      // TODO
-//    FUNERAL_SERVICE,
-      case ProfileFeatureConstants.FUNERAL_SERVICE_REQUEST:
-      case ProfileFeatureConstants.FUNERAL_SERVICE_APPROVAL:
-      // TODO
-
-//    FUNERAL_CHAPEL,
-      case ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST:
-      case ProfileFeatureConstants.FUNERAL_CHAPEL_APPROVAL:
-      // TODO
-
-//    CRYPT_LOBBY,
-      case ProfileFeatureConstants.CRYPT_LOBBY_REQUEST:
-      case ProfileFeatureConstants.CRYPT_LOBBY_APPROVAL:
-      // TODO
-//    NOVEMBER_MASS_FOR_THE_DEAD,
-      case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_REQUEST:
-      case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL:
-      // TODO
-
-      case ProfileFeatureConstants.FIRST_COMMUNION_REQUEST:
-      case ProfileFeatureConstants.FIRST_COMMUNION_APPROVAL:
-      // TODO
-
-      case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST:
-      case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_APPROVAL:
-      // TODO
-    }
   }
 }

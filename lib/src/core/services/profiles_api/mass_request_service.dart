@@ -49,9 +49,6 @@ class MassRequestService {
     List<MassRequest> _massRequests = [];
     final branchId = locator<BranchService>().branch.id;
     final roleId = await locator<AuthenticationService>().getRoleId();
-    final userId = await locator<AuthenticationService>().getUserId();
-    final String urlGetAll =
-        "${AppConstants.API_BASE_URL}${ModuleDirectories.MASS_REQUEST_DIR}/?branch_id=$branchId&role_id=$roleId&user_id=$userId";
 
     DataActionModuleModel _dataActionModuleModel;
     try {

@@ -17,7 +17,6 @@ import 'package:provider/provider.dart';
 class MassRequestedDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //TODO
     final massRequest = Provider.of<MassRequest>(context);
     final serviceName = Provider.of<String>(context);
     DateTime datePosted =

@@ -14,9 +14,6 @@ abstract class PrayerRequestEvent extends Equatable {
 }
 
 class FetchPrayerRequest extends PrayerRequestEvent {
-  final id;
-
-  FetchPrayerRequest(this.id) : super([id]);
 
   @override
   String toString() => 'FetchPrayerRequest';

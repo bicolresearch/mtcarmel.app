@@ -11,27 +11,29 @@ import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_event
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_state.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/prayer_request_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
+import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
 import 'package:mt_carmel_app/src/models/prayer_request.dart';
 
 class PrayerRequestBloc extends Bloc<PrayerRequestEvent, PrayerRequestState> {
   @override
   PrayerRequestState get initialState => PrayerRequestUninitialized();
 
-  PrayerRequest _prayerRequest;
+  ModuleAndDataActions _moduleAndDataActions;
 
-  PrayerRequest get prayerRequest => _prayerRequest;
+  ModuleAndDataActions get moduleAndDataActions => _moduleAndDataActions;
+
 
   @override
   Stream<PrayerRequestState> mapEventToState(PrayerRequestEvent event) async* {
     if (event is FetchPrayerRequest) {
       yield PrayerRequestLoading();
       try {
-        _prayerRequest = await locator<PrayerRequestService>()
-            .getPrayerRequestById(event.id);
+        _moduleAndDataActions = await locator<PrayerRequestService>()
+            .getModuleAndDataActions();
         yield PrayerRequestLoaded();
       } catch (e) {
         print(e);
-        yield PrayerRequestError(Exception("$e"), event.id);
+        yield PrayerRequestError(Exception("$e"));
       }
     }
   }

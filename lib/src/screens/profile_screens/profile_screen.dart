@@ -23,6 +23,8 @@ import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_bloc.dart
 import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
+import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_event.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/priests_bloc/priests_event.dart';
 import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_bloc.dart';
@@ -47,6 +49,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/m
 import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_screens/module_model_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/priests_screens/priests_page.dart';
 
@@ -185,18 +188,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     switch (itemText) {
       case ProfileFeatureConstants.PRAYER_REQUEST_APPROVAL:
       case ProfileFeatureConstants.PRAYER_REQUEST:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.PRAYER_REQUEST_DIR.split("/")[0],
-            ModuleDirectories.PRAYER_REQUEST_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+//        final ModuleModelReference moduleModelReference = ModuleModelReference(
+//            itemText,
+//            ModuleDirectories.PRAYER_REQUEST_DIR.split("/")[0],
+//            ModuleDirectories.PRAYER_REQUEST_DIR);
+//        return MultiProvider(providers: [
+//          BlocProvider<ModuleModelBloc>(
+//            builder: (context) => ModuleModelBloc()
+//              ..dispatch(
+//                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
+//          ),
+//          Provider<ModuleModelReference>.value(value: moduleModelReference),
+//        ], child: ModuleModelPage());
+        return MultiProvider(
+          providers: [
+            BlocProvider<PrayerRequestBloc>(
+              builder: (context) =>
+                  PrayerRequestBloc()..dispatch(FetchPrayerRequest()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: PrayerRequestPage(),
+        );
       case ProfileFeatureConstants.MASS_REQUESTS_APPROVAL:
       case ProfileFeatureConstants.MASS_REQUEST:
 //        final ModuleModelReference moduleModelReference = ModuleModelReference(
