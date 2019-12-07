@@ -266,8 +266,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       case ProfileFeatureConstants.CERTIFICATE_APPROVAL:
         final ModuleModelReference moduleModelReference = ModuleModelReference(
             itemText,
-            ModuleDirectories.CERTIFICATIONS_DIR.split("/")[0],
-            ModuleDirectories.CERTIFICATIONS_DIR);
+            ModuleDirectories.CERTIFICATE_DIR.split("/")[0],
+            ModuleDirectories.CERTIFICATE_DIR);
         return MultiProvider(providers: [
           BlocProvider<ModuleModelBloc>(
             builder: (context) => ModuleModelBloc()

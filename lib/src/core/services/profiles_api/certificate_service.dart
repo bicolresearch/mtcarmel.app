@@ -1,8 +1,8 @@
 /*
-*   Filename    :   november_mass_service.dart
+*   Filename    :   certificate_service.dart
 *   Purpose     :
-*   Created     :   28/11/2019 1:58 PM by Detective Conan
-*   Updated     :   28/11/2019 1:58 PM by Detective Conan
+*   Created     :   28/11/2019 1:52 PM by Detective Conan
+*   Updated     :   28/11/2019 1:52 PM by Detective Conan
 *   Changes     :   
 */
 
@@ -13,15 +13,14 @@ import 'package:mt_carmel_app/src/core/services/branch_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/module_model_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
+import 'package:mt_carmel_app/src/models/certificate.dart';
 import 'package:mt_carmel_app/src/models/module_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:mt_carmel_app/src/models/november_mass.dart';
-
-class NovemberMassService {
+class CertificateService {
   Future<ModuleAndDataActions> getModuleAndDataActions() async {
-    List<NovemberMass> _novemberMasses = [];
+    List<Certificate> _certificates = [];
     final branchId = locator<BranchService>().branch.id;
     final roleId = await locator<AuthenticationService>().getRoleId();
 
@@ -29,14 +28,14 @@ class NovemberMassService {
     try {
       _dataActionModuleModel = await locator<ModuleModelService>()
           .getDataActionModuleModels(
-              ModuleDirectories.NOVEMBER_MASS.split("/")[0]);
+          ModuleDirectories.CERTIFICATE_DIR.split("/")[0]);
     } catch (e) {
       print(e);
     }
 
     var client = new http.Client();
     final urlByIdBase =
-        "${AppConstants.API_BASE_URL}${ModuleDirectories.NOVEMBER_MASS}/?branch_id=$branchId&role_id=$roleId&id=";
+        "${AppConstants.API_BASE_URL}${ModuleDirectories.CERTIFICATE_DIR}/?branch_id=$branchId&role_id=$roleId&id=";
 
     try {
       List<ModuleModel> moduleModels = _dataActionModuleModel.data.data;
@@ -45,14 +44,14 @@ class NovemberMassService {
         await client.get('$urlByIdBase$id').then((respond) {
           if (respond.statusCode == 200) {
             final body = json.decode(respond.body);
-            final novemberMass = NovemberMass.fromJson(body);
-            _novemberMasses.add(novemberMass);
+            final certificate = Certificate.fromJson(body);
+            _certificates.add(certificate);
           }
         });
       }
     } finally {
       client.close();
     }
-    return ModuleAndDataActions(_novemberMasses, _dataActionModuleModel);
+    return ModuleAndDataActions(_certificates, _dataActionModuleModel);
   }
 }

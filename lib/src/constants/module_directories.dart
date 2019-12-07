@@ -10,7 +10,7 @@ class ModuleDirectories {
   static const PRAYER_REQUEST_DIR = "prayer_requests/prayer_request";
   static const MASS_REQUEST_DIR = "mass_requests/mass_request";
   static const LITURGICAL_DIR = "liturgicals/liturgical";
-  static const CERTIFICATIONS_DIR = "certifications/certification";
+  static const CERTIFICATE_DIR = "certifications/certification";
   static const INDIVIDUAL_BAPTISM_DIR = "individuals/individual";
   static const ADULT_BAPTISM_DIR = "adults/adult";
   static const COMMUNITY_BAPTISM_DIR = "communities/community";
