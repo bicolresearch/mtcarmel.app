@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'certificate.dart';
+part of 'crypt_lobby.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Certificate _$CertificateFromJson(Map<String, dynamic> json) {
-  return Certificate(
+CryptLobby _$CryptLobbyFromJson(Map<String, dynamic> json) {
+  return CryptLobby(
     json['id'],
     json['name'],
-    json['certificate_id'],
-    json['certificate_name'],
-    json['purpose_certificate_id'],
-    json['purpose_certificate_name'],
     json['name_contact_person'],
     json['landline_contact_person'],
     json['mobile_contact_person'],
-    json['dt_marriage'],
+    json['dt_service'],
+    json['time_service'],
+    json['duration'],
+    json['officiating_priest_id'],
+    json['officiating_priest_name'],
     json['status_id'],
     json['status_name'],
     json['dt_created'],
@@ -27,18 +27,18 @@ Certificate _$CertificateFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CertificateToJson(Certificate instance) =>
+Map<String, dynamic> _$CryptLobbyToJson(CryptLobby instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'certificate_id': instance.certificateId,
-      'certificate_name': instance.certificateName,
-      'purpose_certificate_id': instance.purposeCertificateId,
-      'purpose_certificate_name': instance.purposeCertificateName,
       'name_contact_person': instance.nameContactPerson,
       'landline_contact_person': instance.landlineContactPerson,
       'mobile_contact_person': instance.mobileContactPerson,
-      'dt_marriage': instance.dtMarriage,
+      'dt_service': instance.dtService,
+      'time_service': instance.timeService,
+      'duration': instance.duration,
+      'officiating_priest_id': instance.officiatingPriestId,
+      'officiating_priest_name': instance.officiatingPriestName,
       'status_id': instance.statusId,
       'status_name': instance.statusName,
       'dt_created': instance.dtCreated,

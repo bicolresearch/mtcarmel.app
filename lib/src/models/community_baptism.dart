@@ -1,18 +1,18 @@
 /*
-*   Filename    :   individual_baptism.dart
+*   Filename    :   community_baptism.dart
 *   Purpose     :
-*   Created     :   04/12/2019 9:57 AM by Detective Conan
-*   Updated     :   04/12/2019 9:57 AM by Detective Conan
+*   Created     :   07/12/2019 2:04 PM by Detective Conan
+*   Updated     :   07/12/2019 2:04 PM by Detective Conan
 *   Changes     :   
 */
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'individual_baptism.g.dart';
+part 'community_baptism.g.dart';
 
 @JsonSerializable()
-class IndividualBaptism {
-  IndividualBaptism(
+class CommunityBaptism {
+  CommunityBaptism(
       this.id,
       this.name,
       this.dtBirth,
@@ -38,8 +38,6 @@ class IndividualBaptism {
       this.nameContactPerson,
       this.landlineContactPerson,
       this.mobileContactPerson,
-      this.officiatingPriestId,
-      this.officiatingPriestName,
       this.dtBaptism,
       this.timeBaptism,
       this.statusId,
@@ -94,10 +92,6 @@ class IndividualBaptism {
   final landlineContactPerson;
   @JsonKey(name: "mobile_contact_person")
   final mobileContactPerson;
-  @JsonKey(name: "officiating_priest_id")
-  final officiatingPriestId;
-  @JsonKey(name: "officiating_priest_name")
-  final officiatingPriestName;
   @JsonKey(name: "dt_baptism")
   final dtBaptism;
   @JsonKey(name: "time_baptism")
@@ -115,41 +109,8 @@ class IndividualBaptism {
   @JsonKey(name: "updated_by")
   final updatedBy;
 
-  factory IndividualBaptism.fromJson(Map<String, dynamic> json) =>
-      _$IndividualBaptismFromJson(json);
+  factory CommunityBaptism.fromJson(Map<String, dynamic> json) =>
+      _$CommunityBaptismFromJson(json);
 
-  Map<String, dynamic> toJson() => _$IndividualBaptismToJson(this);
-}
-
-@JsonSerializable()
-class DataActionIndividualBaptism {
-  DataActionIndividualBaptism(this.data, this.actions);
-
-  final DataIndividualBaptism data;
-  final Map<String, String> actions;
-
-  factory DataActionIndividualBaptism.fromJson(Map<String, dynamic> json) =>
-      _$DataActionIndividualBaptismFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DataActionIndividualBaptismToJson(this);
-}
-
-@JsonSerializable()
-class DataIndividualBaptism {
-  DataIndividualBaptism(
-    this.draw,
-    this.recordsTotal,
-    this.recordsFiltered,
-    this.data,
-  );
-
-  final int draw;
-  final int recordsTotal;
-  final int recordsFiltered;
-  final List<IndividualBaptism> data;
-
-  factory DataIndividualBaptism.fromJson(Map<String, dynamic> json) =>
-      _$DataIndividualBaptismFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DataIndividualBaptismToJson(this);
+  Map<String, dynamic> toJson() => _$CommunityBaptismToJson(this);
 }

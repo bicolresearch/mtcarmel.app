@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'individual_baptism.dart';
+part of 'community_baptism.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-IndividualBaptism _$IndividualBaptismFromJson(Map<String, dynamic> json) {
-  return IndividualBaptism(
+CommunityBaptism _$CommunityBaptismFromJson(Map<String, dynamic> json) {
+  return CommunityBaptism(
     json['id'],
     json['name'],
     json['dt_birth'],
@@ -33,8 +33,6 @@ IndividualBaptism _$IndividualBaptismFromJson(Map<String, dynamic> json) {
     json['name_contact_person'],
     json['landline_contact_person'],
     json['mobile_contact_person'],
-    json['officiating_priest_id'],
-    json['officiating_priest_name'],
     json['dt_baptism'],
     json['time_baptism'],
     json['status_id'],
@@ -46,7 +44,7 @@ IndividualBaptism _$IndividualBaptismFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$IndividualBaptismToJson(IndividualBaptism instance) =>
+Map<String, dynamic> _$CommunityBaptismToJson(CommunityBaptism instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -73,8 +71,6 @@ Map<String, dynamic> _$IndividualBaptismToJson(IndividualBaptism instance) =>
       'name_contact_person': instance.nameContactPerson,
       'landline_contact_person': instance.landlineContactPerson,
       'mobile_contact_person': instance.mobileContactPerson,
-      'officiating_priest_id': instance.officiatingPriestId,
-      'officiating_priest_name': instance.officiatingPriestName,
       'dt_baptism': instance.dtBaptism,
       'time_baptism': instance.timeBaptism,
       'status_id': instance.statusId,
@@ -83,46 +79,4 @@ Map<String, dynamic> _$IndividualBaptismToJson(IndividualBaptism instance) =>
       'dt_updated': instance.dtUpdated,
       'created_by': instance.createdBy,
       'updated_by': instance.updatedBy,
-    };
-
-DataActionIndividualBaptism _$DataActionIndividualBaptismFromJson(
-    Map<String, dynamic> json) {
-  return DataActionIndividualBaptism(
-    json['data'] == null
-        ? null
-        : DataIndividualBaptism.fromJson(json['data'] as Map<String, dynamic>),
-    (json['actions'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, e as String),
-    ),
-  );
-}
-
-Map<String, dynamic> _$DataActionIndividualBaptismToJson(
-        DataActionIndividualBaptism instance) =>
-    <String, dynamic>{
-      'data': instance.data,
-      'actions': instance.actions,
-    };
-
-DataIndividualBaptism _$DataIndividualBaptismFromJson(
-    Map<String, dynamic> json) {
-  return DataIndividualBaptism(
-    json['draw'] as int,
-    json['recordsTotal'] as int,
-    json['recordsFiltered'] as int,
-    (json['data'] as List)
-        ?.map((e) => e == null
-            ? null
-            : IndividualBaptism.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-  );
-}
-
-Map<String, dynamic> _$DataIndividualBaptismToJson(
-        DataIndividualBaptism instance) =>
-    <String, dynamic>{
-      'draw': instance.draw,
-      'recordsTotal': instance.recordsTotal,
-      'recordsFiltered': instance.recordsFiltered,
-      'data': instance.data,
     };

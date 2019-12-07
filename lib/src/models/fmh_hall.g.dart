@@ -1,23 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'certificate.dart';
+part of 'fmh_hall.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Certificate _$CertificateFromJson(Map<String, dynamic> json) {
-  return Certificate(
+FmhHall _$FmhHallFromJson(Map<String, dynamic> json) {
+  return FmhHall(
     json['id'],
     json['name'],
-    json['certificate_id'],
-    json['certificate_name'],
-    json['purpose_certificate_id'],
-    json['purpose_certificate_name'],
+    json['address_1'],
+    json['address_2'],
+    json['city'],
+    json['province'],
+    json['country'],
+    json['event_id'],
+    json['event_name'],
     json['name_contact_person'],
     json['landline_contact_person'],
     json['mobile_contact_person'],
-    json['dt_marriage'],
+    json['package_id'],
+    json['package_name'],
+    json['dt_service'],
+    json['time_service'],
+    json['duration'],
     json['status_id'],
     json['status_name'],
     json['dt_created'],
@@ -27,18 +34,24 @@ Certificate _$CertificateFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CertificateToJson(Certificate instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$FmhHallToJson(FmhHall instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'certificate_id': instance.certificateId,
-      'certificate_name': instance.certificateName,
-      'purpose_certificate_id': instance.purposeCertificateId,
-      'purpose_certificate_name': instance.purposeCertificateName,
+      'address_1': instance.address1,
+      'address_2': instance.address2,
+      'city': instance.city,
+      'province': instance.province,
+      'country': instance.country,
+      'event_id': instance.eventId,
+      'event_name': instance.eventName,
       'name_contact_person': instance.nameContactPerson,
       'landline_contact_person': instance.landlineContactPerson,
       'mobile_contact_person': instance.mobileContactPerson,
-      'dt_marriage': instance.dtMarriage,
+      'package_id': instance.packageId,
+      'package_name': instance.packageName,
+      'dt_service': instance.dtService,
+      'time_service': instance.timeService,
+      'duration': instance.duration,
       'status_id': instance.statusId,
       'status_name': instance.statusName,
       'dt_created': instance.dtCreated,

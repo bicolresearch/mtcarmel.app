@@ -1,23 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'certificate.dart';
+part of 'november_mass.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Certificate _$CertificateFromJson(Map<String, dynamic> json) {
-  return Certificate(
+NovemberMass _$NovemberMassFromJson(Map<String, dynamic> json) {
+  return NovemberMass(
     json['id'],
     json['name'],
-    json['certificate_id'],
-    json['certificate_name'],
-    json['purpose_certificate_id'],
-    json['purpose_certificate_name'],
     json['name_contact_person'],
-    json['landline_contact_person'],
-    json['mobile_contact_person'],
-    json['dt_marriage'],
+    json['address_1'],
+    json['address_2'],
+    json['city'],
+    json['province'],
+    json['country'],
     json['status_id'],
     json['status_name'],
     json['dt_created'],
@@ -27,18 +25,16 @@ Certificate _$CertificateFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CertificateToJson(Certificate instance) =>
+Map<String, dynamic> _$NovemberMassToJson(NovemberMass instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'certificate_id': instance.certificateId,
-      'certificate_name': instance.certificateName,
-      'purpose_certificate_id': instance.purposeCertificateId,
-      'purpose_certificate_name': instance.purposeCertificateName,
       'name_contact_person': instance.nameContactPerson,
-      'landline_contact_person': instance.landlineContactPerson,
-      'mobile_contact_person': instance.mobileContactPerson,
-      'dt_marriage': instance.dtMarriage,
+      'address_1': instance.address1,
+      'address_2': instance.address2,
+      'city': instance.city,
+      'province': instance.province,
+      'country': instance.country,
       'status_id': instance.statusId,
       'status_name': instance.statusName,
       'dt_created': instance.dtCreated,
