@@ -1,5 +1,5 @@
 /*
-*  Filename    :   prayer_requested_detail_screen.dart
+*  Filename    :   individual_baptism_detail_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-20 18:35 by Detective Conan
 *  Updated     :   2019-08-23 10:29 by Detective conan
@@ -188,7 +188,7 @@ class IndividualBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's name: ${individualBaptism.fatherName}",
+                      "Mother's name: ${individualBaptism.motherName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -199,7 +199,7 @@ class IndividualBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Religion of Mother: ${individualBaptism.fatherReligionName}",
+                      "Religion of Mother: ${individualBaptism.motherReligionName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -210,7 +210,7 @@ class IndividualBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's date of birth: ${individualBaptism.fatherDtBirth}",
+                      "Mother's date of birth: ${individualBaptism.motherDtBirth}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -221,40 +221,7 @@ class IndividualBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's place of birth: ${individualBaptism.fatherBirthPlace}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's name: ${individualBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${individualBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${individualBaptism.fatherDtBirth}",
+                      "Mother's place of birth: ${individualBaptism.motherBirthPlace}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -276,73 +243,7 @@ class IndividualBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Father's name: ${individualBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${individualBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${individualBaptism.fatherDtBirth}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
                       "Marriage: ${individualBaptism.marriageName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's name: ${individualBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${individualBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${individualBaptism.fatherDtBirth}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title

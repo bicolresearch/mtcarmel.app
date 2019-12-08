@@ -2,9 +2,8 @@
 *  Filename    :   confirmation_detail_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-20 18:35 by Detective Conan
-*  Updated     :   2019-08-23 10:29 by Detective conan
-*  Changes     :   converted to statelessWidget. Added massPurpose argument to
-*                  the constructor.
+*	 Updated			:   08/12/2019 5:31 PM PM by Detective Conan
+*	 Changes			:   Removed redundant items. Fixed mother's data
 */
 
 import 'package:flutter/material.dart';

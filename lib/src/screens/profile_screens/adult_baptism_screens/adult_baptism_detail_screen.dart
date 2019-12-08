@@ -1,10 +1,10 @@
 /*
-*  Filename    :   prayer_requested_detail_screen.dart
+*  Filename    :   adult_baptism_detail_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-20 18:35 by Detective Conan
 *  Updated     :   2019-08-23 10:29 by Detective conan
-*  Changes     :   converted to statelessWidget. Added massPurpose argument to
-*                  the constructor.
+*	 Updated			:   08/12/2019 5:24 PM PM by Detective Conan
+*	 Changes			:   Removed redundant items. Fixed mother's data
 */
 
 import 'package:flutter/material.dart';
@@ -130,17 +130,6 @@ class AdultBaptismDetailScreen extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                   ),
-//                  Padding(
-//                    padding: const EdgeInsets.only(bottom: 8.0),
-//                    child: Text(
-//                      "Officiating priest: ${adultBaptism.officiatingPriestName}",
-//                      style: Theme.of(context)
-//                          .primaryTextTheme
-//                          .title
-//                          .copyWith(fontWeight: FontWeight.bold),
-//                      textAlign: TextAlign.start,
-//                    ),
-//                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
@@ -188,7 +177,7 @@ class AdultBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's name: ${adultBaptism.fatherName}",
+                      "Mother's name: ${adultBaptism.motherName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -199,7 +188,7 @@ class AdultBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Religion of Mother: ${adultBaptism.fatherReligionName}",
+                      "Religion of Mother: ${adultBaptism.motherReligionName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -210,7 +199,7 @@ class AdultBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's date of birth: ${adultBaptism.fatherDtBirth}",
+                      "Mother's date of birth: ${adultBaptism.motherDtBirth}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -221,40 +210,7 @@ class AdultBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's place of birth: ${adultBaptism.fatherBirthPlace}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's name: ${adultBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${adultBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${adultBaptism.fatherDtBirth}",
+                      "Mother's place of birth: ${adultBaptism.motherBirthPlace}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -276,73 +232,7 @@ class AdultBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Father's name: ${adultBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${adultBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${adultBaptism.fatherDtBirth}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
                       "Marriage: ${adultBaptism.marriageName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's name: ${adultBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${adultBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${adultBaptism.fatherDtBirth}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title

@@ -1,10 +1,9 @@
 /*
-*  Filename    :   prayer_requested_detail_screen.dart
+*  Filename    :   community_baptism_detail_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-20 18:35 by Detective Conan
-*  Updated     :   2019-08-23 10:29 by Detective conan
-*  Changes     :   converted to statelessWidget. Added massPurpose argument to
-*                  the constructor.
+*	 Updated			:   08/12/2019 5:28 PM PM by Detective Conan
+*	 Changes			:   Removed redundant items. Fixed mother's data
 */
 
 import 'package:flutter/material.dart';
@@ -130,17 +129,6 @@ class CommunityBaptismDetailScreen extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                   ),
-//                  Padding(
-//                    padding: const EdgeInsets.only(bottom: 8.0),
-//                    child: Text(
-//                      "Officiating priest: ${communityBaptism.officiatingPriestName}",
-//                      style: Theme.of(context)
-//                          .primaryTextTheme
-//                          .title
-//                          .copyWith(fontWeight: FontWeight.bold),
-//                      textAlign: TextAlign.start,
-//                    ),
-//                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
@@ -188,7 +176,7 @@ class CommunityBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's name: ${communityBaptism.fatherName}",
+                      "Mother's name: ${communityBaptism.motherName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -199,7 +187,7 @@ class CommunityBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Religion of Mother: ${communityBaptism.fatherReligionName}",
+                      "Religion of Mother: ${communityBaptism.motherReligionName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -210,7 +198,7 @@ class CommunityBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's date of birth: ${communityBaptism.fatherDtBirth}",
+                      "Mother's date of birth: ${communityBaptism.motherDtBirth}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -221,40 +209,7 @@ class CommunityBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Mother's place of birth: ${communityBaptism.fatherBirthPlace}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's name: ${communityBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${communityBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${communityBaptism.fatherDtBirth}",
+                      "Mother's place of birth: ${communityBaptism.motherBirthPlace}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -276,73 +231,7 @@ class CommunityBaptismDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Father's name: ${communityBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${communityBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${communityBaptism.fatherDtBirth}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
                       "Marriage: ${communityBaptism.marriageName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's name: ${communityBaptism.fatherName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Religion of father: ${communityBaptism.fatherReligionName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .title
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      "Father's date of birth: ${communityBaptism.fatherDtBirth}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
