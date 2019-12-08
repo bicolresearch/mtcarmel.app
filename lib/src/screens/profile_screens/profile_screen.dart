@@ -120,10 +120,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // TODO remove these
-//    if (!_features.contains(ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST)) {
+//    if (!_features.contains(ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_REQUEST)) {
 //      if (isLoggedIn)
-//        _features.add(ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST);
-    }
+//        _features.add(ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_REQUEST);
+//    }
 
     return SafeArea(
       child: Scaffold(
