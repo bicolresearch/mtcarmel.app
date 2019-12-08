@@ -23,7 +23,7 @@ class ModuleModelService {
     var _dataActionModuleModel;
     String url =
         "${AppConstants.API_BASE_URL}$moduleDir/?branch_id=$branchId&role_id=$roleId&user_id=$userId";
-    print(";...; $url");
+
     await http
         .get(url)
         .then((result) {

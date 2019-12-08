@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_event.dart';
+import 'package:mt_carmel_app/src/blocs/adult_baptism_bloc/adult_baptism_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/adult_baptism_bloc/adult_baptism_event.dart';
 
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
@@ -46,6 +48,7 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/adult_baptism_screens/adult_baptism_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_page.dart';
@@ -90,6 +93,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (!_features.contains(ProfileFeatureConstants.LOGOUT)) {
       if (isLoggedIn) _features.add(ProfileFeatureConstants.LOGOUT);
     }
+
+    // TODO remove these
+//    if (!_features.contains(ProfileFeatureConstants.ADULT_BAPTISM_REQUEST)) {
+//      if (isLoggedIn)
+//        _features.add(ProfileFeatureConstants.ADULT_BAPTISM_REQUEST);
+//    }
 
     return SafeArea(
       child: Scaffold(
@@ -222,7 +231,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       case ProfileFeatureConstants.LITURGICAL_SERVICE:
       case ProfileFeatureConstants.LITURGICAL_SERVICE_APPROVAL:
-
         return MultiProvider(
           providers: [
             BlocProvider<LiturgicalBloc>(
@@ -278,18 +286,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    ADULT_BAPTISM,
       case ProfileFeatureConstants.ADULT_BAPTISM_REQUEST:
       case ProfileFeatureConstants.ADULT_BAPTISM_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.ADULT_BAPTISM_DIR.split("/")[0],
-            ModuleDirectories.ADULT_BAPTISM_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+        return MultiProvider(
+          providers: [
+            BlocProvider<AdultBaptismBloc>(
+              builder: (context) =>
+                  AdultBaptismBloc()..dispatch(FetchAdultBaptism()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: AdultBaptismPage(),
+        );
 
 //    MARRIAGE,
       case ProfileFeatureConstants.MARRIAGE_APPROVAL:
