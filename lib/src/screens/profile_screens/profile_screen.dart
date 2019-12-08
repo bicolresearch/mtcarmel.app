@@ -35,6 +35,8 @@ import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_event.dart';
 import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_event.dart';
+import 'package:mt_carmel_app/src/blocs/november_mass_bloc/november_mass_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/november_mass_bloc/november_mass_event.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/pastors_bloc/pastors_event.dart';
 import 'package:mt_carmel_app/src/blocs/prayer_request_bloc/prayer_request_bloc.dart';
@@ -70,6 +72,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/marriage_screens/marri
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_screens/module_model_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/november_mass_screens/november_mass_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
 
@@ -365,18 +368,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    NOVEMBER_MASS_FOR_THE_DEAD,
       case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_REQUEST:
       case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.NOVEMBER_MASS.split("/")[0],
-            ModuleDirectories.NOVEMBER_MASS);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+        return MultiProvider(
+          providers: [
+            BlocProvider<NovemberMassBloc>(
+              builder: (context) =>
+                  NovemberMassBloc()..dispatch(FetchNovemberMass()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: NovemberMassPage(),
+        );
 
       case ProfileFeatureConstants.FIRST_COMMUNION_REQUEST:
       case ProfileFeatureConstants.FIRST_COMMUNION_APPROVAL:
