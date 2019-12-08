@@ -21,6 +21,8 @@ import 'package:mt_carmel_app/src/blocs/communion_of_the_sick_bloc/communion_of_
 import 'package:mt_carmel_app/src/blocs/communion_of_the_sick_bloc/communion_of_the_sick_event.dart';
 import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_event.dart';
+import 'package:mt_carmel_app/src/blocs/confiramtion_bloc/confirmation_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/confiramtion_bloc/confirmation_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
 import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_bloc.dart';
@@ -72,6 +74,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/certificate_screens/ce
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/communion_of_the_sick_screen/communion_of_the_sick_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/confirmation_screens/confirmation_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/crypt_lobby_srceens/crypt_lobby_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
@@ -120,9 +123,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // TODO remove these
-//    if (!_features.contains(ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_REQUEST)) {
+//    if (!_features.contains(ProfileFeatureConstants.CONFIRMATION_APPROVAL)) {
 //      if (isLoggedIn)
-//        _features.add(ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_REQUEST);
+//        _features.add(ProfileFeatureConstants.CONFIRMATION_APPROVAL);
 //    }
 
     return SafeArea(
@@ -323,6 +326,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // Confirmation
       case ProfileFeatureConstants.CONFIRMATION_APPROVAL:
       case ProfileFeatureConstants.CONFIRMATION_REQUEST:
+      return MultiProvider(
+        providers: [
+          BlocProvider<ConfirmationBloc>(
+            builder: (context) =>
+            ConfirmationBloc()..dispatch(FetchConfirmation()),
+          ),
+          Provider<String>.value(value: itemText)
+        ],
+        child: ConfirmationPage(),
+      );
       // TODO
 //    MARRIAGE,
       case ProfileFeatureConstants.MARRIAGE_APPROVAL:
