@@ -25,6 +25,8 @@ import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_event.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/location_map_bloc/location_map_event.dart';
+import 'package:mt_carmel_app/src/blocs/marriage_bloc/marriage_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/marriage_bloc/marriage_event.dart';
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_event.dart';
 import 'package:mt_carmel_app/src/blocs/module_model_bloc/module_model_bloc.dart';
@@ -57,6 +59,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.da
 import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/liturgical_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/marriage_screens/marriage_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/module_screens/module_model_page.dart';
@@ -300,18 +303,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    MARRIAGE,
       case ProfileFeatureConstants.MARRIAGE_APPROVAL:
       case ProfileFeatureConstants.MARRIAGE_REQUEST:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.MARRIAGE_DIR.split("/")[0],
-            ModuleDirectories.MARRIAGE_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+        return MultiProvider(
+          providers: [
+            BlocProvider<MarriageBloc>(
+              builder: (context) => MarriageBloc()..dispatch(FetchMarriage()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: MarriagePage(),
+        );
 //    FUNERAL_SERVICE,
       case ProfileFeatureConstants.FUNERAL_SERVICE_REQUEST:
       case ProfileFeatureConstants.FUNERAL_SERVICE_APPROVAL:
