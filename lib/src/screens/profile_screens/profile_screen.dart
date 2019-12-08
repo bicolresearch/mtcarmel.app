@@ -19,6 +19,8 @@ import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism
 import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
+import 'package:mt_carmel_app/src/blocs/funeral_service_bloc/funeral_service_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/funeral_service_bloc/funeral_service_event.dart';
 import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_bloc.dart';
@@ -56,6 +58,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedul
 import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/funeral_service_screens/funeral_service_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/liturgical_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
@@ -315,18 +318,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    FUNERAL_SERVICE,
       case ProfileFeatureConstants.FUNERAL_SERVICE_REQUEST:
       case ProfileFeatureConstants.FUNERAL_SERVICE_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.FUNERAL_SERVICE_DIR.split("/")[0],
-            ModuleDirectories.FUNERAL_SERVICE_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+        return MultiProvider(
+          providers: [
+            BlocProvider<FuneralServiceBloc>(
+              builder: (context) =>
+                  FuneralServiceBloc()..dispatch(FetchFuneralService()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: FuneralServicePage(),
+        );
 
 //    FUNERAL_CHAPEL,
       case ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST:
