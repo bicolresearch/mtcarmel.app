@@ -12,6 +12,8 @@ import 'package:mt_carmel_app/src/blocs/about_bloc/about_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_event.dart';
 import 'package:mt_carmel_app/src/blocs/adult_baptism_bloc/adult_baptism_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/adult_baptism_bloc/adult_baptism_event.dart';
+import 'package:mt_carmel_app/src/blocs/certificate_bloc/certificate_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/certificate_bloc/certificate_event.dart';
 
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
@@ -58,6 +60,7 @@ import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/adult_baptism_screens/adult_baptism_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/certificate_screens/certificate_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_page.dart';
@@ -108,10 +111,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // TODO remove these
-//    if (!_features.contains(ProfileFeatureConstants.ADULT_BAPTISM_REQUEST)) {
-//      if (isLoggedIn)
-//        _features.add(ProfileFeatureConstants.ADULT_BAPTISM_REQUEST);
-//    }
+    if (!_features.contains(ProfileFeatureConstants.CERTIFICATE_APPROVAL)) {
+      if (isLoggedIn)
+        _features.add(ProfileFeatureConstants.CERTIFICATE_APPROVAL);
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -256,18 +259,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       case ProfileFeatureConstants.CERTIFICATE_REQUESTS:
       case ProfileFeatureConstants.CERTIFICATE_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.CERTIFICATE_DIR.split("/")[0],
-            ModuleDirectories.CERTIFICATE_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
+      return MultiProvider(
+        providers: [
+          BlocProvider<CertificateBloc>(
+            builder: (context) =>
+            CertificateBloc()..dispatch(FetchCertificate()),
           ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+          Provider<String>.value(value: itemText)
+        ],
+        child: CertificatePage(),
+      );
 
 //        INDIVIDUAL_BAPTISM,
       case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_REQUEST:
@@ -310,6 +311,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: AdultBaptismPage(),
         );
 
+      // Confirmation
+      case ProfileFeatureConstants.CONFIRMATION_APPROVAL:
+      case ProfileFeatureConstants.CONFIRMATION_REQUEST:
+        // TODO
 //    MARRIAGE,
       case ProfileFeatureConstants.MARRIAGE_APPROVAL:
       case ProfileFeatureConstants.MARRIAGE_REQUEST:
