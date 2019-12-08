@@ -16,6 +16,7 @@ import 'package:mt_carmel_app/src/models/liturgical.dart';
 import 'package:mt_carmel_app/src/models/marriage.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/liturgical_detail_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/marriage_screens/marriage_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 enum _SwipedEnum { LeftSwiped, RightSwiped, NotSwiped }
@@ -109,7 +110,7 @@ class _MarriageScreenState extends State<MarriageScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Marriage of: ${_moduleModels[index].groomName} and ${_moduleModels[index].brideName}",
+                      "Wedding of: ${_moduleModels[index].groomName} and ${_moduleModels[index].brideName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .subtitle
@@ -134,20 +135,20 @@ class _MarriageScreenState extends State<MarriageScreen> {
             ),
           ),
           onTap: () {
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                builder: (context) => MultiProvider(
-//                  providers: [
-//                    Provider.value(
-//                      value: marriage,
-//                    ),
-//                    Provider<String>.value(value: _serviceName),
-//                  ],
-//                  child: MarriageDetailScreen(),
-//                ),
-//              ),
-//            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MultiProvider(
+                  providers: [
+                    Provider.value(
+                      value: marriage,
+                    ),
+                    Provider<String>.value(value: _serviceName),
+                  ],
+                  child: MarriageDetailScreen(),
+                ),
+              ),
+            );
           },
         ),
         direction: (_rightSwipeActionText == "")
