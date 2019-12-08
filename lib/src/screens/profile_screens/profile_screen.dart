@@ -23,6 +23,10 @@ import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
 import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_event.dart';
+import 'package:mt_carmel_app/src/blocs/fmh_hall_bloc/fmh_hall_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/fmh_hall_bloc/fmh_hall_event.dart';
+import 'package:mt_carmel_app/src/blocs/funeral_chapel_bloc/funeral_chapel_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/funeral_chapel_bloc/funeral_chapel_event.dart';
 import 'package:mt_carmel_app/src/blocs/funeral_service_bloc/funeral_service_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/funeral_service_bloc/funeral_service_event.dart';
 import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_bloc.dart';
@@ -67,6 +71,8 @@ import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_scre
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/crypt_lobby_srceens/crypt_lobby_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/fmh_hall_screens/fmh_hall_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/funeral_chapel_screens/funeral_chapel_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/funeral_service_screens/funeral_service_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/liturgical_page.dart';
@@ -111,10 +117,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // TODO remove these
-    if (!_features.contains(ProfileFeatureConstants.CERTIFICATE_APPROVAL)) {
-      if (isLoggedIn)
-        _features.add(ProfileFeatureConstants.CERTIFICATE_APPROVAL);
-    }
+//    if (!_features.contains(ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST)) {
+//      if (isLoggedIn)
+//        _features.add(ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST);
+//    }
 
     return SafeArea(
       child: Scaffold(
@@ -259,16 +265,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       case ProfileFeatureConstants.CERTIFICATE_REQUESTS:
       case ProfileFeatureConstants.CERTIFICATE_APPROVAL:
-      return MultiProvider(
-        providers: [
-          BlocProvider<CertificateBloc>(
-            builder: (context) =>
-            CertificateBloc()..dispatch(FetchCertificate()),
-          ),
-          Provider<String>.value(value: itemText)
-        ],
-        child: CertificatePage(),
-      );
+        return MultiProvider(
+          providers: [
+            BlocProvider<CertificateBloc>(
+              builder: (context) =>
+                  CertificateBloc()..dispatch(FetchCertificate()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: CertificatePage(),
+        );
 
 //        INDIVIDUAL_BAPTISM,
       case ProfileFeatureConstants.INDIVIDUAL_BAPTISM_REQUEST:
@@ -314,7 +320,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // Confirmation
       case ProfileFeatureConstants.CONFIRMATION_APPROVAL:
       case ProfileFeatureConstants.CONFIRMATION_REQUEST:
-        // TODO
+      // TODO
 //    MARRIAGE,
       case ProfileFeatureConstants.MARRIAGE_APPROVAL:
       case ProfileFeatureConstants.MARRIAGE_REQUEST:
@@ -344,18 +350,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    FUNERAL_CHAPEL,
       case ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST:
       case ProfileFeatureConstants.FUNERAL_CHAPEL_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.FUNERAL_CHAPEL_DIR.split("/")[0],
-            ModuleDirectories.FUNERAL_CHAPEL_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
+      return MultiProvider(
+        providers: [
+          BlocProvider<FuneralChapelBloc>(
+            builder: (context) =>
+            FuneralChapelBloc()..dispatch(FetchFuneralChapel()),
           ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+          Provider<String>.value(value: itemText)
+        ],
+        child: FuneralChapelPage(),
+      );
 
 //    CRYPT_LOBBY,
       case ProfileFeatureConstants.CRYPT_LOBBY_REQUEST:
@@ -413,6 +417,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           Provider<ModuleModelReference>.value(value: moduleModelReference),
         ], child: ModuleModelPage());
+
+      case ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_APPROVAL:
+      case ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_REQUEST:
+        return MultiProvider(
+          providers: [
+            BlocProvider<FmhHallBloc>(
+              builder: (context) => FmhHallBloc()..dispatch(FetchFmhHall()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: FmhHallPage(),
+        );
 
       case ProfileFeatureConstants.PRIESTS:
         return BlocProvider<PriestsBloc>(
