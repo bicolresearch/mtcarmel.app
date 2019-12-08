@@ -23,6 +23,8 @@ import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
 import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_event.dart';
+import 'package:mt_carmel_app/src/blocs/first_communion_bloc/first_communion_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/first_communion_bloc/first_communion_event.dart';
 import 'package:mt_carmel_app/src/blocs/fmh_hall_bloc/fmh_hall_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/fmh_hall_bloc/fmh_hall_event.dart';
 import 'package:mt_carmel_app/src/blocs/funeral_chapel_bloc/funeral_chapel_bloc.dart';
@@ -58,7 +60,6 @@ import 'package:mt_carmel_app/src/constants/module_directories.dart';
 import 'package:mt_carmel_app/src/constants/profile_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
-import 'package:mt_carmel_app/src/core/services/profiles_api/crypt_lobby_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -71,6 +72,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_scre
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/crypt_lobby_srceens/crypt_lobby_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/first_communion_screens/first_communion_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/fmh_hall_screens/fmh_hall_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/funeral_chapel_screens/funeral_chapel_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/funeral_service_screens/funeral_service_page.dart';
@@ -117,9 +119,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // TODO remove these
-//    if (!_features.contains(ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST)) {
+//    if (!_features.contains(ProfileFeatureConstants.FIRST_COMMUNION_REQUEST)) {
 //      if (isLoggedIn)
-//        _features.add(ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST);
+//        _features.add(ProfileFeatureConstants.FIRST_COMMUNION_REQUEST);
 //    }
 
     return SafeArea(
@@ -390,19 +392,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       case ProfileFeatureConstants.FIRST_COMMUNION_REQUEST:
       case ProfileFeatureConstants.FIRST_COMMUNION_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.FIRST_COMMUNION_DIR.split("/")[0],
-            ModuleDirectories.FIRST_COMMUNION_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
+      return MultiProvider(
+        providers: [
+          BlocProvider<FirstCommunionBloc>(
+            builder: (context) =>
+            FirstCommunionBloc()..dispatch(FetchFirstCommunion()),
           ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
-
+          Provider<String>.value(value: itemText)
+        ],
+        child: FirstCommunionPage(),
+      );
       case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST:
       case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_APPROVAL:
         final ModuleModelReference moduleModelReference = ModuleModelReference(
