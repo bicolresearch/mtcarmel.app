@@ -1,5 +1,5 @@
 /*
-*  Filename    :   liturgical_detail_screen.dart
+*  Filename    :   funeral_service_detail_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-20 18:35 by Detective Conan
 *  Updated     :   2019-08-23 10:29 by Detective conan
@@ -8,20 +8,17 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mt_carmel_app/src/blocs/mass_request_bloc/mass_request_bloc.dart';
-import 'package:mt_carmel_app/src/models/liturgical.dart';
-import 'package:mt_carmel_app/src/models/mass_request.dart';
+import 'package:mt_carmel_app/src/models/funeral_service.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:provider/provider.dart';
 
-class LiturgicalDetailScreen extends StatelessWidget {
+class FuneralServiceDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final liturgical = Provider.of<Liturgical>(context);
+    final funeralService = Provider.of<FuneralService>(context);
     final serviceName = Provider.of<String>(context);
     DateTime datePosted =
-        DateTime.parse("${liturgical.dtCreated ?? "01-01-2019"}");
+        DateTime.parse("${funeralService.dtCreated ?? "01-01-2019"}");
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -48,7 +45,7 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Status: ${liturgical.statusName}",
+                      "Status: ${funeralService.statusName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -59,7 +56,7 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Submitted by: ${liturgical.createdBy}",
+                      "Submitted by: ${funeralService.createdBy}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -81,7 +78,7 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Occasion: ${liturgical.occasionName}",
+                      "Deceased person: ${funeralService.name}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -92,7 +89,7 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Date of Service: ${liturgical.dtService}",
+                      "Civil status: ${funeralService.civilStatusName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -103,7 +100,7 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Time of service: ${liturgical.timeService}",
+                      "Date of death: ${funeralService.dtDeath}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -114,7 +111,7 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Officiating priest: ${liturgical.officiatingPriestName}",
+                      "Cause of death: ${funeralService.causeOfDeath}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -125,7 +122,7 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Contact person: ${liturgical.nameContactPerson}",
+                      "Funeral location: ${funeralService.funeralLocationName}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
@@ -136,7 +133,73 @@ class LiturgicalDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Contact numbers: ${liturgical.mobileContactPerson}/${liturgical.landlineContactPerson}",
+                      "Date of Service: ${funeralService.dtService}",
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      "Time of service: ${funeralService.timeService}",
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      "Interment date: ${funeralService.dtInternment}",
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      "Interment time: ${funeralService.timeInternment}",
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      "Place of interment: ${funeralService.placeInternment}",
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      "Contact person: ${funeralService.nameContactPerson}",
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .title
+                          .copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      "Contact numbers: ${funeralService.mobileContactPerson ?? ""}  ${funeralService.landlineContactPerson ?? ""}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title

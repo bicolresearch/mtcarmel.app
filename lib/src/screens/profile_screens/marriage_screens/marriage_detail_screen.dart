@@ -1,5 +1,5 @@
 /*
-*  Filename    :   prayer_requested_detail_screen.dart
+*  Filename    :   marriage_detail_screen.dart
 *  Purpose     :	
 *  Created     :   2019-08-20 18:35 by Detective Conan
 *  Updated     :   2019-08-23 10:29 by Detective conan

@@ -13,6 +13,7 @@ import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
 import 'package:mt_carmel_app/src/models/funeral_service.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/funeral_service_screens/funeral_service_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 enum _SwipedEnum { LeftSwiped, RightSwiped, NotSwiped }
@@ -105,20 +106,21 @@ class _FuneralServiceScreenState extends State<FuneralServiceScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+//                    Text(
+//                      "${_moduleModels[index].createdBy}",
+//                      style: Theme.of(context)
+//                          .primaryTextTheme
+//                          .title
+//                          .copyWith(fontWeight: FontWeight.bold),
+//                    ),
                     Text(
-                      "${_moduleModels[index].createdBy}",
+                      "Deceased person: ${_moduleModels[index].name}",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .title
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      "Service: ${_moduleModels[index].serviceName}",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .subtitle
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
+
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -138,20 +140,20 @@ class _FuneralServiceScreenState extends State<FuneralServiceScreen> {
             ),
           ),
           onTap: () {
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                builder: (context) => MultiProvider(
-//                  providers: [
-//                    Provider.value(
-//                      value: funeralService,
-//                    ),
-//                    Provider<String>.value(value: _serviceName),
-//                  ],
-//                  child: FuneralServiceDetailScreen(),
-//                ),
-//              ),
-//            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MultiProvider(
+                  providers: [
+                    Provider.value(
+                      value: funeralService,
+                    ),
+                    Provider<String>.value(value: _serviceName),
+                  ],
+                  child: FuneralServiceDetailScreen(),
+                ),
+              ),
+            );
           },
         ),
         direction: (_rightSwipeActionText == "")

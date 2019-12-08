@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:mt_carmel_app/src/blocs/liturgical_bloc/liturgical_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/marriage_bloc/marriage_bloc.dart';
 import 'package:mt_carmel_app/src/constants/action_constants.dart';
 import 'package:mt_carmel_app/src/constants/api_constants.dart';
@@ -12,10 +11,8 @@ import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/crud_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/module_and_data_actions.dart';
-import 'package:mt_carmel_app/src/models/liturgical.dart';
 import 'package:mt_carmel_app/src/models/marriage.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/liturgical_detail_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/marriage_screens/marriage_detail_screen.dart';
 import 'package:provider/provider.dart';
 
