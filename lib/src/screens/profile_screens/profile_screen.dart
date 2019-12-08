@@ -17,6 +17,8 @@ import 'package:mt_carmel_app/src/blocs/certificate_bloc/certificate_event.dart'
 
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/church_regular_schedule_bloc/church_regular_schedule_event.dart';
+import 'package:mt_carmel_app/src/blocs/communion_of_the_sick_bloc/communion_of_the_sick_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/communion_of_the_sick_bloc/communion_of_the_sick_event.dart';
 import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
@@ -68,6 +70,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/adult_baptism_screens/
 import 'package:mt_carmel_app/src/screens/profile_screens/certificate_screens/certificate_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/communion_of_the_sick_screen/communion_of_the_sick_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/crypt_lobby_srceens/crypt_lobby_page.dart';
@@ -81,8 +84,6 @@ import 'package:mt_carmel_app/src/screens/profile_screens/liturgical_screens/lit
 import 'package:mt_carmel_app/src/screens/profile_screens/location_screens/location_map_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/marriage_screens/marriage_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/mass_request_screens/mass_request_page.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/module_model_reference.dart';
-import 'package:mt_carmel_app/src/screens/profile_screens/module_screens/module_model_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/november_mass_screens/november_mass_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/pastors_screens/pastors_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/prayer_request_screens/prayer_request_page.dart';
@@ -119,10 +120,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // TODO remove these
-//    if (!_features.contains(ProfileFeatureConstants.FIRST_COMMUNION_REQUEST)) {
+//    if (!_features.contains(ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST)) {
 //      if (isLoggedIn)
-//        _features.add(ProfileFeatureConstants.FIRST_COMMUNION_REQUEST);
-//    }
+//        _features.add(ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST);
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -404,18 +405,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
       case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST:
       case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.COMMUNION_OF_THE_SICK_DIR.split("/")[0],
-            ModuleDirectories.COMMUNION_OF_THE_SICK_DIR);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
+      return MultiProvider(
+        providers: [
+          BlocProvider<CommunionOfTheSickBloc>(
+            builder: (context) =>
+            CommunionOfTheSickBloc()..dispatch(FetchCommunionOfTheSick()),
           ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+          Provider<String>.value(value: itemText)
+        ],
+        child: CommunionOfTheSickPage(),
+      );
 
       case ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_APPROVAL:
       case ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_REQUEST:
