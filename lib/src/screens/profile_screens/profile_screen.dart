@@ -19,6 +19,8 @@ import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism
 import 'package:mt_carmel_app/src/blocs/community_baptism_bloc/community_baptism_event.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/contact_detail_bloc/contact_detail_event.dart';
+import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/crypt_lobby_bloc/crypt_lobby_event.dart';
 import 'package:mt_carmel_app/src/blocs/funeral_service_bloc/funeral_service_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/funeral_service_bloc/funeral_service_event.dart';
 import 'package:mt_carmel_app/src/blocs/individual_baptism_bloc/individual_baptism_bloc.dart';
@@ -48,6 +50,7 @@ import 'package:mt_carmel_app/src/constants/module_directories.dart';
 import 'package:mt_carmel_app/src/constants/profile_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/crypt_lobby_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
@@ -57,6 +60,7 @@ import 'package:mt_carmel_app/src/screens/profile_screens/adult_baptism_screens/
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/community_baptism_screens/community_baptism_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/contact_detail_screens/contact_detail_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/crypt_lobby_srceens/crypt_lobby_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/edit_profile_screen.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/funeral_service_screens/funeral_service_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/individual_baptism_screens/individual_baptism_page.dart';
@@ -348,18 +352,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    CRYPT_LOBBY,
       case ProfileFeatureConstants.CRYPT_LOBBY_REQUEST:
       case ProfileFeatureConstants.CRYPT_LOBBY_APPROVAL:
-        final ModuleModelReference moduleModelReference = ModuleModelReference(
-            itemText,
-            ModuleDirectories.CRYPT_LOBBY.split("/")[0],
-            ModuleDirectories.CRYPT_LOBBY);
-        return MultiProvider(providers: [
-          BlocProvider<ModuleModelBloc>(
-            builder: (context) => ModuleModelBloc()
-              ..dispatch(
-                  FetchModuleModel(moduleModelReference.moduleGetAllDir)),
-          ),
-          Provider<ModuleModelReference>.value(value: moduleModelReference),
-        ], child: ModuleModelPage());
+        return MultiProvider(
+          providers: [
+            BlocProvider<CryptLobbyBloc>(
+              builder: (context) =>
+                  CryptLobbyBloc()..dispatch(FetchCryptLobby()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: CryptLobbyPage(),
+        );
 //    NOVEMBER_MASS_FOR_THE_DEAD,
       case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_REQUEST:
       case ProfileFeatureConstants.NOVEMBER_MASS_FOR_THE_DEAD_APPROVAL:
