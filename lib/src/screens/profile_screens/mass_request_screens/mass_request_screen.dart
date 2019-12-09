@@ -83,7 +83,7 @@ class _MassRequestScreenState extends State<MassRequestScreen> {
               child: Center(
                 child: _moduleModels.isEmpty
                     ? Text(
-                        "No prayer requests",
+                        "No mass requests",
                         style: Theme.of(context).primaryTextTheme.title,
                       )
                     : ListView.builder(

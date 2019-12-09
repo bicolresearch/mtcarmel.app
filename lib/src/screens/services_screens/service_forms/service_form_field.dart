@@ -13,6 +13,7 @@ import 'package:mt_carmel_app/src/screens/services_screens/service_forms/civil_s
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/country_and_related_form_fields.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/date_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/date_time_form_field.dart';
+import 'package:mt_carmel_app/src/screens/services_screens/service_forms/patterned_text_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/selection_form_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_multiline_text_field.dart';
 import 'package:mt_carmel_app/src/screens/services_screens/service_forms/service_numeric_form_field.dart';
@@ -64,6 +65,9 @@ class ServiceFormField extends StatelessWidget {
       return SelectionFormField(churchFormField: churchFormField);
     else if (churchFormField.textFieldType == "plain_text")
       return ServicePlainTextField(churchFormField: churchFormField);
+    else if (churchFormField.textFieldType == "patterned_text")
+      // TODO parameter must be embed to churchFormField
+      return PatternedTextFormField(churchFormField: churchFormField, mask: "**********");
     else // type will be plain if no match found
       return ServicePlainTextField(churchFormField: churchFormField);
 //    else if(_churchFormField.textFieldType == "nationality_selection")

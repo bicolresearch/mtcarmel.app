@@ -82,17 +82,3 @@ class ServicePlainTextField extends ServiceFormCommon
     return validators;
   }
 }
-
-
-class _TextInput extends StatefulWidget {
-  @override
-  __TextInputState createState() => __TextInputState();
-}
-
-class __TextInputState extends State<_TextInput> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
