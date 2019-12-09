@@ -28,21 +28,21 @@ class ServicePlainTextField extends ServiceFormCommon
       child: Column(
         children: <Widget>[
           labelText(context, churchFormField.labelText),
-//          FormBuilderTextField(
-////            attribute: churchFormField.attribute,
-////            decoration: InputDecoration(
-////                helperStyle: Theme.of(context).primaryTextTheme.subtitle,
-////                hintText: (churchFormField.hint == null ||
-////                        churchFormField.hint.isEmpty)
-////                    ? ""
-////                    : churchFormField.hint),
-////            keyboardType: TextInputType.multiline,
-////            validators: _validators(),
-////            style: Theme.of(context).primaryTextTheme.title,
-////            textAlign: TextAlign.center,
-////            cursorColor: Colors.brown,
-////            maxLines: int.tryParse(churchFormField.maxLines ?? "1"),
-////          ),
+          FormBuilderTextField(
+            attribute: churchFormField.attribute,
+            decoration: InputDecoration(
+                helperStyle: Theme.of(context).primaryTextTheme.subtitle,
+                hintText: (churchFormField.hint == null ||
+                        churchFormField.hint.isEmpty)
+                    ? ""
+                    : churchFormField.hint),
+            keyboardType: TextInputType.text,
+            validators: _validators(),
+            style: Theme.of(context).primaryTextTheme.title,
+            textAlign: TextAlign.center,
+            cursorColor: Colors.brown,
+            maxLines: int.tryParse(churchFormField.maxLines ?? "1"),
+          ),
         ],
       ),
     );
