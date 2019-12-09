@@ -1,9 +1,9 @@
 /*
-*  Filename    :   service_plain_text_field.dart
-*  Purpose     :	 Use for the plain text form field
-*  Created     :   2019-07-15 16:18 by Detective Conan
-*  Updated     :   2019-08-09 09:33 by Detective conan
-*  Changes     :   Fixed the maxLines handling
+*   Filename    :   patterned_text_form_field.dart
+*   Purpose     :
+*   Created     :   09/12/2019 9:54 AM by Detective Conan
+*   Updated     :   09/12/2019 9:54 AM by Detective Conan
+*   Changes     :   
 */
 
 import 'package:flutter/material.dart';
@@ -29,20 +29,21 @@ class ServicePlainTextField extends ServiceFormCommon
         children: <Widget>[
           labelText(context, churchFormField.labelText),
 //          FormBuilderTextField(
-////            attribute: churchFormField.attribute,
-////            decoration: InputDecoration(
-////                helperStyle: Theme.of(context).primaryTextTheme.subtitle,
-////                hintText: (churchFormField.hint == null ||
-////                        churchFormField.hint.isEmpty)
-////                    ? ""
-////                    : churchFormField.hint),
-////            keyboardType: TextInputType.multiline,
-////            validators: _validators(),
-////            style: Theme.of(context).primaryTextTheme.title,
-////            textAlign: TextAlign.center,
-////            cursorColor: Colors.brown,
-////            maxLines: int.tryParse(churchFormField.maxLines ?? "1"),
-////          ),
+//            attribute: churchFormField.attribute,
+//            decoration: InputDecoration(
+//                helperStyle: Theme.of(context).primaryTextTheme.subtitle,
+//                hintText: (churchFormField.hint == null ||
+//                        churchFormField.hint.isEmpty)
+//                    ? ""
+//                    : churchFormField.hint),
+//            keyboardType: TextInputType.multiline,
+//            validators: _validators(),
+//            style: Theme.of(context).primaryTextTheme.title,
+//            textAlign: TextAlign.center,
+//            cursorColor: Colors.brown,
+//            maxLines: int.tryParse(churchFormField.maxLines ?? "1"),
+//          ),
+          _PatternedTextInput()
         ],
       ),
     );
@@ -84,12 +85,12 @@ class ServicePlainTextField extends ServiceFormCommon
 }
 
 
-class _TextInput extends StatefulWidget {
+class _PatternedTextInput extends StatefulWidget {
   @override
-  __TextInputState createState() => __TextInputState();
+  _PatternedTextInputState createState() => _PatternedTextInputState();
 }
 
-class __TextInputState extends State<_TextInput> {
+class _PatternedTextInputState extends State<_PatternedTextInput> {
   @override
   Widget build(BuildContext context) {
     return Container();

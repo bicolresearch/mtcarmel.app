@@ -18,6 +18,10 @@ class ProfileFeatureConstants {
   static const String SHARE_APP = "Share app";
   static const String CHANGE_BRANCH = "Change branch";
   static const String LOGOUT = "Logout";
+
+  static const String APPLICATION_APPROVAL = "Application Approval";
+  static const String APPLICATION_REQUEST = "Application Requests";
+  static const String APPLICATION_FORM = "Application Form";
   static const String PRAYER_REQUEST_APPROVAL = "Prayer Requests Approval";
   static const String PRAYER_REQUEST = "Prayer Requests";
   static const String MASS_REQUEST = "Mass Requests";
@@ -74,6 +78,7 @@ class ProfileFeatureConstants {
   ];
 
   static const List<String> ProfileFeatureList = [
+    APPLICATION_FORM,
     PRAYER_REQUEST,
     PRAYER_REQUEST_APPROVAL,
     MASS_REQUEST,

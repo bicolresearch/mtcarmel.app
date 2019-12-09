@@ -27,6 +27,7 @@ import 'package:mt_carmel_app/src/core/services/carmelites_service.dart';
 import 'package:mt_carmel_app/src/core/services/church_regular_schedule_service.dart';
 import 'package:mt_carmel_app/src/core/services/profile_feature_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/adult_baptism_service.dart';
+import 'package:mt_carmel_app/src/core/services/profiles_api/application_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/certificate_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/communion_of_the_sick_service.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/community_baptism_service.dart';
@@ -97,4 +98,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => NovemberMassService());
   locator.registerLazySingleton(() => CertificateService());
   locator.registerLazySingleton(() => CommunionOfTheSickService());
+  locator.registerLazySingleton(() => ApplicationService());
 }

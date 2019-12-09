@@ -12,6 +12,8 @@ import 'package:mt_carmel_app/src/blocs/about_bloc/about_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/about_bloc/about_event.dart';
 import 'package:mt_carmel_app/src/blocs/adult_baptism_bloc/adult_baptism_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/adult_baptism_bloc/adult_baptism_event.dart';
+import 'package:mt_carmel_app/src/blocs/application_bloc/application_bloc.dart';
+import 'package:mt_carmel_app/src/blocs/application_bloc/application_event.dart';
 import 'package:mt_carmel_app/src/blocs/certificate_bloc/certificate_bloc.dart';
 import 'package:mt_carmel_app/src/blocs/certificate_bloc/certificate_event.dart';
 
@@ -60,7 +62,6 @@ import 'package:mt_carmel_app/src/blocs/profile_feature_bloc/profile_feature_eve
 
 import 'package:mt_carmel_app/src/blocs/tab_bloc/tab.dart';
 import 'package:mt_carmel_app/src/constants/app_constants.dart';
-import 'package:mt_carmel_app/src/constants/module_directories.dart';
 import 'package:mt_carmel_app/src/constants/profile_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
 import 'package:mt_carmel_app/src/core/services/branch_service.dart';
@@ -69,6 +70,7 @@ import 'package:mt_carmel_app/src/helpers/shared_preference_helper.dart';
 import 'package:mt_carmel_app/src/presentations/mount_carmel_icons.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/about_screens/about_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/adult_baptism_screens/adult_baptism_page.dart';
+import 'package:mt_carmel_app/src/screens/profile_screens/application_screens/application_page.dart';
 import 'package:mt_carmel_app/src/screens/profile_screens/certificate_screens/certificate_page.dart';
 
 import 'package:mt_carmel_app/src/screens/profile_screens/church_regular_schedule_screens/church_regular_schedule_page.dart';
@@ -233,6 +235,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _navigateToDetail(BuildContext context, String itemText) {
     switch (itemText) {
+      case ProfileFeatureConstants.APPLICATION_FORM:
+        return MultiProvider(
+          providers: [
+            BlocProvider<ApplicationBloc>(
+              builder: (context) =>
+                  ApplicationBloc()..dispatch(FetchApplication()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: ApplicationPage(),
+        );
       case ProfileFeatureConstants.PRAYER_REQUEST_APPROVAL:
       case ProfileFeatureConstants.PRAYER_REQUEST:
         return MultiProvider(
@@ -326,16 +339,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // Confirmation
       case ProfileFeatureConstants.CONFIRMATION_APPROVAL:
       case ProfileFeatureConstants.CONFIRMATION_REQUEST:
-      return MultiProvider(
-        providers: [
-          BlocProvider<ConfirmationBloc>(
-            builder: (context) =>
-            ConfirmationBloc()..dispatch(FetchConfirmation()),
-          ),
-          Provider<String>.value(value: itemText)
-        ],
-        child: ConfirmationPage(),
-      );
+        return MultiProvider(
+          providers: [
+            BlocProvider<ConfirmationBloc>(
+              builder: (context) =>
+                  ConfirmationBloc()..dispatch(FetchConfirmation()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: ConfirmationPage(),
+        );
       // TODO
 //    MARRIAGE,
       case ProfileFeatureConstants.MARRIAGE_APPROVAL:
@@ -366,16 +379,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //    FUNERAL_CHAPEL,
       case ProfileFeatureConstants.FUNERAL_CHAPEL_REQUEST:
       case ProfileFeatureConstants.FUNERAL_CHAPEL_APPROVAL:
-      return MultiProvider(
-        providers: [
-          BlocProvider<FuneralChapelBloc>(
-            builder: (context) =>
-            FuneralChapelBloc()..dispatch(FetchFuneralChapel()),
-          ),
-          Provider<String>.value(value: itemText)
-        ],
-        child: FuneralChapelPage(),
-      );
+        return MultiProvider(
+          providers: [
+            BlocProvider<FuneralChapelBloc>(
+              builder: (context) =>
+                  FuneralChapelBloc()..dispatch(FetchFuneralChapel()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: FuneralChapelPage(),
+        );
 
 //    CRYPT_LOBBY,
       case ProfileFeatureConstants.CRYPT_LOBBY_REQUEST:
@@ -406,28 +419,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       case ProfileFeatureConstants.FIRST_COMMUNION_REQUEST:
       case ProfileFeatureConstants.FIRST_COMMUNION_APPROVAL:
-      return MultiProvider(
-        providers: [
-          BlocProvider<FirstCommunionBloc>(
-            builder: (context) =>
-            FirstCommunionBloc()..dispatch(FetchFirstCommunion()),
-          ),
-          Provider<String>.value(value: itemText)
-        ],
-        child: FirstCommunionPage(),
-      );
+        return MultiProvider(
+          providers: [
+            BlocProvider<FirstCommunionBloc>(
+              builder: (context) =>
+                  FirstCommunionBloc()..dispatch(FetchFirstCommunion()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: FirstCommunionPage(),
+        );
       case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_REQUEST:
       case ProfileFeatureConstants.COMMUNION_OF_THE_SICK_APPROVAL:
-      return MultiProvider(
-        providers: [
-          BlocProvider<CommunionOfTheSickBloc>(
-            builder: (context) =>
-            CommunionOfTheSickBloc()..dispatch(FetchCommunionOfTheSick()),
-          ),
-          Provider<String>.value(value: itemText)
-        ],
-        child: CommunionOfTheSickPage(),
-      );
+        return MultiProvider(
+          providers: [
+            BlocProvider<CommunionOfTheSickBloc>(
+              builder: (context) =>
+                  CommunionOfTheSickBloc()..dispatch(FetchCommunionOfTheSick()),
+            ),
+            Provider<String>.value(value: itemText)
+          ],
+          child: CommunionOfTheSickPage(),
+        );
 
       case ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_APPROVAL:
       case ProfileFeatureConstants.FATHER_MARK_HORAN_HALL_REQUEST:

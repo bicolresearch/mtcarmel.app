@@ -129,7 +129,7 @@ class ProfileFeatureBloc
         // Check if the feature is available to the branch
         if (profileFeatures.any(
           (value) {
-            return value.name == feature;
+            return value.name.trim() == feature;
           },
         )) _features.add(feature);
       }

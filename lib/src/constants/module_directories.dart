@@ -7,6 +7,7 @@
 */
 
 class ModuleDirectories {
+  static const APPLICATION_DIR = "application_forms/application_form";
   static const PRAYER_REQUEST_DIR = "prayer_requests/prayer_request";
   static const MASS_REQUEST_DIR = "mass_requests/mass_request";
   static const LITURGICAL_DIR = "liturgicals/liturgical";
