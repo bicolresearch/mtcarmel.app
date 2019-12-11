@@ -1,41 +1,38 @@
 /*
-*   Filename    :   patterned_text_form_field.dart
-*   Purpose     :   Used for the inputting text with pattern
-*   Created     :   09/12/2019 9:54 AM by Detective Conan
-*   Updated     :   09/12/2019 9:54 AM by Detective Conan
-*   Changes     :
-*
-*
-*   Mask Options #
-    In mask, you can use the following characters:
-
-      0: accept numbers
-      A: accept letters
-      @: accept numbers and letters
-      *: accept any character
+*   Filename    :   patterned_form_field.dart
+*   Purpose     :
+*   Created     :   11/12/2019 2:07 PM by Detective Conan
+*   Updated     :   11/12/2019 2:07 PM by Detective Conan
+*   Changes     :   
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:mt_carmel_app/src/models/church_module.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
-class PatternedTextFormField extends StatefulWidget {
-  @required
-  final ChurchFormField churchFormField;
+class PatternedFormField extends StatefulWidget {
   final String mask;
+  final String attribute;
+  final String label;
+  final String hintText;
+  final TextAlign textAlign;
+  final List<FormFieldValidator> validators;
 
-  const PatternedTextFormField({
+  const PatternedFormField({
     Key key,
-    this.churchFormField,
     this.mask,
+    @required this.attribute,
+    this.label,
+    this.hintText,
+    this.textAlign = TextAlign.center,
+    this.validators,
   }) : super(key: key);
 
   @override
-  _PatternedTextFormFieldState createState() => _PatternedTextFormFieldState();
+  _PatternedFormFieldState createState() => _PatternedFormFieldState();
 }
 
-class _PatternedTextFormFieldState extends State<PatternedTextFormField> {
+class _PatternedFormFieldState extends State<PatternedFormField> {
   bool _readOnly = false;
   final GlobalKey<FormFieldState> _fKey = GlobalKey<FormFieldState>();
   FormBuilderState _formState;
@@ -52,12 +49,12 @@ class _PatternedTextFormFieldState extends State<PatternedTextFormField> {
 
   _initializeFormState() {
     _formState = FormBuilder.of(context);
-    _formState?.registerFieldKey("${widget.churchFormField.attribute}", _fKey);
+    _formState?.registerFieldKey("${widget.attribute}", _fKey);
   }
 
   @override
   void dispose() {
-    _formState?.unregisterFieldKey("${widget.churchFormField.attribute}");
+    _formState?.unregisterFieldKey("${widget.attribute}");
     super.dispose();
   }
 
@@ -68,10 +65,10 @@ class _PatternedTextFormFieldState extends State<PatternedTextFormField> {
       child: Column(
         children: <Widget>[
           Text(
-            "${widget.churchFormField.labelText}",
+            "${widget.label ?? ""}",
             style: Theme.of(context)
                 .primaryTextTheme
-                .subhead
+                .title
                 .copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
@@ -80,7 +77,8 @@ class _PatternedTextFormFieldState extends State<PatternedTextFormField> {
             enabled: !_readOnly,
             initialValue: _initialValue,
             validator: (val) {
-              final validators = _validators();
+
+              final validators = widget.validators;
               if (validators == null) return null;
 
               for (int i = 0; i < validators.length; i++) {
@@ -89,8 +87,9 @@ class _PatternedTextFormFieldState extends State<PatternedTextFormField> {
               return null;
             },
             onSaved: (val) {
-              _formState?.setAttributeValue(
-                  "${widget.churchFormField.attribute}", val);
+
+              _fKey.currentState.didChange(controller.text);
+              _formState?.setAttributeValue("${widget.attribute}", val);
             },
             builder: (FormFieldState<dynamic> field) {
               return InputDecorator(
@@ -98,10 +97,11 @@ class _PatternedTextFormFieldState extends State<PatternedTextFormField> {
                   errorText: field.errorText,
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(0),
+                  hintText: widget.hintText,
                 ),
                 child: TextField(
                   controller: controller,
-                  textAlign: TextAlign.center,
+                  textAlign: widget.textAlign,
                 ),
               );
             },
@@ -109,23 +109,5 @@ class _PatternedTextFormFieldState extends State<PatternedTextFormField> {
         ],
       ),
     );
-  }
-
-  List<String Function(dynamic)> _validators() {
-    List<String Function(dynamic)> validators = [];
-
-    _fKey.currentState.didChange(controller.text);
-
-    if (widget.churchFormField.validatorIsRequired == "true")
-      validators.add(FormBuilderValidators.required());
-
-    if (widget.churchFormField.validatorIsNumeric == "true")
-      validators.add(FormBuilderValidators.numeric());
-
-    if (widget.churchFormField.errorText != null)
-      validators.add(FormBuilderValidators.required(
-          errorText: widget.churchFormField.errorText));
-
-    return validators;
   }
 }

@@ -618,7 +618,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '${userProfile.firstName} ${userProfile.lastName}',
+                  '${userProfile.firstName??""} ${userProfile.lastName??""}',
                   style: Theme.of(context).primaryTextTheme.subhead,
                   textAlign: TextAlign.left,
                 ),

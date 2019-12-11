@@ -21,9 +21,12 @@ class UserProfile {
       this.email,
       this.address1,
       this.address2,
-      this.city,
-      this.province,
-      this.country,
+      this.cityCode,
+      this.cityName,
+      this.provinceCode,
+      this.provinceName,
+      this.countryCode,
+      this.countryName,
       this.mobile,
       this.landline,
       this.roleId,
@@ -44,9 +47,18 @@ class UserProfile {
   final address1;
   @JsonKey(name: "address_2")
   final address2;
-  final city;
-  final province;
-  final country;
+  @JsonKey(name: "city_code")
+  final cityCode;
+  @JsonKey(name: "city_name")
+  final cityName;
+  @JsonKey(name: "province_code")
+  final provinceCode;
+  @JsonKey(name: "province_name")
+  final provinceName;
+  @JsonKey(name: "country_code")
+  final countryCode;
+  @JsonKey(name: "country_name")
+  final countryName;
   final mobile;
   final landline;
   @JsonKey(name: "role_id")

@@ -9,28 +9,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mt_carmel_app/src/constants/api_constants.dart';
+import 'package:mt_carmel_app/src/constants/app_constants.dart';
 import 'package:mt_carmel_app/src/core/services/authentication_service.dart';
+import 'package:mt_carmel_app/src/core/services/branch_service.dart';
+import 'package:mt_carmel_app/src/core/services/crud_service.dart';
 import 'package:mt_carmel_app/src/core/services/service_locator.dart';
 import 'package:mt_carmel_app/src/core/services/profiles_api/user_profile_service.dart';
+import 'package:mt_carmel_app/src/models/city.dart';
+import 'package:mt_carmel_app/src/models/country.dart';
+import 'package:mt_carmel_app/src/models/province.dart';
 import 'package:mt_carmel_app/src/utils/image_upload_form.dart';
+import 'package:mt_carmel_app/src/widgets/country_and_other_form_field.dart';
 import 'package:mt_carmel_app/src/widgets/left_arrow_back_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mt_carmel_app/src/models/user_profile.dart';
+import 'package:mt_carmel_app/src/widgets/loading_indicator.dart';
+import 'package:mt_carmel_app/src/widgets/patterned_form_field.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  static final GlobalKey<FormBuilderState> _fbKey =
-      GlobalKey<FormBuilderState>();
-
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   UserProfile _userProfile;
+  String _userId;
   bool _isPhotoChanged = false;
+  bool _isLoading = true;
+
+  static final GlobalKey<FormBuilderState> _fbKey =
+      GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
+    final branchName = locator<BranchService>().branch.name;
     return Material(
       child: Scaffold(
         body: Container(
@@ -41,260 +54,284 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
                 child: Text(
-                  "Edit Profile",
+                  "$branchName",
                   style: Theme.of(context)
                       .primaryTextTheme
-                      .headline
+                      .title
                       .copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
               Divider(),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+                child: Text(
+                  "Edit Profile",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .title
+                      .copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               SizedBox(
                 height: 10.0,
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                          height: 200,
-                          width: 200,
-                          //TODO implement retrieved changed photo
-                          child: ImageUploadForm()),
-                      FormBuilder(
-                        key: EditProfileScreen._fbKey,
-                        autovalidate: true,
+              _isLoading
+                  ? Expanded(
+                      child: LoadingIndicator(),
+                    )
+                  : Expanded(
+                      child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
-                            FormBuilderTextField(
-                              attribute: "first_name",
-                              decoration: InputDecoration(
-                                  labelText: "First name",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "middle_name",
-                              decoration: InputDecoration(
-                                  labelText: "Middle name",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "last_name",
-                              decoration: InputDecoration(
-                                  labelText: "Last name",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "roleName",
-                              decoration: InputDecoration(
-                                  labelText: "Role Name",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "username",
-                              decoration: InputDecoration(
-                                  labelText: "Username",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "birthday",
-                              decoration: InputDecoration(
-                                labelText: "Birthday",
-                                helperStyle:
-                                    Theme.of(context).primaryTextTheme.subtitle,
+                            Container(
+                                height: MediaQuery.of(context).size.width / 3,
+                                width: MediaQuery.of(context).size.width / 3,
+                                //TODO implement retrieved changed photo
+                                child: ImageUploadForm()),
+                            FormBuilder(
+                              key: _fbKey,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 30.0,
+                                    ),
+                                    Text(
+                                      "First name",
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .title
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    FormBuilderTextField(
+                                      attribute: "first_name",
+                                      initialValue:
+                                          "${_userProfile?.firstName ?? ""}",
+                                      keyboardType: TextInputType.text,
+                                      validators: [
+                                        FormBuilderValidators.required(),
+                                      ],
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .title,
+                                      textAlign: TextAlign.center,
+                                      cursorColor: Colors.brown,
+                                    ),
+//                                    SizedBox(
+//                                      height: 12.0,
+//                                    ),
+//                                    Text(
+//                                      "Middle name",
+//                                      style: Theme.of(context)
+//                                          .primaryTextTheme
+//                                          .title
+//                                          .copyWith(
+//                                              fontWeight: FontWeight.bold),
+//                                      textAlign: TextAlign.center,
+//                                    ),
+//                                    FormBuilderTextField(
+//                                      attribute: "middle_name",
+//                                      initialValue:
+//                                          "${_userProfile?.middleName ?? ""}",
+//                                      keyboardType: TextInputType.text,
+//                                      validators: [
+////                                        FormBuilderValidators.required(),
+//                                      ],
+//                                      style: Theme.of(context)
+//                                          .primaryTextTheme
+//                                          .title,
+//                                      textAlign: TextAlign.center,
+//                                      cursorColor: Colors.brown,
+//                                    ),
+                                    SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    Text(
+                                      "Last name",
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .title
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    FormBuilderTextField(
+                                      attribute: "last_name",
+                                      initialValue:
+                                          "${_userProfile.lastName ?? ""}",
+                                      keyboardType: TextInputType.text,
+                                      validators: [
+                                        FormBuilderValidators.required(),
+                                      ],
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .title,
+                                      textAlign: TextAlign.center,
+                                      cursorColor: Colors.brown,
+                                    ),
+//                                    SizedBox(
+//                                      height: 12.0,
+//                                    ),
+//                                    Text(
+//                                      "Username",
+//                                      style: Theme.of(context)
+//                                          .primaryTextTheme
+//                                          .title
+//                                          .copyWith(
+//                                              fontWeight: FontWeight.bold),
+//                                      textAlign: TextAlign.center,
+//                                    ),
+//                                    FormBuilderTextField(
+//                                      attribute: "username",
+//                                      initialValue:
+//                                          "${_userProfile.username ?? ""}",
+//                                      keyboardType: TextInputType.text,
+//                                      validators: [
+//                                        FormBuilderValidators.required(),
+//                                      ],
+//                                      style: Theme.of(context)
+//                                          .primaryTextTheme
+//                                          .title,
+//                                      textAlign: TextAlign.center,
+//                                      cursorColor: Colors.brown,
+//                                    ),
+//                                    SizedBox(
+//                                      height: 12.0,
+//                                    ),
+//                                    Text(
+//                                      "Email",
+//                                      style: Theme.of(context)
+//                                          .primaryTextTheme
+//                                          .title
+//                                          .copyWith(
+//                                              fontWeight: FontWeight.bold),
+//                                      textAlign: TextAlign.center,
+//                                    ),
+//                                    FormBuilderTextField(
+//                                      attribute: "email",
+//                                      initialValue:
+//                                          "${_userProfile.email ?? ""}",
+//                                      keyboardType: TextInputType.text,
+//                                      validators: [
+//                                        FormBuilderValidators.required(),
+//                                      ],
+//                                      style: Theme.of(context)
+//                                          .primaryTextTheme
+//                                          .title,
+//                                      textAlign: TextAlign.center,
+//                                      cursorColor: Colors.brown,
+//                                    ),
+                                    SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    Text(
+                                      "Address 1",
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .title
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    FormBuilderTextField(
+                                      attribute: "address_1",
+                                      initialValue:
+                                          "${_userProfile.address1 ?? ""}",
+                                      keyboardType: TextInputType.text,
+                                      validators: [
+                                        FormBuilderValidators.required(),
+                                      ],
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .title,
+                                      textAlign: TextAlign.center,
+                                      cursorColor: Colors.brown,
+                                    ),
+                                    SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    Text(
+                                      "Address 2",
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .subtitle
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    FormBuilderTextField(
+                                      attribute: "address_2",
+                                      initialValue:
+                                          "${_userProfile.address2 ?? ""}",
+                                      keyboardType: TextInputType.text,
+                                      validators: [
+//                                        FormBuilderValidators.required(),
+                                      ],
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .title,
+                                      textAlign: TextAlign.center,
+                                      cursorColor: Colors.brown,
+                                    ),
+                                    CountryAndOtherFormFields(
+                                      initialCountryName:
+                                          _userProfile.countryName,
+                                      initialCountryCode:
+                                          _userProfile.countryCode,
+                                      initialProvinceName:
+                                          _userProfile.provinceName,
+                                      initialProvinceCode:
+                                          _userProfile.provinceCode,
+                                      initialCityName: _userProfile.cityName,
+                                      initialCityCode: _userProfile.cityCode,
+                                    ),
+                                    PatternedFormField(
+                                      attribute: "mobile",
+                                      mask: "(00000)-0000000",
+                                      hintText: "Mobile",
+                                      label: "Mobile",
+                                    ),
+                                    PatternedFormField(
+                                      attribute: "landline",
+                                      mask: "(000)-00000000",
+                                      hintText: "Landline",
+                                      label: "Landline",
+                                    )
+                                  ],
+                                ),
                               ),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "email",
-                              decoration: InputDecoration(
-                                  labelText: "Email",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "address_1",
-                              decoration: InputDecoration(
-                                  labelText: "Address 1",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "address_2",
-                              decoration: InputDecoration(
-                                  labelText: "Address 2",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "city",
-                              decoration: InputDecoration(
-                                  labelText: "City",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "province",
-                              decoration: InputDecoration(
-                                  labelText: "Province",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "country",
-                              decoration: InputDecoration(
-                                  labelText: "Country",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "mobile",
-                              decoration: InputDecoration(
-                                  labelText: "Mobile",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
-                            ),
-                            FormBuilderTextField(
-                              attribute: "landline",
-                              decoration: InputDecoration(
-                                  labelText: "Landline",
-                                  helperStyle: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle),
-                              keyboardType: TextInputType.multiline,
-                              validators: [
-                                FormBuilderValidators.required(),
-                              ],
-                              style: Theme.of(context).primaryTextTheme.title,
-                              textAlign: TextAlign.center,
-                              cursorColor: Colors.brown,
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                color: Colors.brown,
-                child: Text(
-                  "Save",
-                  style: TextStyle(color: Colors.white),
-                ),
-                //TODO implement saving profile
-                onPressed: null,
-              ),
+                    ),
+              _isLoading
+                  ? Container()
+                  : RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      color: Colors.brown,
+                      child: Text(
+                        "Save",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      //TODO implement saving profile
+                      onPressed: () async {
+                        _fbKey.currentState.save();
+                        if (!_fbKey.currentState.validate()) {}
+                        try {
+                          final result = await _save(context);
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                    ),
               leftArrowBackButton(context: context),
             ],
           ),
@@ -333,7 +370,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   initState() {
     _getUserProfile().catchError(
       (error) {
-        debugPrint("EditProfileScree.initState(): $error.");
+        debugPrint("EditProfileScreen.initState(): $error.");
       },
     );
     super.initState();
@@ -342,12 +379,46 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future _getUserProfile() async {
     await locator<AuthenticationService>().getUserId().then(
       (id) async {
+        _userId = id;
         await locator<UserProfileService>().getUserProfile(id).then(
           (user) {
-            _userProfile = user;
+            setState(() {
+              _userProfile = user;
+              _isLoading = false;
+            });
           },
         );
       },
     );
+  }
+
+  Future<bool> _save(BuildContext context) async {
+    if (_userId == null || _userId == "") {
+      print("Retrieving user id error.");
+      return false;
+    }
+
+    var success = false;
+    var fieldsValue = _fbKey.currentState.value;
+
+    fieldsValue.putIfAbsent("user_id", () => _userId);
+    Map<String, String> casted = fieldsValue.cast();
+    final url = "${AppConstants.API_BASE_URL}users/update/id/$_userId";
+
+    final headers = APIConstants.HEADERS;
+    print("$casted");
+    print(url);
+    await locator<CrudService>().put(url, body: casted, headers: headers).then(
+      ((value) {
+        debugPrint("$value");
+        success = value;
+      }),
+    ).catchError(
+      (e) {
+        debugPrint("_save(): $e");
+        throw e;
+      },
+    );
+    return success;
   }
 }

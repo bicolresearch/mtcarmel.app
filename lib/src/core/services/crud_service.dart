@@ -68,7 +68,9 @@ class CrudService {
         .timeout(
       Duration(seconds: 5),
     )
-        .catchError((e) => {throw e});
+        .catchError((e) {
+          print("Crud.put(): $e");
+          throw e;});
     print(response.body);
     print(response.statusCode);
     if (response == null) return false;
