@@ -2,8 +2,8 @@
 *   Filename    :   country_and_other_form_field.dart
 *   Purpose     :
 *   Created     :   11/12/2019 1:13 PM by Detective Conan
-*   Updated     :   11/12/2019 1:13 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   12/12/2019 4:50 PM PM by Detective Conan
+*	 Changes			:   Added default Philippine in country field.
 */
 
 import 'package:flutter/material.dart';
@@ -399,7 +399,6 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
     if (_countries.any((country) {
       return country.countryCode == widget.initialCountryCode ?? null;
     })) {
-      print("_countries.any((country)");
       Country selectedCountry = _countries.firstWhere(
           (country) => country.countryCode == widget.initialCountryCode);
       _selectedCountryName = selectedCountry.name;
@@ -436,6 +435,23 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
           _fieldKeyCity.currentState?.didChange(initialCity);
         }
       }
+      setState(() {});
+    } else {
+      Country selectedCountry = _countries.firstWhere((country) =>
+          country.countryCode == "01"); // Philippine code as default
+      _selectedCountryName = selectedCountry.name;
+      _fieldKeyCountry.currentState.didChange(selectedCountry);
+      _provinces = await _repository
+          .getProvinceByCountryCode("01")
+          .catchError(
+        (e) {
+          print(e);
+          _provinces = [];
+          return;
+        },
+      );
+      _fieldKeyProvince.currentState?.didChange(null);
+      _formState?.setAttributeValue("province", null);
       setState(() {});
     }
   }

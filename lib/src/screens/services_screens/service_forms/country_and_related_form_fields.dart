@@ -703,7 +703,7 @@ class _CountryAndRelatedFormFieldsState
           },
         );
         _fieldKeyProvince.currentState?.didChange(null);
-        _formState?.setAttributeValue("province", null);
+        _formState?.setAttributeValue("province_code", null);
       }
     }
     setState(() {});
