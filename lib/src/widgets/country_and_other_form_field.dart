@@ -23,18 +23,12 @@ enum FieldSelect {
 }
 
 class CountryAndOtherFormFields extends StatefulWidget {
-  final initialCountryName;
   final initialCountryCode;
-  final initialProvinceName;
   final initialProvinceCode;
-  final initialCityName;
   final initialCityCode;
 
   const CountryAndOtherFormFields({
     Key key,
-    this.initialCountryName,
-    this.initialProvinceName,
-    this.initialCityName,
     this.initialCountryCode,
     this.initialProvinceCode,
     this.initialCityCode,
@@ -48,25 +42,21 @@ class CountryAndOtherFormFields extends StatefulWidget {
 class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
   final _repository = locator<AddressRepository>();
 
-  bool _readOnly = false;
   final GlobalKey<FormFieldState> _fieldKeyCountry =
-  GlobalKey<FormFieldState>();
+      GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _fieldKeyProvince =
-  GlobalKey<FormFieldState>();
+      GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _fieldKeyCity = GlobalKey<FormFieldState>();
   FormBuilderState _formState;
 
   Map<String, GlobalKey<FormFieldState>> _labelAndKeyMap = {};
   List<Country> _countries = [];
-
   List<City> _cities = [];
-
   List<Province> _provinces = [];
+  String _selectedProvinceName = "Choose...";
+  String _selectedCityName = "Choose...";
 
-  String _selectedProvince = "Choose...";
-  String _selectedCity = "Choose...";
-
-  String _initialCountry;
+  String _selectedCountryName;
 
   @override
   void initState() {
@@ -77,12 +67,11 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
   _initializeFormState() {
     _labelAndKeyMap = _getLabelAndKeyList();
     final keys = _labelAndKeyMap.keys;
-    print(keys);
     _formState = FormBuilder.of(context);
 
     for (String key in keys) {
       _formState?.registerFieldKey(
-          "${key.toLowerCase()}_code", _labelAndKeyMap[key]);
+          "${key.toLowerCase()}", _labelAndKeyMap[key]);
     }
   }
 
@@ -90,7 +79,7 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
   void dispose() {
     for (String key in _labelAndKeyMap.keys) {
       _formState?.unregisterFieldKey(
-        "${key.toLowerCase()}_code",
+        "${key.toLowerCase()}",
       );
     }
     super.dispose();
@@ -104,8 +93,7 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
         children: <Widget>[
           Text(
             "Country",
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .primaryTextTheme
                 .title
                 .copyWith(fontWeight: FontWeight.bold),
@@ -113,8 +101,8 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
           ),
           FormField(
             key: _fieldKeyCountry,
-            enabled: !_readOnly,
-//            validator: (val) => FormBuilderValidators.required()(val),
+//            enabled: !_readOnly,
+            validator: (val) => FormBuilderValidators.required()(val),
             onSaved: (val) {
               final Country country = val;
               _formState?.setAttributeValue(
@@ -131,12 +119,9 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
                   title: Padding(
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Text(
-                      _initialCountry ?? "Choose...",
+                      _selectedCountryName ?? "Choose...",
                       textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
-                          .primaryTextTheme
-                          .title,
+                      style: Theme.of(context).primaryTextTheme.title,
                     ),
                   ),
                   trailing: Icon(
@@ -158,8 +143,7 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
           // Province
           Text(
             "Province",
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .primaryTextTheme
                 .title
                 .copyWith(fontWeight: FontWeight.bold),
@@ -167,9 +151,9 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
           ),
           FormField(
             key: _fieldKeyProvince,
-            enabled: !_readOnly,
+//            enabled: !_readOnly,
 
-//            validator: (val) => FormBuilderValidators.required()(val),
+            validator: (val) => FormBuilderValidators.required()(val),
             onSaved: (val) {
               if (val == null) return;
               final Province province = val;
@@ -187,12 +171,9 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
                   title: Padding(
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Text(
-                      _selectedProvince ?? "Choose...",
+                      _selectedProvinceName ?? "Choose...",
                       textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
-                          .primaryTextTheme
-                          .title,
+                      style: Theme.of(context).primaryTextTheme.title,
                     ),
                   ),
                   trailing: Icon(
@@ -201,7 +182,7 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
                   ),
                   subtitle: Divider(),
                   onTap: () {
-                    if (_selectedProvince == null ||
+                    if (_selectedProvinceName == null ||
                         _provinces == null ||
                         _provinces.length <= 1) return;
 
@@ -215,8 +196,7 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
 
           Text(
             "City",
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .primaryTextTheme
                 .title
                 .copyWith(fontWeight: FontWeight.bold),
@@ -224,14 +204,13 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
           ),
           FormField(
             key: _fieldKeyCity,
-            enabled: !_readOnly,
+//            enabled: !_readOnly,
 
-//            validator: (val) => FormBuilderValidators.required()(val),
+            validator: (val) => FormBuilderValidators.required()(val),
             onSaved: (val) {
               if (val == null) return;
               final City city = val;
-              _formState?.setAttributeValue(
-                  "city", city?.cityCode ?? null);
+              _formState?.setAttributeValue("city", city?.cityCode ?? null);
             },
             builder: (FormFieldState<dynamic> field) {
               return InputDecorator(
@@ -244,12 +223,9 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
                   title: Padding(
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Text(
-                      _selectedCity ?? "Choose...",
+                      _selectedCityName ?? "Choose...",
                       textAlign: TextAlign.center,
-                      style: Theme
-                          .of(context)
-                          .primaryTextTheme
-                          .title,
+                      style: Theme.of(context).primaryTextTheme.title,
                     ),
                   ),
                   trailing: Icon(
@@ -258,7 +234,7 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
                   ),
                   subtitle: Divider(),
                   onTap: () {
-                    if (_selectedCity == null ||
+                    if (_selectedCityName == null ||
                         _cities == null ||
                         _cities.length <= 1) return;
 
@@ -277,71 +253,76 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
   Map<String, GlobalKey<FormFieldState>> _getLabelAndKeyList() {
     Map<String, GlobalKey<FormFieldState>> fields = {};
 
-    fields["Country"] = _fieldKeyCountry;
-    fields["Province"] = _fieldKeyProvince;
-    fields["City"] = _fieldKeyCity;
+    fields["country"] = _fieldKeyCountry;
+    fields["province"] = _fieldKeyProvince;
+    fields["city"] = _fieldKeyCity;
 
     return fields;
   }
 
   _onCitySelected(City city) async {
-    _selectedCity = city.name;
+    _selectedCityName = city.name;
+    _formState?.setAttributeValue("city", city.id);
     setState(() {});
   }
 
   _onCountrySelected(Country country) async {
-    _initialCountry = country.name;
-
+    _selectedCountryName = country.name;
     //province
     if (_fieldKeyProvince.currentState != null) {
-      _selectedProvince = "Choose...";
+      _selectedProvinceName = "Choose...";
       _provinces = [];
       _provinces = await _repository
           .getProvinceByCountryCode(country?.countryCode ?? null)
           .catchError(
-            (e) {
+        (e) {
           print(e);
           _provinces = [];
         },
       );
       _fieldKeyProvince.currentState?.didChange(null);
+      _formState?.setAttributeValue("province", null);
     }
     // city
     if (_fieldKeyCity.currentState != null) {
-      _selectedCity = "Choose...";
+      _selectedCityName = "Choose...";
       _cities = [];
       _fieldKeyCity.currentState?.didChange(null);
+      _formState?.setAttributeValue("city", null);
     }
     setState(
-          () {},
+      () {},
     );
   }
 
   _onProvinceSelected(Province province) async {
-    _selectedProvince = province.name;
+    _selectedProvinceName = province.name;
 
     // city
     if (_fieldKeyCity.currentState != null) {
-      _selectedCity = "Choose...";
+      _selectedCityName = "Choose...";
       _cities = await _repository
           .getCityByProvinceCode(province?.provinceCode ?? null)
           .catchError(
-            (e) {
+        (e) {
           print(e);
           _cities = [];
         },
       );
       _fieldKeyCity.currentState?.didChange(null);
+      _formState?.setAttributeValue("city", null);
     }
     setState(
-          () {},
+      () {},
     );
   }
 
-  void _showModalBottomSheet(context,
-      selection,
-      FormFieldState<dynamic> field,
-      FieldSelect selectedField,) {
+  void _showModalBottomSheet(
+    context,
+    selection,
+    FormFieldState<dynamic> field,
+    FieldSelect selectedField,
+  ) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -360,10 +341,7 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
               return ListTile(
                 title: Text(
                   name,
-                  style: Theme
-                      .of(context)
-                      .primaryTextTheme
-                      .title,
+                  style: Theme.of(context).primaryTextTheme.title,
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
@@ -394,16 +372,18 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
   }
 
   void _initialize() {
-    _initialValues();
     _initializeFormState();
+    _initialValues();
   }
 
   Future _initializeCountryList() async {
     _countries = await _repository.getCountries().catchError(
-          (e) {
+      (e) {
         print(e);
+        return;
       },
     );
+    setState(() {});
   }
 
   List<String Function(dynamic)> _validators() {
@@ -416,18 +396,18 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
 
   Future _initialValues() async {
     await _initializeCountryList();
-
     if (_countries.any((country) {
       return country.countryCode == widget.initialCountryCode ?? null;
     })) {
+      print("_countries.any((country)");
       Country selectedCountry = _countries.firstWhere(
-              (country) => country.countryCode == widget.initialCountryCode);
-      _initialCountry = selectedCountry.name;
+          (country) => country.countryCode == widget.initialCountryCode);
+      _selectedCountryName = selectedCountry.name;
       _fieldKeyCountry.currentState.didChange(selectedCountry);
       _provinces = await _repository
           .getProvinceByCountryCode(widget.initialCountryCode)
           .catchError(
-            (e) {
+        (e) {
           print(e);
           _provinces = [];
         },
@@ -436,24 +416,24 @@ class _CountryAndOtherFormFieldState extends State<CountryAndOtherFormFields> {
         return province.provinceCode == widget.initialProvinceCode ?? null;
       })) {
         Province initialProvince = _provinces.firstWhere(
-                (province) =>
-            province.provinceCode == widget.initialProvinceCode);
+            (province) => province.provinceCode == widget.initialProvinceCode);
+        _selectedProvinceName = initialProvince.name;
         _fieldKeyProvince.currentState?.didChange(initialProvince);
         _cities = await _repository
             .getCityByProvinceCode(widget.initialProvinceCode)
             .catchError(
-              (e) {
+          (e) {
             print(e);
             _provinces = [];
           },
         );
         if (_cities.any((city) {
           return city.cityCode == widget.initialCityCode ?? null;
-        })){
-          City initialCity = _cities.firstWhere(
-                  (city) =>
-              city.cityCode == widget.initialCityCode);
-          _fieldKeyProvince.currentState?.didChange(initialCity);
+        })) {
+          City initialCity = _cities
+              .firstWhere((city) => city.cityCode == widget.initialCityCode);
+          _selectedCityName = initialCity.name;
+          _fieldKeyCity.currentState?.didChange(initialCity);
         }
       }
       setState(() {});

@@ -38,7 +38,7 @@ class _PatternedFormFieldState extends State<PatternedFormField> {
   FormBuilderState _formState;
   dynamic _initialValue;
 
-  var controller;
+  MaskedTextController controller;
 
   @override
   void initState() {
@@ -55,6 +55,7 @@ class _PatternedFormFieldState extends State<PatternedFormField> {
   @override
   void dispose() {
     _formState?.unregisterFieldKey("${widget.attribute}");
+    controller.dispose();
     super.dispose();
   }
 
@@ -77,19 +78,21 @@ class _PatternedFormFieldState extends State<PatternedFormField> {
             enabled: !_readOnly,
             initialValue: _initialValue,
             validator: (val) {
-
-              final validators = widget.validators;
+              var validators = widget.validators;
               if (validators == null) return null;
 
+              validators.add(FormBuilderValidators.pattern(
+                  "".padRight(widget.mask.length, "."),errorText: "Not valid. Follow this pattern ${widget.mask}"),);
               for (int i = 0; i < validators.length; i++) {
                 if (validators[i](val) != null) return validators[i](val);
               }
               return null;
             },
             onSaved: (val) {
-
-              _fKey.currentState.didChange(controller.text);
-              _formState?.setAttributeValue("${widget.attribute}", val);
+              controller.updateText(val);
+              var newVal = controller.text;
+              _fKey.currentState.didChange(newVal);
+              _formState.setAttributeValue("${widget.attribute}", newVal);
             },
             builder: (FormFieldState<dynamic> field) {
               return InputDecorator(
@@ -102,6 +105,12 @@ class _PatternedFormFieldState extends State<PatternedFormField> {
                 child: TextField(
                   controller: controller,
                   textAlign: widget.textAlign,
+                  onChanged: (val) {
+                    controller.updateText(val);
+                    var newVal = controller.text;
+                    _fKey.currentState.didChange(newVal);
+                    _formState.setAttributeValue("${widget.attribute}", newVal);
+                  },
                 ),
               );
             },

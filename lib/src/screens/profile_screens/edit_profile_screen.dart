@@ -2,8 +2,8 @@
 *  Filename    :   edit_profile_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-24 09:57 by Detective Conan
-*  Updated     :   2019-07-24 09:57 by Detective Conan 
-*  Changes     :
+*	 Updated			:   12/12/2019 10:56 AM PM by Detective Conan
+*	 Changes			:   Added snackbar on failure and successfully saved changes
 */
 
 import 'package:flutter/material.dart';
@@ -41,11 +41,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   static final GlobalKey<FormBuilderState> _fbKey =
       GlobalKey<FormBuilderState>();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final branchName = locator<BranchService>().branch.name;
     return Material(
       child: Scaffold(
+        key: _scaffoldKey,
         body: Container(
           margin: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
           child: Column(
@@ -280,16 +283,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       cursorColor: Colors.brown,
                                     ),
                                     CountryAndOtherFormFields(
-                                      initialCountryName:
-                                          _userProfile.countryName,
                                       initialCountryCode:
                                           _userProfile.countryCode,
-                                      initialProvinceName:
-                                          _userProfile.provinceName,
+//                                          "01",
                                       initialProvinceCode:
                                           _userProfile.provinceCode,
-                                      initialCityName: _userProfile.cityName,
+//                                          "0722",
                                       initialCityCode: _userProfile.cityCode,
+//                                          "072206",
                                     ),
                                     PatternedFormField(
                                       attribute: "mobile",
@@ -302,6 +303,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       mask: "(000)-00000000",
                                       hintText: "Landline",
                                       label: "Landline",
+                                      validators: [
+                                        FormBuilderValidators.required()
+                                      ],
                                     )
                                   ],
                                 ),
@@ -321,14 +325,63 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         "Save",
                         style: TextStyle(color: Colors.white),
                       ),
-                      //TODO implement saving profile
                       onPressed: () async {
                         _fbKey.currentState.save();
-                        if (!_fbKey.currentState.validate()) {}
-                        try {
-                          final result = await _save(context);
-                        } catch (e) {
-                          print(e);
+                        print(_fbKey.currentState.value);
+                        if (_fbKey.currentState.validate()) {
+                          try {
+                            final result = await _save(context);
+                            if (result) {
+                              _scaffoldKey.currentState.removeCurrentSnackBar();
+                              _scaffoldKey.currentState.showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Successfully saved the changes.',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  duration: Duration(seconds: 3),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            } else {
+                              _scaffoldKey.currentState.removeCurrentSnackBar();
+                              _scaffoldKey.currentState.showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Did not saved. Please fill-up required fields',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  duration: Duration(seconds: 3),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            print(e);
+                            _scaffoldKey.currentState.removeCurrentSnackBar();
+                            _scaffoldKey.currentState.showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Did not saved. Something went wrong',
+                                  textAlign: TextAlign.center,
+                                ),
+                                duration: Duration(seconds: 3),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        } else {
+                          _scaffoldKey.currentState.removeCurrentSnackBar();
+                          _scaffoldKey.currentState.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Did not saved. Please fill-up the required fields.',
+                                textAlign: TextAlign.center,
+                              ),
+                              duration: Duration(seconds: 3),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
                         }
                       },
                     ),

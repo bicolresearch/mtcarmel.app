@@ -58,6 +58,7 @@ class _PatternedTextFormFieldState extends State<PatternedTextFormField> {
   @override
   void dispose() {
     _formState?.unregisterFieldKey("${widget.churchFormField.attribute}");
+    controller.dispose();
     super.dispose();
   }
 
