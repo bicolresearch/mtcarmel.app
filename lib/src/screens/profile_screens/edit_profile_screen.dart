@@ -2,8 +2,8 @@
 *  Filename    :   edit_profile_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-24 09:57 by Detective Conan
-*	 Updated			:   12/12/2019 2:54 PM PM by Detective Conan
-*	 Changes			:   Added checking if has modified items. added scroll controller.
+*	 Updated			:   12/12/2019 3:12 PM PM by Detective Conan
+*	 Changes			:   Removed edit image
 */
 
 import 'package:flutter/material.dart';
@@ -86,6 +86,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: _isSaved ? Container() : Divider(),
+              ),
               _isSaved
                   ? Container()
                   : SizedBox(
@@ -110,13 +114,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             controller: _scrollController,
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                    height:
-                                        MediaQuery.of(context).size.width / 3,
-                                    width:
-                                        MediaQuery.of(context).size.width / 3,
-                                    //TODO implement retrieved changed photo
-                                    child: ImageUploadForm()),
+//                                Container(
+//                                    height:
+//                                        MediaQuery.of(context).size.width / 3,
+//                                    width:
+//                                        MediaQuery.of(context).size.width / 3,
+//                                    //TODO implement retrieved changed photo
+//                                    child: ImageUploadForm()),
                                 FormBuilder(
                                   key: _fbKey,
                                   child: Padding(
@@ -239,7 +243,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           "Address 2",
                                           style: Theme.of(context)
                                               .primaryTextTheme
-                                              .subtitle
+                                              .title
                                               .copyWith(
                                                   fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
