@@ -27,7 +27,7 @@ class UserProfileService {
     var response;
     var dio = locator<DioService>().getDio();
     final url =
-        "${AppConstants.API_BASE_URL}${AppConstants.USER_JSON_URL}?branch_id=$branchId&id=$id";
+        "${AppConstants.API_BASE_URL}${AppConstants.USER_JSON_URL}user/?branch_id=$branchId&id=$id";
     try {
       response = await dio
           .get(
@@ -52,9 +52,7 @@ class UserProfileService {
     if (response.statusCode == 200) {
       try {
         final body = json.decode("$response");
-        return (body["data"])
-            .map((data) => new UserProfile.fromJson(data))
-            .firstWhere((user) => user.id == id);
+        return UserProfile.fromJson(body);
       } catch (e) {
         print(e);
         throw Exception("UserProfileService.getData: $e");

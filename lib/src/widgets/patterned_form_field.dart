@@ -2,8 +2,8 @@
 *   Filename    :   patterned_form_field.dart
 *   Purpose     :
 *   Created     :   11/12/2019 2:07 PM by Detective Conan
-*   Updated     :   11/12/2019 2:07 PM by Detective Conan
-*   Changes     :   
+*	 Updated			:   12/12/2019 1:45 PM PM by Detective Conan
+*	 Changes			:   Added initial value of the text field. Changed the color.
 */
 
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ class PatternedFormField extends StatefulWidget {
   final String label;
   final String hintText;
   final TextAlign textAlign;
+  final String initialValue;
   final List<FormFieldValidator> validators;
 
   const PatternedFormField({
@@ -26,6 +27,7 @@ class PatternedFormField extends StatefulWidget {
     this.hintText,
     this.textAlign = TextAlign.center,
     this.validators,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -43,7 +45,8 @@ class _PatternedFormFieldState extends State<PatternedFormField> {
   @override
   void initState() {
     super.initState();
-    controller = MaskedTextController(mask: "${widget.mask}");
+    controller = MaskedTextController(
+        mask: "${widget.mask}", text: widget.initialValue ?? "");
     _initializeFormState();
   }
 
@@ -81,8 +84,11 @@ class _PatternedFormFieldState extends State<PatternedFormField> {
               var validators = widget.validators;
               if (validators == null) return null;
 
-              validators.add(FormBuilderValidators.pattern(
-                  "".padRight(widget.mask.length, "."),errorText: "Not valid. Follow this pattern ${widget.mask}"),);
+              validators.add(
+                FormBuilderValidators.pattern(
+                    "".padRight(widget.mask.length, "."),
+                    errorText: "Not valid. Follow this pattern ${widget.mask}"),
+              );
               for (int i = 0; i < validators.length; i++) {
                 if (validators[i](val) != null) return validators[i](val);
               }
@@ -104,6 +110,9 @@ class _PatternedFormFieldState extends State<PatternedFormField> {
                 ),
                 child: TextField(
                   controller: controller,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
                   textAlign: widget.textAlign,
                   onChanged: (val) {
                     controller.updateText(val);
