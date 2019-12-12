@@ -617,35 +617,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  '${userProfile.firstName??""} ${userProfile.lastName??""}',
-                  style: Theme.of(context).primaryTextTheme.subhead,
-                  textAlign: TextAlign.left,
-                ),
+
                 Row(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: RaisedButton(
-                        //TODO implement the onPress button
-                        onPressed: () => "",
-                        color: Colors.brown,
-                        child: Text(
-                          "My Donations",
-                          style: TextStyle(
-                              fontFamily: 'Helvetica', color: Colors.white),
-                        ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                      ),
+                    Text(
+                      '${userProfile.firstName ?? ""} ${userProfile.lastName ?? ""}',
+                      style: Theme.of(context).primaryTextTheme.subhead,
+                      textAlign: TextAlign.left,
                     ),
-                    InkWell(
-                      onTap: () async {
-                        _showSetting(context);
-                      },
-                      child: Icon(
-                        MountCarmelIcons.settings,
-                        color: Colors.brown,
+//                    Padding(
+//                      padding: const EdgeInsets.only(right: 10.0),
+//                      child: RaisedButton(
+//                        //TODO implement the onPress button
+//                        onPressed: () => "",
+//                        color: Colors.brown,
+//                        child: Text(
+//                          "My Donations",
+//                          style: TextStyle(
+//                              fontFamily: 'Helvetica', color: Colors.white),
+//                        ),
+//                        shape: RoundedRectangleBorder(
+//                            borderRadius: BorderRadius.circular(20.0)),
+//                      ),
+//                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: InkWell(
+                        onTap: () async {
+                          _showSetting(context);
+                        },
+                        child: Icon(
+                          MountCarmelIcons.settings,
+                          color: Colors.brown,
+                        ),
                       ),
                     ),
                   ],

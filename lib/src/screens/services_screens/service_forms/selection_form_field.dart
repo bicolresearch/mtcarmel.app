@@ -41,7 +41,6 @@ class _SelectionFormFieldState extends State<SelectionFormField> {
   @override
   void initState() {
     _initialize();
-
     super.initState();
   }
 

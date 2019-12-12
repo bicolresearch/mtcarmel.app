@@ -2,8 +2,8 @@
 *  Filename    :   country_and_related_form_fields.dart
 *  Purpose     :	
 *  Created     :   2019-08-06 14:34 by Detective Conan
-*	 Updated			:   03/12/2019 9:42 AM PM by Detective Conan
-*	 Changes			:   Enhanced diposing form keys.
+*	 Updated			:   12/12/2019 4:39 PM PM by Detective Conan
+*	 Changes			:   Added default Philippine in country field.
 */
 
 import 'package:flutter/material.dart';
@@ -672,16 +672,41 @@ class _CountryAndRelatedFormFieldsState
   }
 
   void _initialize() {
-    _initializeCountryList();
     _initializeFormState();
+    _initializeCountryList();
   }
 
   Future _initializeCountryList() async {
     _countries = await _repository.getCountries().catchError(
       (e) {
         print(e);
+        return;
       },
     );
+    if (_countries.any((country) {
+      return country.countryCode == "01" ?? null;
+    })) {
+      Country selectedCountry = _countries.firstWhere(
+          (country) => country.countryCode == "01"); // Philippine code
+      _selectedCountry = selectedCountry.name;
+      _fieldKeyCountry.currentState.didChange(selectedCountry);
+      //province
+      if (_fieldKeyProvince.currentState != null) {
+        _selectedProvince = "Choose...";
+        _provinces = [];
+        _provinces = await _repository
+            .getProvinceByCountryCode(selectedCountry?.countryCode ?? null)
+            .catchError(
+              (e) {
+            print(e);
+            _provinces = [];
+          },
+        );
+        _fieldKeyProvince.currentState?.didChange(null);
+        _formState?.setAttributeValue("province", null);
+      }
+    }
+    setState(() {});
   }
 
   List<String Function(dynamic)> _validators() {
