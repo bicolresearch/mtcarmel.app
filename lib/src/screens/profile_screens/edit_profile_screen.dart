@@ -2,8 +2,8 @@
 *  Filename    :   edit_profile_screen.dart
 *  Purpose     :	
 *  Created     :   2019-07-24 09:57 by Detective Conan
-*	 Updated			:   12/12/2019 3:12 PM PM by Detective Conan
-*	 Changes			:   Removed edit image
+*	 Updated			:   13/12/2019 11:13 AM PM by Detective Conan
+*	 Changes			:   Added the branch name to scroll
 */
 
 import 'package:flutter/material.dart';
@@ -55,65 +55,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         body: Container(
           margin: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 30.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _isSaved
-                  ? Container()
-                  : Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 30.0),
-                      child: Text(
-                        "$branchName",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .title
-                            .copyWith(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-              _isSaved ? Container() : Divider(),
-              _isSaved
-                  ? Container()
-                  : Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 30.0),
-                      child: Text(
-                        "Edit Profile",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .title
-                            .copyWith(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: _isSaved ? Container() : Divider(),
-              ),
-              _isSaved
-                  ? Container()
-                  : SizedBox(
-                      height: 10.0,
-                    ),
               _isLoading
                   ? Expanded(
                       child: LoadingIndicator(),
                     )
                   : _isSaved
-                      ? Center(
-                          child: Text(
-                            "The profile has been saved.",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .title
-                                .copyWith(fontWeight: FontWeight.bold),
+                      ? Expanded(
+                          child: Center(
+                            child: Text(
+                              "The profile has been saved.",
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .title
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
                           ),
                         )
                       : Expanded(
-                          child: SingleChildScrollView(
+                          child: ListView(
                             controller: _scrollController,
-                            child: Column(
-                              children: <Widget>[
+                            children: <Widget>[
 //                                Container(
 //                                    height:
 //                                        MediaQuery.of(context).size.width / 3,
@@ -121,181 +84,223 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 //                                        MediaQuery.of(context).size.width / 3,
 //                                    //TODO implement retrieved changed photo
 //                                    child: ImageUploadForm()),
-                                FormBuilder(
-                                  key: _fbKey,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        SizedBox(
-                                          height: 30.0,
-                                        ),
-                                        Text(
-                                          "First name",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        FormBuilderTextField(
-                                          attribute: "first_name",
-                                          initialValue:
-                                              "${_userProfile?.firstName ?? ""}",
-                                          keyboardType: TextInputType.text,
-                                          validators: [
-                                            FormBuilderValidators.required(),
-                                          ],
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title,
-                                          textAlign: TextAlign.center,
-                                          cursorColor: Colors.brown,
-                                          maxLength: _maxLength,
-                                        ),
-                                        SizedBox(
-                                          height: 12.0,
-                                        ),
-                                        Text(
-                                          "Middle name",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        FormBuilderTextField(
-                                          attribute: "middle_name",
-                                          initialValue:
-                                              "${_userProfile?.middleName ?? ""}",
-                                          keyboardType: TextInputType.text,
-                                          validators: [
-//                                        FormBuilderValidators.required(),
-                                          ],
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title,
-                                          textAlign: TextAlign.center,
-                                          cursorColor: Colors.brown,
-                                          maxLength: _maxLength,
-                                        ),
-                                        SizedBox(
-                                          height: 12.0,
-                                        ),
-                                        Text(
-                                          "Last name",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        FormBuilderTextField(
-                                          attribute: "last_name",
-                                          initialValue:
-                                              "${_userProfile.lastName ?? ""}",
-                                          keyboardType: TextInputType.text,
-                                          validators: [
-                                            FormBuilderValidators.required(),
-                                          ],
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title,
-                                          textAlign: TextAlign.center,
-                                          cursorColor: Colors.brown,
-                                          maxLength: _maxLength,
-                                        ),
-                                        SizedBox(
-                                          height: 12.0,
-                                        ),
-                                        Text(
-                                          "Address 1",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        FormBuilderTextField(
-                                          attribute: "address_1",
-                                          initialValue:
-                                              "${_userProfile.address1 ?? ""}",
-                                          keyboardType: TextInputType.text,
-                                          validators: [
-                                            FormBuilderValidators.required(),
-                                          ],
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title,
-                                          textAlign: TextAlign.center,
-                                          cursorColor: Colors.brown,
-                                          maxLength: 40,
-                                        ),
-                                        SizedBox(
-                                          height: 12.0,
-                                        ),
-                                        Text(
-                                          "Address 2",
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        FormBuilderTextField(
-                                          attribute: "address_2",
-                                          initialValue:
-                                              "${_userProfile.address2 ?? ""}",
-                                          keyboardType: TextInputType.text,
-                                          validators: [
-//                                        FormBuilderValidators.required(),
-                                          ],
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .title,
-                                          textAlign: TextAlign.center,
-                                          cursorColor: Colors.brown,
-                                          maxLength: 40,
-                                        ),
-                                        CountryAndOtherFormFields(
-                                          initialCountryCode: _userProfile
-                                              .countryCode
-                                              ?.padLeft(2, "0"),
-//                                          "01",
-                                          initialProvinceCode: _userProfile
-                                              .provinceCode
-                                              ?.padLeft(4, "0"),
-//                                          "0722",
-                                          initialCityCode: _userProfile.cityCode
-                                              ?.padLeft(6, "0"),
-//                                          "072206",
-                                        ),
-                                        PatternedFormField(
-                                          attribute: "mobile",
-                                          mask: "(00000)-0000000",
-                                          hintText: "Mobile",
-                                          label: "Mobile",
-                                          initialValue: _userProfile.mobile,
-                                        ),
-                                        PatternedFormField(
-                                          attribute: "landline",
-                                          mask: "(000)-00000000",
-                                          hintText: "Landline",
-                                          label: "Landline",
-                                          initialValue: _userProfile.landline,
-                                        )
-                                      ],
+                              _isSaved
+                                  ? Container()
+                                  : Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 10.0, horizontal: 30.0),
+                                      child: Text(
+                                        "$branchName",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
+                              _isSaved ? Container() : Divider(),
+                              _isSaved
+                                  ? Container()
+                                  : Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 10.0, horizontal: 30.0),
+                                      child: Text(
+                                        "Edit Profile",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: _isSaved ? Container() : Divider(),
+                              ),
+                              _isSaved
+                                  ? Container()
+                                  : SizedBox(
+                                      height: 10.0,
+                                    ),
+                              FormBuilder(
+                                key: _fbKey,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 30.0,
+                                      ),
+                                      Text(
+                                        "First name",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      FormBuilderTextField(
+                                        attribute: "first_name",
+                                        initialValue:
+                                            "${_userProfile?.firstName ?? ""}",
+                                        keyboardType: TextInputType.text,
+                                        validators: [
+                                          FormBuilderValidators.required(),
+                                        ],
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title,
+                                        textAlign: TextAlign.center,
+                                        cursorColor: Colors.brown,
+                                        maxLength: _maxLength,
+                                      ),
+                                      SizedBox(
+                                        height: 12.0,
+                                      ),
+                                      Text(
+                                        "Middle name",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      FormBuilderTextField(
+                                        attribute: "middle_name",
+                                        initialValue:
+                                            "${_userProfile?.middleName ?? ""}",
+                                        keyboardType: TextInputType.text,
+                                        validators: [
+//                                        FormBuilderValidators.required(),
+                                        ],
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title,
+                                        textAlign: TextAlign.center,
+                                        cursorColor: Colors.brown,
+                                        maxLength: _maxLength,
+                                      ),
+                                      SizedBox(
+                                        height: 12.0,
+                                      ),
+                                      Text(
+                                        "Last name",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      FormBuilderTextField(
+                                        attribute: "last_name",
+                                        initialValue:
+                                            "${_userProfile.lastName ?? ""}",
+                                        keyboardType: TextInputType.text,
+                                        validators: [
+                                          FormBuilderValidators.required(),
+                                        ],
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title,
+                                        textAlign: TextAlign.center,
+                                        cursorColor: Colors.brown,
+                                        maxLength: _maxLength,
+                                      ),
+                                      SizedBox(
+                                        height: 12.0,
+                                      ),
+                                      Text(
+                                        "Address 1",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      FormBuilderTextField(
+                                        attribute: "address_1",
+                                        initialValue:
+                                            "${_userProfile.address1 ?? ""}",
+                                        keyboardType: TextInputType.text,
+                                        validators: [
+                                          FormBuilderValidators.required(),
+                                        ],
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title,
+                                        textAlign: TextAlign.center,
+                                        cursorColor: Colors.brown,
+                                        maxLength: 40,
+                                      ),
+                                      SizedBox(
+                                        height: 12.0,
+                                      ),
+                                      Text(
+                                        "Address 2",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      FormBuilderTextField(
+                                        attribute: "address_2",
+                                        initialValue:
+                                            "${_userProfile.address2 ?? ""}",
+                                        keyboardType: TextInputType.text,
+                                        validators: [
+//                                        FormBuilderValidators.required(),
+                                        ],
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .title,
+                                        textAlign: TextAlign.center,
+                                        cursorColor: Colors.brown,
+                                        maxLength: 40,
+                                      ),
+                                      CountryAndOtherFormFields(
+                                        initialCountryCode: _userProfile
+                                            .countryCode
+                                            ?.padLeft(2, "0"),
+//                                          "01",
+                                        initialProvinceCode: _userProfile
+                                            .provinceCode
+                                            ?.padLeft(4, "0"),
+//                                          "0722",
+                                        initialCityCode: _userProfile.cityCode
+                                            ?.padLeft(6, "0"),
+//                                          "072206",
+                                      ),
+                                      PatternedFormField(
+                                        attribute: "mobile",
+                                        mask: "(00000)-0000000",
+                                        hintText: "Mobile",
+                                        label: "Mobile",
+                                        initialValue: _userProfile.mobile,
+                                        textInputType: TextInputType.number,
+                                      ),
+                                      PatternedFormField(
+                                        attribute: "landline",
+                                        mask: "(000)-00000000",
+                                        hintText: "Landline",
+                                        label: "Landline",
+                                        initialValue: _userProfile.landline,
+                                        textInputType: TextInputType.number,
+                                      )
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
               _isLoading

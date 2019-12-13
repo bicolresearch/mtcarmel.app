@@ -17,6 +17,7 @@ class PatternedFormField extends StatefulWidget {
   final String hintText;
   final TextAlign textAlign;
   final String initialValue;
+  final TextInputType textInputType;
   final List<FormFieldValidator> validators;
 
   const PatternedFormField({
@@ -28,6 +29,7 @@ class PatternedFormField extends StatefulWidget {
     this.textAlign = TextAlign.center,
     this.validators,
     this.initialValue,
+    this.textInputType = TextInputType.text,
   }) : super(key: key);
 
   @override
@@ -110,6 +112,7 @@ class _PatternedFormFieldState extends State<PatternedFormField> {
                 ),
                 child: TextField(
                   controller: controller,
+                  keyboardType: widget.textInputType,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                   ),
